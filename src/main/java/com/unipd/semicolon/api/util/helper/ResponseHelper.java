@@ -1,6 +1,6 @@
 package com.unipd.semicolon.api.util.helper;
 
-import com.example.demo.api.Util.ResponseStructure;
+import com.unipd.semicolon.api.util.ResponseStructure;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
