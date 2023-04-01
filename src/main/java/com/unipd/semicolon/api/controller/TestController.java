@@ -1,4 +1,4 @@
-package com.unipd.semicolon.api.util.controller;
+package com.unipd.semicolon.api.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
