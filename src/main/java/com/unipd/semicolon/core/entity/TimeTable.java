@@ -1,13 +1,23 @@
 package com.unipd.semicolon.core.entity;
 
+import jakarta.persistence.*;
+
+
+@Entity
+@Table(name = "TimeTable")
 public class TimeTable
 {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // will creat the uniq and respectively id
     int dayOfWeek;
     String fromHour;
     String toHour;
 
+
     public TimeTable() {
     }
+
+
 
     public TimeTable(int dayOfWeek, String fromHour, String toHour) {
         this.dayOfWeek = dayOfWeek;
@@ -47,4 +57,5 @@ public class TimeTable
                 ", toHour='" + toHour + '\'' +
                 '}';
     }
+
 }
