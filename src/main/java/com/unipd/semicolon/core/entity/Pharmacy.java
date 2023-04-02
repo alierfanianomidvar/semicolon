@@ -1,11 +1,22 @@
 package com.unipd.semicolon.core.entity;
 
+import jakarta.persistence.*;
+
+import java.util.List;
+
+@Entity
+@Table(name = "Pharmacy")
 public class Pharmacy {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // will creat the uniq and respectively id
     Long pharmacyID;
     String name;
     String owner;           //user
     String address;
     String tellNumber;
+
+    @ManyToOne
+    @JoinColumn(name = "dayOfWeek")
     TimeTable timeTable;
     String logoPath;
 
@@ -70,6 +81,7 @@ public class Pharmacy {
     public void setTellNumber(String tellNumber) {
         this.tellNumber = tellNumber;
     }
+
 
     public TimeTable getTimeTable() {
         return timeTable;
