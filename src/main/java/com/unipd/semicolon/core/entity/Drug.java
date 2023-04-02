@@ -1,5 +1,6 @@
 package com.unipd.semicolon.core.entity;
 
+import com.unipd.semicolon.core.entity.enums.AgeGroup;
 import com.unipd.semicolon.core.entity.enums.Gender;
 import jakarta.persistence.*;
 
@@ -27,6 +28,9 @@ public class Drug {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @Enumerated(EnumType.STRING)
+    private AgeGroup ageGroup;
+
     private boolean isSensitive;
 
     private boolean needPrescription;
@@ -42,17 +46,15 @@ public class Drug {
 
     private LocalDateTime lastModified;
 
-
 //- buy price
 //- sell price //these are related to each pharmacy
 
 //- quantity //the number of availability in pharmacy
 //- isActive //is active in the pharmacy
-//- age //do we really need it?
 
     public Drug(String name, Supplier supplier, LocalDate expirationDate, byte[] photo, String category,
-                String shape, Gender gender, boolean isSensitive, boolean needPrescription, String description,
-                int limit, float price, String countryOFOrigin)
+                String shape, Gender gender, AgeGroup ageGroup, boolean isSensitive, boolean needPrescription,
+                String description, int limit, float price, String countryOFOrigin)
     {
         this.name = name;
         this.supplier = supplier;
@@ -61,6 +63,7 @@ public class Drug {
         this.category = category;
         this.shape = shape;
         this.gender = gender;
+        this.ageGroup = ageGroup;
         this.isSensitive = isSensitive;
         this.needPrescription = needPrescription;
         this.description = description;
@@ -146,6 +149,14 @@ public class Drug {
         this.gender = gender;
     }
 
+    public AgeGroup getAgeGroup() {
+        return ageGroup;
+    }
+
+    public void setAgeGroup(AgeGroup ageGroup) {
+        this.ageGroup = ageGroup;
+    }
+
     public boolean isSensitive() {
         return isSensitive;
     }
@@ -213,6 +224,7 @@ public class Drug {
                 ", category='" + category + '\'' +
                 ", shape='" + shape + '\'' +
                 ", gender=" + gender +
+                ", ageGroup=" + ageGroup +
                 ", isSensitive=" + isSensitive +
                 ", needPrescription=" + needPrescription +
                 ", description='" + description + '\'' +
