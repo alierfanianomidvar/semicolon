@@ -21,7 +21,11 @@ public class Storage {
     @Column(name = "threshold")
     private int threshold;
 
-    public Storage (Pharmacy pharmacy, Drug drug, int amount, int threshold) {
+    public Storage (Pharmacy pharmacy,
+                    Drug drug,
+                    int amount,
+                    int threshold) {
+
         this.pharmacy = pharmacy;
         this.drug = drug;
         this.amount = amount;
@@ -69,17 +73,6 @@ public class Storage {
     public int getThreshold() {
         return threshold;
     }
-
-
-    @Override
-    public String toString() {
-        return  "Storage{" + "\n" +
-                "id = " + id + "\n" +
-                ", pharmacy = " + pharmacy + "\n" +
-                ", drug = " + drug + "\n" +
-                ", amount = " + amount + "\n" +
-                ", threshold = " + threshold + "\n"
-                ;
-    }
+    
 
 }
