@@ -1,6 +1,7 @@
 package com.unipd.semicolon.core.entity;
 
 import com.unipd.semicolon.core.entity.enums.AgeGroup;
+import com.unipd.semicolon.core.entity.enums.Country;
 import com.unipd.semicolon.core.entity.enums.Gender;
 import jakarta.persistence.*;
 
@@ -42,7 +43,7 @@ public class Drug {
 
     private float price;
 
-    private String countryOFOrigin;
+    private Country countryOFOrigin;
 
     private LocalDateTime lastModified;
 
