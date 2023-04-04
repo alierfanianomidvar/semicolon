@@ -18,7 +18,7 @@ public class Order {
     @Column(name = "order_status")
     private boolean status;
 
-    @Column(name = "totalPrice")
+    @Column(name = "total_price")
     private double totalPrice;
 
     /*-------------------------------------------
