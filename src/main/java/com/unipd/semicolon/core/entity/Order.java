@@ -15,11 +15,32 @@ public class Order {
     @Column(name = "order_date")
     private LocalDate orderDate;
 
+    @Column(name = "order_status")
     private boolean status;
 
+    @Column(name = "totalPrice")
     private double totalPrice;
 
-    // Getters
+    /*-------------------------------------------
+    ----------------Constructors-----------------
+    -------------------------------------------*/
+    public Order(LocalDate orderDate,
+                 boolean status,
+                 double totalPrice)
+    {
+        this.orderDate = orderDate;
+        this.status = status;
+        this.totalPrice = totalPrice;
+    }
+
+    public Order() {
+        // No-argument constructor
+        //TODO CHANGE TYPE FOR DRUG
+    }
+
+    /*-------------------------------------------
+    ----------------Getters-----------------
+    -------------------------------------------*/
     public Long getId() {
         return id;
     }
@@ -37,7 +58,9 @@ public class Order {
     }
 
 
-    // Setters
+    /*-------------------------------------------
+    -------------------Setters------------------
+    -------------------------------------------*/
 
     public void setId(Long id) {
         this.id = id;
@@ -55,3 +78,5 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 }
+
+
