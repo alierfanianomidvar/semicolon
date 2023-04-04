@@ -99,8 +99,6 @@ public class Pharmacy {
     }
 
 
-    @OneToMany(mappedBy = "Pharmacy")
-//    @JoinColumn(name = "dayOfWeek")
     public List<TimeTable> getTimeTable() {
         return timeTable;
     }
