@@ -9,15 +9,15 @@ public class TimeTable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // will creat the uniq and respectively id
-    int dayOfWeek;
+    int day_of_week;
 
     @ManyToOne
-    @JoinColumn(name = "pharmacyID")
+    @JoinColumn(name = "pharmacy_ID")
     Pharmacy pharmacy;
     @Column(name = "fromHour")
-    String fromHour;
+    String from_hour;
     @Column(name = "toHour")
-    String toHour;
+    String to_hour;
 
 
     public TimeTable() {
@@ -25,36 +25,36 @@ public class TimeTable
 
 
 
-    public TimeTable(int dayOfWeek,
-                     String fromHour,
-                     String toHour) {
-        this.dayOfWeek = dayOfWeek;
-        this.fromHour = fromHour;
-        this.toHour = toHour;
+    public TimeTable(int day_of_week,
+                     String from_hour,
+                     String to_hour) {
+        this.day_of_week = day_of_week;
+        this.from_hour = from_hour;
+        this.to_hour = to_hour;
     }
 
-    public int getDayOfWeek() {
-        return dayOfWeek;
+    public int getday_of_week() {
+        return day_of_week;
     }
 
-    public void setDayOfWeek(int dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
+    public void setDayOfWeek(int day_of_week) {
+        this.day_of_week = day_of_week;
     }
 
-    public String getFromHour() {
-        return fromHour;
+    public String getFrom_hour() {
+        return from_hour;
     }
 
-    public void setFromHour(String fromHour) {
-        this.fromHour = fromHour;
+    public void setFrom_hour(String from_hour) {
+        this.from_hour = from_hour;
     }
 
-    public String getToHour() {
-        return toHour;
+    public String getTo_hour() {
+        return to_hour;
     }
 
-    public void setToHour(String toHour) {
-        this.toHour = toHour;
+    public void setTo_hour(String to_hour) {
+        this.to_hour = to_hour;
     }
 
 
