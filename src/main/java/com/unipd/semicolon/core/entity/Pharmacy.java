@@ -114,6 +114,4 @@ public class Pharmacy {
     public void setLogoPath(String logoPath) {
         this.logoPath = logoPath;
     }
-
-
 }
