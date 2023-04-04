@@ -239,25 +239,4 @@ public class Drug {
         this.lastModified = lastModified;
     }
 
-    @Override
-    public String toString() {
-        return "Drug{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", supplier=" + supplier +
-                ", expirationDate=" + expirationDate +
-                ", photo=" + Arrays.toString(photo) +
-                ", category='" + category + '\'' +
-                ", shape='" + shape + '\'' +
-                ", gender=" + gender +
-                ", ageGroup=" + ageGroup +
-                ", isSensitive=" + isSensitive +
-                ", needPrescription=" + needPrescription +
-                ", description='" + description + '\'' +
-                ", limit=" + limit +
-                ", price=" + price +
-                ", countryOFOrigin='" + countryOFOrigin + '\'' +
-                ", lastModified=" + lastModified +
-                '}';
-    }
 }
