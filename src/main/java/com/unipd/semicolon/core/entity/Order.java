@@ -3,7 +3,6 @@ package com.unipd.semicolon.core.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table(name = "orders")
@@ -29,7 +28,7 @@ public class Order {
         return orderDate;
     }
 
-    public boolean isStatus() {
+    public boolean isStatusDelivered() {
         return status;
     }
 
