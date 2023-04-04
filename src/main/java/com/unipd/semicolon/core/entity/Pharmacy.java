@@ -10,20 +10,30 @@ public class Pharmacy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // will creat the uniq and respectively id
     Long pharmacyID;
+    @Column(name = "name")
     String name;
+    @Column(name = "owner")
     String owner;           //user
+    @Column(name = "address")
     String address;
+    @Column(name = "tellNumber")
     String tellNumber;
-
-    @ManyToOne
+    @OneToMany
     @JoinColumn(name = "dayOfWeek")
-    TimeTable timeTable;
+    @Column(name = "timeTable")
+    List<TimeTable> timeTable;
+    @Column(name = "logoPath")
     String logoPath;
 
     public Pharmacy() {
     }
 
-    public Pharmacy( String name, String owner, String address, String tellNumber, TimeTable timeTable, String logoPath) {
+    public Pharmacy( String name,
+                     String owner,
+                     String address,
+                     String tellNumber,
+                     List<TimeTable> timeTable,
+                     String logoPath) {
         this.name = name;
         this.owner = owner;
         this.address = address;
@@ -32,7 +42,13 @@ public class Pharmacy {
         this.logoPath = logoPath;
     }
 
-    public Pharmacy(Long pharmacyID, String name, String owner, String address, String tellNumber, TimeTable timeTable, String logoPath) {
+    public Pharmacy(Long pharmacyID,
+                    String name,
+                    String owner,
+                    String address,
+                    String tellNumber,
+                    List<TimeTable> timeTable,
+                    String logoPath) {
         this.pharmacyID = pharmacyID;
         this.name = name;
         this.owner = owner;
@@ -83,11 +99,13 @@ public class Pharmacy {
     }
 
 
-    public TimeTable getTimeTable() {
+    @OneToMany(mappedBy = "Pharmacy")
+//    @JoinColumn(name = "dayOfWeek")
+    public List<TimeTable> getTimeTable() {
         return timeTable;
     }
 
-    public void setTimeTable(TimeTable timeTable) {
+    public void setTimeTable(List<TimeTable> timeTable) {
         this.timeTable = timeTable;
     }
 
@@ -99,16 +117,5 @@ public class Pharmacy {
         this.logoPath = logoPath;
     }
 
-    @Override
-    public String toString() {
-        return "Pharmacy{" +
-                "pharmacyID=" + pharmacyID +
-                ", name='" + name + '\'' +
-                ", owner='" + owner.toString() + '\'' +
-                ", address='" + address + '\'' +
-                ", tellNumber='" + tellNumber + '\'' +
-                ", timeTable=" + timeTable.toString() +
-                ", logoPath='" + logoPath + '\'' +
-                '}';
-    }
+
 }
