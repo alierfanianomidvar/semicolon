@@ -14,9 +14,9 @@ public class TimeTable
     @ManyToOne
     @JoinColumn(name = "pharmacy_ID")
     Pharmacy pharmacy;
-    @Column(name = "fromHour")
+    @Column(name = "from_hour")
     String from_hour;
-    @Column(name = "toHour")
+    @Column(name = "to_hour")
     String to_hour;
 
 
