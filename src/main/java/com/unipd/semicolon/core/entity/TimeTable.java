@@ -10,7 +10,13 @@ public class TimeTable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // will creat the uniq and respectively id
     int dayOfWeek;
+
+    @ManyToOne
+    @JoinColumn(name = "pharmacyID")
+    Pharmacy pharmacy;
+    @Column(name = "fromHour")
     String fromHour;
+    @Column(name = "toHour")
     String toHour;
 
 
@@ -19,7 +25,9 @@ public class TimeTable
 
 
 
-    public TimeTable(int dayOfWeek, String fromHour, String toHour) {
+    public TimeTable(int dayOfWeek,
+                     String fromHour,
+                     String toHour) {
         this.dayOfWeek = dayOfWeek;
         this.fromHour = fromHour;
         this.toHour = toHour;
@@ -49,13 +57,6 @@ public class TimeTable
         this.toHour = toHour;
     }
 
-    @Override
-    public String toString() {
-        return "TimeTable{" +
-                "dayOfWeek=" + dayOfWeek +
-                ", fromHour='" + fromHour + '\'' +
-                ", toHour='" + toHour + '\'' +
-                '}';
-    }
+
 
 }
