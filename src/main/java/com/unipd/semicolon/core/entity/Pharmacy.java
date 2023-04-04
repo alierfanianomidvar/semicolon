@@ -93,8 +93,8 @@ public class Pharmacy {
         return tell_number;
     }
 
-    public void setTell_number(String tellNumber) {
-        this.tell_number = tellNumber;
+    public void setTell_number(String tell_number) {
+        this.tell_number = tell_number;
     }
 
 
@@ -110,7 +110,7 @@ public class Pharmacy {
         return logo_path;
     }
 
-    public void setLogo_path(String logoPath) {
-        this.logo_path = logoPath;
+    public void setLogo_path(String logo_path) {
+        this.logo_path = logo_path;
     }
 }
