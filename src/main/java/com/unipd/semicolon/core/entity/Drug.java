@@ -10,12 +10,13 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 
 @Entity
+@Table(name = "drug")
 public class Drug {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // will creat the uniq and respectively id
     private Long id;
 
-    @Column(length=50, nullable=false)
+    @Column(name = "name",length=50, nullable=false)
     private String name;
 
     @ManyToOne
@@ -23,28 +24,34 @@ public class Drug {
     private Supplier supplier;
     private LocalDate expirationDate;
 
+    @Column(name = "photo")
     private byte[] photo;
+    @Column(name = "category")
     private String category;
+    @Column(name = "shape")
     private String shape;
     @Enumerated(EnumType.STRING)
+    @Column(name = "gender")
     private Gender gender;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "age_group")
     private AgeGroup ageGroup;
-
+    @Column(name = "is_sensitive")
     private boolean isSensitive;
-
+    @Column(name = "need_prescription")
     private boolean needPrescription;
-
+    @Column(name = "description")
     private String description;
 
     //num of drugs that patient can buy
+    @Column(name = "limit")
     private int limit;
-
+    @Column(name = "price")
     private float price;
-
+    @Column(name = "country_of_origin")
     private Country countryOFOrigin;
-
+    @Column(name = "last_modified")
     private LocalDateTime lastModified;
 
 //- buy price
@@ -53,9 +60,21 @@ public class Drug {
 //- quantity //the number of availability in pharmacy
 //- isActive //is active in the pharmacy
 
-    public Drug(String name, Supplier supplier, LocalDate expirationDate, byte[] photo, String category,
-                String shape, Gender gender, AgeGroup ageGroup, boolean isSensitive, boolean needPrescription,
-                String description, int limit, float price, String countryOFOrigin)
+    public Drug(
+            String name,
+            Supplier supplier,
+            LocalDate expirationDate,
+            byte[] photo,
+            String category,
+            String shape,
+            Gender gender,
+            AgeGroup ageGroup,
+            boolean isSensitive,
+            boolean needPrescription,
+            String description,
+            int limit,
+            float price,
+            Country countryOFOrigin)
     {
         this.name = name;
         this.supplier = supplier;
@@ -73,7 +92,13 @@ public class Drug {
         this.countryOFOrigin = countryOFOrigin;
     }
 
-    public Drug(String name, Supplier supplier, LocalDate expirationDate, String category, int limit, float price) {
+    public Drug(
+            String name,
+            Supplier supplier,
+            LocalDate expirationDate,
+            String category,
+            int limit,
+            float price) {
         this.name = name;
         this.supplier = supplier;
         this.expirationDate = expirationDate;
@@ -198,11 +223,11 @@ public class Drug {
         this.price = price;
     }
 
-    public String getCountryOFOrigin() {
+    public Country getCountryOFOrigin() {
         return countryOFOrigin;
     }
 
-    public void setCountryOFOrigin(String countryOFOrigin) {
+    public void setCountryOFOrigin(Country countryOFOrigin) {
         this.countryOFOrigin = countryOFOrigin;
     }
 
