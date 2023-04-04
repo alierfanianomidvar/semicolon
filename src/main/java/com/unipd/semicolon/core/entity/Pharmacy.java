@@ -18,8 +18,7 @@ public class Pharmacy {
     String address;
     @Column(name = "tellNumber")
     String tellNumber;
-    @OneToMany
-    @JoinColumn(name = "dayOfWeek")
+    @OneToMany(mappedBy = "Pharmacy")
     @Column(name = "timeTable")
     List<TimeTable> timeTable;
     @Column(name = "logoPath")
