@@ -9,21 +9,20 @@ import java.util.List;
 public class Pharmacy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // will creat the uniq and respectively id
-    Long pharmacyID;
+    Long pharmacy_ID;
     @Column(name = "name")
     String name;
     @Column(name = "owner")
     String owner;           //user
     @Column(name = "address")
     String address;
-    @Column(name = "tellNumber")
-    String tellNumber;
-    @OneToMany
-    @JoinColumn(name = "dayOfWeek")
-    @Column(name = "timeTable")
-    List<TimeTable> timeTable;
-    @Column(name = "logoPath")
-    String logoPath;
+    @Column(name = "tell_number")
+    String tell_number;
+    @OneToMany//(mappedBy = "Pharmacy")
+    @JoinColumn(name = "day_of_week")
+    List<TimeTable> time_table;
+    @Column(name = "logo_path")
+    String logo_path;
 
     public Pharmacy() {
     }
@@ -31,39 +30,39 @@ public class Pharmacy {
     public Pharmacy( String name,
                      String owner,
                      String address,
-                     String tellNumber,
-                     List<TimeTable> timeTable,
-                     String logoPath) {
+                     String tell_number,
+                     List<TimeTable> time_table,
+                     String logo_path) {
         this.name = name;
         this.owner = owner;
         this.address = address;
-        this.tellNumber = tellNumber;
-        this.timeTable = timeTable;
-        this.logoPath = logoPath;
+        this.tell_number = tell_number;
+        this.time_table = time_table;
+        this.logo_path = logo_path;
     }
 
-    public Pharmacy(Long pharmacyID,
+    public Pharmacy(Long pharmacy_ID,
                     String name,
                     String owner,
                     String address,
-                    String tellNumber,
-                    List<TimeTable> timeTable,
-                    String logoPath) {
-        this.pharmacyID = pharmacyID;
+                    String tell_number,
+                    List<TimeTable> time_table,
+                    String logo_path) {
+        this.pharmacy_ID = pharmacy_ID;
         this.name = name;
         this.owner = owner;
         this.address = address;
-        this.tellNumber = tellNumber;
-        this.timeTable = timeTable;
-        this.logoPath = logoPath;
+        this.tell_number = tell_number;
+        this.time_table = time_table;
+        this.logo_path = logo_path;
     }
 
-    public Long getPharmacyID() {
-        return pharmacyID;
+    public Long getpharmacy_ID() {
+        return pharmacy_ID;
     }
 
-    public void setPharmacyID(Long pharmacyID) {
-        this.pharmacyID = pharmacyID;
+    public void setpharmacy_ID(Long pharmacy_ID) {
+        this.pharmacy_ID = pharmacy_ID;
     }
 
     public String getName() {
@@ -90,28 +89,28 @@ public class Pharmacy {
         this.address = address;
     }
 
-    public String getTellNumber() {
-        return tellNumber;
+    public String getTell_number() {
+        return tell_number;
     }
 
-    public void setTellNumber(String tellNumber) {
-        this.tellNumber = tellNumber;
+    public void setTell_number(String tellNumber) {
+        this.tell_number = tellNumber;
     }
 
 
     public List<TimeTable> getTimeTable() {
-        return timeTable;
+        return time_table;
     }
 
     public void setTimeTable(List<TimeTable> timeTable) {
-        this.timeTable = timeTable;
+        this.time_table = timeTable;
     }
 
-    public String getLogoPath() {
-        return logoPath;
+    public String getLogo_path() {
+        return logo_path;
     }
 
-    public void setLogoPath(String logoPath) {
-        this.logoPath = logoPath;
+    public void setLogo_path(String logoPath) {
+        this.logo_path = logoPath;
     }
 }
