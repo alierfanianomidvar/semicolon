@@ -25,7 +25,14 @@ public class Supplier {
     @Column(name = "arriving_orders")
     private String arrivingOrders;
 
-    public Supplier(String id, String name, String address, String email, String telephoneNumber, String previousOrders, String arrivingOrders) {
+    public Supplier(
+            String id,
+            String name,
+            String address,
+            String email,
+            String telephoneNumber,
+            String previousOrders,
+            String arrivingOrders) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -36,7 +43,6 @@ public class Supplier {
     }
 
     public Supplier() {
-
     }
 
     public String getId() {
