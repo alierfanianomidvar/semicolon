@@ -10,25 +10,31 @@ public class Login {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String userId;
-    @Column(name = "userName")
-    private String userName;
+    @Column(name = "username")
+    private String username;
     @Column(name = "password")
     private String password;
     @Column(name = "session")
     private boolean session;
-    @Column(name = "lastLoginDate")
+    @Column(name = "last_login_date")
     private LocalDateTime lastLoginDate;
-    @Column(name = "activationDate")
+    @Column(name = "activation_date")
     private LocalDateTime activationDate;
-    @Column(name = "terminationDate")
+    @Column(name = "termination_date")
     private LocalDateTime terminationDate;
 
 
-
     //to get the list of login information
-    public Login(String userId, String userName, String password, boolean session, LocalDateTime lastLoginDate, LocalDateTime activationDate, LocalDateTime terminationDate) {
+    public Login(
+            String userId,
+            String userName,
+            String password,
+            boolean session,
+            LocalDateTime lastLoginDate,
+            LocalDateTime activationDate,
+            LocalDateTime terminationDate) {
         this.userId = userId;
-        this.userName = userName;
+        this.username = userName;
         this.password = password;
         this.session = session;
         this.lastLoginDate = lastLoginDate;
@@ -37,9 +43,12 @@ public class Login {
     }
 
     // to use in login
-    public Login(String userId, String userName, String password) {
+    public Login(
+            String userId,
+            String userName,
+            String password) {
         this.userId = userId;
-        this.userName = userName;
+        this.username = userName;
         this.password = password;
     }
 
@@ -56,11 +65,11 @@ public class Login {
     }
 
     public String getUserName() {
-        return userName;
+        return username;
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.username = userName;
     }
 
     public String getPassword() {
