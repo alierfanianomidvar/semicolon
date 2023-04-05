@@ -1,15 +1,17 @@
 package com.unipd.semicolon.core.repository.entity.Imp;
 
 import com.unipd.semicolon.core.entity.Login;
+import com.unipd.semicolon.core.repository.entity.LoginRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
-public class LoginRepository extends Login {
-    public boolean login(Login l) throws Exception {
+public class LoginRepositoryImp extends CustomRepository implements LoginRepository {
+    public boolean login(Login l) throws SQLException {
         Connection conn = null;
         PreparedStatement stmnt = null;
         ResultSet result = null;
