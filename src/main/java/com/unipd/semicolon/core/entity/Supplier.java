@@ -1,16 +1,28 @@
 package com.unipd.semicolon.core.entity;
 
+import jakarta.persistence.*;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+@Entity
+@Table(name = "supplier")
 public class Supplier {
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private String id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "address")
     private String address;
+    @Column(name = "email")
     private String email;
+    @Column(name = "telephone_number")
     private String telephoneNumber;
+    @Column(name = "previous_orders")
     private String previousOrders;
+    @Column(name = "arriving_orders")
     private String arrivingOrders;
 
     public Supplier(String id, String name, String address, String email, String telephoneNumber, String previousOrders, String arrivingOrders) {
@@ -21,6 +33,10 @@ public class Supplier {
         this.telephoneNumber = telephoneNumber;
         this.previousOrders = previousOrders;
         this.arrivingOrders = arrivingOrders;
+    }
+
+    public Supplier() {
+
     }
 
     public String getId() {
@@ -77,107 +93,6 @@ public class Supplier {
 
     public void setArrivingOrders(String arrivingOrders) {
         this.arrivingOrders = arrivingOrders;
-    }
-
-    public static boolean editSupplier(Supplier s) throws Exception {
-        PreparedStatement stmnt = null;
-        Connection conn= null;
-        ResultSet updateResult = null;
-        try {
-            //conn = DataSourceProvider.getDataSource().getConnection();
-
-            String query = "UPDATE supplier SET id=?, name=?, address=?, email=?, telephoneNumber=?, " +
-                    "previousOrder=?, arrivingOrders=?, WHERE id=?;";
-
-            stmnt = conn.prepareStatement(query);
-            stmnt.setString(1, s.getId());
-            stmnt.setString(2, s.getName());
-            stmnt.setString(3, s.getAddress());
-            stmnt.setString(4, s.getEmail());
-            stmnt.setString(5, s.getTelephoneNumber());
-            stmnt.setString(6, s.getPreviousOrders());
-            stmnt.setString(7, s.getArrivingOrders());
-            stmnt.executeUpdate();
-
-            if (updateResult.next()) {
-                return true;
-            }
-            return false;
-
-        } finally {
-            //cleaningOperations(stmnt, conn);
-            if (updateResult != null) {
-                updateResult.close();
-            }
-            if (stmnt != null) {
-                stmnt.close();
-            }
-        }
-    }
-
-    public static boolean addSupplier(Supplier s) throws Exception {
-
-        Connection conn = null;
-        PreparedStatement stmnt = null;
-        ResultSet addResult = null;
-
-        try {
-            // conn = DataSourceProvider.getDataSource().getConnection();
-            String query = "INSERT INTO suppliers VALUES (?, ?, ?, ?, ?, ?, ?);";
-
-            stmnt = conn.prepareStatement(query);
-            stmnt.setString(1, s.getId());
-            stmnt.setString(2, s.getName());
-            stmnt.setString(3, s.getAddress());
-            stmnt.setString(4, s.getEmail());
-            stmnt.setString(5, s.getTelephoneNumber());
-            stmnt.setString(6, s.getPreviousOrders());
-            stmnt.setString(7, s.getArrivingOrders());
-            stmnt.executeUpdate();
-
-            if (addResult != null) {
-                return true;
-            } else {
-                return false;
-            }
-        } finally {
-            if (addResult != null) {
-                addResult.close();
-            }
-            if (stmnt != null) {
-                stmnt.close();
-            }
-        }
-    }
-
-
-    public static boolean removingSuppliers(Supplier s) throws Exception {
-        Connection conn = null;
-        PreparedStatement stmnt = null;
-        ResultSet removeResult = null;
-
-        try {
-            //conn = DataSourceProvider.getDataSource().getConnection();
-
-            String query = "DELETE FROM suppliers WHERE id=?;";
-
-            stmnt = conn.prepareStatement(query);
-            stmnt.setString(1, s.getId());
-            stmnt.executeUpdate();
-
-            if (removeResult != null) {
-                return true;
-            } else {
-                return false;
-            }
-        } finally {
-            if (removeResult != null) {
-                removeResult.close();
-            }
-            if (stmnt != null) {
-                stmnt.close();
-            }
-        }
     }
     
 }
