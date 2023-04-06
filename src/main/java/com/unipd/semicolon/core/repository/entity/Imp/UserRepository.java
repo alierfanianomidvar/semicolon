@@ -1,20 +1,46 @@
 package com.unipd.semicolon.core.repository.entity.Imp;
 
 import com.unipd.semicolon.core.entity.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
-@Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public class UserRepository {
 
-    Optional<User> findById(Long id);
+    private final Map<Long, User> userMap;
 
-    User save(User user);
+    public UserRepository() {
+        this.userMap = new HashMap<>();
+    }
 
-    void delete(User user);
+    public Optional<User> getById(int id) {
+        return Optional.ofNullable(userMap.get(id));
+    }
 
-    List<User> findAll();
+    public void add(User user) throws RepositoryException {
+        if (userMap.containsKey(user.getId())) {
+            throw new RepositoryException("User with ID " + user.getId() + " already exists in the repository");
+        }
+        userMap.put(user.getId(), user);
+    }
+
+    public void update(User user) throws RepositoryException {
+        if (!userMap.containsKey(user.getId())) {
+            throw new RepositoryException("User with ID " + user.getId() + " already exists in the repository");
+        }
+        userMap.put(user.getId(), user);
+    }
+
+    public void delete(Long id) throws RepositoryException {
+        if (!userMap.containsKey(id)) {
+            throw new RepositoryException("User with ID " + id + " does not exists in the repository");
+        }
+        userMap.remove(id);
+    }
+
+    public List<User> findAll() {
+        return List.copyOf(userMap.values());
+    }
 }

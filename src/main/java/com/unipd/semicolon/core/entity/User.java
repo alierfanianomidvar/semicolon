@@ -1,25 +1,51 @@
 package com.unipd.semicolon.core.entity;
 
-import jakarta.persistence.Entity;
+import com.unipd.semicolon.core.entity.enums.Gender;
+import jakarta.persistence.*;
 
 import java.awt.image.BufferedImage;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "user")
 public class User {
-    private String id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "name",length=50, nullable=false)
     private String name;
+
+    @Column(name = "last_name",length=50, nullable=false)
     private String lastName;
-    private String gender;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "gender")
+    private Gender gender;
+
+    @Column(name = "birth_date")
     private LocalDateTime birthDate;
+
+    @Column(name = "phone_number")
     private Long phoneNumber;
+
+    @Column(name = "address")
     private String address;
+
+    @Column(name = "role")
     private String role;
+
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "account_status")
     private String accountStatus;
+
+    @Column(name = "profile_picture")
     private BufferedImage profilePicture;
 
-    public User(String id, String name, String lastName, String gender, LocalDateTime birthDate, Long phoneNumber, String address, String role, String email, String accountStatus, BufferedImage profilePicture) {
+    public User(Long id, String name, String lastName, Gender gender, LocalDateTime birthDate, Long phoneNumber, String address, String role, String email, String accountStatus, BufferedImage profilePicture) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -33,11 +59,11 @@ public class User {
         this.profilePicture = profilePicture;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -57,11 +83,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
@@ -119,23 +145,6 @@ public class User {
 
     public void setProfilePicture(BufferedImage profilePicture) {
         this.profilePicture = profilePicture;
-    }
-
-    public User createUser(String id, String name, String lastName, String gender, LocalDateTime birthDate, Long phoneNumber, String address, String role, String email, String accountStatus, BufferedImage profilePicture) {
-        return new User(id, name, lastName, gender, birthDate, phoneNumber, address, role, email, accountStatus, profilePicture);
-    }
-
-    public User getUser() {
-        // TODO
-        return null;
-    }
-
-    public void editUser() {
-        // TODO
-    }
-
-    public void deleteUser() {
-        // TODO
     }
 
 }
