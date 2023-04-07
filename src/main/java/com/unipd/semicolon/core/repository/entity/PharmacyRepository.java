@@ -1,4 +1,4 @@
-package com.unipd.semicolon.core.repository.entity.Imp;
+package com.unipd.semicolon.core.repository.entity;
 
 import com.unipd.semicolon.core.entity.Pharmacy;
 import org.springframework.data.jpa.repository.JpaRepository;
