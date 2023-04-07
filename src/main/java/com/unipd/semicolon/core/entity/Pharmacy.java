@@ -12,8 +12,9 @@ public class Pharmacy {
     Long pharmacy_ID;
     @Column(name = "name")
     String name;
-    @Column(name = "owner")
-    String owner;           //user
+    @OneToOne
+    @PrimaryKeyJoinColumn(name = "owner")
+    User owner;           //user
     @Column(name = "address")
     String address;
     @Column(name = "tell_number")
@@ -24,11 +25,15 @@ public class Pharmacy {
     @Column(name = "logo_path")
     String logo_path;
 
+    @ManyToOne
+    @JoinColumn(name = "id_storage")
+    Storage storage;
+
     public Pharmacy() {
     }
 
     public Pharmacy( String name,
-                     String owner,
+                     User owner,
                      String address,
                      String tell_number,
                      List<TimeTable> time_table,
@@ -43,7 +48,7 @@ public class Pharmacy {
 
     public Pharmacy(Long pharmacy_ID,
                     String name,
-                    String owner,
+                    User owner,
                     String address,
                     String tell_number,
                     List<TimeTable> time_table,
@@ -73,11 +78,11 @@ public class Pharmacy {
         this.name = name;
     }
 
-    public String getOwner() {
+    public User getOwner() {
         return owner;
     }
 
-    public void setOwner(String owner) {
+    public void setOwner(User owner) {
         this.owner = owner;
     }
 
