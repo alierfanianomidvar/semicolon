@@ -1,4 +1,4 @@
-package com.unipd.semicolon.core.repository.entity.Imp;
+package com.unipd.semicolon.core.exception;
 
 public class RepositoryException extends Exception {
     public RepositoryException(String message) {
