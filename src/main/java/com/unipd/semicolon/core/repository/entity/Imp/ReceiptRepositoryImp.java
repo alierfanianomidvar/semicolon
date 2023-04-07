@@ -1,6 +1,7 @@
 package com.unipd.semicolon.core.repository.entity.Imp;
 
 import com.unipd.semicolon.core.entity.Receipt;
+import com.unipd.semicolon.core.exception.RepositoryException;
 
 import java.util.HashMap;
 import java.util.List;
