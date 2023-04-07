@@ -14,14 +14,18 @@ import java.util.Arrays;
 public class Drug {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // will creat the uniq and respectively id
-    private Long id;
+    private Long id_drug;
 
     @Column(name = "name",length=50, nullable=false)
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "supplier_id")
+    @JoinColumn(name = "id_supplier")
     private Supplier supplier;
+
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private Storage storage;
     private LocalDate expirationDate;
 
     @Column(name = "photo")
@@ -92,31 +96,31 @@ public class Drug {
         this.countryOFOrigin = countryOFOrigin;
     }
 
-    public Drug(
-            String name,
-            Supplier supplier,
-            LocalDate expirationDate,
-            String category,
-            int limit,
-            float price) {
-        this.name = name;
-        this.supplier = supplier;
-        this.expirationDate = expirationDate;
-        this.category = category;
-        this.limit = limit;
-        this.price = price;
-    }
+//    public Drug(
+//            String name,
+//            Supplier supplier,
+//            LocalDate expirationDate,
+//            String category,
+//            int limit,
+//            float price) {
+//        this.name = name;
+//        this.supplier = supplier;
+//        this.expirationDate = expirationDate;
+//        this.category = category;
+//        this.limit = limit;
+//        this.price = price;
+//    }
 
     public Drug() {
 
     }
 
     public Long getId() {
-        return id;
+        return id_drug;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long id_drug) {
+        this.id_drug = id_drug;
     }
 
     public String getName() {

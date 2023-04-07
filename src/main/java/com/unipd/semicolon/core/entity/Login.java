@@ -6,10 +6,9 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "login")
 public class Login {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String userId;
+    private Long userId;
     @Column(name = "username")
     private String username;
     @Column(name = "password")
@@ -26,7 +25,6 @@ public class Login {
 
     //to get the list of login information
     public Login(
-            String userId,
             String userName,
             String password,
             boolean session,
@@ -44,7 +42,7 @@ public class Login {
 
     // to use in login
     public Login(
-            String userId,
+            Long userId,
             String userName,
             String password) {
         this.userId = userId;
@@ -56,11 +54,11 @@ public class Login {
 
     }
 
-    public String getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
