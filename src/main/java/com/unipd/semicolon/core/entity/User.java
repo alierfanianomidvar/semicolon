@@ -14,10 +14,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name",length=50, nullable=false)
+    @Column(name = "name", length = 50, nullable = false)
     private String name;
 
-    @Column(name = "last_name",length=50, nullable=false)
+    @Column(name = "last_name", length = 50, nullable = false)
     private String lastName;
 
     @Enumerated(EnumType.STRING)
@@ -32,9 +32,9 @@ public class User {
 
     @Column(name = "address")
     private String address;
-
+    @OneToOne
     @Column(name = "role")
-    private String role;
+    private Role role;
 
     @Column(name = "email")
     private String email;
@@ -45,7 +45,22 @@ public class User {
     @Column(name = "profile_picture")
     private BufferedImage profilePicture;
 
-    public User(Long id, String name, String lastName, Gender gender, LocalDateTime birthDate, Long phoneNumber, String address, String role, String email, String accountStatus, BufferedImage profilePicture) {
+    public User() {
+    }
+
+    public User(
+            Long id,
+            String name,
+            String lastName,
+            Gender gender,
+            LocalDateTime birthDate,
+            Long phoneNumber,
+            String address,
+            Role role,
+            String email,
+            String accountStatus,
+            BufferedImage profilePicture) {
+
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -58,6 +73,7 @@ public class User {
         this.accountStatus = accountStatus;
         this.profilePicture = profilePicture;
     }
+
 
     public Long getId() {
         return id;
@@ -115,11 +131,11 @@ public class User {
         this.address = address;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
