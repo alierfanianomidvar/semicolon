@@ -2,29 +2,31 @@ package com.unipd.semicolon.core.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "storage")
 public class Storage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    
-    @ManyToMany
-    @JoinColumn(name = "pharmacy_id")
+    private Long id_storage;
+
+    @ManyToOne
+    @JoinColumn(name = "id_pharmacy")
     private Pharmacy pharmacy;
 
-    @OneToMany
-    @JoinColumn(name = "drug_id")
+    @OneToOne
     private Drug drug;
+
     @Column(name = "amount")
     private int amount;
     @Column(name = "threshold")
     private int threshold;
 
-    public Storage (Pharmacy pharmacy,
-                    Drug drug,
-                    int amount,
-                    int threshold) {
+    public Storage(Pharmacy pharmacy,
+                   Drug drug,
+                   int amount,
+                   int threshold) {
 
         this.pharmacy = pharmacy;
         this.drug = drug;
@@ -36,12 +38,14 @@ public class Storage {
 
     }
 
-    public void setId (long id ) {
-        this.id = id;
+    public void setId(Long id_storage) {
+        this.id_storage = id_storage;
     }
-    public long getId () {
-        return id;
+
+    public Long getId() {
+        return id_storage;
     }
+
     public void setPharmacy(Pharmacy pharmacy) {
         this.pharmacy = pharmacy;
     }
@@ -73,6 +77,6 @@ public class Storage {
     public int getThreshold() {
         return threshold;
     }
-    
+
 
 }
