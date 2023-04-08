@@ -5,24 +5,22 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "TimeTable")
-public class TimeTable
-{
+public class TimeTable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // will creat the uniq and respectively id
-    int day_of_week;
+    private int day_of_week;
 
     @ManyToOne
     @JoinColumn(name = "pharmacy_ID")
-    Pharmacy pharmacy;
+    private Pharmacy pharmacy;
     @Column(name = "from_hour")
-    String from_hour;
+    private String from_hour;
     @Column(name = "to_hour")
-    String to_hour;
+    private String to_hour;
 
 
     public TimeTable() {
     }
-
 
 
     public TimeTable(int day_of_week,
@@ -56,7 +54,6 @@ public class TimeTable
     public void setTo_hour(String to_hour) {
         this.to_hour = to_hour;
     }
-
 
 
 }

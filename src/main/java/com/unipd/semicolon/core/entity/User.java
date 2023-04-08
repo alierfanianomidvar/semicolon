@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user")
+@Table(name = "_User")
 public class User {
 
     @Id
@@ -33,8 +33,10 @@ public class User {
     @Column(name = "address")
     private String address;
     @OneToOne
-    @Column(name = "role")
+//    @Column(name = "id")
+    @PrimaryKeyJoinColumn(name = "role")
     private Role role;
+
 
     @Column(name = "email")
     private String email;
@@ -43,7 +45,7 @@ public class User {
     private String accountStatus;
 
     @Column(name = "profile_picture")
-    private BufferedImage profilePicture;
+    private byte[] profilePicture;
 
     public User() {
     }
@@ -59,7 +61,7 @@ public class User {
             Role role,
             String email,
             String accountStatus,
-            BufferedImage profilePicture) {
+            byte[] profilePicture) {
 
         this.id = id;
         this.name = name;
@@ -155,11 +157,11 @@ public class User {
         this.accountStatus = accountStatus;
     }
 
-    public BufferedImage getProfilePicture() {
+    public byte[] getProfilePicture() {
         return profilePicture;
     }
 
-    public void setProfilePicture(BufferedImage profilePicture) {
+    public void setProfilePicture(byte[] profilePicture) {
         this.profilePicture = profilePicture;
     }
 

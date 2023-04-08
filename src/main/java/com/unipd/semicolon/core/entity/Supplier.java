@@ -5,13 +5,14 @@ import jakarta.persistence.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 
 @Entity
 @Table(name = "supplier")
 public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    private String id;
+    private Long id_supplier;
     @Column(name = "name")
     private String name;
     @Column(name = "address")
@@ -25,32 +26,36 @@ public class Supplier {
     @Column(name = "arriving_orders")
     private String arrivingOrders;
 
+    @OneToMany
+    @JoinColumn(name = "id")
+    List<Drug> drugList;
+
     public Supplier(
-            String id,
             String name,
             String address,
             String email,
             String telephoneNumber,
             String previousOrders,
-            String arrivingOrders) {
-        this.id = id;
+            String arrivingOrders,
+            List<Drug> drugList) {
         this.name = name;
         this.address = address;
         this.email = email;
         this.telephoneNumber = telephoneNumber;
         this.previousOrders = previousOrders;
         this.arrivingOrders = arrivingOrders;
+        this.drugList=drugList;
     }
 
     public Supplier() {
     }
 
-    public String getId() {
-        return id;
+    public Long getId() {
+        return id_supplier;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(Long id) {
+        this.id_supplier = id_supplier;
     }
 
     public String getName() {
@@ -100,6 +105,14 @@ public class Supplier {
     public void setArrivingOrders(String arrivingOrders) {
         this.arrivingOrders = arrivingOrders;
     }
-    
+
+
+    public List<Drug> getDrugList() {
+        return drugList;
+    }
+
+    public void setDrugList(List<Drug> drugList) {
+        this.drugList = drugList;
+    }
 }
 

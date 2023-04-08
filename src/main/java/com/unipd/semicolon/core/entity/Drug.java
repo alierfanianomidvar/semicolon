@@ -16,12 +16,14 @@ public class Drug {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // will creat the uniq and respectively id
     private Long id;
 
-    @Column(name = "name",length=50, nullable=false)
+    @Column(name = "name", length = 50, nullable = false)
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "supplier_id")
+    @JoinColumn(name = "id_supplier")
     private Supplier supplier;
+
+    @Column(name = "expiration_date")
     private LocalDate expirationDate;
 
     @Column(name = "photo")
@@ -45,7 +47,7 @@ public class Drug {
     private String description;
 
     //num of drugs that patient can buy
-    @Column(name = "limit")
+    @Column(name = "drug_limit")
     private int limit;
     @Column(name = "price")
     private float price;
@@ -57,8 +59,11 @@ public class Drug {
 //- buy price
 //- sell price //these are related to each pharmacy
 
-//- quantity //the number of availability in pharmacy
+    //- quantity //the number of availability in pharmacy
 //- isActive //is active in the pharmacy
+    public Drug() {
+
+    }
 
     public Drug(
             String name,
@@ -74,8 +79,7 @@ public class Drug {
             String description,
             int limit,
             float price,
-            Country countryOFOrigin)
-    {
+            Country countryOFOrigin) {
         this.name = name;
         this.supplier = supplier;
         this.expirationDate = expirationDate;
@@ -92,24 +96,21 @@ public class Drug {
         this.countryOFOrigin = countryOFOrigin;
     }
 
-    public Drug(
-            String name,
-            Supplier supplier,
-            LocalDate expirationDate,
-            String category,
-            int limit,
-            float price) {
-        this.name = name;
-        this.supplier = supplier;
-        this.expirationDate = expirationDate;
-        this.category = category;
-        this.limit = limit;
-        this.price = price;
-    }
+//    public Drug(
+//            String name,
+//            Supplier supplier,
+//            LocalDate expirationDate,
+//            String category,
+//            int limit,
+//            float price) {
+//        this.name = name;
+//        this.supplier = supplier;
+//        this.expirationDate = expirationDate;
+//        this.category = category;
+//        this.limit = limit;
+//        this.price = price;
+//    }
 
-    public Drug() {
-
-    }
 
     public Long getId() {
         return id;
