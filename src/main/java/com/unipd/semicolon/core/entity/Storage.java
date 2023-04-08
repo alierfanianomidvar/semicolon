@@ -9,27 +9,27 @@ import java.util.List;
 public class Storage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id_storage;
-    
-    @OneToMany
-    @JoinColumn(name = "pharmacy_id")
-    private List<Pharmacy> pharmacy;
+    private Long id_storage;
 
-    @OneToMany
-    @JoinColumn(name = "id_drug")
-    List<Drug> drugList;
+    @ManyToOne
+    @JoinColumn(name = "id_pharmacy")
+    private Pharmacy pharmacy;
+
+    @OneToOne
+    private Drug drug;
+
     @Column(name = "amount")
     private int amount;
     @Column(name = "threshold")
     private int threshold;
 
-    public Storage (List<Pharmacy> pharmacy,
-                    List<Drug> drugList,
-                    int amount,
-                    int threshold) {
+    public Storage(Pharmacy pharmacy,
+                   Drug drug,
+                   int amount,
+                   int threshold) {
 
         this.pharmacy = pharmacy;
-        this.drugList = drugList;
+        this.drug = drug;
         this.amount = amount;
         this.threshold = threshold;
     }
@@ -38,26 +38,28 @@ public class Storage {
 
     }
 
-    public void setId (long id_storage ) {
+    public void setId(Long id_storage) {
         this.id_storage = id_storage;
     }
-    public long getId () {
+
+    public Long getId() {
         return id_storage;
     }
-    public void setPharmacy(List<Pharmacy> pharmacy) {
+
+    public void setPharmacy(Pharmacy pharmacy) {
         this.pharmacy = pharmacy;
     }
 
-    public List<Pharmacy> getPharmacy() {
+    public Pharmacy getPharmacy() {
         return pharmacy;
     }
 
-    public void setDrug(List<Drug> drugList) {
-        this.drugList = drugList;
+    public void setDrug(Drug drug) {
+        this.drug = drug;
     }
 
-    public List<Drug> getDrug() {
-        return drugList;
+    public Drug getDrug() {
+        return drug;
     }
 
     public void setAmount(int amount) {
@@ -75,6 +77,6 @@ public class Storage {
     public int getThreshold() {
         return threshold;
     }
-    
+
 
 }

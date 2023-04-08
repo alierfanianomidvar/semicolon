@@ -14,18 +14,16 @@ import java.util.Arrays;
 public class Drug {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // will creat the uniq and respectively id
-    private Long id_drug;
+    private Long id;
 
-    @Column(name = "name",length=50, nullable=false)
+    @Column(name = "name", length = 50, nullable = false)
     private String name;
 
     @ManyToOne
     @JoinColumn(name = "id_supplier")
     private Supplier supplier;
 
-    @ManyToOne
-    @JoinColumn(name = "id")
-    private Storage storage;
+    @Column(name = "expiration_date")
     private LocalDate expirationDate;
 
     @Column(name = "photo")
@@ -49,7 +47,7 @@ public class Drug {
     private String description;
 
     //num of drugs that patient can buy
-    @Column(name = "limit")
+    @Column(name = "drug_limit")
     private int limit;
     @Column(name = "price")
     private float price;
@@ -61,8 +59,11 @@ public class Drug {
 //- buy price
 //- sell price //these are related to each pharmacy
 
-//- quantity //the number of availability in pharmacy
+    //- quantity //the number of availability in pharmacy
 //- isActive //is active in the pharmacy
+    public Drug() {
+
+    }
 
     public Drug(
             String name,
@@ -78,8 +79,7 @@ public class Drug {
             String description,
             int limit,
             float price,
-            Country countryOFOrigin)
-    {
+            Country countryOFOrigin) {
         this.name = name;
         this.supplier = supplier;
         this.expirationDate = expirationDate;
@@ -111,16 +111,13 @@ public class Drug {
 //        this.price = price;
 //    }
 
-    public Drug() {
-
-    }
 
     public Long getId() {
-        return id_drug;
+        return id;
     }
 
-    public void setId(Long id_drug) {
-        this.id_drug = id_drug;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

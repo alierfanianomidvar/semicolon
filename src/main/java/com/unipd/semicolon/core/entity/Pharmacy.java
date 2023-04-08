@@ -9,25 +9,24 @@ import java.util.List;
 public class Pharmacy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // will creat the uniq and respectively id
-    Long pharmacy_ID;
+    private Long pharmacy_ID;
     @Column(name = "name")
-    String name;
+    private String name;
     @OneToOne
     @PrimaryKeyJoinColumn(name = "owner")
-    User owner;           //user
+    private User owner;           //user
     @Column(name = "address")
-    String address;
+    private String address;
     @Column(name = "tell_number")
-    String tell_number;
+    private String tell_number;
     @OneToMany//(mappedBy = "Pharmacy")
     @JoinColumn(name = "day_of_week")
-    List<TimeTable> time_table;
+    private List<TimeTable> time_table;
     @Column(name = "logo_path")
-    String logo_path;
+    private String logo_path;
 
-    @ManyToOne
-    @JoinColumn(name = "id_storage")
-    Storage storage;
+    @OneToMany(mappedBy = "pharmacy")
+    private List<Storage> storage;
 
     public Pharmacy() {
     }

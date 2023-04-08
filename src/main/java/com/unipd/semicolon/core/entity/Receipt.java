@@ -10,7 +10,7 @@ public class Receipt {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "drug_list")
     private String drug_list; //temp code just to check if it runs or not
@@ -41,11 +41,11 @@ public class Receipt {
 
     // getters and setters for all attributes
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
