@@ -21,7 +21,7 @@ public class SupplierRepositoryImp extends CustomRepository implements SupplierR
                     "previousOrder=?, arrivingOrders=?, WHERE id=?;";
 
             stmnt = conn.prepareStatement(query);
-            stmnt.setString(1, s.getId());
+            stmnt.setLong(1, s.getId());
             stmnt.setString(2, s.getName());
             stmnt.setString(3, s.getAddress());
             stmnt.setString(4, s.getEmail());
@@ -57,7 +57,7 @@ public class SupplierRepositoryImp extends CustomRepository implements SupplierR
             String query = "INSERT INTO supplier VALUES (?, ?, ?, ?, ?, ?, ?);";
 
             stmnt = conn.prepareStatement(query);
-            stmnt.setString(1, s.getId());
+            stmnt.setLong(1, s.getId());
             stmnt.setString(2, s.getName());
             stmnt.setString(3, s.getAddress());
             stmnt.setString(4, s.getEmail());
@@ -96,7 +96,7 @@ public class SupplierRepositoryImp extends CustomRepository implements SupplierR
             String query = "DELETE FROM supplier WHERE id=?;";
 
             stmnt = conn.prepareStatement(query);
-            stmnt.setString(1, s.getId());
+            stmnt.setLong(1, s.getId());
             stmnt.executeUpdate();
 
             if (removeResult != null) {

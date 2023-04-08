@@ -12,7 +12,7 @@ import java.util.List;
 public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    private String id_supplier;
+    private Long id_supplier;
     @Column(name = "name")
     private String name;
     @Column(name = "address")
@@ -31,7 +31,6 @@ public class Supplier {
     List<Drug> drugList;
 
     public Supplier(
-            String id_supplier,
             String name,
             String address,
             String email,
@@ -39,7 +38,6 @@ public class Supplier {
             String previousOrders,
             String arrivingOrders,
             List<Drug> drugList) {
-        this.id_supplier = id_supplier;
         this.name = name;
         this.address = address;
         this.email = email;
@@ -52,11 +50,11 @@ public class Supplier {
     public Supplier() {
     }
 
-    public String getId() {
+    public Long getId() {
         return id_supplier;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id_supplier = id_supplier;
     }
 

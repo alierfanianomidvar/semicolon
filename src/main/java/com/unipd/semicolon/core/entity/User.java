@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user")
+@Table(name = "_User")
 public class User {
 
     @Id
