@@ -20,8 +20,10 @@ import com.unipd.semicolon.core.entity.Supplier;
 import com.unipd.semicolon.base.resource.LogContext;
 import com.unipd.semicolon.base.resource.Message;
 import com.unipd.semicolon.base.rest.*;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.context.annotation.ImportResource;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -33,6 +35,8 @@ import java.io.OutputStream;
  * @version 1.00
  * @since 1.00
  */
+@WebServlet(urlPatterns = "/suppliers", loadOnStartup = 1)
+@ImportResource({"classpath*:context.xml"})
 public final class RestDispatcherServlet extends AbstractDatabaseServlet {
 
 	/**
