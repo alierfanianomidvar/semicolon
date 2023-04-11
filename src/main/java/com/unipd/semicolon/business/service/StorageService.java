@@ -23,5 +23,4 @@ public interface StorageService {
     void delete(
             Storage storage
     );
-    List<Storage> getAll();
 }
