@@ -14,8 +14,7 @@ public class StorageController {
     @Autowired
     private StorageService storageService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    // Here we get the data on the body and not on the url.
+    @RequestMapping(value = "/storage", method = RequestMethod.POST)
     public ResponseEntity save(@RequestBody StorageModel model) {
         return ResponseHelper
                 .response(storageService.save(
