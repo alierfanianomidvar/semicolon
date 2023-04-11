@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!--
  
- Copyright 2023 University of Padua, Italy
+ Copyright 2018-2023 University of Padua, Italy
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -23,23 +23,24 @@
 <!-- The contents of this file will be loaded for each web application -->
 <Context>
 
-   <Resource name="jdbc/employee-ferro"
-          auth="Container"
-          type="javax.sql.DataSource"
-          factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
-          driverClassName="org.postgresql.Driver"
-          url="jdbc:postgresql://localhost:5432/webApp"
-          username="postgres"
-          password="123456"
-          testOnBorrow="true"
-          validationQuery="SELECT 1"
-          timeBetweenEvictionRunsMillis="30000"
-          maxActive="10"
-          minIdle="5"
-          maxWait="10000"
-          initialSize="1"
-          removeAbandonedTimeout="60"
-          removeAbandoned="true"
-          closeMethod="close"
-	/>
+    <Resource name="jdbc/employee-ferro"
+              auth="Container"
+              type="javax.sql.DataSource"
+              factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+              driverClassName="org.postgresql.Driver"
+              url="jdbc:postgresql://localhost:5432/webApp"
+              username="postgres"
+              password="postgres"
+              testOnBorrow="true"
+              validationQuery="SELECT 1"
+              timeBetweenEvictionRunsMillis="30000"
+              maxActive="10"
+              minIdle="5"
+              maxWait="10000"
+              initialSize="2"
+              removeAbandonedTimeout="60"
+              removeAbandoned="true"
+              closeMethod="close"
+    />
+
 </Context>

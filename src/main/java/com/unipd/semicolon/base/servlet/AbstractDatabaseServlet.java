@@ -17,11 +17,13 @@
 package com.unipd.semicolon.base.servlet;
 
 import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.StringFormatterMessageFactory;
+import org.springframework.context.annotation.ImportResource;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -60,19 +62,24 @@ public abstract class AbstractDatabaseServlet extends HttpServlet {
 	public void init(ServletConfig config) throws ServletException {
 
 		// the JNDI lookup context
-		InitialContext cxt;
+//		InitialContext cxt;
+		ServletContext cxt;
 
 		try {
-			cxt = new InitialContext();
-			ds = (DataSource) cxt.lookup("java:/comp/env/jdbc/employee-ferro");
+			cxt = config.getServletContext();
+			ds = (DataSource) cxt.getAttribute("java:jdbc/employee-ferro");
+//			cxt = new InitialContext();
+//			ds = (DataSource) cxt.lookup("java:jdbc/employee-ferro");
 
 			LOGGER.info("Connection pool to the database successfully acquired.");
-		} catch (NamingException e) {
+		} /*catch (NamingException e) {
 			ds = null;
 
 			LOGGER.error("Unable to acquire the connection pool to the database.", e);
 
 			throw new ServletException("Unable to acquire the connection pool to the database", e);
+		}*/ catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 	}
 
