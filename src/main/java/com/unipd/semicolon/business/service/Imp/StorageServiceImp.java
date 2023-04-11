@@ -21,13 +21,16 @@ public class StorageServiceImp implements StorageService {
                         Drug drug,
                         int amount,
                         int threshold) {
+        if (pharmacy == null || drug == null || amount < 0 || threshold < 0) {
+            throw new IllegalArgumentException("Invalid input parameter");
+        } else {
         Storage storage = new Storage(pharmacy,
                 drug,
                 amount,
                 threshold);
 
         storageRepository.save(storage);
-        return null;
+        return null;}
     }
 
     @Override
@@ -36,25 +39,28 @@ public class StorageServiceImp implements StorageService {
                         Drug drug,
                         int amount,
                         int threshold) {
-        if (storageRepository.findStorageById(id_storage) != null) {
-            Storage storage = storageRepository.findStorageById(id_storage);
-            storage.setPharmacy(pharmacy);
-            storage.setDrug(drug);
-            storage.setAmount(amount);
-            storage.setThreshold(threshold);
-            storageRepository.save(storage);
-            return true;
+        if (id_storage == null || id_storage < 0 || pharmacy == null || drug == null || amount < 0 || threshold < 0) {
+            throw new IllegalArgumentException("Invalid input parameter");
+        } else {
+            if (storageRepository.findStorageById(id_storage) != null) {
+                Storage storage = storageRepository.findStorageById(id_storage);
+                storage.setPharmacy(pharmacy);
+                storage.setDrug(drug);
+                storage.setAmount(amount);
+                storage.setThreshold(threshold);
+                storageRepository.save(storage);
+                return true;
+            }
         }
         return false;
     }
 
     @Override
     public void delete(Storage storage) {
-        storageRepository.delete(storage);
-    }
-
-    @Override
-    public List<Storage> getAll() {
-        return storageRepository.getAll();
+        if (storage == null) {
+            throw new IllegalArgumentException("Cannot delete null storage!");
+        } else {
+            storageRepository.delete(storage);
+        }
     }
 }

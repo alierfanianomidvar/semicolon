@@ -30,7 +30,7 @@ public class StorageRepositoryImp extends CustomRepository implements StorageRep
     @Override
     public List<Storage> getAll() {
         return listQueryWrapper(entityManager.createQuery(
-                "select g from User g order by g.id desc ",
+                "select g from Storage g order by g.id desc ",
                 Storage.class));
     }
 }
