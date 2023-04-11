@@ -34,20 +34,19 @@ public class UserModel {
 
     private byte[] profilePicture;
 
-
     public UserModel(Long userId,
-                     String username,
-                     String password,
-                     String name,
-                     String lastName,
-                     LocalDateTime birthDate,
-                     Role role,
-                     Gender gender,
-                     String phoneNumber,
-                     String address,
-                     String email,
-                     Boolean accountStatus,
-                     byte[] profilePicture) {
+            String username,
+            String password,
+            String name,
+            String lastName,
+            LocalDateTime birthDate,
+            Role role,
+            Gender gender,
+            String phoneNumber,
+            String address,
+            String email,
+            Boolean accountStatus,
+            byte[] profilePicture) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -64,17 +63,17 @@ public class UserModel {
     }
 
     public UserModel(String username,
-                     String password,
-                     String name,
-                     String lastName,
-                     LocalDateTime birthDate,
-                     Role role,
-                     Gender gender,
-                     String phoneNumber,
-                     String address,
-                     String email,
-                     Boolean accountStatus,
-                     byte[] profilePicture) {
+            String password,
+            String name,
+            String lastName,
+            LocalDateTime birthDate,
+            Role role,
+            Gender gender,
+            String phoneNumber,
+            String address,
+            String email,
+            Boolean accountStatus,
+            byte[] profilePicture) {
         this.username = username;
         this.password = password;
         this.name = name;
@@ -88,7 +87,6 @@ public class UserModel {
         this.accountStatus = accountStatus;
         this.profilePicture = profilePicture;
     }
-
 
     public Long getUserId() {
         return userId;
@@ -178,10 +176,8 @@ public class UserModel {
         this.profilePicture = profilePicture;
     }
 
-
     public UserModel() {
     }
-
 
     public String getUsername() {
         return username;
@@ -195,9 +191,15 @@ public class UserModel {
         return name;
     }
 
-    public Role getRole() {
-        return role;
+    public String getFamilyName() {
+        return familyName;
     }
 
+    public Date getBirthday() {
+        return birthday;
+    }
 
+    public short getRole() {
+        return role;
+    }
 }
