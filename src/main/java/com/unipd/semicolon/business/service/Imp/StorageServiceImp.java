@@ -8,6 +8,7 @@ import com.unipd.semicolon.core.entity.Storage;
 import java.util.List;
 
 import com.unipd.semicolon.core.repository.entity.StorageRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,6 +62,16 @@ public class StorageServiceImp implements StorageService {
             throw new IllegalArgumentException("Cannot delete null storage!");
         } else {
             storageRepository.delete(storage);
+        }
+    }
+
+    @Override
+    public Storage getById(long id) {
+        Storage storage = storageRepository.findStorageById(id);
+        if (storage != null) {
+            return storage;
+        } else {
+            throw new EntityNotFoundException("Storage not found with id: " + id);
         }
     }
 }

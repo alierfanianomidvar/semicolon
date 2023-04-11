@@ -23,4 +23,7 @@ public interface StorageService {
     void delete(
             Storage storage
     );
+    Storage getById(
+            long id
+    );
 }
