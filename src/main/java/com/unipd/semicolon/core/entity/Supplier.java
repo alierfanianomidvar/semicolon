@@ -1,15 +1,16 @@
 package com.unipd.semicolon.core.entity;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.unipd.semicolon.base.resource.AbstractResource;
 import jakarta.persistence.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
 @Entity
 @Table(name = "supplier")
-public class Supplier {
+public class Supplier extends AbstractResource {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id_supplier;
@@ -45,6 +46,21 @@ public class Supplier {
         this.previousOrders = previousOrders;
         this.arrivingOrders = arrivingOrders;
         this.drugList=drugList;
+    }
+
+    public Supplier(
+            String name,
+            String address,
+            String email,
+            String telephoneNumber,
+            String previousOrders,
+            String arrivingOrders) {
+        this.name = name;
+        this.address = address;
+        this.email = email;
+        this.telephoneNumber = telephoneNumber;
+        this.previousOrders = previousOrders;
+        this.arrivingOrders = arrivingOrders;
     }
 
     public Supplier() {
@@ -113,6 +129,31 @@ public class Supplier {
 
     public void setDrugList(List<Drug> drugList) {
         this.drugList = drugList;
+    }
+
+    @Override
+    protected void writeJSON(OutputStream out) throws IOException {
+        final JsonGenerator jg = JSON_FACTORY.createGenerator(out);
+
+        jg.writeStartObject();
+
+        jg.writeFieldName("supplier");
+
+        jg.writeStartObject();
+
+        jg.writeNumberField("id", id_supplier);
+
+        jg.writeStringField("name", name);
+
+        jg.writeStringField("address", address);
+
+        jg.writeStringField("email", email);
+
+        jg.writeEndObject();
+
+        jg.writeEndObject();
+
+        jg.flush();
     }
 }
 
