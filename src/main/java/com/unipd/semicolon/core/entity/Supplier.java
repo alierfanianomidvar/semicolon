@@ -23,32 +23,29 @@ public class Supplier {
     private String telephoneNumber;
     @OneToMany(mappedBy = "supplier")
     private List<Drug> drugs;
-
     @OneToMany(mappedBy = "supplier")
     private List<Material> materials;
+
+    public Supplier() {
+    }
 
     public Supplier(
             String name,
             String address,
             String email,
             String telephoneNumber,
-            List<Drug> drugList) {
+            List<Drug> drugs,
+            List<Material> materials) {
         this.name = name;
         this.address = address;
         this.email = email;
         this.telephoneNumber = telephoneNumber;
-        this.drugs=drugList;
-    }
-
-    public Supplier() {
+        this.drugs = drugs;
+        this.materials = materials;
     }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -83,12 +80,20 @@ public class Supplier {
         this.telephoneNumber = telephoneNumber;
     }
 
-    public List<Drug> getDrugList() {
+    public List<Drug> getDrugs() {
         return drugs;
     }
 
-    public void setDrugList(List<Drug> drugList) {
-        this.drugs = drugList;
+    public void setDrugs(List<Drug> drugs) {
+        this.drugs = drugs;
+    }
+
+    public List<Material> getMaterials() {
+        return materials;
+    }
+
+    public void setMaterials(List<Material> materials) {
+        this.materials = materials;
     }
 }
 

@@ -25,7 +25,6 @@ public class Material {
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
 
-
     @Column(name = "country_of_production")
     private Country countryOfProduction;
 
@@ -67,117 +66,130 @@ public class Material {
     }
 
     public Material(
-            String materialName,
-            Supplier supplierId,
+            String name,
+            Supplier supplier,
+            Country countryOfProduction,
             LocalDate expirationDate,
             byte[] image,
             Gender gender,
-            AgeGroup age,
             float price,
+            AgeGroup ageGroup,
+            LocalDate lastModifiedDate,
             String description,
-            Country countryOfProduction) {
-        this.name = materialName;
-        this.supplier = supplierId;
+            List<Order> orders,
+            List<Receipt> receipts) {
+        this.name = name;
+        this.supplier = supplier;
+        this.countryOfProduction = countryOfProduction;
         this.expirationDate = expirationDate;
         this.image = image;
         this.gender = gender;
-        this.ageGroup = age;
-        this.description = description;
         this.price = price;
-        this.countryOfProduction = countryOfProduction;
-
+        this.ageGroup = ageGroup;
+        this.lastModifiedDate = lastModifiedDate;
+        this.description = description;
+        this.orders = orders;
+        this.receipts = receipts;
     }
 
-
-    // Getter methods
     public Long getId() {
         return id;
     }
 
-    public String getMaterialName() {
+    public String getName() {
         return name;
     }
 
-    public Supplier getSupllierId() {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Supplier getSupplier() {
         return supplier;
     }
 
-    public Country getcountryOfProduction() {
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
+    }
+
+    public Country getCountryOfProduction() {
         return countryOfProduction;
-    }
-
-    public LocalDate getExpriationDate() {
-        return expirationDate;
-    }
-
-    public byte[] getImage() {
-        return image;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public float getSellPrice() {
-        return price;
-    }
-
-    public AgeGroup getAge() {
-        return ageGroup;
-    }
-
-    public LocalDate getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    // Setter methods
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setMaterialName(String materialName) {
-        this.name = materialName;
-    }
-
-    public void setSupplierId(Supplier supplierId) {
-        this.supplier = supplierId;
     }
 
     public void setCountryOfProduction(Country countryOfProduction) {
         this.countryOfProduction = countryOfProduction;
     }
 
-    public void setExpriationDate(LocalDate expriationDate) {
-        this.expirationDate = expriationDate;
+    public LocalDate getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(LocalDate expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public byte[] getImage() {
+        return image;
     }
 
     public void setImage(byte[] image) {
         this.image = image;
     }
 
+    public Gender getGender() {
+        return gender;
+    }
+
     public void setGender(Gender gender) {
         this.gender = gender;
     }
 
-    public void setSellPrice(float sellPrice) {
-        this.price = sellPrice;
+    public float getPrice() {
+        return price;
     }
 
-    public void setAge(AgeGroup age) {
-        this.ageGroup = age;
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public AgeGroup getAgeGroup() {
+        return ageGroup;
+    }
+
+    public void setAgeGroup(AgeGroup ageGroup) {
+        this.ageGroup = ageGroup;
+    }
+
+    public LocalDate getLastModifiedDate() {
+        return lastModifiedDate;
     }
 
     public void setLastModifiedDate(LocalDate lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
 
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public List<Receipt> getReceipts() {
+        return receipts;
+    }
+
+    public void setReceipts(List<Receipt> receipts) {
+        this.receipts = receipts;
+    }
 }
 
