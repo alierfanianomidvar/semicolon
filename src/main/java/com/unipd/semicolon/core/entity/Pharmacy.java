@@ -9,64 +9,49 @@ import java.util.List;
 public class Pharmacy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // will creat the uniq and respectively id
-    private Long pharmacy_ID;
+    private Long id;
     @Column(name = "name")
     private String name;
-    @OneToOne
-    @PrimaryKeyJoinColumn(name = "owner")
-    private User owner;           //user
+
     @Column(name = "address")
     private String address;
-    @Column(name = "tell_number")
-    private String tell_number;
+    @Column(name = "telephoneNumber")
+    private String telephoneNumber;
     @OneToMany//(mappedBy = "Pharmacy")
     @JoinColumn(name = "day_of_week")
     private List<TimeTable> time_table;
-    @Column(name = "logo_path")
-    private String logo_path;
+
+    @Column(name = "logo")
+    private byte[] logo;
 
     @OneToMany(mappedBy = "pharmacy")
     private List<Storage> storage;
 
+    @OneToMany(mappedBy = "pharmacy")
+    private List<User> staff;
+
     public Pharmacy() {
     }
 
-    public Pharmacy( String name,
-                     User owner,
-                     String address,
-                     String tell_number,
-                     List<TimeTable> time_table,
-                     String logo_path) {
+    public Pharmacy(
+            String name,
+            String address,
+            String telephoneNumber,
+            List<TimeTable> time_table,
+            byte[] logo,
+            List<Storage> storage,
+            List<User> staff) {
         this.name = name;
-        this.owner = owner;
         this.address = address;
-        this.tell_number = tell_number;
+        this.telephoneNumber = telephoneNumber;
         this.time_table = time_table;
-        this.logo_path = logo_path;
+        this.logo = logo;
+        this.storage = storage;
+        this.staff = staff;
     }
 
-    public Pharmacy(Long pharmacy_ID,
-                    String name,
-                    User owner,
-                    String address,
-                    String tell_number,
-                    List<TimeTable> time_table,
-                    String logo_path) {
-        this.pharmacy_ID = pharmacy_ID;
-        this.name = name;
-        this.owner = owner;
-        this.address = address;
-        this.tell_number = tell_number;
-        this.time_table = time_table;
-        this.logo_path = logo_path;
-    }
-
-    public Long getpharmacy_ID() {
-        return pharmacy_ID;
-    }
-
-    public void setpharmacy_ID(Long pharmacy_ID) {
-        this.pharmacy_ID = pharmacy_ID;
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
@@ -77,14 +62,6 @@ public class Pharmacy {
         this.name = name;
     }
 
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -93,28 +70,43 @@ public class Pharmacy {
         this.address = address;
     }
 
-    public String getTell_number() {
-        return tell_number;
+    public String getTelephoneNumber() {
+        return telephoneNumber;
     }
 
-    public void setTell_number(String tell_number) {
-        this.tell_number = tell_number;
+    public void setTelephoneNumber(String telephoneNumber) {
+        this.telephoneNumber = telephoneNumber;
     }
 
-
-    public List<TimeTable> getTimeTable() {
+    public List<TimeTable> getTime_table() {
         return time_table;
     }
 
-    public void setTimeTable(List<TimeTable> timeTable) {
-        this.time_table = timeTable;
+    public void setTime_table(List<TimeTable> time_table) {
+        this.time_table = time_table;
     }
 
-    public String getLogo_path() {
-        return logo_path;
+    public byte[] getLogo() {
+        return logo;
     }
 
-    public void setLogo_path(String logo_path) {
-        this.logo_path = logo_path;
+    public void setLogo(byte[] logo) {
+        this.logo = logo;
+    }
+
+    public List<Storage> getStorage() {
+        return storage;
+    }
+
+    public void setStorage(List<Storage> storage) {
+        this.storage = storage;
+    }
+
+    public List<User> getStaff() {
+        return staff;
+    }
+
+    public void setStaff(List<User> staff) {
+        this.staff = staff;
     }
 }

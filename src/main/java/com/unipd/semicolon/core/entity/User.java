@@ -33,10 +33,8 @@ public class User {
     @Column(name = "address")
     private String address;
     @OneToOne
-//    @Column(name = "id")
     @PrimaryKeyJoinColumn(name = "role")
     private Role role;
-
 
     @Column(name = "email")
     private String email;
@@ -47,11 +45,13 @@ public class User {
     @Column(name = "profile_picture")
     private byte[] profilePicture;
 
+    @ManyToOne
+    private Pharmacy pharmacy;
+
     public User() {
     }
 
     public User(
-            Long id,
             String name,
             String lastName,
             Gender gender,
@@ -61,9 +61,8 @@ public class User {
             Role role,
             String email,
             String accountStatus,
-            byte[] profilePicture) {
-
-        this.id = id;
+            byte[] profilePicture,
+            Pharmacy pharmacy) {
         this.name = name;
         this.lastName = lastName;
         this.gender = gender;
@@ -74,15 +73,11 @@ public class User {
         this.email = email;
         this.accountStatus = accountStatus;
         this.profilePicture = profilePicture;
+        this.pharmacy = pharmacy;
     }
-
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -165,4 +160,11 @@ public class User {
         this.profilePicture = profilePicture;
     }
 
+    public Pharmacy getPharmacy() {
+        return pharmacy;
+    }
+
+    public void setPharmacy(Pharmacy pharmacy) {
+        this.pharmacy = pharmacy;
+    }
 }
