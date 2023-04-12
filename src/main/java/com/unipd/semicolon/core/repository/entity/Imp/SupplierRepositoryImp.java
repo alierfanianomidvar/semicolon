@@ -11,39 +11,7 @@ import java.sql.SQLException;
 
 public class SupplierRepositoryImp extends CustomRepository implements SupplierRepository {
     public boolean editSupplier(Supplier s) throws SQLException {
-        PreparedStatement stmnt = null;
-        Connection conn= null;
-        ResultSet updateResult = null;
-        try {
-            //conn = DataSourceProvider.getDataSource().getConnection();
-
-            String query = "UPDATE supplier SET id=?, name=?, address=?, email=?, telephoneNumber=?, " +
-                    "previousOrder=?, arrivingOrders=?, WHERE id=?;";
-
-            stmnt = conn.prepareStatement(query);
-            stmnt.setLong(1, s.getId());
-            stmnt.setString(2, s.getName());
-            stmnt.setString(3, s.getAddress());
-            stmnt.setString(4, s.getEmail());
-            stmnt.setString(5, s.getTelephoneNumber());
-            stmnt.setString(6, s.getPreviousOrders());
-            stmnt.setString(7, s.getArrivingOrders());
-            stmnt.executeUpdate();
-
-            if (updateResult.next()) {
-                return true;
-            }
-            return false;
-
-        } finally {
-            //cleaningOperations(stmnt, conn);
-            if (updateResult != null) {
-                updateResult.close();
-            }
-            if (stmnt != null) {
-                stmnt.close();
-            }
-        }
+        return false;
     }
 
     public boolean addSupplier(Supplier s) throws SQLException {
@@ -52,33 +20,8 @@ public class SupplierRepositoryImp extends CustomRepository implements SupplierR
         PreparedStatement stmnt = null;
         ResultSet addResult = null;
 
-        try {
-            // conn = DataSourceProvider.getDataSource().getConnection();
-            String query = "INSERT INTO supplier VALUES (?, ?, ?, ?, ?, ?, ?);";
+        return false;
 
-            stmnt = conn.prepareStatement(query);
-            stmnt.setLong(1, s.getId());
-            stmnt.setString(2, s.getName());
-            stmnt.setString(3, s.getAddress());
-            stmnt.setString(4, s.getEmail());
-            stmnt.setString(5, s.getTelephoneNumber());
-            stmnt.setString(6, s.getPreviousOrders());
-            stmnt.setString(7, s.getArrivingOrders());
-            stmnt.executeUpdate();
-
-            if (addResult != null) {
-                return true;
-            } else {
-                return false;
-            }
-        } finally {
-            if (addResult != null) {
-                addResult.close();
-            }
-            if (stmnt != null) {
-                stmnt.close();
-            }
-        }
     }
 
 
