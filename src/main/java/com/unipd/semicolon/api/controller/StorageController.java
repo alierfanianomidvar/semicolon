@@ -21,6 +21,7 @@ public class StorageController {
                 .response(storageService.save(
                         model.getPharmacy(),
                         model.getDrug(),
+                        model.getMaterial(),
                         model.getAmount(),
                         model.getThreshold()
                 ));
@@ -39,6 +40,7 @@ public class StorageController {
                         id,
                         model.getPharmacy(),
                         model.getDrug(),
+                        model.getMaterial(),
                         model.getAmount(),
                         model.getThreshold()
                 ));

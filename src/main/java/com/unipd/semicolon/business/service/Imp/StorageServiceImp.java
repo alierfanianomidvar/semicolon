@@ -2,6 +2,7 @@ package com.unipd.semicolon.business.service.Imp;
 
 import com.unipd.semicolon.business.service.StorageService;
 import com.unipd.semicolon.core.entity.Drug;
+import com.unipd.semicolon.core.entity.Material;
 import com.unipd.semicolon.core.entity.Pharmacy;
 import com.unipd.semicolon.core.entity.Storage;
 
@@ -20,13 +21,15 @@ public class StorageServiceImp implements StorageService {
     @Override
     public Storage save(Pharmacy pharmacy,
                         Drug drug,
+                        Material material,
                         int amount,
                         int threshold) {
-        if (pharmacy == null || drug == null || amount < 0 || threshold < 0) {
+        if (pharmacy == null || drug == null || material == null || amount < 0 || threshold < 0) {
             throw new IllegalArgumentException("Invalid input parameter");
         } else {
         Storage storage = new Storage(pharmacy,
                 drug,
+                material,
                 amount,
                 threshold);
 
@@ -38,15 +41,17 @@ public class StorageServiceImp implements StorageService {
     public boolean edit(Long id_storage,
                         Pharmacy pharmacy,
                         Drug drug,
+                        Material material,
                         int amount,
                         int threshold) {
-        if (id_storage == null || id_storage < 0 || pharmacy == null || drug == null || amount < 0 || threshold < 0) {
+        if (id_storage == null || id_storage < 0 || material == null || pharmacy == null || drug == null || amount < 0 || threshold < 0) {
             throw new IllegalArgumentException("Invalid input parameter");
         } else {
             if (storageRepository.findStorageById(id_storage) != null) {
                 Storage storage = storageRepository.findStorageById(id_storage);
                 storage.setPharmacy(pharmacy);
                 storage.setDrug(drug);
+                storage.setMaterial(material);
                 storage.setAmount(amount);
                 storage.setThreshold(threshold);
                 storageRepository.save(storage);
