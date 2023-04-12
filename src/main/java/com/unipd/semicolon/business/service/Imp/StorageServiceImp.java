@@ -24,7 +24,7 @@ public class StorageServiceImp implements StorageService {
                         Material material,
                         int amount,
                         int threshold) {
-        if (pharmacy == null || drug == null || material == null || amount < 0 || threshold < 0) {
+        if (pharmacy == null || (drug == null && material == null) || amount < 0 || threshold < 0) {
             throw new IllegalArgumentException("Invalid input parameter");
         } else {
         Storage storage = new Storage(pharmacy,
@@ -44,7 +44,7 @@ public class StorageServiceImp implements StorageService {
                         Material material,
                         int amount,
                         int threshold) {
-        if (id_storage == null || id_storage < 0 || material == null || pharmacy == null || drug == null || amount < 0 || threshold < 0) {
+        if (id_storage == null || id_storage < 0 || pharmacy == null || (drug == null && material == null) || amount < 0 || threshold < 0) {
             throw new IllegalArgumentException("Invalid input parameter");
         } else {
             if (storageRepository.findStorageById(id_storage) != null) {
