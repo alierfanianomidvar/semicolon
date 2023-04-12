@@ -22,7 +22,7 @@ public class LoginRepositoryImp extends CustomRepository implements LoginReposit
             //prepare the statement
             stmnt = conn.prepareStatement(query);
             stmnt.setString(1, l.toString());
-            stmnt.setString(2, l.getUserName());
+            stmnt.setString(2, l.getUsername());
             stmnt.setString(3, l.getPassword());
 
             //execute the query

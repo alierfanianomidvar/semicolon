@@ -12,7 +12,7 @@ import java.util.List;
 public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    private Long id_supplier;
+    private Long id;
     @Column(name = "name")
     private String name;
     @Column(name = "address")
@@ -21,41 +21,31 @@ public class Supplier {
     private String email;
     @Column(name = "telephone_number")
     private String telephoneNumber;
-    @Column(name = "previous_orders")
-    private String previousOrders;
-    @Column(name = "arriving_orders")
-    private String arrivingOrders;
+    @OneToMany(mappedBy = "supplier")
+    private List<Drug> drugs;
+    @OneToMany(mappedBy = "supplier")
+    private List<Material> materials;
 
-    @OneToMany
-    @JoinColumn(name = "id")
-    List<Drug> drugList;
+    public Supplier() {
+    }
 
     public Supplier(
             String name,
             String address,
             String email,
             String telephoneNumber,
-            String previousOrders,
-            String arrivingOrders,
-            List<Drug> drugList) {
+            List<Drug> drugs,
+            List<Material> materials) {
         this.name = name;
         this.address = address;
         this.email = email;
         this.telephoneNumber = telephoneNumber;
-        this.previousOrders = previousOrders;
-        this.arrivingOrders = arrivingOrders;
-        this.drugList=drugList;
-    }
-
-    public Supplier() {
+        this.drugs = drugs;
+        this.materials = materials;
     }
 
     public Long getId() {
-        return id_supplier;
-    }
-
-    public void setId(Long id) {
-        this.id_supplier = id_supplier;
+        return id;
     }
 
     public String getName() {
@@ -90,29 +80,20 @@ public class Supplier {
         this.telephoneNumber = telephoneNumber;
     }
 
-    public String getPreviousOrders() {
-        return previousOrders;
+    public List<Drug> getDrugs() {
+        return drugs;
     }
 
-    public void setPreviousOrders(String previousOrders) {
-        this.previousOrders = previousOrders;
+    public void setDrugs(List<Drug> drugs) {
+        this.drugs = drugs;
     }
 
-    public String getArrivingOrders() {
-        return arrivingOrders;
+    public List<Material> getMaterials() {
+        return materials;
     }
 
-    public void setArrivingOrders(String arrivingOrders) {
-        this.arrivingOrders = arrivingOrders;
-    }
-
-
-    public List<Drug> getDrugList() {
-        return drugList;
-    }
-
-    public void setDrugList(List<Drug> drugList) {
-        this.drugList = drugList;
+    public void setMaterials(List<Material> materials) {
+        this.materials = materials;
     }
 }
 

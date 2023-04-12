@@ -8,10 +8,10 @@ import jakarta.persistence.*;
 public class TimeTable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // will creat the uniq and respectively id
-    private int day_of_week;
+    private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "pharmacy_ID")
+    @JoinColumn(name = "pharmacy_id")
     private Pharmacy pharmacy;
     @Column(name = "from_hour")
     private String from_hour;
@@ -23,21 +23,14 @@ public class TimeTable {
     }
 
 
-    public TimeTable(int day_of_week,
+    public TimeTable(Long day_of_week,
                      String from_hour,
                      String to_hour) {
-        this.day_of_week = day_of_week;
+        this.id = day_of_week;
         this.from_hour = from_hour;
         this.to_hour = to_hour;
     }
 
-    public int getday_of_week() {
-        return day_of_week;
-    }
-
-    public void setDayOfWeek(int day_of_week) {
-        this.day_of_week = day_of_week;
-    }
 
     public String getFrom_hour() {
         return from_hour;
