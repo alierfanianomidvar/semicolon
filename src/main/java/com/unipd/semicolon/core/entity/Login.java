@@ -22,6 +22,9 @@ public class Login {
     @Column(name = "termination_date")
     private LocalDateTime terminationDate;
 
+    @OneToOne
+    private User user;
+
 
     //to get the list of login information
     public Login(

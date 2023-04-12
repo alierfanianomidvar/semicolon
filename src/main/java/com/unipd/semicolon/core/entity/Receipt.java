@@ -3,6 +3,7 @@ package com.unipd.semicolon.core.entity;
 import java.util.Date;
 import java.util.List;
 
+import com.unipd.semicolon.core.entity.enums.PaymentMethod;
 import jakarta.persistence.*;
 @Entity
 @Table(name = "receipt")
@@ -12,8 +13,12 @@ public class Receipt {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "drug_list")
-    private String drug_list; //temp code just to check if it runs or not
+
+    @ManyToMany
+    private List<Drug> receiptDrugs;
+
+    @ManyToMany
+    private List<Material> receiptMaterials; //temp code just to check if it runs or not
     //upcoming code: private List<Drug> drug_list;
     //Drug to be connected later
     //
@@ -29,11 +34,11 @@ public class Receipt {
 
     public Receipt() {}
 
-    public Receipt(String drug_list, // temp code. upcoming code:List<> drug_list
+    public Receipt(List<Drug> drug_list, // temp code. upcoming code:List<> drug_list
                    byte[] image,
                    Date date,
                    PaymentMethod paymentMethod) {
-        this.drug_list = drug_list;
+        this.receiptDrugs = drug_list;
         this.image = image;
         this.date = date;
         this.paymentMethod = paymentMethod;
@@ -49,12 +54,12 @@ public class Receipt {
         this.id = id;
     }
 
-    public String getDrug_list() { //temp code. upcoming code: List<Drug> getDrug_list()
-        return drug_list;
+    public List<Drug> getDrug_list() { //temp code. upcoming code: List<Drug> getDrug_list()
+        return receiptDrugs;
     }
 
-    public void setDrug_list(String drug_list) {//temp code. upcoming code: setDrug_list(List<Drug> drug_list)
-        this.drug_list = drug_list;
+    public void setDrug_list(List<Drug> drug_list) {//temp code. upcoming code: setDrug_list(List<Drug> drug_list)
+        this.receiptDrugs = drug_list;
     }
 
     public byte[] getImage() {
@@ -81,11 +86,5 @@ public class Receipt {
         this.paymentMethod = paymentMethod;
     }
 
-    // enum to represent the payment methods available
-    public enum PaymentMethod {
-        CASH,
-        CREDIT_CARD,
-        DEBIT_CARD,
-        PAYPAL
-    }
+
 }

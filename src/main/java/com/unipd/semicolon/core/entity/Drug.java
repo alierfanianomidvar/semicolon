@@ -1,5 +1,6 @@
 package com.unipd.semicolon.core.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.unipd.semicolon.core.entity.enums.AgeGroup;
 import com.unipd.semicolon.core.entity.enums.Country;
 import com.unipd.semicolon.core.entity.enums.Gender;
@@ -8,6 +9,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
 
 @Entity
 @Table(name = "drug")
@@ -20,16 +22,15 @@ public class Drug {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "id_supplier")
+    @JoinColumn(name = "supplier_id")
     private Supplier supplier;
 
     @Column(name = "expiration_date")
     private LocalDate expirationDate;
 
-    @Column(name = "photo")
-    private byte[] photo;
-    @Column(name = "category")
-    private String category;
+    @Column(name = "image")
+    private byte[] image;
+
     @Column(name = "shape")
     private String shape;
     @Enumerated(EnumType.STRING)
@@ -47,20 +48,24 @@ public class Drug {
     private String description;
 
     //num of drugs that patient can buy
-    @Column(name = "drug_limit")
-    private int limit;
+    @Column(name = "limitation")
+    private int limitation;
     @Column(name = "price")
     private float price;
-    @Column(name = "country_of_origin")
-    private Country countryOFOrigin;
-    @Column(name = "last_modified")
-    private LocalDateTime lastModified;
+    @Column(name = "country_of_production")
+    private Country countryOFProduction;
+    @Column(name = "last_modified_date")
+    private LocalDateTime lastModifiedDate;
 
-//- buy price
-//- sell price //these are related to each pharmacy
+    @JsonIgnore
+    @ManyToMany(mappedBy = "orderDrugs")
+    private List<Order> orders;
 
-    //- quantity //the number of availability in pharmacy
-//- isActive //is active in the pharmacy
+    @JsonIgnore
+    @ManyToMany(mappedBy = "receiptDrugs")
+    private List<Receipt> receipts;
+
+
     public Drug() {
 
     }
@@ -70,7 +75,6 @@ public class Drug {
             Supplier supplier,
             LocalDate expirationDate,
             byte[] photo,
-            String category,
             String shape,
             Gender gender,
             AgeGroup ageGroup,
@@ -83,17 +87,16 @@ public class Drug {
         this.name = name;
         this.supplier = supplier;
         this.expirationDate = expirationDate;
-        this.photo = photo;
-        this.category = category;
+        this.image = photo;
         this.shape = shape;
         this.gender = gender;
         this.ageGroup = ageGroup;
         this.isSensitive = isSensitive;
         this.needPrescription = needPrescription;
         this.description = description;
-        this.limit = limit;
+        this.limitation = limit;
         this.price = price;
-        this.countryOFOrigin = countryOFOrigin;
+        this.countryOFProduction = countryOFOrigin;
     }
 
 //    public Drug(
@@ -145,19 +148,11 @@ public class Drug {
     }
 
     public byte[] getPhoto() {
-        return photo;
+        return image;
     }
 
     public void setPhoto(byte[] photo) {
-        this.photo = photo;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
+        this.image = photo;
     }
 
     public String getShape() {
@@ -209,11 +204,11 @@ public class Drug {
     }
 
     public int getLimit() {
-        return limit;
+        return limitation;
     }
 
     public void setLimit(int limit) {
-        this.limit = limit;
+        this.limitation = limit;
     }
 
     public float getPrice() {
@@ -225,19 +220,19 @@ public class Drug {
     }
 
     public Country getCountryOFOrigin() {
-        return countryOFOrigin;
+        return countryOFProduction;
     }
 
     public void setCountryOFOrigin(Country countryOFOrigin) {
-        this.countryOFOrigin = countryOFOrigin;
+        this.countryOFProduction = countryOFOrigin;
     }
 
     public LocalDateTime getLastModified() {
-        return lastModified;
+        return lastModifiedDate;
     }
 
     public void setLastModified(LocalDateTime lastModified) {
-        this.lastModified = lastModified;
+        this.lastModifiedDate = lastModified;
     }
 
 }

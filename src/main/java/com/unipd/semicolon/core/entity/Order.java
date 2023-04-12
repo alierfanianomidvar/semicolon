@@ -1,8 +1,10 @@
 package com.unipd.semicolon.core.entity;
 
+import com.unipd.semicolon.core.entity.enums.OrderStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -15,22 +17,38 @@ public class Order {
     @Column(name = "order_date")
     private LocalDate orderDate;
 
-    @Column(name = "order_status")
-    private boolean status;
+    @ManyToMany
+    private List<Drug> orderDrugs;
 
-    @Column(name = "total_price")
-    private double totalPrice;
+    @ManyToMany
+    private List<Material> orderMaterials;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "order_status")
+    private OrderStatus status;
+
+    @Column(name = "price")
+    private float price;
+
+    //just for soft deleting
+    @Column(name = "is_active")
+    private boolean isActive;
+
 
     /*-------------------------------------------
     ----------------Constructors-----------------
     -------------------------------------------*/
     public Order(LocalDate orderDate,
-                 boolean status,
-                 double totalPrice)
+                 OrderStatus status,
+                 float totalPrice,
+                 List<Drug> drugs,
+                 List<Material> materials)
     {
         this.orderDate = orderDate;
         this.status = status;
-        this.totalPrice = totalPrice;
+        this.price = totalPrice;
+        this.orderDrugs = drugs;
+        this.orderMaterials = materials;
     }
 
     public Order() {
@@ -49,16 +67,35 @@ public class Order {
         return orderDate;
     }
 
-    public boolean isStatusDelivered() {
+    public OrderStatus isStatusDelivered() {
         return status;
     }
 
     public double getTotalPrice() {
-        return totalPrice;
+        return price;
     }
 
+    public List<Drug> getDrugs() {
+        return orderDrugs;
+    }
 
-    /*-------------------------------------------
+    public List<Material> getMaterials() {
+        return orderMaterials;
+    }
+
+    public OrderStatus isStatus() {
+        return status;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+/*-------------------------------------------
     -------------------Setters------------------
     -------------------------------------------*/
 
@@ -70,12 +107,28 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setTotalPrice(float totalPrice) {
+        this.price = totalPrice;
+    }
+
+    public void setDrugs(List<Drug> drugs) {
+        this.orderDrugs = drugs;
+    }
+
+    public void setMaterials(List<Material> materials) {
+        this.orderMaterials = materials;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }
 
