@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "Material")
-public class material {
+public class Material {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)//id
@@ -19,14 +19,14 @@ public class material {
     @Column(name = "material_name")
     private String materialName;
 
+    @ManyToOne
     @JoinColumn(name = "supplier_id")
-    private String supplier;
-
+    private Supplier supplier;
 
     @Column(name = "country_of_production")
     private Country countryOfProduction;
 
-    //@Column(name = "expiration")
+    @Column(name = "expiration")
     private LocalDate expirationDate;
 
     @Column(name = "image")
@@ -37,7 +37,7 @@ public class material {
     public Gender gender;
 
     @Column(name = "sell_price")
-    private double sellPrice;
+    private float sellPrice;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "age")
@@ -50,35 +50,55 @@ public class material {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "buy_price")
+    private float buyPrice;
 
-    public material() {
+    @Column(name = "amount")
+    private int amount;
 
-    }
+    @Column(name = "isActive")
+    private boolean isActive;
 
-    public material(
+
+    /*------------------------------
+    ---------- Constructor ---------
+    ------------------------------*/
+    public Material(
             String materialName,
-            String supplierId,
+            Supplier supplier,
             LocalDate expirationDate,
             byte[] image,
             Gender gender,
             AgeGroup age,
             float sellPrice,
+            float buyPrice,
+            int amount,
+            boolean isActive,
             String description,
             Country countryOfProduction) {
         this.materialName = materialName;
-        this.supplier = supplierId;
+        this.supplier = supplier;
         this.expirationDate = expirationDate;
         this.image = image;
         this.gender = gender;
         this.age = age;
         this.description = description;
         this.sellPrice = sellPrice;
+        this.buyPrice = buyPrice;
+        this.amount = amount;
+        this.isActive = isActive;
         this.countryOfProduction = countryOfProduction;
+    }
+
+
+    public Material() {
 
     }
 
 
-    // Getter methods
+    /*--------------------------------------
+    ------------- Getter methods------------
+    --------------------------------------*/
     public Long getId() {
         return id;
     }
@@ -87,7 +107,7 @@ public class material {
         return materialName;
     }
 
-    public String getSupllierId() {
+    public Supplier getSupllier() {
         return supplier;
     }
 
@@ -95,7 +115,7 @@ public class material {
         return countryOfProduction;
     }
 
-    public LocalDate getExpriationDate() {
+    public LocalDate getExpirationDate() {
         return expirationDate;
     }
 
@@ -107,9 +127,11 @@ public class material {
         return gender;
     }
 
-    public double getSellPrice() {
+    public float getSellPrice() {
         return sellPrice;
     }
+
+    public float getBuyPrice() {return buyPrice;}
 
     public AgeGroup getAge() {
         return age;
@@ -123,7 +145,19 @@ public class material {
         return description;
     }
 
-    // Setter methods
+    public boolean getIsActive() {
+        return isActive;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+
+    /*--------------------------------------
+    ------------- Setter methods------------
+    --------------------------------------*/
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -132,16 +166,16 @@ public class material {
         this.materialName = materialName;
     }
 
-    public void setSupplierId(String supplierId) {
-        this.supplier = supplierId;
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
     }
 
     public void setCountryOfProduction(Country countryOfProduction) {
         this.countryOfProduction = countryOfProduction;
     }
 
-    public void setExpriationDate(LocalDate expriationDate) {
-        this.expirationDate = expriationDate;
+    public void setExpirationDate(LocalDate expirationDate) {
+        this.expirationDate = expirationDate;
     }
 
     public void setImage(byte[] image) {
@@ -152,12 +186,23 @@ public class material {
         this.gender = gender;
     }
 
-    public void setSellPrice(double sellPrice) {
+    public void setSellPrice(float sellPrice) {
         this.sellPrice = sellPrice;
     }
 
+    public void setBuyPrice(float buyPrice) {
+        this.buyPrice = sellPrice;
+    }
     public void setAge(AgeGroup age) {
         this.age = age;
+    }
+
+    public void setIsActive(boolean active) {
+        isActive = active;
+    }
+
+    public void setAmount(int amount){
+        this.amount = amount;
     }
 
     public void setLastModifiedDate(LocalDate lastModifiedDate) {
