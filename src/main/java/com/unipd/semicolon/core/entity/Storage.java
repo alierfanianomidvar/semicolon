@@ -9,7 +9,7 @@ import java.util.List;
 public class Storage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_storage;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "id_pharmacy")
@@ -18,65 +18,72 @@ public class Storage {
     @OneToOne
     private Drug drug;
 
+    @OneToOne
+    private Material material;
+
     @Column(name = "amount")
     private int amount;
     @Column(name = "threshold")
     private int threshold;
 
-    public Storage(Pharmacy pharmacy,
-                   Drug drug,
-                   int amount,
-                   int threshold) {
-
-        this.pharmacy = pharmacy;
-        this.drug = drug;
-        this.amount = amount;
-        this.threshold = threshold;
-    }
-
     public Storage() {
 
     }
 
-    public void setId(Long id_storage) {
-        this.id_storage = id_storage;
+    public Storage(
+            Pharmacy pharmacy,
+            Drug drug,
+            Material material,
+            int amount,
+            int threshold) {
+        this.pharmacy = pharmacy;
+        this.drug = drug;
+        this.material = material;
+        this.amount = amount;
+        this.threshold = threshold;
     }
 
     public Long getId() {
-        return id_storage;
-    }
-
-    public void setPharmacy(Pharmacy pharmacy) {
-        this.pharmacy = pharmacy;
+        return id;
     }
 
     public Pharmacy getPharmacy() {
         return pharmacy;
     }
 
-    public void setDrug(Drug drug) {
-        this.drug = drug;
+    public void setPharmacy(Pharmacy pharmacy) {
+        this.pharmacy = pharmacy;
     }
 
     public Drug getDrug() {
         return drug;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setDrug(Drug drug) {
+        this.drug = drug;
+    }
+
+    public Material getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(Material material) {
+        this.material = material;
     }
 
     public int getAmount() {
         return amount;
     }
 
-    public void setThreshold(int threshold) {
-        this.threshold = threshold;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     public int getThreshold() {
         return threshold;
     }
 
-
+    public void setThreshold(int threshold) {
+        this.threshold = threshold;
+    }
 }
