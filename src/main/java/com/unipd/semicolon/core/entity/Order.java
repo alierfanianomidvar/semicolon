@@ -38,27 +38,30 @@ public class Order {
     /*-------------------------------------------
     ----------------Constructors-----------------
     -------------------------------------------*/
-    public Order(LocalDate orderDate,
-                 OrderStatus status,
-                 float totalPrice,
-                 List<Drug> drugs,
-                 List<Material> materials)
-    {
-        this.orderDate = orderDate;
-        this.status = status;
-        this.price = totalPrice;
-        this.orderDrugs = drugs;
-        this.orderMaterials = materials;
-    }
 
     public Order() {
-        // No-argument constructor
-        //TODO CHANGE TYPE FOR DRUG
+
+    }
+
+    public Order(
+            LocalDate orderDate,
+            List<Drug> orderDrugs,
+            List<Material> orderMaterials,
+            OrderStatus status,
+            float price,
+            boolean isActive) {
+        this.orderDate = orderDate;
+        this.orderDrugs = orderDrugs;
+        this.orderMaterials = orderMaterials;
+        this.status = status;
+        this.price = price;
+        this.isActive = isActive;
     }
 
     /*-------------------------------------------
-    ----------------Getters-----------------
-    -------------------------------------------*/
+        ----------------Getters and Setters-----------------
+        -------------------------------------------*/
+
     public Long getId() {
         return id;
     }
@@ -67,64 +70,44 @@ public class Order {
         return orderDate;
     }
 
-    public OrderStatus isStatusDelivered() {
-        return status;
+    public void setOrderDate(LocalDate orderDate) {
+        this.orderDate = orderDate;
     }
 
-    public double getTotalPrice() {
-        return price;
-    }
-
-    public List<Drug> getDrugs() {
+    public List<Drug> getOrderDrugs() {
         return orderDrugs;
     }
 
-    public List<Material> getMaterials() {
+    public void setOrderDrugs(List<Drug> orderDrugs) {
+        this.orderDrugs = orderDrugs;
+    }
+
+    public List<Material> getOrderMaterials() {
         return orderMaterials;
     }
 
-    public OrderStatus isStatus() {
+    public void setOrderMaterials(List<Material> orderMaterials) {
+        this.orderMaterials = orderMaterials;
+    }
+
+    public OrderStatus getStatus() {
         return status;
-    }
-
-    public float getPrice() {
-        return price;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-/*-------------------------------------------
-    -------------------Setters------------------
-    -------------------------------------------*/
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setOrderDate(LocalDate orderDate) {
-        this.orderDate = orderDate;
     }
 
     public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
-    public void setTotalPrice(float totalPrice) {
-        this.price = totalPrice;
-    }
-
-    public void setDrugs(List<Drug> drugs) {
-        this.orderDrugs = drugs;
-    }
-
-    public void setMaterials(List<Material> materials) {
-        this.orderMaterials = materials;
+    public float getPrice() {
+        return price;
     }
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public boolean isActive() {
+        return isActive;
     }
 
     public void setActive(boolean active) {

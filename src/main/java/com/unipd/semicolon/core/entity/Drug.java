@@ -74,53 +74,39 @@ public class Drug {
             String name,
             Supplier supplier,
             LocalDate expirationDate,
-            byte[] photo,
+            byte[] image,
             String shape,
             Gender gender,
             AgeGroup ageGroup,
             boolean isSensitive,
             boolean needPrescription,
             String description,
-            int limit,
+            int limitation,
             float price,
-            Country countryOFOrigin) {
+            Country countryOFProduction,
+            LocalDateTime lastModifiedDate,
+            List<Order> orders, List<Receipt> receipts) {
         this.name = name;
         this.supplier = supplier;
         this.expirationDate = expirationDate;
-        this.image = photo;
+        this.image = image;
         this.shape = shape;
         this.gender = gender;
         this.ageGroup = ageGroup;
         this.isSensitive = isSensitive;
         this.needPrescription = needPrescription;
         this.description = description;
-        this.limitation = limit;
+        this.limitation = limitation;
         this.price = price;
-        this.countryOFProduction = countryOFOrigin;
+        this.countryOFProduction = countryOFProduction;
+        this.lastModifiedDate = lastModifiedDate;
+        this.orders = orders;
+        this.receipts = receipts;
     }
-
-//    public Drug(
-//            String name,
-//            Supplier supplier,
-//            LocalDate expirationDate,
-//            String category,
-//            int limit,
-//            float price) {
-//        this.name = name;
-//        this.supplier = supplier;
-//        this.expirationDate = expirationDate;
-//        this.category = category;
-//        this.limit = limit;
-//        this.price = price;
-//    }
 
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -147,12 +133,12 @@ public class Drug {
         this.expirationDate = expirationDate;
     }
 
-    public byte[] getPhoto() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setPhoto(byte[] photo) {
-        this.image = photo;
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public String getShape() {
@@ -203,12 +189,12 @@ public class Drug {
         this.description = description;
     }
 
-    public int getLimit() {
+    public int getLimitation() {
         return limitation;
     }
 
-    public void setLimit(int limit) {
-        this.limitation = limit;
+    public void setLimitation(int limitation) {
+        this.limitation = limitation;
     }
 
     public float getPrice() {
@@ -219,20 +205,35 @@ public class Drug {
         this.price = price;
     }
 
-    public Country getCountryOFOrigin() {
+    public Country getCountryOFProduction() {
         return countryOFProduction;
     }
 
-    public void setCountryOFOrigin(Country countryOFOrigin) {
-        this.countryOFProduction = countryOFOrigin;
+    public void setCountryOFProduction(Country countryOFProduction) {
+        this.countryOFProduction = countryOFProduction;
     }
 
-    public LocalDateTime getLastModified() {
+    public LocalDateTime getLastModifiedDate() {
         return lastModifiedDate;
     }
 
-    public void setLastModified(LocalDateTime lastModified) {
-        this.lastModifiedDate = lastModified;
+    public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
 
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public List<Receipt> getReceipts() {
+        return receipts;
+    }
+
+    public void setReceipts(List<Receipt> receipts) {
+        this.receipts = receipts;
+    }
 }

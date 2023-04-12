@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.unipd.semicolon.core.entity.enums.PaymentMethod;
 import jakarta.persistence.*;
+
 @Entity
 @Table(name = "receipt")
 public class Receipt {
@@ -13,15 +14,11 @@ public class Receipt {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @ManyToMany
     private List<Drug> receiptDrugs;
 
     @ManyToMany
-    private List<Material> receiptMaterials; //temp code just to check if it runs or not
-    //upcoming code: private List<Drug> drug_list;
-    //Drug to be connected later
-    //
+    private List<Material> receiptMaterials;
 
     @Column(name = "image")
     private byte[] image;
@@ -32,13 +29,17 @@ public class Receipt {
     @Column(name = "payment_method")
     private PaymentMethod paymentMethod;
 
-    public Receipt() {}
+    public Receipt() {
+    }
 
-    public Receipt(List<Drug> drug_list, // temp code. upcoming code:List<> drug_list
-                   byte[] image,
-                   Date date,
-                   PaymentMethod paymentMethod) {
-        this.receiptDrugs = drug_list;
+    public Receipt(
+            List<Drug> receiptDrugs,
+            List<Material> receiptMaterials,
+            byte[] image,
+            Date date,
+            PaymentMethod paymentMethod) {
+        this.receiptDrugs = receiptDrugs;
+        this.receiptMaterials = receiptMaterials;
         this.image = image;
         this.date = date;
         this.paymentMethod = paymentMethod;
@@ -46,20 +47,25 @@ public class Receipt {
 
     // getters and setters for all attributes
 
+
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public List<Drug> getDrug_list() { //temp code. upcoming code: List<Drug> getDrug_list()
+    public List<Drug> getReceiptDrugs() {
         return receiptDrugs;
     }
 
-    public void setDrug_list(List<Drug> drug_list) {//temp code. upcoming code: setDrug_list(List<Drug> drug_list)
-        this.receiptDrugs = drug_list;
+    public void setReceiptDrugs(List<Drug> receiptDrugs) {
+        this.receiptDrugs = receiptDrugs;
+    }
+
+    public List<Material> getReceiptMaterials() {
+        return receiptMaterials;
+    }
+
+    public void setReceiptMaterials(List<Material> receiptMaterials) {
+        this.receiptMaterials = receiptMaterials;
     }
 
     public byte[] getImage() {
@@ -85,6 +91,4 @@ public class Receipt {
     public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
-
-
 }
