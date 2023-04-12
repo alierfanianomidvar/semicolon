@@ -1,18 +1,21 @@
 package com.unipd.semicolon.api.model;
 
 import com.unipd.semicolon.core.entity.Drug;
+import com.unipd.semicolon.core.entity.Material;
 import com.unipd.semicolon.core.entity.Pharmacy;
 
 public class StorageModel {
     private Long id;
     private Pharmacy pharmacy;
+    private Material material;
     private Drug drug;
     private int amount;
     private int threshold;
 
-    public StorageModel(Pharmacy pharmacy, Drug drug, int amount, int threshold) {
+    public StorageModel(Pharmacy pharmacy, Material material, Drug drug, int amount, int threshold) {
         this.pharmacy = pharmacy;
         this.drug = drug;
+        this.material = material;
         this.amount = amount;
         this.threshold = threshold;
     }
@@ -39,6 +42,14 @@ public class StorageModel {
 
     public void setDrug(Drug drug) {
         this.drug = drug;
+    }
+
+    public Material getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(Material material) {
+        this.material = material;
     }
 
     public int getAmount() {

@@ -1,6 +1,7 @@
 package com.unipd.semicolon.business.service;
 
 import com.unipd.semicolon.core.entity.Drug;
+import com.unipd.semicolon.core.entity.Material;
 import com.unipd.semicolon.core.entity.Pharmacy;
 import com.unipd.semicolon.core.entity.Storage;
 
@@ -10,6 +11,7 @@ public interface StorageService {
     Storage save(
             Pharmacy pharmacy,
             Drug drug,
+            Material material,
             int amount,
             int threshold
     );
@@ -17,6 +19,7 @@ public interface StorageService {
             Long id_storage,
             Pharmacy pharmacy,
             Drug drug,
+            Material material,
             int amount,
             int threshold
     );
