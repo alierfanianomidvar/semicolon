@@ -1,5 +1,6 @@
 package com.unipd.semicolon.core.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.unipd.semicolon.core.entity.enums.AgeGroup;
 import com.unipd.semicolon.core.entity.enums.Country;
 import com.unipd.semicolon.core.entity.enums.Gender;
@@ -7,26 +8,28 @@ import jakarta.persistence.*;
 
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "Material")
-public class material {
+public class Material {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)//id
     private Long id;
 
-    @Column(name = "material_name")
-    private String materialName;
+    @Column(name = "name")
+    private String name;
 
+    @ManyToOne
     @JoinColumn(name = "supplier_id")
-    private String supplier;
+    private Supplier supplier;
 
 
     @Column(name = "country_of_production")
     private Country countryOfProduction;
 
-    //@Column(name = "expiration")
+    @Column(name = "expiration_date")
     private LocalDate expirationDate;
 
     @Column(name = "image")
@@ -36,12 +39,12 @@ public class material {
     @Column(name = "gender")
     public Gender gender;
 
-    @Column(name = "sell_price")
-    private double sellPrice;
+    @Column(name = "price")
+    private float price;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "age")
-    private AgeGroup age;
+    @Column(name = "age_group")
+    private AgeGroup ageGroup;
 
     @Column(name = "last_modified_date")
     private LocalDate lastModifiedDate;
@@ -50,29 +53,37 @@ public class material {
     @Column(name = "description")
     private String description;
 
+    @JsonIgnore
+    @ManyToMany(mappedBy = "orderMaterials")
+    private List<Order> orders;
 
-    public material() {
+    @JsonIgnore
+    @ManyToMany(mappedBy = "receiptMaterials")
+    private List<Receipt> receipts;
+
+
+    public Material() {
 
     }
 
-    public material(
+    public Material(
             String materialName,
-            String supplierId,
+            Supplier supplierId,
             LocalDate expirationDate,
             byte[] image,
             Gender gender,
             AgeGroup age,
-            float sellPrice,
+            float price,
             String description,
             Country countryOfProduction) {
-        this.materialName = materialName;
+        this.name = materialName;
         this.supplier = supplierId;
         this.expirationDate = expirationDate;
         this.image = image;
         this.gender = gender;
-        this.age = age;
+        this.ageGroup = age;
         this.description = description;
-        this.sellPrice = sellPrice;
+        this.price = price;
         this.countryOfProduction = countryOfProduction;
 
     }
@@ -84,10 +95,10 @@ public class material {
     }
 
     public String getMaterialName() {
-        return materialName;
+        return name;
     }
 
-    public String getSupllierId() {
+    public Supplier getSupllierId() {
         return supplier;
     }
 
@@ -107,12 +118,12 @@ public class material {
         return gender;
     }
 
-    public double getSellPrice() {
-        return sellPrice;
+    public float getSellPrice() {
+        return price;
     }
 
     public AgeGroup getAge() {
-        return age;
+        return ageGroup;
     }
 
     public LocalDate getLastModifiedDate() {
@@ -129,10 +140,10 @@ public class material {
     }
 
     public void setMaterialName(String materialName) {
-        this.materialName = materialName;
+        this.name = materialName;
     }
 
-    public void setSupplierId(String supplierId) {
+    public void setSupplierId(Supplier supplierId) {
         this.supplier = supplierId;
     }
 
@@ -152,12 +163,12 @@ public class material {
         this.gender = gender;
     }
 
-    public void setSellPrice(double sellPrice) {
-        this.sellPrice = sellPrice;
+    public void setSellPrice(float sellPrice) {
+        this.price = sellPrice;
     }
 
     public void setAge(AgeGroup age) {
-        this.age = age;
+        this.ageGroup = age;
     }
 
     public void setLastModifiedDate(LocalDate lastModifiedDate) {

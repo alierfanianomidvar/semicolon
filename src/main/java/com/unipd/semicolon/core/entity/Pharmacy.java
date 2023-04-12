@@ -9,7 +9,7 @@ import java.util.List;
 public class Pharmacy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // will creat the uniq and respectively id
-    private Long pharmacy_ID;
+    private Long id;
     @Column(name = "name")
     private String name;
     @OneToOne
@@ -17,16 +17,23 @@ public class Pharmacy {
     private User owner;           //user
     @Column(name = "address")
     private String address;
-    @Column(name = "tell_number")
-    private String tell_number;
+    @Column(name = "telephoneNumber")
+    private String telephoneNumber;
     @OneToMany//(mappedBy = "Pharmacy")
     @JoinColumn(name = "day_of_week")
     private List<TimeTable> time_table;
-    @Column(name = "logo_path")
-    private String logo_path;
+
+    @Column(name = "logo")
+    private byte[] logo;
 
     @OneToMany(mappedBy = "pharmacy")
     private List<Storage> storage;
+
+    //todo
+
+    @Column(name = "staff")
+    @OneToMany(mappedBy = "")
+    private List<User> staff;
 
     public Pharmacy() {
     }
@@ -34,39 +41,39 @@ public class Pharmacy {
     public Pharmacy( String name,
                      User owner,
                      String address,
-                     String tell_number,
+                     String telephoneNumber,
                      List<TimeTable> time_table,
-                     String logo_path) {
+                     byte[] logo_path) {
         this.name = name;
         this.owner = owner;
         this.address = address;
-        this.tell_number = tell_number;
+        this.telephoneNumber = telephoneNumber;
         this.time_table = time_table;
-        this.logo_path = logo_path;
+        this.logo = logo_path;
     }
 
-    public Pharmacy(Long pharmacy_ID,
+    public Pharmacy(Long id,
                     String name,
                     User owner,
                     String address,
-                    String tell_number,
+                    String telephoneNumber,
                     List<TimeTable> time_table,
-                    String logo_path) {
-        this.pharmacy_ID = pharmacy_ID;
+                    byte[] logo_path) {
+        this.id = id;
         this.name = name;
         this.owner = owner;
         this.address = address;
-        this.tell_number = tell_number;
+        this.telephoneNumber = telephoneNumber;
         this.time_table = time_table;
-        this.logo_path = logo_path;
+        this.logo = logo_path;
     }
 
     public Long getpharmacy_ID() {
-        return pharmacy_ID;
+        return id;
     }
 
     public void setpharmacy_ID(Long pharmacy_ID) {
-        this.pharmacy_ID = pharmacy_ID;
+        this.id = pharmacy_ID;
     }
 
     public String getName() {
@@ -94,11 +101,11 @@ public class Pharmacy {
     }
 
     public String getTell_number() {
-        return tell_number;
+        return telephoneNumber;
     }
 
-    public void setTell_number(String tell_number) {
-        this.tell_number = tell_number;
+    public void setTell_number(String telephoneNumber) {
+        this.telephoneNumber = telephoneNumber;
     }
 
 
@@ -110,11 +117,11 @@ public class Pharmacy {
         this.time_table = timeTable;
     }
 
-    public String getLogo_path() {
-        return logo_path;
+    public byte[] getLogo_path() {
+        return logo;
     }
 
-    public void setLogo_path(String logo_path) {
-        this.logo_path = logo_path;
+    public void setLogo_path(byte[] logo_path) {
+        this.logo = logo_path;
     }
 }

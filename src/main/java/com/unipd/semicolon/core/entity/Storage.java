@@ -9,7 +9,7 @@ import java.util.List;
 public class Storage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_storage;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "id_pharmacy")
@@ -17,6 +17,9 @@ public class Storage {
 
     @OneToOne
     private Drug drug;
+
+    @OneToOne
+    private Material material;
 
     @Column(name = "amount")
     private int amount;
@@ -39,11 +42,11 @@ public class Storage {
     }
 
     public void setId(Long id_storage) {
-        this.id_storage = id_storage;
+        this.id = id_storage;
     }
 
     public Long getId() {
-        return id_storage;
+        return id;
     }
 
     public void setPharmacy(Pharmacy pharmacy) {
