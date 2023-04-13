@@ -12,6 +12,7 @@ import com.unipd.semicolon.core.entity.User;
 import com.unipd.semicolon.core.entity.enums.Gender;
 import com.unipd.semicolon.core.repository.entity.RoleRepository;
 import com.unipd.semicolon.core.repository.entity.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -125,8 +126,12 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public List<UserResponse> getById(User userName) {
-        return null;
+    public User getById(long id){
+        User user = userRepository.findUserById(id);
+        if(user!=null){
+            return user;
+        }
+        throw new EntityNotFoundException("User not found with id:" + id);
     }
 
     @Override
