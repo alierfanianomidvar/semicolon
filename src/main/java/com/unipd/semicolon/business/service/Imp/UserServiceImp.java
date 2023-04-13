@@ -118,17 +118,5 @@ public class UserServiceImp {
         return userList;
     }
 
-    @Override
-    public List<UserListExampleResponse> findAllByFamilyName(String familyName) {
-        List<User> users = userRepository.findAllByLastName(familyName);
-        if (users.isEmpty()) {
-            throw new NotFoundException();
-        }
 
-        List<UserListExampleResponse> userList = new ArrayList<>();
-        for (User user : users) {
-            userList.add(UserMapper.userListExampleResponse(user));
-        }
-        return userList;
-    }
 }
