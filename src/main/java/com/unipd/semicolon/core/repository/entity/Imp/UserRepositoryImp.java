@@ -1,6 +1,7 @@
 package com.unipd.semicolon.core.repository.entity.Imp;
 
 import com.unipd.semicolon.core.entity.Role;
+import com.unipd.semicolon.core.entity.Storage;
 import com.unipd.semicolon.core.entity.User;
 import com.unipd.semicolon.core.repository.entity.UserRepository;
 import jakarta.persistence.Query;
