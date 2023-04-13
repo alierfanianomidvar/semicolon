@@ -3,11 +3,11 @@ package com.unipd.semicolon.business.service.Imp;
 import com.unipd.semicolon.business.exception.NotFoundException;
 import com.unipd.semicolon.business.exception.UserExsitsException;
 import com.unipd.semicolon.business.mapper.UserMapper;
+import com.unipd.semicolon.business.service.UserService;
 import com.unipd.semicolon.core.domain.UserListExampleResponse;
 import com.unipd.semicolon.core.domain.UserResponse;
 import com.unipd.semicolon.core.entity.Login;
 import com.unipd.semicolon.core.entity.Role;
-import com.unipd.semicolon.core.entity.Storage;
 import com.unipd.semicolon.core.entity.User;
 import com.unipd.semicolon.core.entity.enums.Gender;
 import com.unipd.semicolon.core.repository.entity.RoleRepository;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 @Service
-public class UserServiceImp {
+public class UserServiceImp implements UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -103,6 +103,11 @@ public class UserServiceImp {
     }
 
     @Override
+    public Boolean changeStatus(Long Id) {
+        return null;
+    }
+
+    @Override
     public List<UserResponse> getAll() {
         List<UserResponse> userList = new ArrayList<>();
         try {
@@ -120,12 +125,16 @@ public class UserServiceImp {
     }
 
     @Override
-    public void delete(Storage storage) {
-        if (storage == null) {
-            throw new IllegalArgumentException("Cannot delete null storage!");
-        } else {
-            userRepository.delete(storage);
-        }
+    public List<UserResponse> getById(User userName) {
+        return null;
     }
 
+    @Override
+    public void delete(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("Cannot delete null user!");
+        } else {
+            userRepository.delete(user);
+        }
+    }
 }

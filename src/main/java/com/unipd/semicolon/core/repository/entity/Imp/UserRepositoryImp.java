@@ -1,7 +1,6 @@
 package com.unipd.semicolon.core.repository.entity.Imp;
 
 import com.unipd.semicolon.core.entity.Role;
-import com.unipd.semicolon.core.entity.Storage;
 import com.unipd.semicolon.core.entity.User;
 import com.unipd.semicolon.core.repository.entity.UserRepository;
 import jakarta.persistence.Query;
@@ -72,5 +71,9 @@ public class UserRepositoryImp extends CustomRepository implements UserRepositor
 
     public void delete(Storage storage) {
         delete(Storage.class, storage);
+    }
+
+    public void delete(User user) {
+        delete(User.class, user);
     }
 }
