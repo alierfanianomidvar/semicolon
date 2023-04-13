@@ -1,11 +1,15 @@
 package com.unipd.semicolon.business.service.Imp;
 
+import com.unipd.semicolon.core.entity.Login;
+import com.unipd.semicolon.core.entity.Role;
 import com.unipd.semicolon.core.entity.User;
+import com.unipd.semicolon.core.entity.enums.Gender;
 import com.unipd.semicolon.core.repository.entity.RoleRepository;
 import com.unipd.semicolon.core.repository.entity.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,18 +22,26 @@ public class UserServiceImp {
     @Autowired
     private RoleRepository roleRepository;
 
-    //@Autowired
-    //private LoginService loginService;
+    @Autowired
+    private LoginService loginService;
 
 
-    /*@Override
+    //TODO: change the types phonenumber, accountStatus and ....
+    @Override
     public User save(
             String username,
             String password,
             String name,
-            String familyName,
-            Date birthday,
-            Short roleId) {
+            String lastName,
+            Gender gender,
+            LocalDateTime birthDate,
+            String phoneNumber,
+            String address,
+            Role role,
+            String email,
+            boolean accountStatus,
+            byte[] profilePicture
+            ) {
 
         if (loginService.exists(username)) {
             throw new UserExsitsException();
@@ -37,10 +49,15 @@ public class UserServiceImp {
             Login login = loginService.creat(username, password);
 
             User user = new User(name,
-                    familyName,
-                    login,
-                    birthday,
-                    roleRepository.findById(roleId));
+                    lastName,
+                    gender,
+                    birthDate,
+                    phoneNumber,
+                    address,
+                    role,
+                    email,
+                    accountStatus,
+                    profilePicture);
 
             userRepository.save(user);
         }
@@ -106,5 +123,5 @@ public class UserServiceImp {
         // 2. we can rise an exception.
 
         return userList;
-    }*/
+    }
 }
