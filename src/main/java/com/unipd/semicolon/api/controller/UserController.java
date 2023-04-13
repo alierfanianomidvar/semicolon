@@ -47,6 +47,12 @@ public class UserController {
                 .response(userService.getAll());
     }
 
+    @RequestMapping(value="/{id}",method=RequestMethod.GET)
+    public ResponseEntity getById(@PathVariable("id")Long id){
+        return ResponseHelper
+                .response(userService.getById(id));
+    }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteById(@PathVariable("id") Long id) {
         User user = userService.getById(id);
