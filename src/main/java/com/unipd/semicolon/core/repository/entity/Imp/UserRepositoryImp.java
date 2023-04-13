@@ -1,6 +1,7 @@
 package com.unipd.semicolon.core.repository.entity.Imp;
 
 import com.unipd.semicolon.core.entity.Role;
+import com.unipd.semicolon.core.entity.Storage;
 import com.unipd.semicolon.core.entity.User;
 import com.unipd.semicolon.core.repository.entity.UserRepository;
 import jakarta.persistence.Query;
@@ -23,6 +24,7 @@ public class UserRepositoryImp extends CustomRepository implements UserRepositor
     public User findUserById(Long id) {
         return findById(User.class, id);
     }
+
     @Transactional
     @Override
     public Boolean deleteByPharmacyId(Long id) {
@@ -31,10 +33,12 @@ public class UserRepositoryImp extends CustomRepository implements UserRepositor
             delete(User.class, user);
         }
         return true;
-        /*Query query = entityManager.createQuery(
-                "DELETE FROM User g WHERE g.pharmacy.id = :id",
-                User.class).setParameter("id", id);
-        return deleteQueryWrapper(query);*/
+        /*
+         * Query query = entityManager.createQuery(
+         * "DELETE FROM User g WHERE g.pharmacy.id = :id",
+         * User.class).setParameter("id", id);
+         * return deleteQueryWrapper(query);
+         */
 
     }
 
@@ -65,8 +69,8 @@ public class UserRepositoryImp extends CustomRepository implements UserRepositor
         return listQueryWrapper(
                 entityManager.createQuery("SELECT u FROM User u WHERE u.role.role =: roleName", User.class));
     }
+
+    public void delete(Storage storage) {
+        delete(Storage.class, storage);
+    }
 }
-
-
-
-
