@@ -5,7 +5,7 @@ import com.unipd.semicolon.core.domain.UserResponse;
 import com.unipd.semicolon.core.entity.User;
 
 public class UserMapper {
-   /* public static UserListExampleResponse userListExampleResponse(User user) {
+   public static UserListExampleResponse userListExampleResponse(User user) {
         String fullName = user.getName() + " " + user.getFamilyName();
         return new UserListExampleResponse(fullName);
     }
@@ -17,5 +17,5 @@ public class UserMapper {
                 user.getBirthday(),
                 user.getRole().getRole()
         );
-    }*/
+    }
 }
