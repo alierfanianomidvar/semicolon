@@ -1,5 +1,6 @@
 package com.unipd.semicolon.business.service.Imp;
 
+import com.unipd.semicolon.business.exception.NotFoundException;
 import com.unipd.semicolon.business.service.StorageService;
 import com.unipd.semicolon.core.entity.Drug;
 import com.unipd.semicolon.core.entity.Material;
@@ -34,7 +35,7 @@ public class StorageServiceImp implements StorageService {
                 threshold);
 
         storageRepository.save(storage);
-        return null;}
+        return storage;}
     }
 
     @Override
@@ -47,8 +48,10 @@ public class StorageServiceImp implements StorageService {
         if (id_storage == null || id_storage < 0 || pharmacy == null || (drug == null && material == null) || amount < 0 || threshold < 0) {
             throw new IllegalArgumentException("Invalid input parameter");
         } else {
-            if (storageRepository.findStorageById(id_storage) != null) {
-                Storage storage = storageRepository.findStorageById(id_storage);
+            Storage storage = storageRepository.findStorageById(id_storage);
+            if (storage == null) {
+                throw new NotFoundException();
+            }
                 storage.setPharmacy(pharmacy);
                 storage.setDrug(drug);
                 storage.setMaterial(material);
@@ -58,8 +61,6 @@ public class StorageServiceImp implements StorageService {
                 return true;
             }
         }
-        return false;
-    }
 
     @Override
     public void delete(Storage storage) {
@@ -75,8 +76,7 @@ public class StorageServiceImp implements StorageService {
         Storage storage = storageRepository.findStorageById(id);
         if (storage != null) {
             return storage;
-        } else {
-            throw new EntityNotFoundException("Storage not found with id: " + id);
         }
+            throw new EntityNotFoundException("Storage not found with id: " + id);
     }
 }
