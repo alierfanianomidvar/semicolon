@@ -1,12 +1,19 @@
 package com.unipd.semicolon.business.service.Imp;
 
+import com.unipd.semicolon.business.exception.NotFoundException;
+import com.unipd.semicolon.business.exception.UserExsitsException;
+import com.unipd.semicolon.business.mapper.UserMapper;
+import com.unipd.semicolon.core.domain.UserListExampleResponse;
+import com.unipd.semicolon.core.domain.UserResponse;
 import com.unipd.semicolon.core.entity.Login;
 import com.unipd.semicolon.core.entity.Role;
 import com.unipd.semicolon.core.entity.User;
 import com.unipd.semicolon.core.entity.enums.Gender;
 import com.unipd.semicolon.core.repository.entity.RoleRepository;
 import com.unipd.semicolon.core.repository.entity.UserRepository;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -92,36 +99,36 @@ public class UserServiceImp {
         } else {
             return false;
         }
-
-
     }
 
     @Override
     public List<UserResponse> getAll() {
-        // here we don't need to pass the info of login to front because
-        // inside the login we have the password of the users, so we must use userResponse we can create
-        // userResponse base on what info we need to pass.
-
         List<UserResponse> userList = new ArrayList<>();
-        for (User user : userRepository.getAll()) {
-            userList.add(UserMapper.userResponse(user));
+        try {
+            List<User> users = userRepository.getAll();
+            if (users == null || users.isEmpty()) {
+                throw new NotFoundException();
+            }
+            for (User user : users) {
+                userList.add(UserMapper.userResponse(user));
+            }
+        } catch (DataAccessException ex) {
+            throw new ServiceException("Failed to retrieve users.", ex);
         }
         return userList;
     }
 
     @Override
     public List<UserListExampleResponse> findAllByFamilyName(String familyName) {
-        List<UserListExampleResponse> userList = new ArrayList<>();
-        for (User user : userRepository.findAllByFamilyName(familyName)) {
-            userList.add(UserMapper.userListExampleResponse(user));
-            // we dont want to send all info of user to front, so we will use a mapper here
-            // If we for admin we need all info we can create another api just for admin.
+        List<User> users = userRepository.findAllByLastName(familyName);
+        if (users.isEmpty()) {
+            throw new NotFoundException();
         }
 
-        // if we don't have anybody with this family name we can do 2 things ->
-        // 1. send an empty list
-        // 2. we can rise an exception.
-
+        List<UserListExampleResponse> userList = new ArrayList<>();
+        for (User user : users) {
+            userList.add(UserMapper.userListExampleResponse(user));
+        }
         return userList;
     }
 }
