@@ -3,6 +3,8 @@ package com.unipd.semicolon.api.controller;
 import com.unipd.semicolon.api.model.UserModel;
 import com.unipd.semicolon.api.util.helper.ResponseHelper;
 import com.unipd.semicolon.business.service.UserService;
+import com.unipd.semicolon.core.entity.Storage;
+import com.unipd.semicolon.core.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,5 +45,12 @@ public class UserController {
     public ResponseEntity getAll() {
         return ResponseHelper
                 .response(userService.getAll());
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity deleteById(@PathVariable("id") Long id) {
+        User user = userService.getById(id);
+        userService.delete(user);
+        return ResponseHelper.response(true);
     }
 }

@@ -1,33 +1,37 @@
 package com.unipd.semicolon.core.domain;
 
+import com.unipd.semicolon.core.entity.Pharmacy;
 import com.unipd.semicolon.core.entity.Role;
 import com.unipd.semicolon.core.entity.enums.Gender;
+import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class UserResponse {
     private String name;
-    private String familyName;
-    private Enum<Gender> gender;
-    private Date birthDate;
-    private String phoneNumber;
+    private String lastName;
+    private Gender gender;
+    private LocalDateTime birthDate;
+    private long phoneNumber;
     private String address;
     private Role role;
     private String email;
+
 
     public UserResponse() {
     }
     public UserResponse(
             String name,
-            String familyName,
-            Enum<Gender> gender,
-            Date birthDate,
-            String phoneNumber,
+            String lastName,
+            Gender gender,
+            LocalDateTime birthDate,
+            long phoneNumber,
             String address,
             Role role,
             String email) {
         this.name = name;
-        this.familyName = familyName;
+        this.lastName = lastName;
         this.gender = gender;
         this.birthDate = birthDate;
         this.phoneNumber = phoneNumber;
@@ -35,8 +39,6 @@ public class UserResponse {
         this.role = role;
         this.email = email;
     }
-
-
 
     public String getName() {
         return name;
@@ -46,27 +48,27 @@ public class UserResponse {
         this.name = name;
     }
 
-    public Enum<Gender> getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(Enum<Gender> gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
-    public Date getBirthDate() {
+    public LocalDateTime getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDateTime birthDate) {
         this.birthDate = birthDate;
     }
 
-    public String getPhoneNumber() {
+    public long getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(long phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -86,15 +88,15 @@ public class UserResponse {
         this.email = email;
     }
 
-    public String getFamilyName() {
-        return familyName;
+    public String getlastName() {
+        return lastName;
     }
 
-    public void setFamilyName(String familyName) {
-        this.familyName = familyName;
+    public void setlastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public Date getBirthday() {
+    public LocalDateTime getBirthday() {
         return birthDate;
     }
 

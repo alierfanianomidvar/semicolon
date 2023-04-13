@@ -2,7 +2,6 @@ package com.unipd.semicolon.core.repository.entity;
 
 import com.unipd.semicolon.core.entity.Pharmacy;
 import com.unipd.semicolon.core.entity.Role;
-import com.unipd.semicolon.core.entity.Storage;
 import com.unipd.semicolon.core.entity.User;
 import io.micrometer.common.lang.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,5 +21,5 @@ public interface UserRepository {
 
     List<User> getAll();
 
-    void delete(Storage storage);
+    void delete(User user);
 }

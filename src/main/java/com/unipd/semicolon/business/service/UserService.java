@@ -4,6 +4,7 @@ package com.unipd.semicolon.business.service;
 import com.unipd.semicolon.core.domain.UserListExampleResponse;
 import com.unipd.semicolon.core.domain.UserResponse;
 import com.unipd.semicolon.core.entity.Role;
+import com.unipd.semicolon.core.entity.Storage;
 import com.unipd.semicolon.core.entity.User;
 import com.unipd.semicolon.core.entity.enums.Gender;
 import org.springframework.stereotype.Service;
@@ -47,15 +48,12 @@ public interface UserService {
             Long Id
     );
 
-
     List<UserResponse> getAll();
 
-    List<UserResponse> findAllByFamilyName(String familyName);
-
-    List<UserResponse> findAllbyRole(Role role);
 
     //TODO: User and Login entities must be connected
-    List<UserResponse> findByUserName(User userName);
+    //List<UserResponse> findByUserName(User userName);
+    
 
-
+    void delete(User user);
 }
