@@ -7,6 +7,7 @@ import com.unipd.semicolon.core.domain.UserListExampleResponse;
 import com.unipd.semicolon.core.domain.UserResponse;
 import com.unipd.semicolon.core.entity.Login;
 import com.unipd.semicolon.core.entity.Role;
+import com.unipd.semicolon.core.entity.Storage;
 import com.unipd.semicolon.core.entity.User;
 import com.unipd.semicolon.core.entity.enums.Gender;
 import com.unipd.semicolon.core.repository.entity.RoleRepository;
@@ -118,5 +119,13 @@ public class UserServiceImp {
         return userList;
     }
 
+    @Override
+    public void delete(Storage storage) {
+        if (storage == null) {
+            throw new IllegalArgumentException("Cannot delete null storage!");
+        } else {
+            userRepository.delete(storage);
+        }
+    }
 
 }
