@@ -39,14 +39,6 @@ public class UserController {
                         model.getRole()));
     }
 
-    //findAllByFamilyName
-    @RequestMapping(value = "/get-family-name/{familyName}", method = RequestMethod.GET)
-    // Here we get the family name in the url.
-    public ResponseEntity findAllByFamilyName(@PathVariable("familyName") String familyName) {
-        return ResponseHelper
-                .response(userService.findAllByFamilyName(familyName));
-    }
-
     @RequestMapping(value = "/get-all", method = RequestMethod.GET)
     public ResponseEntity getAll() {
         return ResponseHelper

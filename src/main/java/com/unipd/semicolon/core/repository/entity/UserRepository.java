@@ -22,9 +22,5 @@ public interface UserRepository {
 
     List<User> getAll();
 
-    List<User> findAllByLastName(String lastName);
-
-    List<User> findByRoles(@NonNull Role role);
-
     void delete(Storage storage);
 }
