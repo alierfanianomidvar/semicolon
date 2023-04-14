@@ -15,7 +15,18 @@ public class SupplierServiceImp implements SupplierService {
     }
     @Override
     public List<Supplier> getSupplierList() {
-
         return supplierDao.findAll();
+    }
+
+    @Override
+    public Supplier create(String name, String address, String email, String telephoneNumber) {
+        List<Supplier> suppliers = supplierDao.findByEmail(email);
+        if (suppliers.toArray().length > 0) {
+            throw new IllegalStateException();
+        }
+
+
+        Supplier supplier = new Supplier(name,address,email,telephoneNumber);
+        return supplierDao.create(supplier);
     }
 }
