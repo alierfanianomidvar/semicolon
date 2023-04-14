@@ -9,6 +9,13 @@ import java.util.List;
 
 public interface SupplierService {
 
+    List<Supplier> getSupplierList() throws SQLException;
+
+    Supplier create(String name,
+                    String address,
+                    String email,
+                    String telephoneNumber) throws SQLException;
+
     Object findBySupplierId(Long id);
 
     public Supplier save(
