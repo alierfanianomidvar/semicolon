@@ -4,12 +4,14 @@ import com.unipd.semicolon.core.entity.Login;
 import com.unipd.semicolon.core.repository.entity.LoginRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Repository
 public class LoginRepositoryImp extends CustomRepository implements LoginRepository {
     public boolean login(Login l) throws SQLException {
         Connection conn = null;
@@ -53,5 +55,22 @@ public class LoginRepositoryImp extends CustomRepository implements LoginReposit
             session.invalidate();
         }
     }
+
+    @Override
+    public Login save(Login login) {
+        return save(login);
+    }
+
+    @Override
+    public Login findByUsername(String username) {
+
+        Login login = findByUsername(username);
+        if(login != null) {
+            return findByUsername(username);
+        } else {
+            return null;
+        }
+    }
+
 
 }
