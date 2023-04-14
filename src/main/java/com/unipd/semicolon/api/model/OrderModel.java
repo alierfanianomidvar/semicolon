@@ -1,55 +1,30 @@
-package com.unipd.semicolon.core.entity;
+package com.unipd.semicolon.api.model;
 
+import com.unipd.semicolon.core.entity.Drug;
+import com.unipd.semicolon.core.entity.Material;
 import com.unipd.semicolon.core.entity.enums.OrderStatus;
-import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@Entity
-@Table(name = "orders")
-public class Order {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class OrderModel {
     private Long id;
-
-    @Column(name = "order_date")
     private LocalDate orderDate;
-
-    @ManyToMany
     private List<Drug> orderDrugs;
-
-    @ManyToMany
     private List<Material> orderMaterials;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "order_status")
     private OrderStatus status;
-
-    @Column(name = "price")
     private float price;
-
-    //just for soft deleting
-    @Column(name = "is_active")
     private boolean isActive;
 
-
-    /*-------------------------------------------
-    ----------------Constructors-----------------
-    -------------------------------------------*/
-
-    public Order() {
-
-    }
-
-    public Order(
+    public OrderModel(
+            Long id,
             LocalDate orderDate,
             List<Drug> orderDrugs,
             List<Material> orderMaterials,
             OrderStatus status,
             float price,
             boolean isActive) {
+        this.id = id;
         this.orderDate = orderDate;
         this.orderDrugs = orderDrugs;
         this.orderMaterials = orderMaterials;
@@ -58,20 +33,12 @@ public class Order {
         this.isActive = isActive;
     }
 
-    public Order(
-            LocalDate orderDate,
-            OrderStatus status,
-            float price,
-            boolean isActive) {
-    }
-
-
-    /*-------------------------------------------
-        ----------------Getters and Setters-----------------
-        -------------------------------------------*/
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public LocalDate getOrderDate() {
@@ -121,6 +88,5 @@ public class Order {
     public void setActive(boolean active) {
         isActive = active;
     }
+
 }
-
-
