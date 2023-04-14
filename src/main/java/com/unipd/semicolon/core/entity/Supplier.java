@@ -1,10 +1,10 @@
 package com.unipd.semicolon.core.entity;
 
+import com.fasterxml.jackson.core.JsonGenerator;
 import jakarta.persistence.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
 @Entity
@@ -43,6 +43,18 @@ public class Supplier {
         this.drugs = drugs;
         this.materials = materials;
     }
+
+    public Supplier(
+            String name,
+            String address,
+            String email,
+            String telephoneNumber) {
+        this.name = name;
+        this.address = address;
+        this.email = email;
+        this.telephoneNumber = telephoneNumber;
+    }
+
 
     public Long getId() {
         return id;
@@ -95,5 +107,6 @@ public class Supplier {
     public void setMaterials(List<Material> materials) {
         this.materials = materials;
     }
+
 }
 
