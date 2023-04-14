@@ -1,0 +1,35 @@
+package com.unipd.semicolon.business.service.Imp;
+
+import com.unipd.semicolon.business.service.StringService;
+import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+@Service
+public class StringServiceImp implements StringService {
+
+    @Override
+    public String encodeBase64(String input) {
+        return null;
+    }
+
+    @Override
+    public String decodeBase64(String input) {
+        return null;
+    }
+
+    @Override
+    public String bCryptPasswordEncoder(String input) {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        String encode = bCryptPasswordEncoder.encode(input);
+
+        return encode;
+    }
+
+    @Override
+    public Boolean verifyBCryptPassword(
+            String rawInput,
+            String hashInput) {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        return bCryptPasswordEncoder.matches(rawInput, hashInput);
+    }
+}
