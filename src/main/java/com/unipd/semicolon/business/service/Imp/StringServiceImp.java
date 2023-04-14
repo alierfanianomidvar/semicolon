@@ -1,27 +1,28 @@
 package com.unipd.semicolon.business.service.Imp;
 
 import com.unipd.semicolon.business.service.StringService;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import org.springframework.stereotype.Service;
 @Service
 public class StringServiceImp implements StringService {
 
     @Override
     public String encodeBase64(String input) {
-        return null;
+        return new String(Base64.encodeBase64String(input.getBytes()));
     }
 
     @Override
     public String decodeBase64(String input) {
-        return null;
+        return new String(Base64.encodeBase64String(input.getBytes()));
     }
 
     @Override
     public String bCryptPasswordEncoder(String input) {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         String encode = bCryptPasswordEncoder.encode(input);
-
         return encode;
     }
 
