@@ -17,8 +17,7 @@ public class Pharmacy {
     private String address;
     @Column(name = "telephoneNumber")
     private String telephoneNumber;
-    @OneToMany//(mappedBy = "Pharmacy")
-    @JoinColumn(name = "day_of_week")
+    @OneToMany(mappedBy = "pharmacy")
     private List<TimeTable> time_table;
 
     @Column(name = "logo")
@@ -37,17 +36,11 @@ public class Pharmacy {
             String name,
             String address,
             String telephoneNumber,
-            List<TimeTable> time_table,
-            byte[] logo,
-            List<Storage> storage,
-            List<User> staff) {
+            byte[] logo) {
         this.name = name;
         this.address = address;
         this.telephoneNumber = telephoneNumber;
-        this.time_table = time_table;
         this.logo = logo;
-        this.storage = storage;
-        this.staff = staff;
     }
 
     public Long getId() {
