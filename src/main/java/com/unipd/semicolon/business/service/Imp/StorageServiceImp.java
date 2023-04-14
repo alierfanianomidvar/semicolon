@@ -1,12 +1,15 @@
 package com.unipd.semicolon.business.service.Imp;
 
 import com.unipd.semicolon.business.exception.NotFoundException;
+import com.unipd.semicolon.business.mapper.StorageMapper;
 import com.unipd.semicolon.business.service.StorageService;
+import com.unipd.semicolon.core.domain.StorageResponse;
 import com.unipd.semicolon.core.entity.Drug;
 import com.unipd.semicolon.core.entity.Material;
 import com.unipd.semicolon.core.entity.Pharmacy;
 import com.unipd.semicolon.core.entity.Storage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.unipd.semicolon.core.repository.entity.StorageRepository;
@@ -78,5 +81,14 @@ public class StorageServiceImp implements StorageService {
             return storage;
         }
             throw new EntityNotFoundException("Storage not found with id: " + id);
+    }
+
+    @Override
+    public List<StorageResponse> getAll() {
+        List<StorageResponse> storageList = new ArrayList<>();
+        for (Storage storage : storageRepository.getAll()) {
+            storageList.add(StorageMapper.storageResponse(storage));
+        }
+        return storageList;
     }
 }

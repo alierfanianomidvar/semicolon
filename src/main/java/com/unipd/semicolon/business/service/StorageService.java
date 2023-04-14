@@ -1,5 +1,6 @@
 package com.unipd.semicolon.business.service;
 
+import com.unipd.semicolon.core.domain.StorageResponse;
 import com.unipd.semicolon.core.entity.Drug;
 import com.unipd.semicolon.core.entity.Material;
 import com.unipd.semicolon.core.entity.Pharmacy;
@@ -29,4 +30,5 @@ public interface StorageService {
     Storage getById(
             Long id
     );
+    List<StorageResponse> getAll();
 }
