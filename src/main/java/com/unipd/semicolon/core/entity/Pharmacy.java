@@ -1,5 +1,6 @@
 package com.unipd.semicolon.core.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.unipd.semicolon.core.entity.enums.PharmacyStatus;
 import jakarta.persistence.*;
 
@@ -28,6 +29,7 @@ public class Pharmacy {
     @OneToMany(mappedBy = "pharmacy")
     private List<Storage> storage;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "pharmacy")
     private List<User> staff;
 
