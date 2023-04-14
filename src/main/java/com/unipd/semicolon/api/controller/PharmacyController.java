@@ -1,7 +1,8 @@
 package com.unipd.semicolon.api.controller;
 
+import com.unipd.semicolon.api.model.PharmacyModel;
+import com.unipd.semicolon.api.util.helper.ResponseHelper;
 import com.unipd.semicolon.business.service.PharmacyService;
-import com.unipd.semicolon.core.entity.enums.PharmacyStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ public class PharmacyController {
 
     @PatchMapping(path = "{pharmacyId}")
     public void pharmacyActivation(@PathVariable("pharmacyId") Long pharmacyId,
-                              @RequestParam(required = false) PharmacyStatus status){
-        pharmacyService.activation(pharmacyId, status);
+                              @RequestParam PharmacyModel pharmacyModel){
+        ResponseHelper.response(pharmacyService.activation(pharmacyId, pharmacyModel.getStatus()));
     }
 }
