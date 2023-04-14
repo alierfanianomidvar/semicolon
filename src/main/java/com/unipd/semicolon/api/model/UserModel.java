@@ -24,13 +24,13 @@ public class UserModel {
 
     private Gender gender;
 
-    private String phoneNumber;
+    private Long phoneNumber;
 
     private String address;
 
     private String email;
 
-    private Boolean accountStatus;
+    private String accountStatus;
 
     private byte[] profilePicture;
 
@@ -42,10 +42,10 @@ public class UserModel {
             LocalDateTime birthDate,
             Role role,
             Gender gender,
-            String phoneNumber,
+            Long phoneNumber,
             String address,
             String email,
-            Boolean accountStatus,
+            String accountStatus,
             byte[] profilePicture) {
         this.userId = userId;
         this.username = username;
@@ -69,10 +69,10 @@ public class UserModel {
             LocalDateTime birthDate,
             Role role,
             Gender gender,
-            String phoneNumber,
+            Long phoneNumber,
             String address,
             String email,
-            Boolean accountStatus,
+            String accountStatus,
             byte[] profilePicture) {
         this.username = username;
         this.password = password;
@@ -136,11 +136,11 @@ public class UserModel {
         this.gender = gender;
     }
 
-    public String getPhoneNumber() {
+    public Long getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(Long phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -160,11 +160,11 @@ public class UserModel {
         this.email = email;
     }
 
-    public Boolean getAccountStatus() {
+    public String getAccountStatus() {
         return accountStatus;
     }
 
-    public void setAccountStatus(Boolean accountStatus) {
+    public void setAccountStatus(String accountStatus) {
         this.accountStatus = accountStatus;
     }
 
@@ -191,15 +191,8 @@ public class UserModel {
         return name;
     }
 
-    public String getFamilyName() {
-        return familyName;
-    }
-
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public short getRole() {
+    public Role getRole() {
         return role;
     }
+
 }
