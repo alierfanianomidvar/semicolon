@@ -2,18 +2,17 @@ package com.unipd.semicolon.core.repository.entity;
 
 import com.unipd.semicolon.core.entity.Material;
 import jakarta.transaction.Transactional;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Transactional
+
 @Repository
 public interface MaterialRepository {
-    Material save(
-            Material material
-    );
+    Material save(Material material);
 
-    List<Material> getAll();
+    public List<Material> getAll();
 
-    Material findMaterialById(Long id);
+    public Material findMaterialById(Long id);
 }
