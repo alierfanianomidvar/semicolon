@@ -15,6 +15,7 @@ public interface UserRepository {
 
     User save(User user);
 
+
     User findUserById(Long id);
 
     Boolean deleteByPharmacyId(Long id);

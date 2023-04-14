@@ -16,29 +16,37 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST) //@PostMapping("/add") we can write like this too.
-    // Here we get the data on the body and not on the url.
-    public ResponseEntity save(@RequestBody UserModel model){ //always use model.
-        return ResponseHelper
-                .response(userService.save(
-                        model.getUsername(),
-                        model.getPassword(),
-                        model.getName(),
-                        model.getFamilyName(),
-                        model.getBirthday(),
-                        model.getRole()));
-    }
+//    @RequestMapping(value = "/save", method = RequestMethod.POST) //@PostMapping("/add") we can write like this too.
+//    // Here we get the data on the body and not on the url.
+//    public ResponseEntity save(@RequestBody UserModel model){ //always use model.
+//        return ResponseHelper
+//                .response(userService.save(
+//                        model.getUsername(),
+//                        model.getPassword(),
+//                        model.getName(),
+//                        model.getFamilyName(),
+//                        model.getBirthday(),
+//                        model.getRole()));
+//    }
 
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
     //Here we want to update the data, so we use PUT and not POSt.
     public ResponseEntity edit(@RequestBody UserModel model) {
         return ResponseHelper
                 .response(userService.edit(
-                        model.getId(),
+                        model.getUserId(),
                         model.getName(),
-                        model.getFamilyName(),
-                        model.getBirthday(),
-                        model.getRole()));
+                        model.getLastName(),
+                        model.getGender(),
+                        model.getBirthDate(),
+                        model.getPhoneNumber(),
+                        model.getAddress(),
+                        model.getRole(),
+                        model.getEmail(),
+                        model.getAccountStatus(),
+                        model.getProfilePicture()
+                        )
+                );
     }
 
     @RequestMapping(value = "/get-all", method = RequestMethod.GET)

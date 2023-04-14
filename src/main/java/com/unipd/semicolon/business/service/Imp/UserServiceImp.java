@@ -1,43 +1,41 @@
 package com.unipd.semicolon.business.service.Imp;
 
 import com.unipd.semicolon.business.exception.NotFoundException;
-import com.unipd.semicolon.business.exception.UserExsitsException;
 import com.unipd.semicolon.business.mapper.UserMapper;
 import com.unipd.semicolon.business.service.UserService;
-import com.unipd.semicolon.core.domain.UserListExampleResponse;
+
 import com.unipd.semicolon.core.domain.UserResponse;
-import com.unipd.semicolon.core.entity.Login;
 import com.unipd.semicolon.core.entity.Role;
 import com.unipd.semicolon.core.entity.User;
 import com.unipd.semicolon.core.entity.enums.Gender;
-import com.unipd.semicolon.core.repository.entity.RoleRepository;
 import com.unipd.semicolon.core.repository.entity.UserRepository;
+
 import jakarta.persistence.EntityNotFoundException;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
 @Service
 public class UserServiceImp implements UserService {
 
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private RoleRepository roleRepository;
+//    @Autowired
+//    private RoleRepository roleRepository;
 
-    @Autowired
-    private LoginService loginService;
+//    @Autowired
+//    private LoginService loginService;
 
 
-    //TODO: change the types phonenumber, accountStatus and ....
     @Override
-    public User save(
+    public Boolean save(
             String username,
             String password,
             String name,
@@ -52,62 +50,100 @@ public class UserServiceImp implements UserService {
             byte[] profilePicture
             ) {
 
-        if (loginService.exists(username)) {
-            throw new UserExsitsException();
-        } else {
-            Login login = loginService.creat(username, password);
-
-            User user = new User(name,
-                    lastName,
-                    gender,
-                    birthDate,
-                    phoneNumber,
-                    address,
-                    role,
-                    email,
-                    accountStatus,
-                    profilePicture);
-
-            userRepository.save(user);
-        }
-        return null;
+//        if (loginService.exists(username)) {
+//            throw new UserExsitsException();
+//        } else {
+//            Login login = loginService.creat(username, password);
+//
+//            User user = new User(name,
+//                    lastName,
+//                    gender,
+//                    birthDate,
+//                    phoneNumber,
+//                    address,
+//                    role,
+//                    email,
+//                    accountStatus,
+//                    profilePicture);
+//
+//            userRepository.save(user);
+//        }
+        return false;
     }
 
     @Override
-    public Boolean edit(
-            Long id,
-            String name,
-            String familyName,
-            Date birthday,
-            Short role) {
+    public Boolean edit(Long userId,
+                     String name,
+                     String lastName,
+                     Gender gender,
+                     LocalDateTime birthDate,
+                     Long phoneNumber,
+                     String address,
+                     Role role,
+                     String email,
+                     String accountStatus,
+                     byte[] profilePicture
+    )
+    {
+        if (userId != null) {
+            // Retrieve the user from the database
+            if (userRepository.findUserById(userId) != null) {
+                User user = userRepository.findUserById(userId);
 
-        if (userRepository.findUserById(id) != null) {
-            User user = userRepository.findUserById(id);
-            if (name != null) {
-                user.setName(name);
-            }
-            if (familyName != null) {
-                user.setFamilyName(familyName);
-            }
-            if (birthday != null) {
-                user.setBirthday(birthday);
-            }
-            if (role != null) {
-                user.setName(name);
-            }
-            userRepository.save(user); // to save the changes on the database.
+                // Validate inputs
+                if (name != null && !name.isBlank()) {
+                    user.setName(name);
+                }
 
-            return true;
-        } else {
-            return false;
+                if (lastName != null && !lastName.isBlank()) {
+                    user.setLastName(lastName);
+                }
+
+                if (gender != null) {
+                    user.setGender(gender);
+                }
+
+                if (birthDate != null) {
+                    user.setBirthDate(birthDate);
+                }
+
+                if (phoneNumber != null) {
+                    user.setPhoneNumber(phoneNumber);
+                }
+
+                if (address != null && !address.isBlank()) {
+                    user.setAddress(address);
+                }
+
+                if (role != null) {
+                    user.setRole(role);
+                }
+
+                if (email != null && !email.isBlank()) {
+                    user.setEmail(email);
+                }
+
+                if (accountStatus != null && !accountStatus.isBlank()) {
+                    user.setAccountStatus(accountStatus);
+                }
+
+                if (profilePicture != null) {
+                    user.setProfilePicture(profilePicture);
+                }
+
+
+                // Save changes to the database
+                userRepository.save(user);
+                return true;
+            }
         }
+        return false;
     }
-
     @Override
     public Boolean changeStatus(Long Id) {
         return null;
     }
-
+//
     @Override
     public List<UserResponse> getAll() {
         List<UserResponse> userList = new ArrayList<>();
@@ -133,7 +169,7 @@ public class UserServiceImp implements UserService {
         }
         throw new EntityNotFoundException("User not found with id:" + id);
     }
-
+//
     @Override
     public void delete(User user) {
         if (user == null) {
@@ -142,4 +178,6 @@ public class UserServiceImp implements UserService {
             userRepository.delete(user);
         }
     }
-}
+
+
+    }
