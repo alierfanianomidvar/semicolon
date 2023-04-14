@@ -27,6 +27,6 @@ public interface StorageService {
             Storage storage
     );
     Storage getById(
-            long id
+            Long id
     );
 }
