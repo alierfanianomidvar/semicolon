@@ -37,9 +37,7 @@ public class SupplierCreateServlet extends HttpServlet {
         String jsonString = IOUtils.toString(req.getReader());
         JSONObject jo = null;
         try {
-             jo = new JSONObject(
-                    jsonString
-            );
+            jo = new JSONObject(jsonString);
             // model
             // retrieves the request parameter
             name = String.valueOf(jo.getString("name"));
@@ -50,7 +48,7 @@ public class SupplierCreateServlet extends HttpServlet {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        Supplier supplier = supplierService.create(name,address,email,telephoneNumber);
+        Supplier supplier = supplierService.create(name, address, email, telephoneNumber);
         req.setAttribute("supplier", supplier);
         req.getRequestDispatcher("/WEB-INF/jsp/createSupplierResult.jsp").forward(req, res);
 

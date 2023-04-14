@@ -54,7 +54,6 @@ public class SupplierDao {
             if (rs.next()){
                 supplier.setId(rs.getLong(1));
             }
-//            System.out.println(rs);
             if (stmt != null) {
                 stmt.close();
             }

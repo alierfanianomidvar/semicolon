@@ -1,5 +1,6 @@
 package com.unipd.semicolon.business.service.Imp;
 
+import com.unipd.semicolon.business.exception.PharmacyExistsException;
 import com.unipd.semicolon.business.service.SupplierService;
 import com.unipd.semicolon.core.dao.SupplierDao;
 import com.unipd.semicolon.core.entity.Supplier;
@@ -22,7 +23,7 @@ public class SupplierServiceImp implements SupplierService {
     public Supplier create(String name, String address, String email, String telephoneNumber) {
         List<Supplier> suppliers = supplierDao.findByEmail(email);
         if (suppliers.toArray().length > 0) {
-            throw new IllegalStateException();
+            throw new PharmacyExistsException();
         }
 
 
