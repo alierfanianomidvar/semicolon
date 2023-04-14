@@ -51,4 +51,10 @@ public class StorageController {
         storageService.delete(storage);
         return ResponseHelper.response(true);
     }
+
+    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
+    public ResponseEntity getAll() {
+        return ResponseHelper
+                .response(storageService.getAll());
+    }
 }
