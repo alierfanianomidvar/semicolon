@@ -2,6 +2,7 @@ package com.unipd.semicolon.business.service.Imp;
 
 
 import com.unipd.semicolon.business.exception.NotFoundException;
+import com.unipd.semicolon.business.mapper.MaterialMapper;
 import com.unipd.semicolon.business.service.MaterialService;
 import com.unipd.semicolon.core.domain.MaterialResponse;
 import com.unipd.semicolon.core.entity.Material;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -112,5 +114,14 @@ public class MaterialServiceImp implements MaterialService {
             } else {
                 throw new EntityNotFoundException("Material Not Found with id" + id);
             }
+        }
+
+        @Override
+        public List<MaterialResponse> getAll(){
+            List<MaterialResponse> materialList = new ArrayList<>();
+            for (Material material : materialRepository.getAll()) {
+                materialList.add(MaterialMapper.materialResponse(material));
+            }
+            return materialList;
         }
     }

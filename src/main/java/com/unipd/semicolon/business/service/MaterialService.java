@@ -1,5 +1,6 @@
 package com.unipd.semicolon.business.service;
 
+import com.unipd.semicolon.core.domain.MaterialResponse;
 import com.unipd.semicolon.core.entity.Material;
 import com.unipd.semicolon.core.entity.Order;
 import com.unipd.semicolon.core.entity.Receipt;
@@ -42,4 +43,5 @@ public interface MaterialService {
             List<Receipt> receipts);
 
     Material getById(Long id);
+    List<MaterialResponse> getAll();
 }

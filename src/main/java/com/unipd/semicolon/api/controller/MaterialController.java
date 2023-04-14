@@ -44,7 +44,7 @@ public class MaterialController {
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
-    public ResponseEntity edit( @RequestBody MaterialModel model) {
+    public ResponseEntity edit(@RequestBody MaterialModel model) {
         return ResponseHelper
                 .response(materialService.edit(
                         model.getId(),
@@ -61,5 +61,11 @@ public class MaterialController {
                         model.getOrders(),
                         model.getReceipts()
                 ));
+    }
+
+    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
+    public ResponseEntity getAll() {
+        return ResponseHelper
+                .response(materialService.getAll());
     }
 }
