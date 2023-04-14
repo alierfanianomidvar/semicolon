@@ -58,7 +58,6 @@ public class MaterialServiceImp implements MaterialService {
                     orders,
                     receipts
             );
-
             materialRepository.save(material);
             return material;
         }

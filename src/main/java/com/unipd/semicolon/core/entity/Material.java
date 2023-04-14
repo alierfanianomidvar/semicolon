@@ -63,7 +63,8 @@ public class Material {
 
     public Material() {
 
-    }
+    @Column(name = "isActive")
+    private boolean isActive;
 
     public Material(
             String name,
@@ -88,10 +89,10 @@ public class Material {
         this.ageGroup = ageGroup;
         this.lastModifiedDate = lastModifiedDate;
         this.description = description;
+
         this.orders = orders;
         this.receipts = receipts;
     }
-
     public Long getId() {
         return id;
     }
@@ -99,7 +100,6 @@ public class Material {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -115,7 +115,60 @@ public class Material {
     public Country getCountryOfProduction() {
         return countryOfProduction;
     }
+    public LocalDate getExpirationDate() {
+        return expirationDate;
+    }
 
+    public byte[] getImage() {
+        return image;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public float getSellPrice() {
+        return sellPrice;
+    }
+
+    public float getBuyPrice() {return buyPrice;}
+
+    public AgeGroup getAge() {
+        return age;
+    }
+
+    public LocalDate getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public boolean getIsActive() {
+        return isActive;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+
+    /*--------------------------------------
+    ------------- Setter methods------------
+    --------------------------------------*/
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setMaterialName(String materialName) {
+        this.materialName = materialName;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
+    }
     public void setCountryOfProduction(Country countryOfProduction) {
         this.countryOfProduction = countryOfProduction;
     }
@@ -144,6 +197,7 @@ public class Material {
         this.gender = gender;
     }
 
+
     public float getPrice() {
         return price;
     }
@@ -162,6 +216,14 @@ public class Material {
 
     public LocalDate getLastModifiedDate() {
         return lastModifiedDate;
+    }
+
+    public void setIsActive(boolean active) {
+        isActive = active;
+    }
+
+    public void setAmount(int amount){
+        this.amount = amount;
     }
 
     public void setLastModifiedDate(LocalDate lastModifiedDate) {
