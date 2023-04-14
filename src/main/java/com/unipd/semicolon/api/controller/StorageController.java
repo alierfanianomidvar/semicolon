@@ -27,13 +27,13 @@ public class StorageController {
                 ));
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/getByID", method = RequestMethod.GET)
     public ResponseEntity getById(@PathVariable("id") Long id) {
         return ResponseHelper
                 .response(storageService.getById(id));
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
     public ResponseEntity edit(@PathVariable("id") Long id, @RequestBody StorageModel model) {
         return ResponseHelper
                 .response(storageService.edit(
@@ -45,7 +45,7 @@ public class StorageController {
                         model.getThreshold()
                 ));
     }
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public ResponseEntity deleteById(@PathVariable("id") Long id) {
         Storage storage = storageService.getById(id);
         storageService.delete(storage);
