@@ -37,14 +37,14 @@ public class MaterialController {
                 ));
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity getById(@PathVariable("id") Long id) {
+    @RequestMapping(value = "/getById", method = RequestMethod.GET)
+    public ResponseEntity getById(@PathVariable("getById") Long id) {
         return ResponseHelper
                 .response(materialService.getById(id));
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity edit(@PathVariable("id") Long id, @RequestBody MaterialModel model) {
+    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
+    public ResponseEntity edit(@PathVariable("edit") Long id, @RequestBody MaterialModel model) {
         return ResponseHelper
                 .response(materialService.edit(
                         id,
