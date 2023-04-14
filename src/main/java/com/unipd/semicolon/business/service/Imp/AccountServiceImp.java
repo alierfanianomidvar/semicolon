@@ -27,6 +27,7 @@ public class AccountServiceImp implements AccountService {
             String password) {
 
         Login login = loginRepository.findByUsername(username);
+        login.getUser().getRole().getRole();
         if (stringService.verifyBCryptPassword(password, login.getPassword())) {
             login.setSession(true);
             login.setLastLoginDate(localTimeService.getLocalDateTime());
