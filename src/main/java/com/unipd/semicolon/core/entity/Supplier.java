@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name = "supplier")
 public class Supplier {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "name")
     private String name;
@@ -55,6 +55,9 @@ public class Supplier {
         this.telephoneNumber = telephoneNumber;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getId() {
         return id;

@@ -7,4 +7,9 @@ import java.util.List;
 public interface SupplierService {
 
     List<Supplier> getSupplierList();
+
+    Supplier create(String name,
+                    String address,
+                    String email,
+                    String telephoneNumber);
 }
