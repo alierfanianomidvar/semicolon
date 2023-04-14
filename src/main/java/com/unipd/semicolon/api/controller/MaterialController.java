@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping(value = "/material")
@@ -18,7 +16,7 @@ public class MaterialController {
     @Autowired
     private MaterialService materialService;
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ResponseEntity save(@RequestBody MaterialModel model) {
         return ResponseHelper
                 .response(materialService.save(
@@ -28,19 +26,19 @@ public class MaterialController {
                         model.getImage(),
                         model.getGender(),
                         model.getAgeGroup(),
-                        model.getSellPrice(),
-                        model.getBuyPrice(),
-                        model.getAmount(),
-                        model.getIsActive(),
+                        model.getLastModifiedDate(),
+                        model.getPrice(),
                         model.getDescription(),
-                        model.getCountryOfProduction()
+                        model.getCountryOfProduction(),
+                        model.getOrders(),
+                        model.getReceipts()
                 ));
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity getById(@PathVariable("id") Long id) {
         return ResponseHelper
-                .response(materialService.getById(id));
+                .response(materialService.MaterialgetById(id));
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
@@ -48,24 +46,13 @@ public class MaterialController {
         return ResponseHelper
                 .response(materialService.edit(
                         id,
-                        model.getName(),
-                        model.getSupplier(),
-                        model.getExpirationDate(),
-                        model.getImage(),
-                        model.getGender(),
-                        model.getAgeGroup(),
-                        model.getSellPrice(),
-                        model.getBuyPrice(),
-                        model.getAmount(),
-                        model.getIsActive(),
-                        model.getDescription(),
-                        model.getCountryOfProduction()
+                        model.
                 ));
     }
 
     @RequestMapping(value = "/{id}/isActive", method = RequestMethod.GET)
     public ResponseEntity isActive(@PathVariable("id") Long id) {
-        Material material = (Material) materialService.getById(id);
+        Material material = (Material) materialService.MaterialgetById(id);
         return ResponseHelper.response(materialService.isActive(material));
     }
 }

@@ -1,69 +1,90 @@
 package com.unipd.semicolon.api.model;
 
+import com.unipd.semicolon.core.entity.Order;
+import com.unipd.semicolon.core.entity.Receipt;
 import com.unipd.semicolon.core.entity.Supplier;
 import com.unipd.semicolon.core.entity.enums.AgeGroup;
 import com.unipd.semicolon.core.entity.enums.Country;
 import com.unipd.semicolon.core.entity.enums.Gender;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class MaterialModel {
     private Long id;
     private String name;
     private Supplier supplier;
+    private Country countryOfProduction;
     private LocalDate expirationDate;
     private byte[] image;
     private Gender gender;
-    private AgeGroup age;
-    private float sellPrice;
-    private float buyPrice;
-    private int amount;
-    private boolean active;
+    private float price;
+    private AgeGroup ageGroup;
+    private LocalDate lastModifiedDate;
     private String description;
-    private Country countryOfProduction;
 
-    public MaterialModel() {
-    }
+    private List<Order> orders;
+
+    private List<Receipt> receipts;
 
     public MaterialModel(
-            Long id,
             String name,
             Supplier supplier,
             LocalDate expirationDate,
             byte[] image,
             Gender gender,
+            float price,
             AgeGroup ageGroup,
-            double sellPrice,
-            double buyPrice,
-            int amount,
-            boolean active,
+            LocalDate lastModifiedDate,
             String description,
-            Country countryOfProduction) {
-        this.id = id;
+            Country countryOfProduction,
+            List<Order> orders,
+            List<Receipt> receipts) {
         this.name = name;
         this.supplier = supplier;
+        this.countryOfProduction = countryOfProduction;
         this.expirationDate = expirationDate;
         this.image = image;
         this.gender = gender;
-        this.age = ageGroup;
-        this.sellPrice = (float) sellPrice;
-        this.buyPrice = (float) buyPrice;
-        this.amount = amount;
-        this.active = active;
+        this.price = price;
+        this.ageGroup = ageGroup;
+        this.lastModifiedDate = lastModifiedDate;
         this.description = description;
-        this.countryOfProduction = countryOfProduction;
+        this.orders = orders;
+        this.receipts = receipts;
     }
+
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Supplier getSupplier() {
         return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
+    }
+
+    public Country getCountryOfProduction() {
+        return countryOfProduction;
+    }
+
+    public void setCountryOfProduction(Country countryOfProduction) {
+        this.countryOfProduction = countryOfProduction;
     }
 
     public LocalDate getExpirationDate() {
@@ -86,31 +107,55 @@ public class MaterialModel {
         return gender;
     }
 
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
     public AgeGroup getAgeGroup() {
-        return age;
+        return ageGroup;
     }
 
-    public float getSellPrice() {
-        return sellPrice;
+    public void setAgeGroup(AgeGroup ageGroup) {
+        this.ageGroup = ageGroup;
     }
 
-    public float getBuyPrice() {
-        return buyPrice;
+    public LocalDate getLastModifiedDate() {
+        return lastModifiedDate;
     }
 
-    public int getAmount() {
-        return amount;
-    }
-
-    public boolean getIsActive() {
-        return active;
+    public void setLastModifiedDate(LocalDate lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public Country getCountryOfProduction() {
-        return countryOfProduction;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public List<Receipt> getReceipts() {
+        return receipts;
+    }
+
+    public void setReceipts(List<Receipt> receipts) {
+        this.receipts = receipts;
     }
 }
