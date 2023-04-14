@@ -4,8 +4,8 @@ import com.unipd.semicolon.business.service.StringService;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import org.springframework.stereotype.Service;
+
 @Service
 public class StringServiceImp implements StringService {
 
