@@ -72,7 +72,7 @@ public class StorageServiceImp implements StorageService {
     }
 
     @Override
-    public Storage getById(long id) {
+    public Storage getById(Long id) {
         Storage storage = storageRepository.findStorageById(id);
         if (storage != null) {
             return storage;
