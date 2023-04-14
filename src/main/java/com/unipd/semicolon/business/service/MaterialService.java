@@ -25,7 +25,6 @@ public interface MaterialService {
             String description,
             List<Order> orders,
             List<Receipt> receipts
-    );
 
     boolean edit(
             Long id,
@@ -43,4 +42,18 @@ public interface MaterialService {
             List<Receipt> receipts);
 
     Material getById(Long id);
+            AgeGroup age,
+            float sellPrice,
+            float buyPrice,
+            int amount,
+            boolean isActive,
+            String description,
+            Country countryOfProduction
+    );
+
+    boolean isActive(
+            Material material
+    );
+
+    Object getById(Long id);
 }

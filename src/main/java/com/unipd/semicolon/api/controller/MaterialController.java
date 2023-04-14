@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping(value = "/material")
@@ -15,7 +17,6 @@ public class MaterialController {
 
     @Autowired
     private MaterialService materialService;
-
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ResponseEntity save(@RequestBody MaterialModel model) {
         return ResponseHelper
@@ -38,7 +39,7 @@ public class MaterialController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity getById(@PathVariable("id") Long id) {
         return ResponseHelper
-                .response(materialService.MaterialgetById(id));
+                .response(materialService.getById(id));
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
@@ -46,13 +47,24 @@ public class MaterialController {
         return ResponseHelper
                 .response(materialService.edit(
                         id,
-                        model.
+                        model.getName(),
+                        model.getSupplier(),
+                        model.getExpirationDate(),
+                        model.getImage(),
+                        model.getGender(),
+                        model.getAgeGroup(),
+                        model.getSellPrice(),
+                        model.getBuyPrice(),
+                        model.getAmount(),
+                        model.getIsActive(),
+                        model.getDescription(),
+                        model.getCountryOfProduction()
                 ));
     }
 
     @RequestMapping(value = "/{id}/isActive", method = RequestMethod.GET)
     public ResponseEntity isActive(@PathVariable("id") Long id) {
-        Material material = (Material) materialService.MaterialgetById(id);
+        Material material = (Material) materialService.getById(id);
         return ResponseHelper.response(materialService.isActive(material));
     }
 }
