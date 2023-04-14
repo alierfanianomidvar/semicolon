@@ -44,10 +44,10 @@ public class MaterialController {
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
-    public ResponseEntity edit(@PathVariable("edit") Long id, @RequestBody MaterialModel model) {
+    public ResponseEntity edit( @RequestBody MaterialModel model) {
         return ResponseHelper
                 .response(materialService.edit(
-                        id,
+                        model.getId(),
                         model.getName(),
                         model.getSupplier(),
                         model.getExpirationDate(),
