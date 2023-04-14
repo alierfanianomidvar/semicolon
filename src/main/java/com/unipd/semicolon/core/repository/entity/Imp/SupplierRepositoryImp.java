@@ -3,12 +3,14 @@ package com.unipd.semicolon.core.repository.entity.Imp;
 
 import com.unipd.semicolon.core.entity.Supplier;
 import com.unipd.semicolon.core.repository.entity.SupplierRepository;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Repository
 public class SupplierRepositoryImp extends CustomRepository implements SupplierRepository {
     public boolean editSupplier(Supplier s) throws SQLException {
         return false;
@@ -57,4 +59,8 @@ public class SupplierRepositoryImp extends CustomRepository implements SupplierR
         }
     }
 
+    @Override
+    public Supplier findBySupplierId(Long id) {
+        return findById(Supplier.class, id);
+    }
 }
