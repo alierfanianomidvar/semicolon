@@ -4,6 +4,8 @@ import com.unipd.semicolon.api.model.PharmacyModel;
 import com.unipd.semicolon.api.util.helper.ResponseHelper;
 import com.unipd.semicolon.business.service.PharmacyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -14,9 +16,10 @@ public class PharmacyController {
     @Autowired
     private PharmacyService pharmacyService;
 
-    @PatchMapping(path = "{pharmacyId}")
-    public void pharmacyActivation(@PathVariable("pharmacyId") Long pharmacyId,
-                              @RequestParam PharmacyModel pharmacyModel){
-        ResponseHelper.response(pharmacyService.activation(pharmacyId, pharmacyModel.getStatus()));
+    @RequestMapping(value = {"{pharmacyId}"}, method = RequestMethod.PATCH,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity pharmacyActivation(@PathVariable("pharmacyId") Long pharmacyId,
+                                             @RequestBody PharmacyModel status){
+        return ResponseHelper.response(pharmacyService.activation(pharmacyId, status.getStatus()));
     }
 }

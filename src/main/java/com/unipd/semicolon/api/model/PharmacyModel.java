@@ -6,6 +6,9 @@ public class PharmacyModel {
 
     private PharmacyStatus status;
 
+    public PharmacyModel() {
+    }
+
     public PharmacyModel(PharmacyStatus status) {
         this.status = status;
     }
