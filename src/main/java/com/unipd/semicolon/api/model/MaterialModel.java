@@ -53,27 +53,6 @@ public class MaterialModel {
         this.orders = orders;
         this.receipts = receipts;
     }
-            AgeGroup ageGroup,
-            double sellPrice,
-            double buyPrice,
-            int amount,
-            boolean active,
-            String description,
-            Country countryOfProduction) {
-        this.id = id;
-        this.name = name;
-        this.supplier = supplier;
-        this.expirationDate = expirationDate;
-        this.image = image;
-        this.gender = gender;
-        this.age = ageGroup;
-        this.sellPrice = (float) sellPrice;
-        this.buyPrice = (float) buyPrice;
-        this.amount = amount;
-        this.active = active;
-        this.description = description;
-        this.countryOfProduction = countryOfProduction;
-    }
     public Long getId() {
         return id;
     }

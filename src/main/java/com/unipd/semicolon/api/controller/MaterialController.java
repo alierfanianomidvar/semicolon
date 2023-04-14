@@ -17,20 +17,21 @@ public class MaterialController {
 
     @Autowired
     private MaterialService materialService;
+
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ResponseEntity save(@RequestBody MaterialModel model) {
         return ResponseHelper
                 .response(materialService.save(
                         model.getName(),
                         model.getSupplier(),
+                        model.getCountryOfProduction(),
                         model.getExpirationDate(),
                         model.getImage(),
                         model.getGender(),
+                        model.getPrice(),
                         model.getAgeGroup(),
                         model.getLastModifiedDate(),
-                        model.getPrice(),
                         model.getDescription(),
-                        model.getCountryOfProduction(),
                         model.getOrders(),
                         model.getReceipts()
                 ));
@@ -53,18 +54,12 @@ public class MaterialController {
                         model.getImage(),
                         model.getGender(),
                         model.getAgeGroup(),
-                        model.getSellPrice(),
-                        model.getBuyPrice(),
-                        model.getAmount(),
-                        model.getIsActive(),
+                        model.getPrice(),
+                        model.getLastModifiedDate(),
                         model.getDescription(),
-                        model.getCountryOfProduction()
+                        model.getCountryOfProduction(),
+                        model.getOrders(),
+                        model.getReceipts()
                 ));
-    }
-
-    @RequestMapping(value = "/{id}/isActive", method = RequestMethod.GET)
-    public ResponseEntity isActive(@PathVariable("id") Long id) {
-        Material material = (Material) materialService.getById(id);
-        return ResponseHelper.response(materialService.isActive(material));
     }
 }
