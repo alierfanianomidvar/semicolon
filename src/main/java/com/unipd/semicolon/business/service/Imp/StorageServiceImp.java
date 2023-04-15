@@ -9,11 +9,15 @@ import com.unipd.semicolon.core.entity.Material;
 import com.unipd.semicolon.core.entity.Pharmacy;
 import com.unipd.semicolon.core.entity.Storage;
 
+import java.util.Objects;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import com.unipd.semicolon.core.repository.entity.PharmacyRepository;
+//import com.unipd.semicolon.core.repository.entity.MaterialRepository;
+import com.unipd.semicolon.core.repository.entity.DrugRepository;
 import com.unipd.semicolon.core.repository.entity.StorageRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +32,11 @@ public class StorageServiceImp implements StorageService {
     @Autowired
     private PharmacyRepository pharmacyRepository;
 
-    //@Autowired
-    //private MaterialRepository materialRepository;
+    @Autowired
+    private MaterialRepository materialRepository;
 
-    //@Autowired
-    //private DrugRepository drugRepository;
+    @Autowired
+    private DrugRepository drugRepository;
 
     @Override
     public Storage save(Pharmacy pharmacy,
@@ -41,39 +45,43 @@ public class StorageServiceImp implements StorageService {
                         int amount,
                         int threshold,
                         double discount) {
-        if (pharmacy == null) {
-            throw new IllegalArgumentException("Pharmacy is null");
-        } else if (amount < 0 || threshold < 0 || discount < 0) {
+        Objects.requireNonNull(pharmacy, "Pharmacy is null");
+        if (amount <= 0 || threshold <= 0 || discount < 0.0 || discount > 100.0) {
             throw new IllegalArgumentException("Invalid input parameter");
         } else if (drug == null && material == null) {
             throw new IllegalArgumentException("Either drug or material must be specified");
+        } else if (drug != null && material != null) {
+            throw new IllegalArgumentException("Both drug and material cannot be specified at the same time");
         } else {
-            if (!pharmacyRepository.findById(pharmacy.getId()).isEmpty()) {
-                Pharmacy pharmacyRepositoryById = pharmacyRepository.findById(pharmacy.getId()).get();
+            Pharmacy pharmacyRepositoryById = null;
+            Material materialRepositoryById = null;
+            Drug drugRepositoryById = null;
+            if (pharmacyRepository.findById(pharmacy.getId()).isPresent()) {
+                pharmacyRepositoryById = pharmacyRepository.findById(pharmacy.getId()).get();
+                if (materialRepository.findById(material.getId()).isPresent()) {
+                    materialRepositoryById = materialRepository.findById(material.getId()).get();
+                    Storage storage = new Storage(pharmacyRepositoryById,
+                            null,
+                            materialRepositoryById,
+                            amount,
+                            threshold,
+                            discount);
+
+                    return storageRepository.save(storage);
+
+                } else if (drugRepository.findById(drug.getId()).isPresent()) {
+                    drugRepositoryById = drugRepository.findById(drug.getId()).get();
+                    Storage storage = new Storage(pharmacyRepositoryById,
+                            drugRepositoryById,
+                            null,
+                            amount,
+                            threshold,
+                            discount);
+                    return storageRepository.save(storage);
+                }
             }
-            //else if (!materialRepository.findById(material.getId()).isEmpty()) {
-            //   Material materialRepositoryById = materialRepository.findById(material.getId()).get();
-            //  Storage storage = new Storage(pharmacyRepositoryById,
-            //        null,
-            //       materialRepositoryById,
-            //      amount,
-            //     threshold
-            //     discount);
-
-            //    return storageRepository.save(storage);
-
-            // } else if (!drugRepository.findById(drug.getId()).isEmpty()) {
-            //    Drug drugRepositoryById = drugRepository.findById(drug.getId()).get();
-            //   Storage storage = new Storage(pharmacyRepositoryById,
-            //          drugRepositoryById,
-            //          null,
-            //         amount,
-            //         threshold
-            //         discount);
-            //  return storageRepository.save(storage);
-            // }
+            return null;
         }
-        return null;
     }
 
     @Override
@@ -101,7 +109,7 @@ public class StorageServiceImp implements StorageService {
                 storage.setAmount(amount);
             if (threshold > 0)
                 storage.setThreshold(threshold);
-            if (discount > 0)
+            if (discount >= 0 && discount <= 100)
                 storage.setDiscount(discount);
             storageRepository.save(storage);
             return true;
@@ -110,7 +118,7 @@ public class StorageServiceImp implements StorageService {
 
     @Override
     public boolean delete(Long id) {
-        if (id < 0) {
+        if (id == null || id < 0) {
             throw new IllegalArgumentException("Cannot delete null storage!");
         } else {
             try {
@@ -126,7 +134,9 @@ public class StorageServiceImp implements StorageService {
     @Override
     public StorageResponse getById(Long id) {
         Storage storage = storageRepository.findStorageById(id);
-        if (storage != null) {
+        if (storage == null)
+            throw new EntityNotFoundException("Storage not found with id: " + id);
+        {
             return new StorageResponse(
                     storage.getId(),
                     storage.getPharmacy(),
@@ -137,7 +147,6 @@ public class StorageServiceImp implements StorageService {
                     storage.getDiscount()
             );
         }
-        throw new EntityNotFoundException("Storage not found with id: " + id);
     }
 
     @Override
