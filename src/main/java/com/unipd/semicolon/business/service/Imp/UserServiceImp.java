@@ -86,8 +86,7 @@ public class UserServiceImp implements UserService {
                         String email,
                         Boolean accountStatus,
                         byte[] profilePicture
-    )
-    {
+    ) {
         if (userId != null) {
             // Retrieve the user from the database
             if (userRepository.findUserById(userId) != null) {
@@ -142,11 +141,13 @@ public class UserServiceImp implements UserService {
         }
         return false;
     }
+
     @Override
     public Boolean changeStatus(Long Id) {
         return null;
     }
-//
+
+    //
     @Override
     public List<UserResponse> getAll() {
         List<UserResponse> userList = new ArrayList<>();
@@ -165,22 +166,35 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public User getById(long id){
+    public UserResponse getById(long id) {
         User user = userRepository.findUserById(id);
-        if(user!=null){
-            return user;
+        if (user != null) {
+            return new UserResponse(
+                    user.getName(),
+                    user.getLastName(),
+                    user.getGender(),
+                    user.getBirthDate(),
+                    user.getPhoneNumber(),
+                    user.getAddress(),
+                    user.getRole(),
+                    user.getEmail()
+            );
         }
         throw new EntityNotFoundException("User not found with id:" + id);
     }
-//
+
     @Override
-    public void delete(User user) {
-        if (user == null) {
+    public boolean delete(Long id) {
+        if (id <= 0) {
             throw new IllegalArgumentException("Cannot delete null user!");
         } else {
-            userRepository.delete(user);
+            try {
+                User user = userRepository.findUserById(id);
+                userRepository.delete(user);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
         }
     }
-
-
-    }
+}

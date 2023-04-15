@@ -48,7 +48,6 @@ public interface UserService {
     );
 
 
-
     //Id => userId
     Boolean changeStatus(
             Long Id
@@ -60,8 +59,7 @@ public interface UserService {
     //TODO: User and Login entities must be connected
     //List<UserResponse> findByUserName(User userName);
 
-    User getById(long id);
+    UserResponse getById(long id);
 
-    void delete(User user);
-
+    boolean delete(Long user);
 }
