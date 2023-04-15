@@ -37,12 +37,14 @@ public class SupplierDao {
         return suppliers;
     }
 
-    public Supplier create(final Supplier supplier) {
+    public Supplier create(final Supplier supplier) throws SQLException {
         final String CREATE = "INSERT INTO supplier (name, address, telephone_number, email) VALUES (?, ?, ?, ?)";
 
-        try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-             PreparedStatement stmt = conn.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS)) {
+        PreparedStatement stmt = null;
 
+        try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+
+            stmt = conn.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
 
             stmt.setString(1, supplier.getName());
             stmt.setString(2, supplier.getAddress());
@@ -54,13 +56,10 @@ public class SupplierDao {
             if (rs.next()){
                 supplier.setId(rs.getLong(1));
             }
+        } finally {
             if (stmt != null) {
                 stmt.close();
             }
-//            LOGGER.info("Employee %d successfully stored in the database.", employee.getBadge());
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
 
         return supplier;
