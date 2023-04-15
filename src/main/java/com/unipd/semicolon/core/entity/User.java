@@ -33,7 +33,6 @@ public class User {
     @Column(name = "address")
     private String address;
     @OneToOne
-    @PrimaryKeyJoinColumn(name = "role")
     private Role role;
 
     @Column(name = "email")

@@ -5,4 +5,6 @@ import java.time.LocalDateTime;
 public interface LocalTimeService {
 
     LocalDateTime getLocalDateTime();
+
+    Long nowTime();
 }
