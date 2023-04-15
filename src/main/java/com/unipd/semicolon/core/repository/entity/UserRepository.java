@@ -1,6 +1,7 @@
 package com.unipd.semicolon.core.repository.entity;
 
 import com.unipd.semicolon.core.entity.Pharmacy;
+import com.unipd.semicolon.core.domain.UserResponse;
 import com.unipd.semicolon.core.entity.Role;
 import com.unipd.semicolon.core.entity.User;
 import io.micrometer.common.lang.NonNull;
@@ -15,12 +16,11 @@ public interface UserRepository {
 
     User save(User user);
 
-
     User findUserById(Long id);
 
     Boolean deleteByPharmacyId(Long id);
 
     List<User> getAll();
 
-    void delete(User user);
+    boolean delete(User user);
 }

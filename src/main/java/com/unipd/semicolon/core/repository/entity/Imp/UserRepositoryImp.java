@@ -1,5 +1,6 @@
 package com.unipd.semicolon.core.repository.entity.Imp;
 
+import com.unipd.semicolon.core.domain.UserResponse;
 import com.unipd.semicolon.core.entity.Role;
 import com.unipd.semicolon.core.entity.Storage;
 import com.unipd.semicolon.core.entity.User;
@@ -70,11 +71,8 @@ public class UserRepositoryImp extends CustomRepository implements UserRepositor
                 entityManager.createQuery("SELECT u FROM User u WHERE u.role.role =: roleName", User.class));
     }
 
-    public void delete(Storage storage) {
-        delete(Storage.class, storage);
-    }
-
-    public void delete(User user) {
+    public boolean delete(User user) {
         delete(User.class, user);
+        return true;
     }
 }

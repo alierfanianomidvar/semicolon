@@ -9,7 +9,7 @@ import com.unipd.semicolon.core.entity.enums.Gender;
 import java.util.Date;
 
 public class UserMapper {
-   public static UserListExampleResponse userListExampleResponse(User user) {
+    public static UserListExampleResponse userListExampleResponse(User user) {
         String fullName = user.getName() + " " + user.getLastName();
         return new UserListExampleResponse(fullName);
     }
