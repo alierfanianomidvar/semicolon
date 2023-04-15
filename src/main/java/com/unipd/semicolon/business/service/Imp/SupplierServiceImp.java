@@ -14,16 +14,17 @@ public class SupplierServiceImp implements SupplierService {
     private SupplierDao supplierDao;
 
     public SupplierServiceImp() {
-            this.supplierDao = new SupplierDao();
+        this.supplierDao = new SupplierDao();
     }
+
     @Override
-    public List<Supplier> getSupplierList() {
+    public List<Supplier> getSupplierList() throws SQLException {
         return supplierDao.findAll();
     }
 
     @Override
     public Supplier create(String name, String address, String email, String telephoneNumber) throws SQLException {
-        if (name.isBlank() || address.isBlank() || email.isBlank() || telephoneNumber.isBlank()){
+        if (name.isBlank() || address.isBlank() || email.isBlank() || telephoneNumber.isBlank()) {
             throw new CreatePharmacyDataNotFound();
         }
         List<Supplier> suppliers = supplierDao.findByEmail(email);
@@ -31,7 +32,7 @@ public class SupplierServiceImp implements SupplierService {
             throw new PharmacyExistsException();
         }
 
-        Supplier supplier = new Supplier(name,address,email,telephoneNumber);
+        Supplier supplier = new Supplier(name, address, email, telephoneNumber);
         return supplierDao.create(supplier);
     }
 }

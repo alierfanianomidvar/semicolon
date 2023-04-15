@@ -13,15 +13,16 @@ public class SupplierDao {
     private static final String USERNAME = "postgres";
     private static final String PASSWORD = "123456";
 
-    public List<Supplier> findAll() {
+    public List<Supplier> findAll() throws SQLException {
         final String SELECT_ALL = "SELECT id, name, address, email, telephone_number FROM supplier";
 
         List<Supplier> suppliers = new ArrayList<>();
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
 
-        try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-             PreparedStatement stmt = conn.prepareStatement(SELECT_ALL);
-             ResultSet rs = stmt.executeQuery()) {
-
+        try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+            stmt = conn.prepareStatement(SELECT_ALL);
+            rs = stmt.executeQuery();
             while (rs.next()) {
                 Supplier supplier = new Supplier();
                 supplier.setName(rs.getString("name"));
@@ -30,8 +31,15 @@ public class SupplierDao {
                 supplier.setTelephoneNumber(rs.getString("telephone_number"));
                 suppliers.add(supplier);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+
+            if (stmt != null) {
+                stmt.close();
+            }
+
         }
 
         return suppliers;
@@ -53,7 +61,7 @@ public class SupplierDao {
 
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
-            if (rs.next()){
+            if (rs.next()) {
                 supplier.setId(rs.getLong(1));
             }
         } finally {
@@ -61,11 +69,10 @@ public class SupplierDao {
                 stmt.close();
             }
         }
-
         return supplier;
     }
 
-    public List<Supplier> findByEmail(String email) {
+    public List<Supplier> findByEmail(String email) throws SQLException {
         final String FIND_BY_EMAIL = "SELECT id, name, address, email, telephone_number FROM supplier WHERE email = ?";
         List<Supplier> suppliers = new ArrayList<>();
         PreparedStatement stmt = null;
@@ -83,19 +90,13 @@ public class SupplierDao {
                 supplier.setTelephoneNumber(rs.getString("telephone_number"));
                 suppliers.add(supplier);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
+            if (rs != null) {
+                rs.close();
+            }
 
-                if (stmt != null) {
-                    stmt.close();
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+            if (stmt != null) {
+                stmt.close();
             }
         }
 
