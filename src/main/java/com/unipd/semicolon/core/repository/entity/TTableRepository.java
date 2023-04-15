@@ -11,5 +11,7 @@ public interface TTableRepository extends JpaRepository<TimeTable, Long> {
 
     TimeTable save(TimeTable timeTable);
 
+    Boolean deleteByPharmacyId(Long id);
+
     Optional<TimeTable> findById(Long id);
 }
