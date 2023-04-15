@@ -28,7 +28,7 @@ public interface UserService {
             String address,
             Role role,
             String email,
-            boolean accountStatus,
+            Boolean accountStatus,
             byte[] profilePicture
     );
 
@@ -39,11 +39,11 @@ public interface UserService {
                  String lastName,
                  Gender gender,
                  LocalDateTime birthDate,
-                 Long phoneNumber,
+                 String phoneNumber,
                  String address,
                  Role role,
                  String email,
-                 String accountStatus,
+                 Boolean accountStatus,
                  byte[] profilePicture
     );
 

@@ -1,13 +1,16 @@
 package com.unipd.semicolon.business.service.Imp;
 
 import com.unipd.semicolon.business.exception.NotFoundException;
+import com.unipd.semicolon.business.exception.UserExsitsException;
 import com.unipd.semicolon.business.mapper.UserMapper;
 import com.unipd.semicolon.business.service.UserService;
 
 import com.unipd.semicolon.core.domain.UserResponse;
+import com.unipd.semicolon.core.entity.Login;
 import com.unipd.semicolon.core.entity.Role;
 import com.unipd.semicolon.core.entity.User;
 import com.unipd.semicolon.core.entity.enums.Gender;
+import com.unipd.semicolon.core.repository.entity.RoleRepository;
 import com.unipd.semicolon.core.repository.entity.UserRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -27,28 +30,27 @@ public class UserServiceImp implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-//    @Autowired
-//    private RoleRepository roleRepository;
+    @Autowired
+    private RoleRepository roleRepository;
 
 //    @Autowired
 //    private LoginService loginService;
 
 
     @Override
-    public Boolean save(
-            String username,
-            String password,
-            String name,
-            String lastName,
-            Gender gender,
-            LocalDateTime birthDate,
-            String phoneNumber,
-            String address,
-            Role role,
-            String email,
-            boolean accountStatus,
-            byte[] profilePicture
-            ) {
+    public Boolean save(String username,
+                        String password,
+                        String name,
+                        String lastName,
+                        Gender gender,
+                        LocalDateTime birthDate,
+                        String phoneNumber,
+                        String address,
+                        Role role,
+                        String email,
+                        Boolean accountStatus,
+                        byte[] profilePicture
+    ) {
 
 //        if (loginService.exists(username)) {
 //            throw new UserExsitsException();
@@ -64,7 +66,8 @@ public class UserServiceImp implements UserService {
 //                    role,
 //                    email,
 //                    accountStatus,
-//                    profilePicture);
+//                    profilePicture,
+//                    null);
 //
 //            userRepository.save(user);
 //        }
@@ -73,16 +76,16 @@ public class UserServiceImp implements UserService {
 
     @Override
     public Boolean edit(Long userId,
-                     String name,
-                     String lastName,
-                     Gender gender,
-                     LocalDateTime birthDate,
-                     Long phoneNumber,
-                     String address,
-                     Role role,
-                     String email,
-                     String accountStatus,
-                     byte[] profilePicture
+                        String name,
+                        String lastName,
+                        Gender gender,
+                        LocalDateTime birthDate,
+                        String phoneNumber,
+                        String address,
+                        Role role,
+                        String email,
+                        Boolean accountStatus,
+                        byte[] profilePicture
     )
     {
         if (userId != null) {
@@ -123,7 +126,7 @@ public class UserServiceImp implements UserService {
                     user.setEmail(email);
                 }
 
-                if (accountStatus != null && !accountStatus.isBlank()) {
+                if (accountStatus != null) {
                     user.setAccountStatus(accountStatus);
                 }
 
