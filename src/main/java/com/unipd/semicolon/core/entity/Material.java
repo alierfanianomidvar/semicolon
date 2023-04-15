@@ -191,5 +191,4 @@ public class Material {
     public void setReceipts(List<Receipt> receipts) {
         this.receipts = receipts;
     }
-    
 }
