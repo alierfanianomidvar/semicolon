@@ -24,10 +24,10 @@ public interface StorageService {
             int amount,
             int threshold
     );
-    void delete(
-            Storage storage
+    boolean delete(
+            Long id
     );
-    Storage getById(
+    StorageResponse getById(
             Long id
     );
     List<StorageResponse> getAll();
