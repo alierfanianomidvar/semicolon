@@ -1,5 +1,6 @@
 package com.unipd.semicolon.core.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.unipd.semicolon.core.entity.enums.AgeGroup;
 import com.unipd.semicolon.core.entity.enums.Country;
 import com.unipd.semicolon.core.entity.enums.Gender;
@@ -8,6 +9,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
 
 @Entity
 @Table(name = "drug")
@@ -20,16 +22,15 @@ public class Drug {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "id_supplier")
+    @JoinColumn(name = "supplier_id")
     private Supplier supplier;
 
     @Column(name = "expiration_date")
     private LocalDate expirationDate;
 
-    @Column(name = "photo")
-    private byte[] photo;
-    @Column(name = "category")
-    private String category;
+    @Column(name = "image")
+    private byte[] image;
+
     @Column(name = "shape")
     private String shape;
     @Enumerated(EnumType.STRING)
@@ -47,20 +48,24 @@ public class Drug {
     private String description;
 
     //num of drugs that patient can buy
-    @Column(name = "drug_limit")
-    private int limit;
+    @Column(name = "limitation")
+    private int limitation;
     @Column(name = "price")
     private float price;
-    @Column(name = "country_of_origin")
-    private Country countryOFOrigin;
-    @Column(name = "last_modified")
-    private LocalDateTime lastModified;
+    @Column(name = "country_of_production")
+    private Country countryOFProduction;
+    @Column(name = "last_modified_date")
+    private LocalDateTime lastModifiedDate;
 
-//- buy price
-//- sell price //these are related to each pharmacy
+    @JsonIgnore
+    @ManyToMany(mappedBy = "orderDrugs")
+    private List<Order> orders;
 
-    //- quantity //the number of availability in pharmacy
-//- isActive //is active in the pharmacy
+    @JsonIgnore
+    @ManyToMany(mappedBy = "receiptDrugs")
+    private List<Receipt> receipts;
+
+
     public Drug() {
 
     }
@@ -69,55 +74,39 @@ public class Drug {
             String name,
             Supplier supplier,
             LocalDate expirationDate,
-            byte[] photo,
-            String category,
+            byte[] image,
             String shape,
             Gender gender,
             AgeGroup ageGroup,
             boolean isSensitive,
             boolean needPrescription,
             String description,
-            int limit,
+            int limitation,
             float price,
-            Country countryOFOrigin) {
+            Country countryOFProduction,
+            LocalDateTime lastModifiedDate,
+            List<Order> orders, List<Receipt> receipts) {
         this.name = name;
         this.supplier = supplier;
         this.expirationDate = expirationDate;
-        this.photo = photo;
-        this.category = category;
+        this.image = image;
         this.shape = shape;
         this.gender = gender;
         this.ageGroup = ageGroup;
         this.isSensitive = isSensitive;
         this.needPrescription = needPrescription;
         this.description = description;
-        this.limit = limit;
+        this.limitation = limitation;
         this.price = price;
-        this.countryOFOrigin = countryOFOrigin;
+        this.countryOFProduction = countryOFProduction;
+        this.lastModifiedDate = lastModifiedDate;
+        this.orders = orders;
+        this.receipts = receipts;
     }
-
-//    public Drug(
-//            String name,
-//            Supplier supplier,
-//            LocalDate expirationDate,
-//            String category,
-//            int limit,
-//            float price) {
-//        this.name = name;
-//        this.supplier = supplier;
-//        this.expirationDate = expirationDate;
-//        this.category = category;
-//        this.limit = limit;
-//        this.price = price;
-//    }
 
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -144,20 +133,12 @@ public class Drug {
         this.expirationDate = expirationDate;
     }
 
-    public byte[] getPhoto() {
-        return photo;
+    public byte[] getImage() {
+        return image;
     }
 
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public String getShape() {
@@ -208,12 +189,12 @@ public class Drug {
         this.description = description;
     }
 
-    public int getLimit() {
-        return limit;
+    public int getLimitation() {
+        return limitation;
     }
 
-    public void setLimit(int limit) {
-        this.limit = limit;
+    public void setLimitation(int limitation) {
+        this.limitation = limitation;
     }
 
     public float getPrice() {
@@ -224,20 +205,35 @@ public class Drug {
         this.price = price;
     }
 
-    public Country getCountryOFOrigin() {
-        return countryOFOrigin;
+    public Country getCountryOFProduction() {
+        return countryOFProduction;
     }
 
-    public void setCountryOFOrigin(Country countryOFOrigin) {
-        this.countryOFOrigin = countryOFOrigin;
+    public void setCountryOFProduction(Country countryOFProduction) {
+        this.countryOFProduction = countryOFProduction;
     }
 
-    public LocalDateTime getLastModified() {
-        return lastModified;
+    public LocalDateTime getLastModifiedDate() {
+        return lastModifiedDate;
     }
 
-    public void setLastModified(LocalDateTime lastModified) {
-        this.lastModified = lastModified;
+    public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
 
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public List<Receipt> getReceipts() {
+        return receipts;
+    }
+
+    public void setReceipts(List<Receipt> receipts) {
+        this.receipts = receipts;
+    }
 }

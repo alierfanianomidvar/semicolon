@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class Login {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long id;
     @Column(name = "username")
     private String username;
     @Column(name = "password")
@@ -22,52 +22,40 @@ public class Login {
     @Column(name = "termination_date")
     private LocalDateTime terminationDate;
 
-
-    //to get the list of login information
-    public Login(
-            String userName,
-            String password,
-            boolean session,
-            LocalDateTime lastLoginDate,
-            LocalDateTime activationDate,
-            LocalDateTime terminationDate) {
-        this.userId = userId;
-        this.username = userName;
-        this.password = password;
-        this.session = session;
-        this.lastLoginDate = lastLoginDate;
-        this.activationDate = activationDate;
-        this.terminationDate = terminationDate;
-    }
-
-    // to use in login
-    public Login(
-            Long userId,
-            String userName,
-            String password) {
-        this.userId = userId;
-        this.username = userName;
-        this.password = password;
-    }
+    @OneToOne
+    private User user;
 
     public Login() {
 
     }
 
-    public Long getUserId() {
-        return userId;
+    public Login(
+            String username,
+            String password,
+            boolean session,
+            LocalDateTime lastLoginDate,
+            LocalDateTime activationDate,
+            LocalDateTime terminationDate,
+            User user) {
+        this.username = username;
+        this.password = password;
+        this.session = session;
+        this.lastLoginDate = lastLoginDate;
+        this.activationDate = activationDate;
+        this.terminationDate = terminationDate;
+        this.user = user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public Long getId() {
+        return id;
     }
 
-    public String getUserName() {
+    public String getUsername() {
         return username;
     }
 
-    public void setUserName(String userName) {
-        this.username = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -110,4 +98,11 @@ public class Login {
         this.terminationDate = terminationDate;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
