@@ -59,7 +59,7 @@ public interface UserService {
     //TODO: User and Login entities must be connected
     //List<UserResponse> findByUserName(User userName);
 
-    UserResponse getById(long id);
+    UserResponse getById(Long id);
 
     boolean delete(Long user);
 }

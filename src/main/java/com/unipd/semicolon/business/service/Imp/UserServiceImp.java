@@ -166,7 +166,7 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public UserResponse getById(long id) {
+    public UserResponse getById(Long id) {
         User user = userRepository.findUserById(id);
         if (user != null) {
             return new UserResponse(
