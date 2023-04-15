@@ -14,35 +14,55 @@ public class StorageResponse {
     private int amount;
     private int threshold;
 
-    public StorageResponse(Long id, Pharmacy pharmacy, Drug drug, Material material, int amount, int threshold) {
+    private double discount;
+
+    public StorageResponse(Long id,
+                           Pharmacy pharmacy,
+                           Drug drug,
+                           Material material,
+                           int amount,
+                           int threshold,
+                           double discount) {
         this.id = id;
         this.pharmacy = pharmacy;
         this.drug = drug;
         this.material = material;
         this.amount = amount;
         this.threshold = threshold;
+        this.discount = discount;
     }
 
     public Long getId() {
+
         return id;
     }
 
     public Pharmacy getPharmacy() {
+
         return pharmacy;
     }
 
     public Drug getDrug() {
+
         return drug;
     }
 
-    public Material getMaterial() {return material;}
+    public Material getMaterial() {
+        return material;
+    }
 
     public int getAmount() {
+
         return amount;
     }
 
     public int getThreshold() {
+
         return threshold;
+    }
+
+    public double getDiscount() {
+        return discount;
     }
 }
 

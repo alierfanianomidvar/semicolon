@@ -12,12 +12,20 @@ public class StorageModel {
     private int amount;
     private int threshold;
 
-    public StorageModel(Pharmacy pharmacy, Material material, Drug drug, int amount, int threshold) {
+    private double discount;
+
+    public StorageModel(Pharmacy pharmacy,
+                        Material material,
+                        Drug drug,
+                        int amount,
+                        int threshold,
+                        double discount) {
         this.pharmacy = pharmacy;
         this.drug = drug;
         this.material = material;
         this.amount = amount;
         this.threshold = threshold;
+        this.discount = discount;
     }
 
     public Long getId() {
@@ -67,4 +75,8 @@ public class StorageModel {
     public void setThreshold(int threshold) {
         this.threshold = threshold;
     }
+
+    public double getDiscount() {return discount;}
+
+    public void setDiscount(double discount) {this.discount = discount;}
 }

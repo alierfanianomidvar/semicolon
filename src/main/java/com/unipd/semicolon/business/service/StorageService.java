@@ -14,7 +14,8 @@ public interface StorageService {
             Drug drug,
             Material material,
             int amount,
-            int threshold
+            int threshold,
+            double discount
     );
     boolean edit(
             Long id_storage,
@@ -22,7 +23,8 @@ public interface StorageService {
             Drug drug,
             Material material,
             int amount,
-            int threshold
+            int threshold,
+            double discount
     );
     boolean delete(
             Long id

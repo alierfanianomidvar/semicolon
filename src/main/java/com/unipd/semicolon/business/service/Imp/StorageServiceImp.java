@@ -39,10 +39,11 @@ public class StorageServiceImp implements StorageService {
                         Drug drug,
                         Material material,
                         int amount,
-                        int threshold) {
+                        int threshold,
+                        double discount) {
         if (pharmacy == null) {
             throw new IllegalArgumentException("Pharmacy is null");
-        } else if (amount < 0 || threshold < 0) {
+        } else if (amount < 0 || threshold < 0 || discount < 0) {
             throw new IllegalArgumentException("Invalid input parameter");
         } else if (drug == null && material == null) {
             throw new IllegalArgumentException("Either drug or material must be specified");
@@ -56,7 +57,8 @@ public class StorageServiceImp implements StorageService {
             //        null,
             //       materialRepositoryById,
             //      amount,
-            //     threshold);
+            //     threshold
+            //     discount);
 
             //    return storageRepository.save(storage);
 
@@ -66,7 +68,8 @@ public class StorageServiceImp implements StorageService {
             //          drugRepositoryById,
             //          null,
             //         amount,
-            //         threshold);
+            //         threshold
+            //         discount);
             //  return storageRepository.save(storage);
             // }
         }
@@ -79,7 +82,8 @@ public class StorageServiceImp implements StorageService {
                         Drug drug,
                         Material material,
                         int amount,
-                        int threshold) {
+                        int threshold,
+                        double discount) {
         if (id_storage == null || id_storage < 0) {
             throw new IllegalArgumentException("id_storage is null");
         } else {
@@ -97,6 +101,8 @@ public class StorageServiceImp implements StorageService {
                 storage.setAmount(amount);
             if (threshold > 0)
                 storage.setThreshold(threshold);
+            if (discount > 0)
+                storage.setDiscount(discount);
             storageRepository.save(storage);
             return true;
         }
@@ -127,7 +133,8 @@ public class StorageServiceImp implements StorageService {
                     storage.getDrug(),
                     storage.getMaterial(),
                     storage.getAmount(),
-                    storage.getThreshold()
+                    storage.getThreshold(),
+                    storage.getDiscount()
             );
         }
         throw new EntityNotFoundException("Storage not found with id: " + id);

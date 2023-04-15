@@ -12,7 +12,8 @@ public class StorageMapper {
                 storage.getDrug(),
                 storage.getMaterial(),
                 storage.getAmount(),
-                storage.getThreshold()
+                storage.getThreshold(),
+                storage.getDiscount()
         ) {
         };
     }
