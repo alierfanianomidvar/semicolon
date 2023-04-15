@@ -192,3 +192,4 @@ public class Material {
         this.receipts = receipts;
     }
 }
+ 
