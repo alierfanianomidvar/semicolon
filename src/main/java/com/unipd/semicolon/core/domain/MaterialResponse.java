@@ -1,6 +1,5 @@
 package com.unipd.semicolon.core.domain;
 
-import com.unipd.semicolon.core.entity.Material;
 import com.unipd.semicolon.core.entity.Order;
 import com.unipd.semicolon.core.entity.Receipt;
 import com.unipd.semicolon.core.entity.Supplier;
@@ -36,9 +35,7 @@ public class MaterialResponse {
             float price,
             AgeGroup ageGroup,
             LocalDate lastModifiedDate,
-            String description,
-            List<Order> orders,
-            List<Receipt> receipts) {
+            String description) {
         this.name = name;
         this.supplier = supplier;
         this.countryOfProduction = countryOfProduction;
@@ -49,8 +46,6 @@ public class MaterialResponse {
         this.ageGroup = ageGroup;
         this.lastModifiedDate = lastModifiedDate;
         this.description = description;
-        this.orders = orders;
-        this.receipts = receipts;
     }
 
     public Long getId() {
