@@ -55,7 +55,6 @@ public class SupplierCreateServlet extends HttpServlet {
             m = new Message("Cannot create the employee data. The provided data not correct.",
                     "E100", ex.getMessage());
         } catch (PharmacyExistsException ex) {
-//            throw new CreatePharmacyDataNotFound();
             m = new Message(String.format("Cannot create the Supplier: another supplier with the same email already exists.\n Email: %s", email),
                     "E300", ex.getMessage());
         } catch (SQLException ex) {

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface SupplierService {
 
-    List<Supplier> getSupplierList();
+    List<Supplier> getSupplierList() throws SQLException;
 
     Supplier create(String name,
                     String address,

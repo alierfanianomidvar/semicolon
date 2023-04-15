@@ -27,25 +27,29 @@
     </style>
 </head>
 <body>
-<table>
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Address</th>
-        <th>Telephone Number</th>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach items="${suppliers}" var="supplier">
+<!-- display the message -->
+<c:import url="include/show-message.jsp"/>
+<c:if test='${not empty suppliers && !message.error}'>
+    <table>
+        <thead>
         <tr>
-            <td>${supplier.name}</td>
-            <td>${supplier.email}</td>
-            <td>${supplier.address}</td>
-            <td>${supplier.telephoneNumber}</td>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Telephone Number</th>
         </tr>
-    </c:forEach>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        <c:forEach items="${suppliers}" var="supplier">
+            <tr>
+                <td>${supplier.name}</td>
+                <td>${supplier.email}</td>
+                <td>${supplier.address}</td>
+                <td>${supplier.telephoneNumber}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+</c:if>
 </body>
 </html>
