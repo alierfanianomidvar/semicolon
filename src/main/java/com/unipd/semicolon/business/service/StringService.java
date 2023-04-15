@@ -6,10 +6,10 @@ public interface StringService {
 
     String decodeBase64(String input);
 
-    String bCryptPasswordEncoder(String input);
+  /*  String bCryptPasswordEncoder(String input);
 
     Boolean verifyBCryptPassword(
             String rawInput,
-            String hashInput);
+            String hashInput);*/
 
 }
