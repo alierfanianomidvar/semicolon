@@ -13,7 +13,7 @@ public class UserResponse {
     private String lastName;
     private Gender gender;
     private LocalDateTime birthDate;
-    private long phoneNumber;
+    private String phoneNumber;
     private String address;
     private Role role;
     private String email;
@@ -26,7 +26,7 @@ public class UserResponse {
             String lastName,
             Gender gender,
             LocalDateTime birthDate,
-            long phoneNumber,
+            String phoneNumber,
             String address,
             Role role,
             String email) {
@@ -64,11 +64,11 @@ public class UserResponse {
         this.birthDate = birthDate;
     }
 
-    public long getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(long phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

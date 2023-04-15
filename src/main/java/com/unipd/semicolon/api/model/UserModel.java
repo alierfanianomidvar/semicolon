@@ -24,13 +24,13 @@ public class UserModel {
 
     private Gender gender;
 
-    private Long phoneNumber;
+    private String phoneNumber;
 
     private String address;
 
     private String email;
 
-    private String accountStatus;
+    private Boolean accountStatus;
 
     private byte[] profilePicture;
 
@@ -42,10 +42,10 @@ public class UserModel {
             LocalDateTime birthDate,
             Role role,
             Gender gender,
-            Long phoneNumber,
+            String phoneNumber,
             String address,
             String email,
-            String accountStatus,
+            Boolean accountStatus,
             byte[] profilePicture) {
         this.userId = userId;
         this.username = username;
@@ -69,10 +69,10 @@ public class UserModel {
             LocalDateTime birthDate,
             Role role,
             Gender gender,
-            Long phoneNumber,
+            String phoneNumber,
             String address,
             String email,
-            String accountStatus,
+            Boolean accountStatus,
             byte[] profilePicture) {
         this.username = username;
         this.password = password;
@@ -136,11 +136,11 @@ public class UserModel {
         this.gender = gender;
     }
 
-    public Long getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(Long phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -160,11 +160,11 @@ public class UserModel {
         this.email = email;
     }
 
-    public String getAccountStatus() {
+    public Boolean getAccountStatus() {
         return accountStatus;
     }
 
-    public void setAccountStatus(String accountStatus) {
+    public void setAccountStatus(Boolean accountStatus) {
         this.accountStatus = accountStatus;
     }
 
