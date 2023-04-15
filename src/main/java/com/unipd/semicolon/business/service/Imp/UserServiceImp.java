@@ -185,7 +185,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public boolean delete(Long id) {
-        if (id <= 0) {
+        if (id < 0) {
             throw new IllegalArgumentException("Cannot delete null user!");
         } else {
             try {
