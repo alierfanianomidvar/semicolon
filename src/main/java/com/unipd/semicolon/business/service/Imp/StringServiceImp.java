@@ -3,8 +3,6 @@ package com.unipd.semicolon.business.service.Imp;
 import com.unipd.semicolon.business.service.StringService;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Service;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
 
 @Service
 public class StringServiceImp implements StringService {
@@ -16,10 +14,10 @@ public class StringServiceImp implements StringService {
 
     @Override
     public String decodeBase64(String input) {
-        return new String(Base64.encodeBase64String(input.getBytes()));
+        return new String(Base64.decodeBase64(input));
     }
 
-    @Override
+    /*@Override
     public String bCryptPasswordEncoder(String input) {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         String encode = bCryptPasswordEncoder.encode(input);
@@ -32,5 +30,5 @@ public class StringServiceImp implements StringService {
             String hashInput) {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         return bCryptPasswordEncoder.matches(rawInput, hashInput);
-    }
+    }*/
 }
