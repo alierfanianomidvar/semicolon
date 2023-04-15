@@ -44,28 +44,5 @@ public class StorageResponse {
     public int getThreshold() {
         return threshold;
     }
-
-    // optional setters
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setPharmacy(Pharmacy pharmacy) {
-        this.pharmacy = pharmacy;
-    }
-
-    public void setDrug(Drug drug) {
-        this.drug = drug;
-    }
-
-    public void setMaterial(Material material) {this.material = material;}
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-    public void setThreshold(int threshold) {
-        this.threshold = threshold;
-    }
 }
 

@@ -51,24 +51,24 @@ public class StorageServiceImp implements StorageService {
                 Pharmacy pharmacyRepositoryById = pharmacyRepository.findById(pharmacy.getId()).get();
             }
             //else if (!materialRepository.findById(material.getId()).isEmpty()) {
-             //   Material materialRepositoryById = materialRepository.findById(material.getId()).get();
-              //  Storage storage = new Storage(pharmacyRepositoryById,
-                //        null,
-                 //       materialRepositoryById,
-                  //      amount,
-                   //     threshold);
+            //   Material materialRepositoryById = materialRepository.findById(material.getId()).get();
+            //  Storage storage = new Storage(pharmacyRepositoryById,
+            //        null,
+            //       materialRepositoryById,
+            //      amount,
+            //     threshold);
 
             //    return storageRepository.save(storage);
 
-           // } else if (!drugRepository.findById(drug.getId()).isEmpty()) {
+            // } else if (!drugRepository.findById(drug.getId()).isEmpty()) {
             //    Drug drugRepositoryById = drugRepository.findById(drug.getId()).get();
-             //   Storage storage = new Storage(pharmacyRepositoryById,
-              //          drugRepositoryById,
-              //          null,
-               //         amount,
-               //         threshold);
-              //  return storageRepository.save(storage);
-           // }
+            //   Storage storage = new Storage(pharmacyRepositoryById,
+            //          drugRepositoryById,
+            //          null,
+            //         amount,
+            //         threshold);
+            //  return storageRepository.save(storage);
+            // }
         }
         return null;
     }
@@ -103,19 +103,32 @@ public class StorageServiceImp implements StorageService {
     }
 
     @Override
-    public void delete(Storage storage) {
-        if (storage == null) {
+    public boolean delete(Long id) {
+        if (id < 0) {
             throw new IllegalArgumentException("Cannot delete null storage!");
         } else {
-            storageRepository.delete(storage);
+            try {
+                Storage storage = storageRepository.findStorageById(id);
+                storageRepository.delete(storage);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
         }
     }
 
     @Override
-    public Storage getById(Long id) {
+    public StorageResponse getById(Long id) {
         Storage storage = storageRepository.findStorageById(id);
         if (storage != null) {
-            return storage;
+            return new StorageResponse(
+                    storage.getId(),
+                    storage.getPharmacy(),
+                    storage.getDrug(),
+                    storage.getMaterial(),
+                    storage.getAmount(),
+                    storage.getThreshold()
+            );
         }
         throw new EntityNotFoundException("Storage not found with id: " + id);
     }
