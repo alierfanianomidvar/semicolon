@@ -1,7 +1,9 @@
 package com.unipd.semicolon.business.service.Imp;
 
+import com.unipd.semicolon.business.service.LocalTimeService;
 import com.unipd.semicolon.business.service.SecurityService;
 import io.jsonwebtoken.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +11,9 @@ import java.util.Date;
 
 @Service
 public class SecurityServiceImp implements SecurityService {
+
+    @Autowired
+    private LocalTimeService localTimeService;
 
     @Value("${security.jwt.token.secret-key:secret-key}")  // the secret-key
     private String secretKey;
@@ -21,12 +26,11 @@ public class SecurityServiceImp implements SecurityService {
         Claims claims = Jwts.claims().setSubject(accountId);
         claims.put("Role" , role);
 
-        Date now = new Date();
-        Date validity = new Date(now.getTime() + validityInMilliseconds * 1000000);
+        Date validity = new Date(localTimeService.nowTime() + validityInMilliseconds * 1000000);
 
         return Jwts.builder()
                 .setClaims(claims)
-                .setIssuedAt(now)
+                .setIssuedAt(new Date())
                 .setExpiration(validity)
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
