@@ -31,9 +31,7 @@ public class MaterialController {
                         model.getPrice(),
                         model.getAgeGroup(),
                         model.getLastModifiedDate(),
-                        model.getDescription(),
-                        model.getOrders(),
-                        model.getReceipts()
+                        model.getDescription()
                 ));
     }
 
@@ -57,9 +55,7 @@ public class MaterialController {
                         model.getPrice(),
                         model.getLastModifiedDate(),
                         model.getDescription(),
-                        model.getCountryOfProduction(),
-                        model.getOrders(),
-                        model.getReceipts()
+                        model.getCountryOfProduction()
                 ));
     }
 

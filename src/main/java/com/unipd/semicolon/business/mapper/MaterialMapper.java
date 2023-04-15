@@ -15,9 +15,7 @@ public class MaterialMapper {
                 material.getPrice(),
                 material.getAgeGroup(),
                 material.getLastModifiedDate(),
-                material.getDescription(),
-                material.getOrders(),
-                material.getReceipts()
+                material.getDescription()
         );
     }
 }

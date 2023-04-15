@@ -6,13 +6,10 @@ import com.unipd.semicolon.business.mapper.MaterialMapper;
 import com.unipd.semicolon.business.service.MaterialService;
 import com.unipd.semicolon.core.domain.MaterialResponse;
 import com.unipd.semicolon.core.entity.Material;
-import com.unipd.semicolon.core.entity.Order;
-import com.unipd.semicolon.core.entity.Receipt;
 import com.unipd.semicolon.core.entity.Supplier;
 import com.unipd.semicolon.core.entity.enums.AgeGroup;
 import com.unipd.semicolon.core.entity.enums.Country;
 import com.unipd.semicolon.core.entity.enums.Gender;
-import com.unipd.semicolon.core.repository.entity.Imp.MaterialRepositoryImp;
 import com.unipd.semicolon.core.repository.entity.MaterialRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +24,8 @@ public class MaterialServiceImp implements MaterialService {
 
     @Autowired
     private MaterialRepository materialRepository;
+    private Material material;
+
     @Override
     public Material save(
             String name,
@@ -38,17 +37,21 @@ public class MaterialServiceImp implements MaterialService {
             float price,
             AgeGroup ageGroup,
             LocalDate lastModifiedDate,
-            String description,
-            List<Order> orders,
-            List<Receipt> receipts) {
-        if (name == null || supplier == null ||
+            String description) {
+        if (name == null ||
                 gender == null || price < 0
                  || countryOfProduction == null) {
             throw new IllegalArgumentException("Invalid input parameter");
         } else {
+            if (supplier != null) {
+                material.setSupplier(supplier);
+            } else {
+                throw new IllegalArgumentException("Invalid input parameter, Supplier has not been set");
+            }
+            // Supplier supplierNew == {id}
             Material material = new Material(
                     name,
-                    supplier,
+                    supplier, // supplierNew
                     countryOfProduction,
                     expirationDate,
                     image,
@@ -56,9 +59,7 @@ public class MaterialServiceImp implements MaterialService {
                     price,
                     ageGroup,
                     lastModifiedDate,
-                    description,
-                    orders,
-                    receipts
+                    description
             );
             materialRepository.save(material);
             return material;
@@ -77,9 +78,7 @@ public class MaterialServiceImp implements MaterialService {
             float price,
             LocalDate lastModifiedDate,
             String description,
-            Country countryOfProduction,
-            List<Order> orders,
-            List<Receipt> receipts) {
+            Country countryOfProduction) {
                 if (
                         id == null || id < 0 || name == null ||
                         supplier == null || gender == null || price < 0
@@ -91,18 +90,37 @@ public class MaterialServiceImp implements MaterialService {
                     if (material == null) {
                         throw new NotFoundException();
                     }
-                    material.setName(name);
-                    material.setSupplier(supplier);
-                    material.setCountryOfProduction(countryOfProduction);
-                    material.setExpirationDate(expirationDate);
-                    material.setImage(image);
-                    material.setGender(gender);
-                    material.setPrice(price);
-                    material.setAgeGroup(ageGroup);
-                    material.setLastModifiedDate(lastModifiedDate);
-                    material.setDescription(description);
+                    if(name != null) {
+                        material.setName(name);
+                    }
+                    if(supplier != null) {
+                        material.setSupplier(supplier);
+                    }
+                    if(countryOfProduction != null) {
+                        material.setCountryOfProduction(countryOfProduction);
+                    }
+                    if (expirationDate != null) {
+                        material.setExpirationDate(expirationDate);
+                    }
+                    if (image != null) {
+                        material.setImage(image);
+                    }
+                    if (gender != null) {
+                        material.setGender(gender);
+                    }
+                    if (price < 0) {
+                        material.setPrice(price);
+                    }
+                    if (ageGroup != null) {
+                        material.setAgeGroup(ageGroup);
+                    }
+                    if (lastModifiedDate != null) {
+                        material.setLastModifiedDate(lastModifiedDate);
+                    }
+                    if (description != null) {
+                        material.setDescription(description);
+                    }
                     return true;
-
                 }
     }
 

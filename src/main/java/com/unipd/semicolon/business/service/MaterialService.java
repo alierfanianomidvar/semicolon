@@ -23,9 +23,8 @@ public interface MaterialService {
             float price,
             AgeGroup ageGroup,
             LocalDate lastModifiedDate,
-            String description,
-            List<Order> orders,
-            List<Receipt> receipts);
+            String description
+    );
 
     boolean edit(
             Long id,
@@ -38,9 +37,7 @@ public interface MaterialService {
             float price,
             LocalDate lastModifiedDate,
             String description,
-            Country countryOfProduction,
-            List<Order> orders,
-            List<Receipt> receipts);
+            Country countryOfProduction);
 
     Material getById(Long id);
     List<MaterialResponse> getAll();
