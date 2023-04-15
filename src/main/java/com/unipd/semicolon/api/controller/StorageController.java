@@ -23,7 +23,8 @@ public class StorageController {
                         model.getDrug(),
                         model.getMaterial(),
                         model.getAmount(),
-                        model.getThreshold()
+                        model.getThreshold(),
+                        model.getDiscount()
                 ));
     }
 
@@ -42,7 +43,8 @@ public class StorageController {
                         model.getDrug(),
                         model.getMaterial(),
                         model.getAmount(),
-                        model.getThreshold()
+                        model.getThreshold(),
+                        model.getDiscount()
                 ));
     }
 
