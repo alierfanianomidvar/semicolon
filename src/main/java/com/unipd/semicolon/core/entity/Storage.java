@@ -92,11 +92,7 @@ public class Storage {
         this.threshold = threshold;
     }
 
-    public double getDiscount() {
-        return discount;
-    }
+    public double getDiscount() {return discount;}
 
-    public void setDiscount(double discount) {
-        this.discount = discount;
-    }
+    public void setDiscount(double discount) {this.discount = discount;}
 }
