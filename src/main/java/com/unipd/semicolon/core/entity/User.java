@@ -52,6 +52,33 @@ public class User {
     }
 
     public User(
+            Long id,
+            String name,
+            String lastName,
+            Gender gender,
+            LocalDateTime birthDate,
+            String phoneNumber,
+            String address,
+            Role role,
+            String email,
+            String accountStatus,
+            byte[] profilePicture,
+            Pharmacy pharmacy) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.birthDate = birthDate;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.role = role;
+        this.email = email;
+        this.accountStatus = accountStatus;
+        this.profilePicture = profilePicture;
+        this.pharmacy = pharmacy;
+    }
+
+    public User(
             String name,
             String lastName,
             Gender gender,
@@ -78,6 +105,10 @@ public class User {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
