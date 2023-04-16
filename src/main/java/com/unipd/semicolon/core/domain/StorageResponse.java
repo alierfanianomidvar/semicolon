@@ -48,6 +48,7 @@ public class StorageResponse {
     }
 
     public Material getMaterial() {
+
         return material;
     }
 
@@ -62,6 +63,7 @@ public class StorageResponse {
     }
 
     public double getDiscount() {
+
         return discount;
     }
 }
