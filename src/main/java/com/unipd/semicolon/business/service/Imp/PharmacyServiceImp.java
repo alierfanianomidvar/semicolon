@@ -1,6 +1,8 @@
 package com.unipd.semicolon.business.service.Imp;
 
 import com.unipd.semicolon.business.exception.CustomException;
+import com.unipd.semicolon.business.exception.InvalidParameterException;
+import com.unipd.semicolon.core.entity.enums.PharmacyStatus;
 import com.unipd.semicolon.business.service.PharmacyService;
 import com.unipd.semicolon.core.entity.*;
 import com.unipd.semicolon.core.repository.entity.*;
@@ -11,6 +13,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import java.util.Objects;
 
 @Service
 public class PharmacyServiceImp implements PharmacyService {
@@ -27,27 +31,31 @@ public class PharmacyServiceImp implements PharmacyService {
     @Autowired
     private TTableRepository tTableRepository;
 
-//    @Autowired
-//    private StorageRepository storageRepository;
+    // @Autowired
+    // private StorageRepository storageRepository;
 
     // super admin only
     @Override
     public Pharmacy save(String name,
-                         String address,
-                         String tell_number,
-                         List<TimeTable> time_table,
-                         byte[] logo_path,
-                         List<Storage> storages,
-                         List<User> staff
-    ) throws CustomException {
+            String address,
+            String tell_number,
+            List<TimeTable> time_table,
+            byte[] logo_path,
+            List<Storage> storages,
+            List<User> staff) throws CustomException {
 
-        if (name == null) throw new CustomException("Name is not specified!");
-        if (address == null) throw new CustomException("Address is not specified!");
-        if (time_table == null) throw new CustomException("time_table can not be null! Pass an empty list instead");
-        if (storages == null) throw new CustomException("storage can not be null! Pass an empty list instead");
-        if (staff == null) throw new CustomException("staff can not be null! Pass an empty list instead");
+        if (name == null)
+            throw new CustomException("Name is not specified!");
+        if (address == null)
+            throw new CustomException("Address is not specified!");
+        if (time_table == null)
+            throw new CustomException("time_table can not be null! Pass an empty list instead");
+        if (storages == null)
+            throw new CustomException("storage can not be null! Pass an empty list instead");
+        if (staff == null)
+            throw new CustomException("staff can not be null! Pass an empty list instead");
 
-        //pharmacyRepository.findPharmacyByIdExists(1L);
+        // pharmacyRepository.findPharmacyByIdExists(1L);
 
         if (pharmacyRepository.getPharmacyByName(name) == null) {
             Pharmacy pharmacy = new Pharmacy(name,
@@ -59,42 +67,38 @@ public class PharmacyServiceImp implements PharmacyService {
             if (!time_table.isEmpty()) {
                 for (TimeTable t : time_table) {
                     if (t.getPharmacy() != null) {
-                        //  drug exits !!!
+                        // drug exits !!!
                         TimeTable timeTable = new TimeTable(
                                 t.getId(),
                                 t.getFrom_hour(),
-                                t.getTo_hour()
-                        );
+                                t.getTo_hour());
 
-//                        timeTableRepository.save(timeTable);
+                        // timeTableRepository.save(timeTable);
                     }
                     // Check if storage item has a valid ID
-                    //TODO: After merge uncomment and debug
-//                Storage storageItem = storageRepository.findStorageByPharmacyId(s.getId());
-//                if(storageItem == null) {
-//                    // ID is invalid, create a new Storage item for this Pharmacy
-//                    storageItem = new Storage(save.getId(), save, null, null, 0, 0);
-//                    storageRepository.save(storageItem);
-//                }
+                    // TODO: After merge uncomment and debug
+                    // Storage storageItem = storageRepository.findStorageByPharmacyId(s.getId());
+                    // if(storageItem == null) {
+                    // // ID is invalid, create a new Storage item for this Pharmacy
+                    // storageItem = new Storage(save.getId(), save, null, null, 0, 0);
+                    // storageRepository.save(storageItem);
+                    // }
 
                 }
             }
 
-
-
             if (!storages.isEmpty()) {
                 for (Storage s : storages) {
                     if (s.getDrug() != null) {
-                        //  drug exits !!!
+                        // drug exits !!!
                         Storage storage = new Storage(
                                 save,
                                 s.getDrug(),
                                 null,
                                 s.getAmount(),
-                                s.getThreshold()
-                        );
+                                s.getThreshold());
 
-//                         storageRepository.save(storage);
+                        // storageRepository.save(storage);
                     } else if (s.getMaterial() != null) {
                         // material exits !!
                         Storage storage = new Storage(
@@ -102,25 +106,25 @@ public class PharmacyServiceImp implements PharmacyService {
                                 null,
                                 s.getMaterial(),
                                 s.getAmount(),
-                                s.getThreshold()
-                        );
-//                        storageRepository.save(storage);
+                                s.getThreshold());
+                        // storageRepository.save(storage);
                     }
                     // Check if storage item has a valid ID
-                    //TODO: After merge uncomment and debug
-//                Storage storageItem = storageRepository.findStorageByPharmacyId(s.getId());
-//                if(storageItem == null) {
-//                    // ID is invalid, create a new Storage item for this Pharmacy
-//                    storageItem = new Storage(save.getId(), save, null, null, 0, 0);
-//                    storageRepository.save(storageItem);
-//                }
+                    // TODO: After merge uncomment and debug
+                    // Storage storageItem = storageRepository.findStorageByPharmacyId(s.getId());
+                    // if(storageItem == null) {
+                    // // ID is invalid, create a new Storage item for this Pharmacy
+                    // storageItem = new Storage(save.getId(), save, null, null, 0, 0);
+                    // storageRepository.save(storageItem);
+                    // }
 
                 }
             }
             if (!staff.isEmpty()) {
                 for (User user : staff) {
                     User userById = userRepository.findUserById(user.getId());
-                    if(userById == null) throw new CustomException("The user with id " + user.getId() + "does not exist!");
+                    if (userById == null)
+                        throw new CustomException("The user with id " + user.getId() + "does not exist!");
                     userById.setPharmacy(save);
                     userRepository.save(userById);
                 }
@@ -133,21 +137,22 @@ public class PharmacyServiceImp implements PharmacyService {
 
     @Override
     public Boolean edit(Long id,
-                        String name,
-                        String address,
-                        String tell_number,
-                        List<TimeTable> time_table,
-                        byte[] logo,
-                        List<Storage> storage,
-                        List<User> staff
-    ) {
+            String name,
+            String address,
+            String tell_number,
+            List<TimeTable> time_table,
+            byte[] logo,
+            List<Storage> storage,
+            List<User> staff) {
         Optional<Pharmacy> pharmacyOptional = pharmacyRepository.findById(id);
         if (pharmacyOptional.isPresent()) {
             Pharmacy pharmacy = pharmacyOptional.get();
-            if (name != null) pharmacy.setName(name);
-            if (address != null) pharmacy.setAddress(address);
+            if (name != null)
+                pharmacy.setName(name);
+            if (address != null)
+                pharmacy.setAddress(address);
             if (tell_number != null) {
-                //Check if Phone number is valid
+                // Check if Phone number is valid
                 String regex = "(\\+39|0039)?(3[0-9]{2})(\\s|-)?([0-9]{7})";
                 Pattern pattern = Pattern.compile(regex);
                 Matcher matcher = pattern.matcher(tell_number);
@@ -157,9 +162,12 @@ public class PharmacyServiceImp implements PharmacyService {
                     throw new CustomException("Invalid phone number!");
                 }
             }
-            if (time_table != null) pharmacy.setTime_table(time_table);
-            if (logo != null) pharmacy.setLogo(logo);
-            if (staff != null) pharmacy.setStorage(storage);
+            if (time_table != null)
+                pharmacy.setTime_table(time_table);
+            if (logo != null)
+                pharmacy.setLogo(logo);
+            if (staff != null)
+                pharmacy.setStorage(storage);
             pharmacyRepository.save(pharmacy);
 
             return true;
@@ -197,8 +205,7 @@ public class PharmacyServiceImp implements PharmacyService {
                         staffMember.getEmail(),
                         staffMember.getAccountStatus(),
                         staffMember.getProfilePicture(),
-                        pharmacy
-                );
+                        pharmacy);
                 userRepository.save(newStaffMember);
             }
         }
@@ -211,12 +218,14 @@ public class PharmacyServiceImp implements PharmacyService {
         for (User staffMember : staffList) {
             User existingStaffMember = userRepository.findUserById(staffMember.getId());
             if (existingStaffMember != null) {
-//                User user = existingStaffMember;
-                if (existingStaffMember.getPharmacy() != null && existingStaffMember.getPharmacy().getId().equals(staffMember.getPharmacy().getId())) {
+                // User user = existingStaffMember;
+                if (existingStaffMember.getPharmacy() != null
+                        && existingStaffMember.getPharmacy().getId().equals(staffMember.getPharmacy().getId())) {
                     existingStaffMember.setPharmacy(null);
                     userRepository.save(existingStaffMember);
                 } else {
-                    throw new CustomException("Pharmacy ID " + staffMember.getPharmacy().getId() + " does not match with the user's pharmacy ID!");
+                    throw new CustomException("Pharmacy ID " + staffMember.getPharmacy().getId()
+                            + " does not match with the user's pharmacy ID!");
                 }
             } else {
                 throw new CustomException("Staff member with ID " + staffMember.getId() + " not found!");
@@ -233,7 +242,7 @@ public class PharmacyServiceImp implements PharmacyService {
             // Remove rows from other tables referencing this Pharmacy
             userRepository.deleteByPharmacyId(id);
             tTableRepository.deleteByPharmacyId(id);
-//            storageRepository.deleteByPharmacyId(id);
+            // storageRepository.deleteByPharmacyId(id);
 
             // Remove the Pharmacy object
             pharmacyRepository.deleteById(id);
@@ -246,6 +255,28 @@ public class PharmacyServiceImp implements PharmacyService {
     @Override
     public List<Pharmacy> getAll() {
         return pharmacyRepository.findAll();
+    }
+
+    @Override
+    public Pharmacy activation(Long pharmacyId, PharmacyStatus status) {
+
+        Pharmacy pharmacy = pharmacyRepository.findById(pharmacyId)
+                .orElseThrow(() -> new IllegalStateException("Pharmacy not found - " + pharmacyId));
+
+        if (status != null && !Objects.equals(status, pharmacy.getStatus())) {
+            pharmacy.setStatus(status);
+            if (pharmacy.getStaff().toArray().length > 0) {
+                for (User user : pharmacy.getStaff()) {
+                    user.setAccountStatus(status.toString());
+                    userRepository.save(user);
+                }
+            }
+            pharmacy = pharmacyRepository.save(pharmacy);
+        } else {
+            throw new InvalidParameterException();
+        }
+
+        return pharmacy;
     }
 
 }
