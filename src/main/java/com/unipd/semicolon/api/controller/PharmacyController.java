@@ -22,7 +22,7 @@ public class PharmacyController {
     private PharmacyService pharmacyService;
 
     @PostMapping("/save")
-    public ResponseEntity save(@RequestBody PharmacyModel model){
+    public ResponseEntity save(@RequestBody PharmacyModel model) {
         return ResponseHelper
                 .response(pharmacyService.save(
                         model.getName(),
@@ -31,8 +31,7 @@ public class PharmacyController {
                         model.getTimeTable(),
                         model.getLogoPath(),
                         model.getStorage(),
-                        model.getStaff()
-                        ));
+                        model.getStaff()));
     }
 
     @PutMapping("/edit/{id}")
@@ -48,8 +47,7 @@ public class PharmacyController {
                         model.getTimeTable(),
                         model.getLogoPath(),
                         model.getStorage(),
-                        model.getStaff()
-                        ));
+                        model.getStaff()));
     }
 
     @PutMapping("/add-staff/{id}")
@@ -59,7 +57,8 @@ public class PharmacyController {
         List<User> users = new ArrayList<>();
         for (UserModel userModel : model) {
             User user = new User();
-            if (userModel.getUserId() != null) user.setId(userModel.getUserId());
+            if (userModel.getUserId() != null)
+                user.setId(userModel.getUserId());
             user.setName(userModel.getName());
             user.setLastName(userModel.getLastName());
             user.setBirthDate(userModel.getBirthDate());
@@ -98,6 +97,14 @@ public class PharmacyController {
     @GetMapping("/get-all")
     public ResponseEntity getAll() {
         return ResponseHelper.response(pharmacyService.getAll());
+
+    }
+
+    @RequestMapping(value = {
+            "{pharmacyId}" }, method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity pharmacyActivation(@PathVariable("pharmacyId") Long pharmacyId,
+            @RequestBody PharmacyModel status) {
+        return ResponseHelper.response(pharmacyService.activation(pharmacyId, status.getStatus()));
     }
 
 }

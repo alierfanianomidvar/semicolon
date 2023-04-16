@@ -1,5 +1,6 @@
 package com.unipd.semicolon.core.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.unipd.semicolon.core.entity.enums.Gender;
 import jakarta.persistence.*;
 
@@ -45,6 +46,7 @@ public class User {
     @Column(name = "profile_picture")
     private byte[] profilePicture;
 
+    @JsonBackReference
     @ManyToOne
     private Pharmacy pharmacy;
 

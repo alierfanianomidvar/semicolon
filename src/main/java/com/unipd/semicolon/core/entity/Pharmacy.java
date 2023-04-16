@@ -1,5 +1,7 @@
 package com.unipd.semicolon.core.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.unipd.semicolon.core.entity.enums.PharmacyStatus;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -26,21 +28,29 @@ public class Pharmacy {
     @OneToMany(mappedBy = "pharmacy")
     private List<Storage> storage;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "pharmacy")
     private List<User> staff;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private PharmacyStatus status;
+
     public Pharmacy() {
+
     }
 
     public Pharmacy(
             String name,
             String address,
             String telephoneNumber,
-            byte[] logo) {
+            byte[] logo,
+            PharmacyStatus status) {
         this.name = name;
         this.address = address;
         this.telephoneNumber = telephoneNumber;
         this.logo = logo;
+        this.status = status;
     }
 
     public Long getId() {
@@ -101,5 +111,13 @@ public class Pharmacy {
 
     public void setStaff(List<User> staff) {
         this.staff = staff;
+    }
+
+    public PharmacyStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(PharmacyStatus status) {
+        this.status = status;
     }
 }

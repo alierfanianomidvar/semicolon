@@ -6,14 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Optional;
-
 @Repository
 public interface PharmacyRepository
         extends JpaRepository<Pharmacy, Long>, JpaSpecificationExecutor<Pharmacy> {
 
-//     Find Pharmacy by id
+    // Find Pharmacy by id
     Optional<Pharmacy> findById(Long id);
 
     // Save an Pharmacy to the database
@@ -21,15 +18,14 @@ public interface PharmacyRepository
 
     Pharmacy getPharmacyByName(String name);
     // Delete an Pharmacy from the database
-//    void delete(Pharmacy pharmacy);
-//
-//    // Get all Pharmacies
-//    List<Pharmacy> findAll();
-//
-//    List<Pharmacy> findByTimeTable(String from, String to);
-//
-//    // Get Pharmacies by timeTable (day)
-//    List<Pharmacy> findByTimeTable(int day);
-
+    // void delete(Pharmacy pharmacy);
+    //
+    // // Get all Pharmacies
+    // List<Pharmacy> findAll();
+    //
+    // List<Pharmacy> findByTimeTable(String from, String to);
+    //
+    // // Get Pharmacies by timeTable (day)
+    // List<Pharmacy> findByTimeTable(int day);
 
 }

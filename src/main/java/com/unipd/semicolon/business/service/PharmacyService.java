@@ -1,7 +1,9 @@
 package com.unipd.semicolon.business.service;
+
 import com.unipd.semicolon.business.exception.CustomException;
 import com.unipd.semicolon.core.domain.PharmacyResponse;
 import com.unipd.semicolon.core.entity.Pharmacy;
+import com.unipd.semicolon.core.entity.enums.PharmacyStatus;
 import com.unipd.semicolon.core.entity.Storage;
 import com.unipd.semicolon.core.entity.TimeTable;
 import com.unipd.semicolon.core.entity.User;
@@ -17,8 +19,8 @@ public interface PharmacyService {
             List<TimeTable> time_table,
             byte[] logo,
             List<Storage> storage,
-            List<User> staff
-    ) throws CustomException;
+            List<User> staff) throws CustomException;
+
     Boolean edit(
             Long id,
             String name,
@@ -33,13 +35,17 @@ public interface PharmacyService {
 
     Pharmacy get(Long id);
 
-    //Add staff
+    // Add staff
     Boolean addStaff(List<User> user_list, Long id);
-    //Delete staff
+
+    // Delete staff
     Boolean deleteStaff(List<User> user_list);
+
     Boolean delete(Long id);
+
     List<Pharmacy> getAll();
 
+    Pharmacy activation(Long id, PharmacyStatus status);
 
-    //Not sure if the list type should be user or userResponse
+    // Not sure if the list type should be user or userResponse
 }
