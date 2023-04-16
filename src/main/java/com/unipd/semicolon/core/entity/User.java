@@ -28,7 +28,7 @@ public class User {
     private LocalDateTime birthDate;
 
     @Column(name = "phone_number")
-    private Long phoneNumber;
+    private String phoneNumber;
 
     @Column(name = "address")
     private String address;
@@ -40,7 +40,7 @@ public class User {
     private String email;
 
     @Column(name = "account_status")
-    private String accountStatus;
+    private Boolean accountStatus;
 
     @Column(name = "profile_picture")
     private byte[] profilePicture;
@@ -52,15 +52,42 @@ public class User {
     }
 
     public User(
+            Long id,
             String name,
             String lastName,
             Gender gender,
             LocalDateTime birthDate,
-            Long phoneNumber,
+            String phoneNumber,
             String address,
             Role role,
             String email,
-            String accountStatus,
+            Boolean accountStatus,
+            byte[] profilePicture,
+            Pharmacy pharmacy) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.birthDate = birthDate;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.role = role;
+        this.email = email;
+        this.accountStatus = accountStatus;
+        this.profilePicture = profilePicture;
+        this.pharmacy = pharmacy;
+    }
+
+    public User(
+            String name,
+            String lastName,
+            Gender gender,
+            LocalDateTime birthDate,
+            String phoneNumber,
+            String address,
+            Role role,
+            String email,
+            Boolean accountStatus,
             byte[] profilePicture,
             Pharmacy pharmacy) {
         this.name = name;
@@ -78,6 +105,10 @@ public class User {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -112,11 +143,11 @@ public class User {
         this.birthDate = birthDate;
     }
 
-    public Long getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(Long phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -144,11 +175,11 @@ public class User {
         this.email = email;
     }
 
-    public String getAccountStatus() {
+    public Boolean getAccountStatus() {
         return accountStatus;
     }
 
-    public void setAccountStatus(String accountStatus) {
+    public void setAccountStatus(Boolean accountStatus) {
         this.accountStatus = accountStatus;
     }
 
