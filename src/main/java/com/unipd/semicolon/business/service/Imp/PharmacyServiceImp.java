@@ -148,7 +148,7 @@ public class PharmacyServiceImp implements PharmacyService {
             if (address != null) pharmacy.setAddress(address);
             if (tell_number != null) {
                 //Check if Phone number is valid
-                String regex = "(\\\\+39|0039)?(3[0-9]{2})(\\\\s|-)?([0-9]{7})";
+                String regex = "(\\+39|0039)?(3[0-9]{2})(\\s|-)?([0-9]{7})";
                 Pattern pattern = Pattern.compile(regex);
                 Matcher matcher = pattern.matcher(tell_number);
                 if (matcher.matches()) {
@@ -180,20 +180,27 @@ public class PharmacyServiceImp implements PharmacyService {
                 .orElseThrow(() -> new CustomException("Pharmacy with ID " + pharmacyId + " not found!"));
 
         for (User staffMember : staffList) {
-            User newStaffMember = new User(
-                    staffMember.getName(),
-                    staffMember.getLastName(),
-                    staffMember.getGender(),
-                    staffMember.getBirthDate(),
-                    staffMember.getPhoneNumber(),
-                    staffMember.getAddress(),
-                    staffMember.getRole(),
-                    staffMember.getEmail(),
-                    staffMember.getAccountStatus(),
-                    staffMember.getProfilePicture(),
-                    pharmacy
-            );
-            userRepository.save(newStaffMember);
+            User existingStaffMember = userRepository.findUserById(staffMember.getId());
+            if (existingStaffMember != null) {
+                // Update existing user's pharmacy
+                existingStaffMember.setPharmacy(pharmacy);
+                userRepository.save(existingStaffMember);
+            } else {
+                User newStaffMember = new User(
+                        staffMember.getName(),
+                        staffMember.getLastName(),
+                        staffMember.getGender(),
+                        staffMember.getBirthDate(),
+                        staffMember.getPhoneNumber(),
+                        staffMember.getAddress(),
+                        staffMember.getRole(),
+                        staffMember.getEmail(),
+                        staffMember.getAccountStatus(),
+                        staffMember.getProfilePicture(),
+                        pharmacy
+                );
+                userRepository.save(newStaffMember);
+            }
         }
 
         return true;
@@ -202,12 +209,12 @@ public class PharmacyServiceImp implements PharmacyService {
     @Override
     public Boolean deleteStaff(List<User> staffList) {
         for (User staffMember : staffList) {
-            Optional<User> existingStaffMember = userRepository.findById(staffMember.getId());
-            if (existingStaffMember.isPresent()) {
-                User user = existingStaffMember.get();
-                if (user.getPharmacy() != null && user.getPharmacy().getId().equals(staffMember.getPharmacy().getId())) {
-                    user.setPharmacy(null);
-                    userRepository.save(user);
+            User existingStaffMember = userRepository.findUserById(staffMember.getId());
+            if (existingStaffMember != null) {
+//                User user = existingStaffMember;
+                if (existingStaffMember.getPharmacy() != null && existingStaffMember.getPharmacy().getId().equals(staffMember.getPharmacy().getId())) {
+                    existingStaffMember.setPharmacy(null);
+                    userRepository.save(existingStaffMember);
                 } else {
                     throw new CustomException("Pharmacy ID " + staffMember.getPharmacy().getId() + " does not match with the user's pharmacy ID!");
                 }
