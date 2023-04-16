@@ -36,7 +36,7 @@ public class UserController {
                         model.getProfilePicture()));
     }
 
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
     //Here we want to update the data, so we use PUT and not POSt.
     public ResponseEntity edit(@RequestBody UserModel model) {
         return ResponseHelper
@@ -67,6 +67,7 @@ public class UserController {
         return ResponseHelper
                 .response(userService.getById(id));
     }
+
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteById(@PathVariable("id") Long id) {
