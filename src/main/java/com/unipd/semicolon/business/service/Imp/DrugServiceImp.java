@@ -7,6 +7,7 @@ import com.unipd.semicolon.core.entity.enums.AgeGroup;
 import com.unipd.semicolon.core.entity.enums.Country;
 import com.unipd.semicolon.core.entity.enums.Gender;
 import com.unipd.semicolon.core.repository.entity.DrugRepository;
+import com.unipd.semicolon.business.service.DrugService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,9 +36,8 @@ public class DrugServiceImp implements DrugService {
             float price,
             Country countryOFProduction) {
         if (name == null || supplier == null || expirationDate == null ||
-                image == null || shape == null || gender == null || ageGroup == null ||
-                isSensitive == null || needPrescription == null || description == null ||
-                limitation == null || price < 0 || countryOFProduction == null) {
+                image == null || shape == null || gender == null || ageGroup == null || description == null ||
+                limitation == 0 || price < 0 || countryOFProduction == null) {
             throw new IllegalArgumentException("Invalid input parameter");
         } else {
             Drug drug = new Drug(
@@ -72,6 +72,11 @@ public class DrugServiceImp implements DrugService {
     @Override
     public boolean isActive(Drug drug){
         return false;
+    }
+
+    @Override
+    public Object getById(Long id) {
+        return null;
     }
 
     @Override
