@@ -1,84 +1,74 @@
-package com.unipd.semicolon.core.entity;
+package com.unipd.semicolon.api.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.unipd.semicolon.core.entity.enums.PharmacyStatus;
-import jakarta.persistence.*;
+import com.unipd.semicolon.core.entity.Storage;
+import com.unipd.semicolon.core.entity.TimeTable;
+import com.unipd.semicolon.core.entity.User;
 
 import java.util.List;
 
-@Entity
-@Table(name = "Pharmacy")
-public class Pharmacy {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // will creat the uniq and respectively id
-    private Long id;
-    @Column(name = "name")
+public class PharmacyModel {
+
     private String name;
 
-    @Column(name = "address")
     private String address;
-    @Column(name = "telephoneNumber")
-    private String telephoneNumber;
-    @OneToMany(mappedBy = "pharmacy")
+
+    private String tell_number;
     private List<TimeTable> time_table;
 
-    @Column(name = "logo")
     private byte[] logo;
 
-    @OneToMany(mappedBy = "pharmacy")
     private List<Storage> storage;
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "pharmacy")
     private List<User> staff;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
     private PharmacyStatus status;
 
-    public Pharmacy() {
-
+    public PharmacyModel() {
     }
 
-    public Pharmacy(
-            String name,
+    public PharmacyModel(String name,
             String address,
-            String telephoneNumber,
+            String tell_number,
+            List<TimeTable> time_table,
             byte[] logo,
+            List<Storage> storage,
+            List<User> staff,
             PharmacyStatus status) {
         this.name = name;
         this.address = address;
-        this.telephoneNumber = telephoneNumber;
+        this.tell_number = tell_number;
+        this.time_table = time_table;
         this.logo = logo;
+        this.storage = storage;
+        this.staff = staff;
         this.status = status;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public String getTellNumber() {
+        return tell_number;
     }
 
-    public String getTelephoneNumber() {
-        return telephoneNumber;
+    public List<TimeTable> getTimeTable() {
+        return time_table;
     }
 
-    public void setTelephoneNumber(String telephoneNumber) {
-        this.telephoneNumber = telephoneNumber;
+    public byte[] getLogoPath() {
+        return logo;
+    }
+
+    public String getTell_number() {
+        return tell_number;
+    }
+
+    public void setTell_number(String tell_number) {
+        this.tell_number = tell_number;
     }
 
     public List<TimeTable> getTime_table() {
@@ -111,6 +101,26 @@ public class Pharmacy {
 
     public void setStaff(List<User> staff) {
         this.staff = staff;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setTellNumber(String tell_number) {
+        this.tell_number = tell_number;
+    }
+
+    public void setTimeTable(List<TimeTable> time_table) {
+        this.time_table = time_table;
+    }
+
+    public void setLogoPath(byte[] logo) {
+        this.logo = logo;
     }
 
     public PharmacyStatus getStatus() {

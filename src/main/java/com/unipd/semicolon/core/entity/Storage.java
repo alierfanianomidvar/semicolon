@@ -43,6 +43,15 @@ public class Storage {
         this.threshold = threshold;
     }
 
+    public Storage(Long id, Pharmacy pharmacy, Drug drug, Material material, int amount, int threshold) {
+        this.id = id;
+        this.pharmacy = pharmacy;
+        this.drug = drug;
+        this.material = material;
+        this.amount = amount;
+        this.threshold = threshold;
+    }
+
     public Long getId() {
         return id;
     }
