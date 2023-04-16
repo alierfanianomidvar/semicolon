@@ -30,7 +30,7 @@ public class UserModel {
 
     private String email;
 
-    private String accountStatus;
+    private Boolean accountStatus;
 
     private byte[] profilePicture;
 
@@ -46,7 +46,7 @@ public class UserModel {
                      String phoneNumber,
                      String address,
                      String email,
-                     String accountStatus,
+                     Boolean accountStatus,
                      byte[] profilePicture) {
         this.userId = userId;
         this.username = username;
@@ -73,7 +73,7 @@ public class UserModel {
                      String phoneNumber,
                      String address,
                      String email,
-                     String accountStatus,
+                     Boolean accountStatus,
                      byte[] profilePicture) {
         this.username = username;
         this.password = password;
@@ -162,11 +162,11 @@ public class UserModel {
         this.email = email;
     }
 
-    public String getAccountStatus() {
+    public Boolean getAccountStatus() {
         return accountStatus;
     }
 
-    public void setAccountStatus(String accountStatus) {
+    public void setAccountStatus(Boolean accountStatus) {
         this.accountStatus = accountStatus;
     }
 
