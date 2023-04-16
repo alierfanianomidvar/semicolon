@@ -1,5 +1,6 @@
 package com.unipd.semicolon.api.model;
 
+import com.unipd.semicolon.core.entity.enums.PharmacyStatus;
 import com.unipd.semicolon.core.entity.Storage;
 import com.unipd.semicolon.core.entity.TimeTable;
 import com.unipd.semicolon.core.entity.User;
@@ -19,18 +20,19 @@ public class PharmacyModel {
 
     private List<Storage> storage;
     private List<User> staff;
+    private PharmacyStatus status;
 
     public PharmacyModel() {
     }
 
     public PharmacyModel(String name,
-                         String address,
-                         String tell_number,
-                         List<TimeTable> time_table,
-                         byte[] logo,
-                         List<Storage> storage,
-                         List<User> staff
-                         ) {
+            String address,
+            String tell_number,
+            List<TimeTable> time_table,
+            byte[] logo,
+            List<Storage> storage,
+            List<User> staff,
+            PharmacyStatus status) {
         this.name = name;
         this.address = address;
         this.tell_number = tell_number;
@@ -38,6 +40,7 @@ public class PharmacyModel {
         this.logo = logo;
         this.storage = storage;
         this.staff = staff;
+        this.status = status;
     }
 
     public String getName() {
@@ -118,5 +121,13 @@ public class PharmacyModel {
 
     public void setLogoPath(byte[] logo) {
         this.logo = logo;
+    }
+
+    public PharmacyStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(PharmacyStatus status) {
+        this.status = status;
     }
 }
