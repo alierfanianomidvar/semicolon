@@ -9,11 +9,7 @@ import com.unipd.semicolon.core.entity.Material;
 import com.unipd.semicolon.core.entity.Pharmacy;
 import com.unipd.semicolon.core.entity.Storage;
 
-import java.util.Objects;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import com.unipd.semicolon.core.repository.entity.PharmacyRepository;
 //import com.unipd.semicolon.core.repository.entity.MaterialRepository;
@@ -21,6 +17,7 @@ import com.unipd.semicolon.core.repository.entity.DrugRepository;
 import com.unipd.semicolon.core.repository.entity.StorageRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,8 +29,8 @@ public class StorageServiceImp implements StorageService {
     @Autowired
     private PharmacyRepository pharmacyRepository;
 
-    @Autowired
-    private MaterialRepository materialRepository;
+//    @Autowired
+//    private MaterialRepository materialRepository;
 
     @Autowired
     private DrugRepository drugRepository;
@@ -45,44 +42,64 @@ public class StorageServiceImp implements StorageService {
                         int amount,
                         int threshold,
                         double discount) {
-        Objects.requireNonNull(pharmacy, "Pharmacy is null");
+        Objects.requireNonNull(pharmacy, "Pharmacy is null"); // Check that pharmacy is not null
         if (amount <= 0 || threshold <= 0 || discount < 0.0 || discount > 100.0) {
             throw new IllegalArgumentException("Invalid input parameter");
         } else if (drug == null && material == null) {
             throw new IllegalArgumentException("Either drug or material must be specified");
         } else if (drug != null && material != null) {
-            throw new IllegalArgumentException("Both drug and material cannot be specified at the same time");
-        } else {
+            throw new IllegalArgumentException("Both drug and material cannot be specified at the same time. Please specify only one.");
+        } else
+        {
+            // Declare variables to store the found entities
             Pharmacy pharmacyRepositoryById = null;
             Material materialRepositoryById = null;
             Drug drugRepositoryById = null;
-            if (pharmacyRepository.findById(pharmacy.getId()).isPresent()) {
-                pharmacyRepositoryById = pharmacyRepository.findById(pharmacy.getId()).get();
-                if (materialRepository.findById(material.getId()).isPresent()) {
-                    materialRepositoryById = materialRepository.findById(material.getId()).get();
-                    Storage storage = new Storage(pharmacyRepositoryById,
-                            null,
-                            materialRepositoryById,
-                            amount,
-                            threshold,
-                            discount);
+            try
+            {
+                if (pharmacyRepository.findById(pharmacy.getId()).isPresent()) {
+                    pharmacyRepositoryById = pharmacyRepository.findById(pharmacy.getId()).get();
+                }
+//                if (materialRepository.findById(material.getId()).isPresent()) {
+//                    materialRepositoryById = materialRepository.findById(material.getId()).get();
+//                    Storage storage = new Storage(pharmacyRepositoryById,
+//                            null,
+//                            materialRepositoryById,
+//                            amount,
+//                            threshold,
+//                            discount);
+//
+//                    Storage savedStorage = storageRepository.save(storage);
+//                    if (savedStorage == null) {
+//                        throw new RuntimeException("Failed to save Storage");
+//                    }
+//                    return savedStorage;
 
-                    return storageRepository.save(storage);
-
-                } else if (drugRepository.findById(drug.getId()).isPresent()) {
+//                } else
+                    if (drugRepository.findById(drug.getId()).isPresent()) {
                     drugRepositoryById = drugRepository.findById(drug.getId()).get();
-                    Storage storage = new Storage(pharmacyRepositoryById,
-                            drugRepositoryById,
-                            null,
-                            amount,
-                            threshold,
-                            discount);
-                    return storageRepository.save(storage);
+                Storage storage = new Storage(pharmacyRepositoryById,
+                        drugRepositoryById,
+                        null,
+                        amount,
+                        threshold,
+                        discount);
+                Storage savedStorage = storageRepository.save(storage);
+                    if (savedStorage == null) {
+                        throw new RuntimeException("Failed to save Storage");
+                    }
+                return savedStorage;
                 }
             }
-            return null;
+            catch (NoSuchElementException e) {
+                throw new IllegalArgumentException("Invalid input parameter: " + e.getMessage());
+            } catch (DataAccessException e) {
+                throw new RuntimeException("Failed to access data: " + e.getMessage());
+            }
         }
+        return null;
     }
+
 
     @Override
     public boolean edit(Long id_storage,
