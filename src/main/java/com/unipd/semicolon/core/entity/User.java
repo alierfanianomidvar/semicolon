@@ -28,7 +28,7 @@ public class User {
     private LocalDateTime birthDate;
 
     @Column(name = "phone_number")
-    private Long phoneNumber;
+    private String phoneNumber;
 
     @Column(name = "address")
     private String address;
@@ -56,7 +56,7 @@ public class User {
             String lastName,
             Gender gender,
             LocalDateTime birthDate,
-            Long phoneNumber,
+            String phoneNumber,
             String address,
             Role role,
             String email,
@@ -112,11 +112,11 @@ public class User {
         this.birthDate = birthDate;
     }
 
-    public Long getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(Long phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
