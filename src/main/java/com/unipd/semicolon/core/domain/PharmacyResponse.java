@@ -1,50 +1,44 @@
-package com.unipd.semicolon.core.entity;
+package com.unipd.semicolon.core.domain;
 
-import jakarta.persistence.*;
+import com.unipd.semicolon.core.entity.TimeTable;
+import com.unipd.semicolon.core.entity.User;
 
 import java.util.List;
 
-@Entity
-@Table(name = "Pharmacy")
-public class Pharmacy {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // will creat the uniq and respectively id
+public class PharmacyResponse {
     private Long id;
-    @Column(name = "name")
     private String name;
-
-    @Column(name = "address")
     private String address;
-    @Column(name = "telephoneNumber")
     private String telephoneNumber;
-    @OneToMany(mappedBy = "pharmacy")
     private List<TimeTable> time_table;
-
-    @Column(name = "logo")
     private byte[] logo;
 
-    @OneToMany(mappedBy = "pharmacy")
-    private List<Storage> storage;
+    public PharmacyResponse() {
 
-    @OneToMany(mappedBy = "pharmacy")
-    private List<User> staff;
-
-    public Pharmacy() {
     }
 
-    public Pharmacy(
-            String name,
-            String address,
-            String telephoneNumber,
-            byte[] logo) {
+    public PharmacyResponse(Long id,
+                            String name,
+                            String address,
+                            String telephoneNumber,
+                            List<TimeTable> time_table,
+                            byte[] logo,
+                            List<User> staff
+    ) {
+        this.id = id;
         this.name = name;
         this.address = address;
         this.telephoneNumber = telephoneNumber;
+        this.time_table = time_table;
         this.logo = logo;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -87,19 +81,4 @@ public class Pharmacy {
         this.logo = logo;
     }
 
-    public List<Storage> getStorage() {
-        return storage;
-    }
-
-    public void setStorage(List<Storage> storage) {
-        this.storage = storage;
-    }
-
-    public List<User> getStaff() {
-        return staff;
-    }
-
-    public void setStaff(List<User> staff) {
-        this.staff = staff;
-    }
 }
