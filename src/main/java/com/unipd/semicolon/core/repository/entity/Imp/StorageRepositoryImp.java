@@ -14,16 +14,20 @@ public class StorageRepositoryImp extends CustomRepository implements StorageRep
     @Transactional
     @Override
     public Storage save(Storage storage) {
+
         return save(Storage.class, storage);
     }
 
     @Override
-    public void delete(Storage storage) {
+    public boolean delete(Storage storage) {
+
         delete(Storage.class, storage);
+        return true;
     }
 
     @Override
     public Storage findStorageById(Long id) {
+
         return findById(Storage.class, id);
     }
 

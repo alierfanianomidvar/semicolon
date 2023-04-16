@@ -11,7 +11,7 @@ public interface StorageRepository {
     Storage save(
             Storage storage
     );
-    void delete(
+    boolean delete(
             Storage storage
     );
 
