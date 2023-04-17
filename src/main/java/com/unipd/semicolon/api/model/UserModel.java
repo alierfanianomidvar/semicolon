@@ -34,7 +34,6 @@ public class UserModel {
 
     private byte[] profilePicture;
 
-
     public UserModel(Long userId,
                      String username,
                      String password,
@@ -88,7 +87,6 @@ public class UserModel {
         this.accountStatus = accountStatus;
         this.profilePicture = profilePicture;
     }
-
 
     public Long getUserId() {
         return userId;
@@ -178,10 +176,8 @@ public class UserModel {
         this.profilePicture = profilePicture;
     }
 
-
     public UserModel() {
     }
-
 
     public String getUsername() {
         return username;
@@ -198,6 +194,5 @@ public class UserModel {
     public Role getRole() {
         return role;
     }
-
 
 }
