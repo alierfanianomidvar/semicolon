@@ -63,7 +63,9 @@ public class PharmacyServiceImp implements PharmacyService {
             Pharmacy pharmacy = new Pharmacy(name,
                     address,
                     tell_number,
-                    logo_path);
+                    logo_path,
+                    PharmacyStatus.ACTIVE);
+
             Pharmacy save = pharmacyRepository.save(pharmacy);
 
             if (!time_table.isEmpty()) {
