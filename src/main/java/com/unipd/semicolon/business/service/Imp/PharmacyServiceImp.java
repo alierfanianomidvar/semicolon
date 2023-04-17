@@ -37,12 +37,12 @@ public class PharmacyServiceImp implements PharmacyService {
     // super admin only
     @Override
     public Pharmacy save(String name,
-            String address,
-            String tell_number,
-            List<TimeTable> time_table,
-            byte[] logo_path,
-            List<Storage> storages,
-            List<User> staff) throws CustomException {
+                         String address,
+                         String tell_number,
+                         List<TimeTable> time_table,
+                         byte[] logo_path,
+                         List<Storage> storages,
+                         List<User> staff) throws CustomException {
 
         if (name == null)
             throw new CustomException("Name is not specified!");
@@ -61,7 +61,9 @@ public class PharmacyServiceImp implements PharmacyService {
             Pharmacy pharmacy = new Pharmacy(name,
                     address,
                     tell_number,
-                    logo_path);
+                    logo_path,
+                    PharmacyStatus.ACTIVE);
+
             Pharmacy save = pharmacyRepository.save(pharmacy);
 
             if (!time_table.isEmpty()) {
@@ -137,13 +139,13 @@ public class PharmacyServiceImp implements PharmacyService {
 
     @Override
     public Boolean edit(Long id,
-            String name,
-            String address,
-            String tell_number,
-            List<TimeTable> time_table,
-            byte[] logo,
-            List<Storage> storage,
-            List<User> staff) {
+                        String name,
+                        String address,
+                        String tell_number,
+                        List<TimeTable> time_table,
+                        byte[] logo,
+                        List<Storage> storage,
+                        List<User> staff) {
         Optional<Pharmacy> pharmacyOptional = pharmacyRepository.findById(id);
         if (pharmacyOptional.isPresent()) {
             Pharmacy pharmacy = pharmacyOptional.get();
