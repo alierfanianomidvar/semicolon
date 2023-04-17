@@ -100,11 +100,10 @@ public class PharmacyController {
 
     }
 
-    @RequestMapping(value = {
-            "{pharmacyId}" }, method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = {"{pharmacyId}"}, method = RequestMethod.PATCH,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity pharmacyActivation(@PathVariable("pharmacyId") Long pharmacyId,
-            @RequestBody PharmacyModel status) {
+                                             @RequestBody PharmacyModel status){
         return ResponseHelper.response(pharmacyService.activation(pharmacyId, status.getStatus()));
     }
-
 }

@@ -36,6 +36,7 @@ public class Pharmacy {
     @Column(name = "status")
     private PharmacyStatus status;
 
+
     public Pharmacy() {
 
     }
@@ -51,6 +52,14 @@ public class Pharmacy {
         this.telephoneNumber = telephoneNumber;
         this.logo = logo;
         this.status = status;
+    }
+
+    public Pharmacy(String name, String address, String telephoneNumber, byte[] logo) {
+        this.name = name;
+        this.address = address;
+        this.telephoneNumber = telephoneNumber;
+        this.logo = logo;
+        this.status = PharmacyStatus.ACTIVE;
     }
 
     public Long getId() {

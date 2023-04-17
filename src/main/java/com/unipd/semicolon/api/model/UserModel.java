@@ -35,18 +35,18 @@ public class UserModel {
     private byte[] profilePicture;
 
     public UserModel(Long userId,
-            String username,
-            String password,
-            String name,
-            String lastName,
-            LocalDateTime birthDate,
-            Role role,
-            Gender gender,
-            String phoneNumber,
-            String address,
-            String email,
-            String accountStatus,
-            byte[] profilePicture) {
+                     String username,
+                     String password,
+                     String name,
+                     String lastName,
+                     LocalDateTime birthDate,
+                     Role role,
+                     Gender gender,
+                     String phoneNumber,
+                     String address,
+                     String email,
+                     String accountStatus,
+                     byte[] profilePicture) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -63,17 +63,17 @@ public class UserModel {
     }
 
     public UserModel(String username,
-            String password,
-            String name,
-            String lastName,
-            LocalDateTime birthDate,
-            Role role,
-            Gender gender,
-            String phoneNumber,
-            String address,
-            String email,
-            String accountStatus,
-            byte[] profilePicture) {
+                     String password,
+                     String name,
+                     String lastName,
+                     LocalDateTime birthDate,
+                     Role role,
+                     Gender gender,
+                     String phoneNumber,
+                     String address,
+                     String email,
+                     String accountStatus,
+                     byte[] profilePicture) {
         this.username = username;
         this.password = password;
         this.name = name;

@@ -43,6 +43,10 @@ public class PharmacyModel {
         this.status = status;
     }
 
+    public PharmacyModel(PharmacyStatus status) {
+        this.status = status;
+    }
+
     public String getName() {
         return name;
     }
@@ -123,11 +127,11 @@ public class PharmacyModel {
         this.logo = logo;
     }
 
-    public PharmacyStatus getStatus() {
-        return status;
-    }
-
     public void setStatus(PharmacyStatus status) {
         this.status = status;
+    }
+
+    public PharmacyStatus getStatus() {
+        return status;
     }
 }
