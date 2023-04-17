@@ -1,13 +1,13 @@
 package com.unipd.semicolon.core.repository.entity;
 
 import com.unipd.semicolon.core.entity.Pharmacy;
+import com.unipd.semicolon.core.domain.UserResponse;
 import com.unipd.semicolon.core.entity.Role;
 import com.unipd.semicolon.core.entity.User;
 import io.micrometer.common.lang.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
-
 
 import java.util.List;
 
@@ -22,8 +22,5 @@ public interface UserRepository {
 
     List<User> getAll();
 
-    List<User> findAllByLastName(String lastName);
-
-    List<User> findByRoles(@NonNull Role role);
-
+    boolean delete(User user);
 }
