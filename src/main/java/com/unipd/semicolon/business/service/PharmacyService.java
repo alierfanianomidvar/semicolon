@@ -1,7 +1,6 @@
 package com.unipd.semicolon.business.service;
 
 import com.unipd.semicolon.business.exception.CustomException;
-import com.unipd.semicolon.core.domain.PharmacyResponse;
 import com.unipd.semicolon.core.entity.Pharmacy;
 import com.unipd.semicolon.core.entity.enums.PharmacyStatus;
 import com.unipd.semicolon.core.entity.Storage;
@@ -48,4 +47,5 @@ public interface PharmacyService {
     Pharmacy activation(Long id, PharmacyStatus status);
 
     // Not sure if the list type should be user or userResponse
+
 }
