@@ -41,7 +41,7 @@ public class User {
     private String email;
 
     @Column(name = "account_status")
-    private Boolean accountStatus;
+    private String accountStatus;
 
     @Column(name = "profile_picture")
     private byte[] profilePicture;
@@ -63,7 +63,7 @@ public class User {
             String address,
             Role role,
             String email,
-            Boolean accountStatus,
+            String accountStatus,
             byte[] profilePicture,
             Pharmacy pharmacy) {
         this.id = id;
@@ -89,7 +89,7 @@ public class User {
             String address,
             Role role,
             String email,
-            Boolean accountStatus,
+            String accountStatus,
             byte[] profilePicture,
             Pharmacy pharmacy) {
         this.name = name;
@@ -177,11 +177,11 @@ public class User {
         this.email = email;
     }
 
-    public Boolean getAccountStatus() {
+    public String getAccountStatus() {
         return accountStatus;
     }
 
-    public void setAccountStatus(Boolean accountStatus) {
+    public void setAccountStatus(String accountStatus) {
         this.accountStatus = accountStatus;
     }
 
