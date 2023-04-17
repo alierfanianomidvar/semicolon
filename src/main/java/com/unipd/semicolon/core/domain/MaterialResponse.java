@@ -1,84 +1,31 @@
-package com.unipd.semicolon.core.entity;
+package com.unipd.semicolon.core.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.unipd.semicolon.core.entity.Order;
+import com.unipd.semicolon.core.entity.Receipt;
+import com.unipd.semicolon.core.entity.Supplier;
 import com.unipd.semicolon.core.entity.enums.AgeGroup;
 import com.unipd.semicolon.core.entity.enums.Country;
 import com.unipd.semicolon.core.entity.enums.Gender;
-import jakarta.persistence.*;
-
 
 import java.time.LocalDate;
 import java.util.List;
 
-@Entity
-@Table(name = "Material")
-public class Material {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)//id
+public class MaterialResponse {
     private Long id;
-
-    @Column(name = "name")
     private String name;
-
-    @ManyToOne
-    @JoinColumn(name = "supplier_id")
     private Supplier supplier;
-
-    @Column(name = "country_of_production")
-    private Country countryOfProduction;
-
-    @Column(name = "expiration_date")
     private LocalDate expirationDate;
-
-    @Column(name = "image")
     private byte[] image;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "gender")
-    public Gender gender;
-
-    @Column(name = "price")
-    private float price;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "age_group")
+    private Gender gender;
     private AgeGroup ageGroup;
-
-    @Column(name = "last_modified_date")
+    private float price;
     private LocalDate lastModifiedDate;
-
-
-    @Column(name = "description")
     private String description;
-
-    @JsonIgnore
-    @ManyToMany(mappedBy = "orderMaterials")
+    private Country countryOfProduction;
     private List<Order> orders;
-
-    @JsonIgnore
-    @ManyToMany(mappedBy = "receiptMaterials")
     private List<Receipt> receipts;
 
-
-    public Material() {
-
-    }
-
-    public Material(String name, Supplier supplier, Country countryOfProduction, LocalDate expirationDate, byte[] image, Gender gender, float price, AgeGroup ageGroup, LocalDate lastModifiedDate, String description) {
-        this.name = name;
-        this.supplier = supplier;
-        this.countryOfProduction = countryOfProduction;
-        this.expirationDate = expirationDate;
-        this.image = image;
-        this.gender = gender;
-        this.price = price;
-        this.ageGroup = ageGroup;
-        this.lastModifiedDate = lastModifiedDate;
-        this.description = description;
-    }
-
-    public Material(
+    public MaterialResponse(
             String name,
             Supplier supplier,
             Country countryOfProduction,
@@ -88,9 +35,7 @@ public class Material {
             float price,
             AgeGroup ageGroup,
             LocalDate lastModifiedDate,
-            String description,
-            List<Order> orders,
-            List<Receipt> receipts) {
+            String description) {
         this.name = name;
         this.supplier = supplier;
         this.countryOfProduction = countryOfProduction;
@@ -101,8 +46,6 @@ public class Material {
         this.ageGroup = ageGroup;
         this.lastModifiedDate = lastModifiedDate;
         this.description = description;
-        this.orders = orders;
-        this.receipts = receipts;
     }
 
     public Long getId() {
@@ -204,4 +147,5 @@ public class Material {
     public void setReceipts(List<Receipt> receipts) {
         this.receipts = receipts;
     }
+
 }
