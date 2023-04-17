@@ -48,7 +48,7 @@ public class UserServiceImp implements UserService {
                         String address,
                         Role role,
                         String email,
-                        Boolean accountStatus,
+                        String accountStatus,
                         byte[] profilePicture
     ) {
 
@@ -84,7 +84,7 @@ public class UserServiceImp implements UserService {
                         String address,
                         Role role,
                         String email,
-                        Boolean accountStatus,
+                        String  accountStatus,
                         byte[] profilePicture
     ) {
         if (userId != null) {
@@ -126,7 +126,7 @@ public class UserServiceImp implements UserService {
                 }
 
                 if (accountStatus != null) {
-                    user.setAccountStatus(accountStatus.toString());
+                    user.setAccountStatus(accountStatus);
                 }
 
                 if (profilePicture != null) {

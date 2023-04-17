@@ -28,7 +28,7 @@ public interface UserService {
             String address,
             Role role,
             String email,
-            Boolean accountStatus,
+            String accountStatus,
             byte[] profilePicture
     );
 
@@ -43,7 +43,7 @@ public interface UserService {
                  String address,
                  Role role,
                  String email,
-                 Boolean accountStatus,
+                 String accountStatus,
                  byte[] profilePicture
     );
 
