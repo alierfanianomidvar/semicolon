@@ -120,15 +120,15 @@ public class DrugModel {
                 this.ageGroup = ageGroup;
         }
 
-        public boolean isSensitive() {
+        public boolean getIsSensitive() {
                 return isSensitive;
         }
 
-        public void setSensitive(boolean sensitive) {
+        public void setIsSensitive(boolean sensitive) {
                 isSensitive = sensitive;
         }
 
-        public boolean isNeedPrescription() {
+        public boolean getNeedPrescription() {
                 return needPrescription;
         }
 

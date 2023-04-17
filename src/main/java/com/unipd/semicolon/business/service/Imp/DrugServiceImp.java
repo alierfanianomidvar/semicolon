@@ -54,7 +54,7 @@ public class DrugServiceImp implements DrugService {
                     limitation,
                     price,
                     countryOFProduction);
-            DrugRepository.save(drug);
+            drugRepository.save(drug);
             return drug;
         }
     }
