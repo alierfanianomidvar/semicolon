@@ -54,6 +54,14 @@ public class Pharmacy {
         this.status = status;
     }
 
+    public Pharmacy(String name, String address, String telephoneNumber, byte[] logo) {
+        this.name = name;
+        this.address = address;
+        this.telephoneNumber = telephoneNumber;
+        this.logo = logo;
+        this.status = PharmacyStatus.ACTIVE;
+    }
+
     public Long getId() {
         return id;
     }

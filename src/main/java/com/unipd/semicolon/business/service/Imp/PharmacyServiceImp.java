@@ -6,53 +6,45 @@ import com.unipd.semicolon.core.entity.enums.PharmacyStatus;
 import com.unipd.semicolon.business.service.PharmacyService;
 import com.unipd.semicolon.core.entity.*;
 import com.unipd.semicolon.core.repository.entity.*;
+import com.unipd.semicolon.core.repository.entity.TTableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.unipd.semicolon.core.entity.Pharmacy;
+import com.unipd.semicolon.core.entity.User;
+import com.unipd.semicolon.core.repository.entity.PharmacyRepository;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.unipd.semicolon.business.exception.InvalidParameterException;
-import com.unipd.semicolon.business.service.PharmacyService;
-import com.unipd.semicolon.core.entity.Pharmacy;
-import com.unipd.semicolon.core.entity.User;
-import com.unipd.semicolon.core.entity.enums.PharmacyStatus;
-import com.unipd.semicolon.core.repository.entity.PharmacyRepository;
-import com.unipd.semicolon.core.repository.entity.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
 @Service
 public class PharmacyServiceImp implements PharmacyService {
+    private final TTableRepository tTableRepository;
+
+    private final PharmacyRepository pharmacyRepository;
+
+    private final UserRepository userRepository;
 
     @Autowired
-    private PharmacyRepository pharmacyRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private DrugRepository drugRepository;
-
-    @Autowired
-    private TTableRepository tTableRepository;
-
-    // @Autowired
-    // private StorageRepository storageRepository;
+    public PharmacyServiceImp(PharmacyRepository pharmacyRepository, UserRepository userRepository, TTableRepository tTableRepository) {
+        this.pharmacyRepository = pharmacyRepository;
+        this.userRepository = userRepository;
+        this.tTableRepository = tTableRepository;
+    }
 
     // super admin only
     @Override
     public Pharmacy save(String name,
-            String address,
-            String tell_number,
-            List<TimeTable> time_table,
-            byte[] logo_path,
-            List<Storage> storages,
-            List<User> staff) throws CustomException {
+                         String address,
+                         String tell_number,
+                         List<TimeTable> time_table,
+                         byte[] logo_path,
+                         List<Storage> storages,
+                         List<User> staff) throws CustomException {
 
         if (name == null)
             throw new CustomException("Name is not specified!");
@@ -147,13 +139,13 @@ public class PharmacyServiceImp implements PharmacyService {
 
     @Override
     public Boolean edit(Long id,
-            String name,
-            String address,
-            String tell_number,
-            List<TimeTable> time_table,
-            byte[] logo,
-            List<Storage> storage,
-            List<User> staff) {
+                        String name,
+                        String address,
+                        String tell_number,
+                        List<TimeTable> time_table,
+                        byte[] logo,
+                        List<Storage> storage,
+                        List<User> staff) {
         Optional<Pharmacy> pharmacyOptional = pharmacyRepository.findById(id);
         if (pharmacyOptional.isPresent()) {
             Pharmacy pharmacy = pharmacyOptional.get();
@@ -265,14 +257,6 @@ public class PharmacyServiceImp implements PharmacyService {
     @Override
     public List<Pharmacy> getAll() {
         return pharmacyRepository.findAll();
-    private final PharmacyRepository pharmacyRepository;
-
-    private final UserRepository userRepository;
-
-    @Autowired
-    public PharmacyServiceImp(PharmacyRepository pharmacyRepository, UserRepository userRepository) {
-        this.pharmacyRepository = pharmacyRepository;
-        this.userRepository = userRepository;
     }
 
     @Override
