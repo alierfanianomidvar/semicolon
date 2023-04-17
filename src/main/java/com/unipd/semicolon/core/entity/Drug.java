@@ -8,7 +8,6 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -66,7 +65,7 @@ public class Drug {
     private List<Receipt> receipts;
 
 
-    public Drug() {
+    public Drug(String name, Supplier supplier, LocalDate expirationDate, byte[] image, String shape, Gender gender, AgeGroup ageGroup, boolean isSensitive, boolean needPrescription, String description, int limitation, float price, Country countryOFProduction) {
 
     }
 
@@ -102,6 +101,10 @@ public class Drug {
         this.lastModifiedDate = lastModifiedDate;
         this.orders = orders;
         this.receipts = receipts;
+    }
+
+    public Drug() {
+        
     }
 
 
