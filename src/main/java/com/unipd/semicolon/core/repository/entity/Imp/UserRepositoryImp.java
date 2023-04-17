@@ -1,12 +1,8 @@
 package com.unipd.semicolon.core.repository.entity.Imp;
 
-import com.unipd.semicolon.core.domain.UserResponse;
 import com.unipd.semicolon.core.entity.Role;
-import com.unipd.semicolon.core.entity.Storage;
 import com.unipd.semicolon.core.entity.User;
 import com.unipd.semicolon.core.repository.entity.UserRepository;
-import jakarta.persistence.Query;
-import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
