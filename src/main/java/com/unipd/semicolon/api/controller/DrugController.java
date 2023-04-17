@@ -17,7 +17,7 @@ public class DrugController {
     @Autowired
     private DrugService drugService;
 
-    @RequestMapping(value = "/" , method = RequestMethod.POST)
+    @RequestMapping(value = "/save" , method = RequestMethod.POST)
     public ResponseEntity save(@RequestBody DrugModel model) {
         return ResponseHelper.response(drugService.save(
                 model.getName(),
@@ -27,8 +27,8 @@ public class DrugController {
                 model.getShape(),
                 model.getGender(),
                 model.getAgeGroup(),
-                model.isSensitive(),
-                model.setNeedPrescription(),
+                model.getIsSensitive(),
+                model.getNeedPrescription(),
                 model.getDescription(),
                 model.getLimitation(),
                 model.getPrice(),
@@ -36,13 +36,13 @@ public class DrugController {
         ));
     }
 
-    @RequestMapping(value = "/{id}" , method = RequestMethod.GET)
-    public ResponseEntity getById(@pathVariable("id") Long id){
+    @RequestMapping(value = "/getById/{id}" , method = RequestMethod.GET)
+    public ResponseEntity getById(@PathVariable("id") Long id){
         return ResponseHelper.response(drugService.getById(id));
     }
 
-    @RequestMapping(value = "/{id}" , method = RequestMethod.PUT)
-    public ResponseEntity edit(@pathVariable("id") Long id , @RequestBody DrugModel model){
+    @RequestMapping(value = "/edit/{id}" , method = RequestMethod.PUT)
+    public ResponseEntity edit(@PathVariable("id") Long id , @RequestBody DrugModel model){
         return ResponseHelper.response(drugService.edit(
                 id,
                 model.getName(),
@@ -52,8 +52,8 @@ public class DrugController {
                 model.getShape(),
                 model.getGender(),
                 model.getAgeGroup(),
-                model.isSensitive(),
-                model.setNeedPrescription(),
+                model.getIsSensitive(),
+                model.getNeedPrescription(),
                 model.getDescription(),
                 model.getLimitation(),
                 model.getPrice(),
@@ -61,8 +61,8 @@ public class DrugController {
         ));
     }
 
-    @RequestMapping(value = "/{id}/isActive" , method = RequestMethod.GET)
-    public ResponseEntity isActive(@pathVariable("id") Long id){
+    @RequestMapping(value = "/isActive/{id}" , method = RequestMethod.GET)
+    public ResponseEntity isActive(@PathVariable("id") Long id){
         Drug drug = (Drug) drugService.getById(id);
         return ResponseHelper.response(drugService.isActive(drug));
     }
