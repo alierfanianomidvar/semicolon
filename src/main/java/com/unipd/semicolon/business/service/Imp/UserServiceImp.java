@@ -126,7 +126,7 @@ public class UserServiceImp implements UserService {
                 }
 
                 if (accountStatus != null) {
-                    user.setAccountStatus(accountStatus);
+                    user.setAccountStatus(accountStatus.toString());
                 }
 
                 if (profilePicture != null) {

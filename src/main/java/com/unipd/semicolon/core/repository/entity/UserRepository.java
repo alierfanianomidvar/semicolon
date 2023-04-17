@@ -22,5 +22,9 @@ public interface UserRepository {
 
     List<User> getAll();
 
+    List<User> findAllByLastName(String lastName);
+
+    List<User> findByRoles(Role role);
+
     boolean delete(User user);
 }
