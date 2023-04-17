@@ -8,6 +8,7 @@ import com.unipd.semicolon.core.entity.Material;
 import com.unipd.semicolon.core.entity.Receipt;
 import com.unipd.semicolon.core.entity.enums.PaymentMethod;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,17 +43,21 @@ public class ReceiptController {
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public ResponseEntity<Void> edit(
-            @RequestBody ReceiptModel receiptModel
-    ) {
+    public ResponseEntity edit(@RequestBody ReceiptModel receiptModel)
+    {
+        Long id=receiptModel.getId();
         List<Long> drugIds = receiptModel.getList_drug_id();
         List<Long> materialIds = receiptModel.getList_material_id();
         byte[] image = receiptModel.getImage();
         Date date = receiptModel.getDate();
         PaymentMethod paymentMethod = receiptModel.getPaymentMethod();
-
-        boolean success = receiptService.edit(receiptModel.getId(), drugIds, materialIds, image, date, paymentMethod);
-        return success ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+        return ResponseHelper
+                .response(receiptService.edit(id,
+                        drugIds,
+                        materialIds,
+                        image,
+                        date,
+                        paymentMethod));
 
     }
 
