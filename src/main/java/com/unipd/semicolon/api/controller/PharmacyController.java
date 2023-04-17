@@ -66,7 +66,7 @@ public class PharmacyController {
             user.setPhoneNumber(userModel.getPhoneNumber());
             user.setAddress(userModel.getAddress());
             user.setEmail(userModel.getEmail());
-            user.setAccountStatus(userModel.getAccountStatus().toString());
+            user.setAccountStatus(userModel.getAccountStatus());
             user.setProfilePicture(userModel.getProfilePicture());
             user.setRole(userModel.getRole());
 
