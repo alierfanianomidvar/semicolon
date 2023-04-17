@@ -1,45 +1,25 @@
-package com.unipd.semicolon.core.entity;
+package com.unipd.semicolon.api.model;
 
-import jakarta.persistence.*;
+import com.unipd.semicolon.core.entity.Drug;
+import com.unipd.semicolon.core.entity.Material;
+import com.unipd.semicolon.core.entity.Pharmacy;
 
-import java.util.List;
-
-@Entity
-@Table(name = "storage")
-public class Storage {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class StorageModel {
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "id_pharmacy")
     private Pharmacy pharmacy;
-
-    @OneToOne
-    private Drug drug;
-
-    @OneToOne
     private Material material;
-
-    @Column(name = "amount")
+    private Drug drug;
     private int amount;
-    @Column(name = "threshold")
     private int threshold;
 
-    @Column(name = "discount")
     private double discount;
 
-    public Storage() {
-
-    }
-
-    public Storage(
-            Pharmacy pharmacy,
-            Drug drug,
-            Material material,
-            int amount,
-            int threshold,
-            double discount) {
+    public StorageModel(Pharmacy pharmacy,
+                        Material material,
+                        Drug drug,
+                        int amount,
+                        int threshold,
+                        double discount) {
         this.pharmacy = pharmacy;
         this.drug = drug;
         this.material = material;
@@ -48,17 +28,12 @@ public class Storage {
         this.discount = discount;
     }
 
-    public Storage(Long id, Pharmacy pharmacy, Drug drug, Material material, int amount, int threshold) {
-        this.id = id;
-        this.pharmacy = pharmacy;
-        this.drug = drug;
-        this.material = material;
-        this.amount = amount;
-        this.threshold = threshold;
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Pharmacy getPharmacy() {
