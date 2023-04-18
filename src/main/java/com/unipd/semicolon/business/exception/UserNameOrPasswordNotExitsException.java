@@ -9,5 +9,6 @@ public class UserNameOrPasswordNotExitsException extends CustomException {
   public UserNameOrPasswordNotExitsException() {
     super("user_name_or_password_not_exists",HttpStatus.NOT_FOUND);
     this.setMsg("user_name_or_password_not_exists");
+    this.setData("No additional data available");
   }
 }
