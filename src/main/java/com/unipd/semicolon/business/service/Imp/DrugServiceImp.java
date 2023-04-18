@@ -1,14 +1,13 @@
 package com.unipd.semicolon.business.service.Imp;
 
 
+import com.unipd.semicolon.business.service.DrugService;
 import com.unipd.semicolon.core.entity.Drug;
 import com.unipd.semicolon.core.entity.Supplier;
 import com.unipd.semicolon.core.entity.enums.AgeGroup;
 import com.unipd.semicolon.core.entity.enums.Country;
 import com.unipd.semicolon.core.entity.enums.Gender;
 import com.unipd.semicolon.core.repository.entity.DrugRepository;
-import com.unipd.semicolon.business.service.DrugService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -74,19 +73,17 @@ public class DrugServiceImp implements DrugService {
         return false;
     }
 
-    @Override
-    public Object getById(Long id) {
-        return null;
-    }
+
 
     @Override
-    public Drug grtById(Long id){
-        Drug drug = drugRepository.findDrugById(id);
-        if (drug != null){
-            return drug;
-        } else {
-            throw new EntityNotFoundException("Drug Not Found with id" + id);
-        }
+    public Drug getById(Long id){
+        return drugRepository.findDrugById(id);
+        //Drug drug = drugRepository.findDrugById(id).get();
+//        /if (drug != null){
+//            return drug;
+//        } else {
+//            throw new EntityNotFoundException("Drug Not Found with id" + id);
+//        }
     }
 
 

@@ -46,7 +46,6 @@ public interface DrugService {
             Drug drug
     );
 
-    Object getById(Long id);
 
-    Drug grtById(Long id);
+     Drug getById(Long id);
 }
