@@ -60,7 +60,7 @@ public class AccountServiceImp implements AccountService {
         }
     }
 
-    // only inside of project must call and no api can not call this.
+    // only inside of project must be call and no api have right to call this.
     @Override
     public Login save(
             String username,
@@ -68,7 +68,6 @@ public class AccountServiceImp implements AccountService {
             User userId) {
 
         String passwordEncoder = stringService.encodeBase64(password);
-
         User user = userRepository.findUserById(userId.getId());
 
         Login login = new Login(
@@ -80,7 +79,6 @@ public class AccountServiceImp implements AccountService {
                 null,
                 user
         );
-        ;
 
         return loginRepository.save(login);
     }
