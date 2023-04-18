@@ -1,5 +1,7 @@
 package com.unipd.semicolon.business.service.Imp;
 
+import com.unipd.semicolon.business.exception.CustomException;
+import com.unipd.semicolon.business.exception.InvalidTokenException;
 import com.unipd.semicolon.business.service.LocalTimeService;
 import com.unipd.semicolon.business.service.SecurityService;
 import io.jsonwebtoken.*;
@@ -7,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Date;
 
 @Service
@@ -48,16 +51,20 @@ public class SecurityServiceImp implements SecurityService {
     }
 
     @Override
-    public String getAccountId(String token) {
-        return (getParseToken(token).getBody().getSubject());
+    public String getAccountId(String token) throws CustomException {
+        try {
+            return (getParseToken(token).getBody().getSubject());
+        } catch (CustomException e){
+            throw e;
+        }
     }
 
     /* ----  private class ----- */
-    private Jws<Claims> getParseToken(String token) {
+    private Jws<Claims> getParseToken(String token) throws CustomException {
         try {
             return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
         } catch (JwtException | IllegalArgumentException e) {
-            return null;
+            throw new InvalidTokenException();
         }
     }
 }
