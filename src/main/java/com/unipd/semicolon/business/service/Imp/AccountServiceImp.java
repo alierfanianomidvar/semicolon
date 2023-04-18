@@ -1,5 +1,6 @@
 package com.unipd.semicolon.business.service.Imp;
 
+import com.unipd.semicolon.business.exception.*;
 import com.unipd.semicolon.business.mapper.AccountMapper;
 import com.unipd.semicolon.business.service.LocalTimeService;
 import com.unipd.semicolon.business.service.AccountService;
@@ -12,6 +13,8 @@ import com.unipd.semicolon.core.repository.entity.LoginRepository;
 import com.unipd.semicolon.core.repository.entity.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class AccountServiceImp implements AccountService {
@@ -35,28 +38,37 @@ public class AccountServiceImp implements AccountService {
     @Override
     public AccountResponse Login(
             String username,
-            String password) {
+            String password) throws CustomException {
         Login login = loginRepository.findByUsername(username);
         if (password.equals(stringService.decodeBase64(login.getPassword()))) {
             login.setToken(securityService.createToken(
                     login.getId().toString(),
                     login.getUser().getRole().getRole()));
             login.setLastLoginDate(localTimeService.getLocalDateTime());
+        } else {
+            throw new UserNameOrPasswordNotExitsException();
         }
         Login save = loginRepository.save(login);
         return AccountMapper.loginMapper(save);
     }
 
     @Override
-    public Boolean LogOut(String token) {
-        Long id = Long.parseLong(securityService.getAccountId(token));
-        Login login = loginRepository.findById(id).get();
-        if (login != null) {
-            login.setToken(null);
-            loginRepository.save(login);
-            return true;
+    public Boolean LogOut(String token)
+            throws CustomException {
+        Long id = Optional.ofNullable(securityService.getAccountId(token))
+                .map(Long::parseLong)
+                .orElseThrow(() -> new InvalidTokenException());
+        if (id != null && id != 0) {
+            Optional<Login> login = loginRepository.findById(id);
+            if (login.isPresent()) {
+                login.get().setToken(null);
+                loginRepository.save(login.get());
+                return true;
+            } else {
+                throw new UserExsitsException();
+            }
         } else {
-            return false;
+            throw new InvalidTokenException();
         }
     }
 
@@ -65,10 +77,9 @@ public class AccountServiceImp implements AccountService {
     public Login save(
             String username,
             String password,
-            User userId) {
+            User user) {
 
         String passwordEncoder = stringService.encodeBase64(password);
-        User user = userRepository.findUserById(userId.getId());
 
         Login login = new Login(
                 username,
