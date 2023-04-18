@@ -36,8 +36,8 @@ public class ReceiptController {
     }
 
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Receipt> getById(@PathVariable Long id) {
+    @GetMapping("/getReciept/{id}")
+    public ResponseEntity<Receipt> getById(@PathVariable("id") Long id) {
         Receipt receipt = receiptService.getReceiptById(id);
         return ResponseHelper.response(receipt);
     }
@@ -60,10 +60,10 @@ public class ReceiptController {
                         paymentMethod));
 
     }
-
-    @GetMapping("")
-    public ResponseEntity<List<Receipt>> getAll() {
-        List<Receipt> receipts = receiptService.getList();
-        return ResponseHelper.response(receipts);
-    }
+//
+//    @GetMapping("/getRecieptList/{id}")
+//    public ResponseEntity<List<Receipt>> getAll(@PathVariable("id") Long id) {
+//        List<Receipt> receipts = receiptService.get;
+//        return ResponseHelper.response(receipts);
+//    }
 }
