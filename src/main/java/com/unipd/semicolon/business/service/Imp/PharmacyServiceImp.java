@@ -100,7 +100,8 @@ public class PharmacyServiceImp implements PharmacyService {
                                 s.getDrug(),
                                 null,
                                 s.getAmount(),
-                                s.getThreshold());
+                                s.getThreshold(),
+                                1);
 
                         // storageRepository.save(storage);
                     } else if (s.getMaterial() != null) {
@@ -110,7 +111,8 @@ public class PharmacyServiceImp implements PharmacyService {
                                 null,
                                 s.getMaterial(),
                                 s.getAmount(),
-                                s.getThreshold());
+                                s.getThreshold(),
+                                1);
                         // storageRepository.save(storage);
                     }
                     // Check if storage item has a valid ID
