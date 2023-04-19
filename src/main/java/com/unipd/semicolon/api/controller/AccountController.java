@@ -3,6 +3,8 @@ package com.unipd.semicolon.api.controller;
 import com.unipd.semicolon.api.model.LoginRequest;
 import com.unipd.semicolon.api.util.helper.ResponseHelper;
 import com.unipd.semicolon.business.exception.CustomException;
+import com.unipd.semicolon.business.exception.InvalidTokenException;
+import com.unipd.semicolon.business.exception.UserExsitsException;
 import com.unipd.semicolon.business.exception.UserNameOrPasswordNotExitsException;
 import com.unipd.semicolon.business.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +26,9 @@ public class AccountController {
             return ResponseHelper.response(accountService.Login(
                     model.getUsername(),
                     model.getPassword()));
-        } catch (CustomException e) {
+        } catch (UserNameOrPasswordNotExitsException e) {
             return ResponseHelper.response(
-                    e.getData(),
+                    model.getUsername() + " | " + model.getPassword(),
                     e.getMsg(),
                     e.getStatus()
             );
@@ -38,9 +40,15 @@ public class AccountController {
             throws CustomException {
         try {
             return ResponseHelper.response(accountService.LogOut(token));
-        } catch (CustomException e){
+        } catch (InvalidTokenException e) {
             return ResponseHelper.response(
-                    e.getData(),
+                    token,
+                    e.getMsg(),
+                    e.getStatus()
+            );
+        } catch (UserExsitsException e) {
+            return ResponseHelper.response(
+                    token,
                     e.getMsg(),
                     e.getStatus()
             );
