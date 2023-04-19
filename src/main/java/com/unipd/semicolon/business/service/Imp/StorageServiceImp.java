@@ -8,17 +8,18 @@ import com.unipd.semicolon.core.entity.Drug;
 import com.unipd.semicolon.core.entity.Material;
 import com.unipd.semicolon.core.entity.Pharmacy;
 import com.unipd.semicolon.core.entity.Storage;
-
-import java.util.*;
-
-import com.unipd.semicolon.core.repository.entity.PharmacyRepository;
-//import com.unipd.semicolon.core.repository.entity.MaterialRepository;
 import com.unipd.semicolon.core.repository.entity.DrugRepository;
+import com.unipd.semicolon.core.repository.entity.PharmacyRepository;
 import com.unipd.semicolon.core.repository.entity.StorageRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 
 @Service
 public class StorageServiceImp implements StorageService {
@@ -76,8 +77,8 @@ public class StorageServiceImp implements StorageService {
 //                    return savedStorage;
 
 //                } else
-                    if (drugRepository.findById(drug.getId()).isPresent()) {
-                    drugRepositoryById = drugRepository.findById(drug.getId()).get();
+                    if (drugRepository.findDrugById(drug.getId()) != null) {
+                    drugRepositoryById = drugRepository.findDrugById(drug.getId());
                 Storage storage = new Storage(pharmacyRepositoryById,
                         drugRepositoryById,
                         null,
