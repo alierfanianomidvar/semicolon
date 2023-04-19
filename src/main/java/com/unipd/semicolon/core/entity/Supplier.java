@@ -1,10 +1,8 @@
 package com.unipd.semicolon.core.entity;
 
-import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.List;
 
 @Entity
@@ -21,6 +19,7 @@ public class Supplier {
     private String email;
     @Column(name = "telephone_number")
     private String telephoneNumber;
+    @JsonManagedReference
     @OneToMany(mappedBy = "supplier")
     private List<Drug> drugs;
     @OneToMany(mappedBy = "supplier")

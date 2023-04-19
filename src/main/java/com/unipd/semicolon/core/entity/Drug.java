@@ -1,5 +1,6 @@
 package com.unipd.semicolon.core.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.unipd.semicolon.core.entity.enums.AgeGroup;
 import com.unipd.semicolon.core.entity.enums.Country;
@@ -21,6 +22,7 @@ public class Drug {
     private String name;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
 
@@ -65,9 +67,24 @@ public class Drug {
     @ManyToMany(mappedBy = "receiptDrugs")
     private List<Receipt> receipts;
 
+    public Drug() {
 
-    public Drug(String name, Supplier supplier, LocalDate expirationDate, byte[] image, String shape, Gender gender, AgeGroup ageGroup, boolean isSensitive, boolean needPrescription, String description, int limitation, float price, Country countryOFProduction) {
+    }
 
+    public Drug(String name, Supplier supplier, LocalDate expirationDate, byte[] image, String shape, Gender gender, AgeGroup ageGroup, boolean isSensitive, boolean needPrescription, String description, int limitation, float price, Country countryOFProduction ) {
+        this.name = name;
+        this.supplier = supplier;
+        this.expirationDate = expirationDate;
+        this.image = image;
+        this.shape = shape;
+        this.gender = gender;
+        this.ageGroup = ageGroup;
+        this.isSensitive = isSensitive;
+        this.needPrescription = needPrescription;
+        this.description = description;
+        this.limitation = limitation;
+        this.price = price;
+        this.countryOFProduction = countryOFProduction;
     }
 
     public Drug(
@@ -104,9 +121,6 @@ public class Drug {
         this.receipts = receipts;
     }
 
-    public Drug() {
-
-    }
 
 
     public Long getId() {

@@ -44,8 +44,7 @@ public class DrugResponse {
             String description,
             int limitation,
             float price,
-            Country countryOFProduction,
-            LocalDateTime lastModifiedDate) {
+            Country countryOFProduction) {
         this.name = name;
         this.supplier = supplier;
         this.expirationDate = expirationDate;
