@@ -3,11 +3,8 @@ package com.unipd.semicolon.api.controller;
 import com.unipd.semicolon.api.model.LoginRequest;
 import com.unipd.semicolon.api.util.helper.ResponseHelper;
 import com.unipd.semicolon.business.exception.CustomException;
-<<<<<<< HEAD
 import com.unipd.semicolon.business.exception.InvalidTokenException;
 import com.unipd.semicolon.business.exception.UserExsitsException;
-=======
->>>>>>> a80e7139b083979a7035af8cf03d3e594780b256
 import com.unipd.semicolon.business.exception.UserNameOrPasswordNotExitsException;
 import com.unipd.semicolon.business.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
