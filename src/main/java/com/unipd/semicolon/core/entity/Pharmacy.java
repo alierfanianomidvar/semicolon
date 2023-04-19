@@ -1,5 +1,7 @@
 package com.unipd.semicolon.core.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.unipd.semicolon.core.entity.enums.PharmacyStatus;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -17,8 +19,7 @@ public class Pharmacy {
     private String address;
     @Column(name = "telephoneNumber")
     private String telephoneNumber;
-    @OneToMany//(mappedBy = "Pharmacy")
-    @JoinColumn(name = "day_of_week")
+    @OneToMany(mappedBy = "pharmacy")
     private List<TimeTable> time_table;
 
     @Column(name = "logo")
@@ -27,27 +28,38 @@ public class Pharmacy {
     @OneToMany(mappedBy = "pharmacy")
     private List<Storage> storage;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "pharmacy")
     private List<User> staff;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private PharmacyStatus status;
+
+
     public Pharmacy() {
+
     }
 
     public Pharmacy(
             String name,
             String address,
             String telephoneNumber,
-            List<TimeTable> time_table,
             byte[] logo,
-            List<Storage> storage,
-            List<User> staff) {
+            PharmacyStatus status) {
         this.name = name;
         this.address = address;
         this.telephoneNumber = telephoneNumber;
-        this.time_table = time_table;
         this.logo = logo;
-        this.storage = storage;
-        this.staff = staff;
+        this.status = status;
+    }
+
+    public Pharmacy(String name, String address, String telephoneNumber, byte[] logo) {
+        this.name = name;
+        this.address = address;
+        this.telephoneNumber = telephoneNumber;
+        this.logo = logo;
+        this.status = PharmacyStatus.ACTIVE;
     }
 
     public Long getId() {
@@ -108,5 +120,13 @@ public class Pharmacy {
 
     public void setStaff(List<User> staff) {
         this.staff = staff;
+    }
+
+    public PharmacyStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(PharmacyStatus status) {
+        this.status = status;
     }
 }
