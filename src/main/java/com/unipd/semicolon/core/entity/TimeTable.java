@@ -23,6 +23,8 @@ public class TimeTable {
     }
 
 
+
+
     public TimeTable(Long day_of_week,
                      String from_hour,
                      String to_hour) {
@@ -31,6 +33,20 @@ public class TimeTable {
         this.to_hour = to_hour;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public Pharmacy getPharmacy() {
+        return pharmacy;
+    }
+
+    public void setPharmacy(Pharmacy pharmacy) {
+        this.pharmacy = pharmacy;
+    }
 
     public String getFrom_hour() {
         return from_hour;

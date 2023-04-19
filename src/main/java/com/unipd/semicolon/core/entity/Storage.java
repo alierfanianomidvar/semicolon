@@ -26,6 +26,9 @@ public class Storage {
     @Column(name = "threshold")
     private int threshold;
 
+    @Column(name = "discount")
+    private double discount;
+
     public Storage() {
 
     }
@@ -35,7 +38,18 @@ public class Storage {
             Drug drug,
             Material material,
             int amount,
-            int threshold) {
+            int threshold,
+            double discount) {
+        this.pharmacy = pharmacy;
+        this.drug = drug;
+        this.material = material;
+        this.amount = amount;
+        this.threshold = threshold;
+        this.discount = discount;
+    }
+
+    public Storage(Long id, Pharmacy pharmacy, Drug drug, Material material, int amount, int threshold) {
+        this.id = id;
         this.pharmacy = pharmacy;
         this.drug = drug;
         this.material = material;
@@ -86,4 +100,8 @@ public class Storage {
     public void setThreshold(int threshold) {
         this.threshold = threshold;
     }
+
+    public double getDiscount() {return discount;}
+
+    public void setDiscount(double discount) {this.discount = discount;}
 }

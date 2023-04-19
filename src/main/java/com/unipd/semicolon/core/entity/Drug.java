@@ -51,6 +51,7 @@ public class Drug {
     private int limitation;
     @Column(name = "price")
     private float price;
+    //Why not @Enumerated(EnumType.STRING)??
     @Column(name = "country_of_production")
     private Country countryOFProduction;
     @Column(name = "last_modified_date")
