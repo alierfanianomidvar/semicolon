@@ -1,17 +1,19 @@
 package com.unipd.semicolon.api.model;
 
-import com.unipd.semicolon.core.entity.Supplier;
+import com.unipd.semicolon.core.entity.Order;
+import com.unipd.semicolon.core.entity.Receipt;
 import com.unipd.semicolon.core.entity.enums.AgeGroup;
 import com.unipd.semicolon.core.entity.enums.Country;
 import com.unipd.semicolon.core.entity.enums.Gender;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class DrugModel {
 
         private Long id;
         private String name;
-        private Supplier supplier;
+        private Long supplier;
         private LocalDate expirationDate;
         private byte[] image;
         private String shape;
@@ -24,6 +26,8 @@ public class DrugModel {
         private float price;
         private Country countryOFProduction;
 
+
+
         public DrugModel(){
 
         }
@@ -31,7 +35,7 @@ public class DrugModel {
         public DrugModel(
                 Long id,
                 String name,
-                Supplier supplier,
+                Long supplier,
                 LocalDate expirationDate,
                 byte[] image,
                 String shape,
@@ -42,7 +46,9 @@ public class DrugModel {
                 String description,
                 int limitation,
                 float price,
-                Country countryOFProduction) {
+                Country countryOFProduction,
+                List<Order> orders,
+                List<Receipt> receipts) {
 
                 this.id = id;
                 this.name = name;
@@ -64,6 +70,8 @@ public class DrugModel {
                 return id;
         }
 
+        public void setId(Long Id) { this.id = id; }
+
         public String getName() {
                 return name;
         }
@@ -72,11 +80,11 @@ public class DrugModel {
                 this.name = name;
         }
 
-        public Supplier getSupplier() {
+        public Long getSupplier() {
                 return supplier;
         }
 
-        public void setSupplier(Supplier supplier) {
+        public void setSupplier(Long supplier) {
                 this.supplier = supplier;
         }
 
@@ -167,5 +175,7 @@ public class DrugModel {
         public void setCountryOFProduction(Country countryOFProduction) {
                 this.countryOFProduction = countryOFProduction;
         }
+
+
 
 }
