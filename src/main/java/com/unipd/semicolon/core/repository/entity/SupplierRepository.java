@@ -8,4 +8,5 @@ public interface SupplierRepository {
     boolean editSupplier(Supplier s) throws SQLException;
     boolean addSupplier(Supplier s) throws SQLException;
     boolean removingSuppliers(Supplier s) throws SQLException;
+    Supplier findById(Long id) throws SQLException;
 }
