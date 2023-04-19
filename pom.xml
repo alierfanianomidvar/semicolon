@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.5</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
-	<groupId>com.unipd</groupId>
-	<artifactId>semicolon</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>semicolon</name>
-	<description>Project for web application course</description>
-	<properties>
-		<java.version>19</java.version>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.0.5</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.unipd</groupId>
+    <artifactId>semicolon</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>semicolon</name>
+    <description>Project for web application course</description>
+    <properties>
+        <java.version>19</java.version>
 		<log4j.version>2.20.0</log4j.version>
-	</properties>
-	<dependencies>
+    </properties>
+    <dependencies>
 
 
 		<dependency>
@@ -142,7 +142,20 @@
 			<version>${log4j.version}</version>
 		</dependency>
 
-	</dependencies>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.11</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+
+    </dependencies>
+
 
 	<build>
 		<plugins>
