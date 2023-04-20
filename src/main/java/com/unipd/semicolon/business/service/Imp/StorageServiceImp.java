@@ -77,8 +77,8 @@ public class StorageServiceImp implements StorageService {
 //                    return savedStorage;
 
 //                } else
-                    if (drugRepository.findDrugById(drug.getId()) != null) {
-                    drugRepositoryById = drugRepository.findDrugById(drug.getId());
+                    if (drugRepository.findById(drug.getId()) != null) {
+                    drugRepositoryById = drugRepository.findById(drug.getId());
                 Storage storage = new Storage(pharmacyRepositoryById,
                         drugRepositoryById,
                         null,

@@ -12,5 +12,5 @@ public interface DrugRepository {
 
     List<Drug> getAll();
 
-    Drug findDrugById(Long id);
+    Drug findById(Long id);
 }
