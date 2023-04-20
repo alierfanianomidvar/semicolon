@@ -29,7 +29,7 @@ public interface DrugService {
             Country countryOFProduction
     ) throws SQLException;
 
-    boolean edit(
+    Drug edit(
             Long id,
             String name,
             Long supplier,

@@ -79,12 +79,12 @@ public class DrugServiceImp implements DrugService {
     }
 
     @Override
-    public boolean edit(Long id, String name, Long supplierId, LocalDate expirationDate,
-                        byte[] image, String shape, Gender gender,
-                        AgeGroup ageGroup, boolean isSensitive,
-                        boolean needPrescription, String description,
-                        int limitation, float price,
-                        Country countryOFProduction) throws SQLException {
+    public Drug edit(Long id, String name, Long supplierId, LocalDate expirationDate,
+                     byte[] image, String shape, Gender gender,
+                     AgeGroup ageGroup, boolean isSensitive,
+                     boolean needPrescription, String description,
+                     int limitation, float price,
+                     Country countryOFProduction) throws SQLException {
         if (
                 id == null || id < 0 || name == null ||
                         supplierId == null || gender == null || price < 0
@@ -128,15 +128,15 @@ public class DrugServiceImp implements DrugService {
             if (description != null) {
                 drug.setDescription(description);
             }
-
-            return true;
+            drugRepository.save(drug);
+            return drug;
 
         }
     }
 
     @Override
     public DrugResponse getById(Long id) {
-         Drug drug = drugRepository.findById(id);
+        Drug drug = drugRepository.findById(id);
 
         if (drug == null)
             throw new EntityNotFoundException("Drug Not Found with id" + id);
