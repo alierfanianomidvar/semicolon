@@ -13,13 +13,12 @@ import java.sql.SQLException;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping(value = "/drug")
 public class DrugController {
 
     @Autowired
     private DrugService drugService;
 
-    @RequestMapping(value = "/save" , method = RequestMethod.POST)
+    @RequestMapping(value = "/drug" ,method = RequestMethod.POST)
     public ResponseEntity save(@RequestBody DrugModel model) {
         try {
             return ResponseHelper.response(drugService.save(
@@ -42,16 +41,16 @@ public class DrugController {
         }
     }
 
-    @RequestMapping(value = "/getById/{id}" , method = RequestMethod.GET)
+    @RequestMapping(value = "/drug/{id}" , method = RequestMethod.GET)
     public ResponseEntity getById(@PathVariable("id") Long id){
         return ResponseHelper.response(drugService.getById(id));
     }
 
-    @RequestMapping(value = "/edit/{id}" , method = RequestMethod.PUT)
+    @RequestMapping(value = "/drug/{id}" , method = RequestMethod.PUT)
     public ResponseEntity edit(@PathVariable("id") Long id , @RequestBody DrugModel model){
         try {
             return ResponseHelper.response(drugService.edit(
-                    model.getId(),
+                    id,
                     model.getName(),
                     model.getSupplier(),
                     model.getExpirationDate(),
@@ -71,7 +70,7 @@ public class DrugController {
         }
     }
 
-    @RequestMapping(value = "/getAll" , method = RequestMethod.GET )
+    @RequestMapping(value = "/drug" , method = RequestMethod.GET )
     public ResponseEntity getAll(){
         return ResponseHelper.response(drugService.getAll());
     }
