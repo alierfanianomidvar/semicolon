@@ -21,7 +21,7 @@ public class DrugRepositoryImp extends CustomRepository implements DrugRepositor
         ));
     }
 
-    public Drug findDrugById(Long id) {
-        return null;
+    public Drug findById(Long id) {
+        return findById(Drug.class,id);
     }
 }

@@ -94,7 +94,7 @@ public class DrugServiceImp implements DrugService {
         } else {
             Supplier supplier = supplierRepository.findById(supplierId);
 
-            Drug drug = drugRepository.findDrugById(id);
+            Drug drug = drugRepository.findById(id);
             if (drug == null) {
                 throw new NotFoundException();
             }
@@ -136,7 +136,7 @@ public class DrugServiceImp implements DrugService {
 
     @Override
     public DrugResponse getById(Long id) {
-         Drug drug = drugRepository.findDrugById(id);
+         Drug drug = drugRepository.findById(id);
 
         if (drug == null)
             throw new EntityNotFoundException("Drug Not Found with id" + id);
