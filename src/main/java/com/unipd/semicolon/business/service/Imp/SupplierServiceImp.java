@@ -4,12 +4,24 @@ import com.unipd.semicolon.business.exception.CreatePharmacyDataNotFound;
 import com.unipd.semicolon.business.exception.PharmacyExistsException;
 import com.unipd.semicolon.business.service.SupplierService;
 import com.unipd.semicolon.core.dao.SupplierDao;
+import com.unipd.semicolon.core.entity.Drug;
+import com.unipd.semicolon.core.entity.Material;
 import com.unipd.semicolon.core.entity.Supplier;
+import com.unipd.semicolon.core.repository.entity.SupplierRepository;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Objects;
 
+@Service
 public class SupplierServiceImp implements SupplierService {
+
+    @Autowired
+    private SupplierRepository supplierRepository;
+
 
     private SupplierDao supplierDao;
 
@@ -34,24 +46,8 @@ public class SupplierServiceImp implements SupplierService {
 
         Supplier supplier = new Supplier(name, address, email, telephoneNumber);
         return supplierDao.create(supplier);
-import com.unipd.semicolon.business.service.SupplierService;
-import com.unipd.semicolon.core.entity.Drug;
-import com.unipd.semicolon.core.entity.Material;
-import com.unipd.semicolon.core.entity.Supplier;
-import com.unipd.semicolon.core.repository.entity.SupplierRepository;
-import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Objects;
-
-@Service
-public class SupplierServiceImp implements SupplierService {
-
-    @Autowired
-    private SupplierRepository supplierRepository;
+    }
 
     @Override
     public Object findBySupplierId(Long id) {
