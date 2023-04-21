@@ -58,13 +58,6 @@ public class Order {
         this.isActive = isActive;
     }
 
-    public Order(
-            LocalDate orderDate,
-            OrderStatus status,
-            float price,
-            boolean isActive) {
-    }
-
 
     /*-------------------------------------------
         ----------------Getters and Setters-----------------
