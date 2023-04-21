@@ -1,11 +1,7 @@
 package com.unipd.semicolon.business.service;
-
-import com.unipd.semicolon.core.entity.Drug;
-import com.unipd.semicolon.core.entity.Material;
 import com.unipd.semicolon.core.entity.Receipt;
 import com.unipd.semicolon.core.entity.enums.PaymentMethod;
 
-import javax.ws.rs.core.Response;
 import java.util.Date;
 import java.util.List;
 
