@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLException;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -24,7 +23,7 @@ public class SupplierController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ResponseEntity add(@RequestBody SupplierModel model) throws SQLException {
+    public ResponseEntity add(@RequestBody SupplierModel model) {
         return ResponseHelper
                 .response(supplierService.save(
                         model.getName(),
@@ -37,7 +36,7 @@ public class SupplierController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity edit(@PathVariable("id") Long id, @RequestBody SupplierModel model) throws SQLException {
+    public ResponseEntity edit(@PathVariable("id") Long id, @RequestBody SupplierModel model) {
         return ResponseHelper
                 .response(supplierService.edit(
                         id,
@@ -50,8 +49,8 @@ public class SupplierController {
                 ));
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity remove(@PathVariable("id") Long id, @RequestBody SupplierModel model) throws SQLException {
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity remove(@PathVariable("id") Long id) {
         return ResponseHelper
                 .response(supplierService.remove(id));
     }

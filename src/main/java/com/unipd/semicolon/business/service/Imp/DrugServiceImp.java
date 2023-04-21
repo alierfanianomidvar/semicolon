@@ -59,7 +59,7 @@ public class DrugServiceImp implements DrugService {
         if (limitation <= 0 || price < 0.0 || price > Float.MAX_VALUE) {
             throw new IllegalArgumentException("Invalid input parameter");
         }
-        Supplier supplier = supplierRepository.findById(supplierId);
+        Supplier supplier = supplierRepository.findBySupplierId(supplierId);
         Drug drug = new Drug(
                 name,
                 supplier,
@@ -108,7 +108,7 @@ public class DrugServiceImp implements DrugService {
                 drug.setName(name);
             }
             if (supplierId != null && supplierId > 0 ) {
-                Supplier supplier = supplierRepository.findById(supplierId);
+                Supplier supplier = supplierRepository.findBySupplierId(supplierId);
                 if (supplier != null)
                     drug.setSupplier(supplier);
             }
