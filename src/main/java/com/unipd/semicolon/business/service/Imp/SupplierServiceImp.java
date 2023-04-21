@@ -9,6 +9,7 @@ import com.unipd.semicolon.core.entity.Material;
 import com.unipd.semicolon.core.entity.Supplier;
 import com.unipd.semicolon.core.repository.entity.SupplierRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,8 +58,9 @@ public class SupplierServiceImp implements SupplierService {
         return supplierRepository.findBySupplierId(id);
     }
 
+    @Transactional
     @Override
-    public Supplier save(String name, String address, String email, String telephoneNumber, List<Drug> drugs, List<Material> materials) throws SQLException {
+    public Supplier save(String name, String address, String email, String telephoneNumber, List<Drug> drugs, List<Material> materials) {
         if (name == null || address == null || email == null ||
                 telephoneNumber == null || drugs == null || materials == null ) {
             throw new IllegalArgumentException("Invalid input parameter");
@@ -71,13 +73,14 @@ public class SupplierServiceImp implements SupplierService {
                     drugs,
                     materials);
 
-            supplierRepository.addSupplier(supplier);
+            supplierRepository.saveSupplier(supplier);
             return supplier;
         }
     }
 
+    @Transactional
     @Override
-    public boolean edit(Long id, String name, String address, String email, String telephoneNumber, List<Drug> drugs, List<Material> materials) throws SQLException {
+    public boolean edit(Long id, String name, String address, String email, String telephoneNumber, List<Drug> drugs, List<Material> materials) {
         if (Objects.nonNull(supplierRepository.findBySupplierId(id))) {
             Supplier supplier = supplierRepository.findBySupplierId(id);
             if (name != null) {
@@ -98,20 +101,21 @@ public class SupplierServiceImp implements SupplierService {
             if (materials != null) {
                 supplier.setMaterials(materials);
             }
-            supplierRepository.editSupplier(supplier);
+            supplierRepository.saveSupplier(supplier);
             return true;
         } else {
             return false;
         }
     }
 
+    @Transactional
     @Override
-    public boolean remove(Long id) throws SQLException {
+    public boolean remove(Long id) {
         if(Objects.isNull(supplierRepository.findBySupplierId(id))) {
             throw new IllegalArgumentException("Supplier with this id could not found!");
         }
         Supplier supplier = supplierRepository.findBySupplierId(id);
-        supplierRepository.removingSuppliers(supplier);
-        return false;
+        supplierRepository.deleteSupplier(supplier);
+        return true;
     }
 }
