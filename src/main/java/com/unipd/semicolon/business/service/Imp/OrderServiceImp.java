@@ -7,6 +7,8 @@ import com.unipd.semicolon.core.entity.Drug;
 import com.unipd.semicolon.core.entity.Material;
 import com.unipd.semicolon.core.entity.Order;
 import com.unipd.semicolon.core.entity.enums.OrderStatus;
+import com.unipd.semicolon.core.repository.entity.DrugRepository;
+import com.unipd.semicolon.core.repository.entity.MaterialRepository;
 import com.unipd.semicolon.core.repository.entity.OrderRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,10 @@ import java.util.List;
 public class OrderServiceImp implements OrderService {
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private DrugRepository drugRepository;
+    @Autowired
+    private MaterialRepository materialRepository;
 
     @Override
     public Order save(
@@ -36,13 +42,15 @@ public class OrderServiceImp implements OrderService {
         }else {
             Order order = new Order(
                     orderDate,
+                    orderDrugs,
+                    orderMaterials,
                     status,
                     price,
                     isActive);
             List<Drug> newListDrug = new ArrayList<>();
             if(!orderDrugs.isEmpty()){
-                for (Drug orderDrugs : orderDrugs) {
-                    Drug drug = DrugRepository.getId(orderDrugs.getId());
+                for (Drug orderDrug : orderDrugs) {
+                    Drug drug = drugRepository.findById(orderDrug.getId());
                     newListDrug.add(drug);
                 }
                 order.setOrderDrugs(newListDrug);
@@ -50,8 +58,8 @@ public class OrderServiceImp implements OrderService {
 
             List<Material> newListMaterial = new ArrayList<>();
             if(!orderMaterials.isEmpty()){
-                for (Material orderMaterials : orderMaterials) {
-                    Material material = MaterialRepository.findMaterialById(orderMaterials.getId());
+                for (Material orderMaterial : orderMaterials) {
+                    Material material = materialRepository.findMaterialById(orderMaterial.getId());
                     newListMaterial.add(material);
                 }
                 order.setOrderMaterials(newListMaterial);
