@@ -49,7 +49,7 @@ public class ReceiptServiceImp implements ReceiptService {
             else {
                 List<Drug> drugList = new ArrayList<>();
                 for (Long id : drug_id){
-                    drugList.addAll(drugRepository.findById(id).stream().toList());
+                    drugList.add(drugRepository.findById(id));
                 }
                 //List<Drug> drugList = drugRepository.findById(drug_id);
                 //List<Material> materialList=materialRepository.findById(material_id).stream().toList();
@@ -92,8 +92,8 @@ public class ReceiptServiceImp implements ReceiptService {
                 //List<Drug> drugList = drugRepository.findById(drug_id).stream().toList();
                 //List<Material> materialList=materialRepository.findById(material_id).stream().toList();
                 List<Drug> drugList = new ArrayList<>();
-                for (Long did : drug_id){
-                    drugList.addAll(drugRepository.findById(did).stream().toList());
+                for (Long drugId : drug_id){
+                    drugList.add(drugRepository.findById(drugId));
                 }
                 material_id=null;//after getting repository of material it will edit
     //          receipt.setReceiptDrugs(drugList);
