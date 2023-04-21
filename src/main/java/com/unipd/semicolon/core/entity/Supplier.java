@@ -1,17 +1,17 @@
 package com.unipd.semicolon.core.entity;
 
+import com.fasterxml.jackson.core.JsonGenerator;
 import jakarta.persistence.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
 @Entity
 @Table(name = "supplier")
 public class Supplier {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "name")
     private String name;
@@ -42,6 +42,21 @@ public class Supplier {
         this.telephoneNumber = telephoneNumber;
         this.drugs = drugs;
         this.materials = materials;
+    }
+
+    public Supplier(
+            String name,
+            String address,
+            String email,
+            String telephoneNumber) {
+        this.name = name;
+        this.address = address;
+        this.email = email;
+        this.telephoneNumber = telephoneNumber;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getId() {
@@ -95,5 +110,6 @@ public class Supplier {
     public void setMaterials(List<Material> materials) {
         this.materials = materials;
     }
+
 }
 

@@ -1,6 +1,9 @@
 package com.unipd.semicolon.business.service.Imp;
 
+import com.unipd.semicolon.business.exception.CreatePharmacyDataNotFound;
+import com.unipd.semicolon.business.exception.PharmacyExistsException;
 import com.unipd.semicolon.business.service.SupplierService;
+import com.unipd.semicolon.core.dao.SupplierDao;
 import com.unipd.semicolon.core.entity.Drug;
 import com.unipd.semicolon.core.entity.Material;
 import com.unipd.semicolon.core.entity.Supplier;
@@ -19,18 +22,45 @@ public class SupplierServiceImp implements SupplierService {
     @Autowired
     private SupplierRepository supplierRepository;
 
+    private SupplierDao supplierDao;
+
+    public SupplierServiceImp() {
+        this.supplierDao = new SupplierDao();
+    }
+
+    @Override
+    public List<Supplier> getSupplierList() throws SQLException {
+        return supplierDao.findAll();
+    }
+
+    @Override
+    public Supplier create(String name, String address, String email, String telephoneNumber) throws SQLException {
+        if (name.isBlank() || address.isBlank() || email.isBlank() || telephoneNumber.isBlank()) {
+            throw new CreatePharmacyDataNotFound();
+        }
+        List<Supplier> suppliers = supplierDao.findByEmail(email);
+        if (suppliers.toArray().length > 0) {
+            throw new PharmacyExistsException();
+        }
+
+        Supplier supplier = new Supplier(name, address, email, telephoneNumber);
+        return supplierDao.create(supplier);
+
+    }
+
     @Override
     public Object findBySupplierId(Long id) {
-        if(Objects.isNull(supplierRepository.findBySupplierId(id))) {
+        if (Objects.isNull(supplierRepository.findBySupplierId(id))) {
             throw new EntityNotFoundException("Supplier Not Found with id" + id);
         }
         return supplierRepository.findBySupplierId(id);
     }
 
     @Override
-    public Supplier save(String name, String address, String email, String telephoneNumber, List<Drug> drugs, List<Material> materials) throws SQLException {
+    public Supplier save(String name, String address, String email, String telephoneNumber, List<Drug> drugs,
+            List<Material> materials) throws SQLException {
         if (name == null || address == null || email == null ||
-                telephoneNumber == null || drugs == null || materials == null ) {
+                telephoneNumber == null || drugs == null || materials == null) {
             throw new IllegalArgumentException("Invalid input parameter");
         } else {
             Supplier supplier = new Supplier(
@@ -47,7 +77,8 @@ public class SupplierServiceImp implements SupplierService {
     }
 
     @Override
-    public boolean edit(Long id, String name, String address, String email, String telephoneNumber, List<Drug> drugs, List<Material> materials) throws SQLException {
+    public boolean edit(Long id, String name, String address, String email, String telephoneNumber, List<Drug> drugs,
+            List<Material> materials) throws SQLException {
         if (Objects.nonNull(supplierRepository.findBySupplierId(id))) {
             Supplier supplier = supplierRepository.findBySupplierId(id);
             if (name != null) {
@@ -77,7 +108,7 @@ public class SupplierServiceImp implements SupplierService {
 
     @Override
     public boolean remove(Long id) throws SQLException {
-        if(Objects.isNull(supplierRepository.findBySupplierId(id))) {
+        if (Objects.isNull(supplierRepository.findBySupplierId(id))) {
             throw new IllegalArgumentException("Supplier with this id could not found!");
         }
         Supplier supplier = supplierRepository.findBySupplierId(id);

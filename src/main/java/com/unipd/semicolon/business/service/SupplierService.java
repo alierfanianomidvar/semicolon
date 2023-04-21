@@ -9,29 +9,33 @@ import java.util.List;
 
 public interface SupplierService {
 
-    Object findBySupplierId(Long id);
+        List<Supplier> getSupplierList() throws SQLException;
 
-    public Supplier save(
-            String name,
-            String address,
-            String email,
-            String telephoneNumber,
-            List<Drug> drugs,
-            List<Material> materials
-    ) throws SQLException;
+        Supplier create(String name,
+                        String address,
+                        String email,
+                        String telephoneNumber) throws SQLException;
 
-    boolean edit(
-            Long id,
-            String name,
-            String address,
-            String email,
-            String telephoneNumber,
-            List<Drug> drugs,
-            List<Material> materials
-    ) throws SQLException;
+        Object findBySupplierId(Long id);
 
-    boolean remove(
-            Long id
-    ) throws SQLException;
+        public Supplier save(
+                        String name,
+                        String address,
+                        String email,
+                        String telephoneNumber,
+                        List<Drug> drugs,
+                        List<Material> materials) throws SQLException;
+
+        boolean edit(
+                        Long id,
+                        String name,
+                        String address,
+                        String email,
+                        String telephoneNumber,
+                        List<Drug> drugs,
+                        List<Material> materials) throws SQLException;
+
+        boolean remove(
+                        Long id) throws SQLException;
 
 }
