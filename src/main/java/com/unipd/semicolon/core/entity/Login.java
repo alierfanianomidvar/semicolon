@@ -1,6 +1,7 @@
 package com.unipd.semicolon.core.entity;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,8 +14,8 @@ public class Login {
     private String username;
     @Column(name = "password")
     private String password;
-    @Column(name = "session")
-    private boolean session;
+    @Column(name = "token")
+    private String Token;
     @Column(name = "last_login_date")
     private LocalDateTime lastLoginDate;
     @Column(name = "activation_date")
@@ -32,14 +33,14 @@ public class Login {
     public Login(
             String username,
             String password,
-            boolean session,
+            String token,
             LocalDateTime lastLoginDate,
             LocalDateTime activationDate,
             LocalDateTime terminationDate,
             User user) {
         this.username = username;
         this.password = password;
-        this.session = session;
+        this.Token = token;
         this.lastLoginDate = lastLoginDate;
         this.activationDate = activationDate;
         this.terminationDate = terminationDate;
@@ -66,12 +67,12 @@ public class Login {
         this.password = password;
     }
 
-    public boolean isSession() {
-        return session;
+    public String getToken() {
+        return Token;
     }
 
-    public void setSession(boolean session) {
-        this.session = session;
+    public void setToken(String token) {
+        Token = token;
     }
 
     public LocalDateTime getLastLoginDate() {

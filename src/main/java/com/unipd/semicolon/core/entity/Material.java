@@ -65,6 +65,19 @@ public class Material {
 
     }
 
+    public Material(String name, Supplier supplier, Country countryOfProduction, LocalDate expirationDate, byte[] image, Gender gender, float price, AgeGroup ageGroup, LocalDate lastModifiedDate, String description) {
+        this.name = name;
+        this.supplier = supplier;
+        this.countryOfProduction = countryOfProduction;
+        this.expirationDate = expirationDate;
+        this.image = image;
+        this.gender = gender;
+        this.price = price;
+        this.ageGroup = ageGroup;
+        this.lastModifiedDate = lastModifiedDate;
+        this.description = description;
+    }
+
     public Material(
             String name,
             Supplier supplier,
@@ -192,4 +205,3 @@ public class Material {
         this.receipts = receipts;
     }
 }
-
