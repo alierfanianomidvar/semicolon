@@ -79,30 +79,38 @@ public class DrugServiceImp implements DrugService {
     }
 
     @Override
-    public Drug edit(Long id, String name, Long supplierId, LocalDate expirationDate,
-                     byte[] image, String shape, Gender gender,
-                     AgeGroup ageGroup, boolean isSensitive,
-                     boolean needPrescription, String description,
-                     int limitation, float price,
-                     Country countryOFProduction) throws SQLException {
+    public Drug edit(
+            Long drugId,
+            String name,
+            Long supplierId,
+            LocalDate expirationDate,
+            byte[] image,
+            String shape,
+            Gender gender,
+            AgeGroup ageGroup,
+            boolean isSensitive,
+            boolean needPrescription,
+            String description,
+            int limitation,
+            float price,
+            Country countryOFProduction) throws SQLException {
         if (
-                id == null || id < 0 || name == null ||
-                        supplierId == null || gender == null || price < 0
-                        || countryOFProduction == null
+                drugId == null || drugId < 0
         ) {
             throw new IllegalArgumentException("Invalid input parameter");
         } else {
-            Supplier supplier = supplierRepository.findById(supplierId);
 
-            Drug drug = drugRepository.findById(id);
+            Drug drug = drugRepository.findById(drugId);
             if (drug == null) {
                 throw new NotFoundException();
             }
             if (name != null) {
                 drug.setName(name);
             }
-            if (supplier != null) {
-                drug.setSupplier(supplier);
+            if (supplierId != null && supplierId > 0 ) {
+                Supplier supplier = supplierRepository.findById(supplierId);
+                if (supplier != null)
+                    drug.setSupplier(supplier);
             }
             if (countryOFProduction != null) {
                 drug.setCountryOFProduction(countryOFProduction);
