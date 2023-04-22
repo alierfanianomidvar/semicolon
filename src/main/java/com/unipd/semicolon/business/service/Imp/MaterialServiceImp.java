@@ -86,7 +86,7 @@ public class MaterialServiceImp implements MaterialService {
                 ){
                 throw new IllegalArgumentException("Invalid input parameter");
                 } else {
-                    Material material = materialRepository.findMaterialById(id);
+                    Material material = materialRepository.findById(id);
                     if (material == null) {
                         throw new NotFoundException();
                     }
@@ -126,7 +126,7 @@ public class MaterialServiceImp implements MaterialService {
 
         @Override
         public Material getById(Long id){
-            Material material = materialRepository.findMaterialById(id);
+            Material material = materialRepository.findById(id);
             if (material != null) {
                 return material;
             } else {
