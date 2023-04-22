@@ -15,7 +15,7 @@ public interface StorageRepository {
             Storage storage
     );
 
-    Storage findStorageById(Long id);
+    Storage findById(Long id);
 
     List<Storage> getAll();
 
