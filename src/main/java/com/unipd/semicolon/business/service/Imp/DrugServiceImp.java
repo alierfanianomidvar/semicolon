@@ -12,10 +12,7 @@ import com.unipd.semicolon.core.entity.enums.Country;
 import com.unipd.semicolon.core.entity.enums.Gender;
 import com.unipd.semicolon.core.repository.entity.DrugRepository;
 import com.unipd.semicolon.core.repository.entity.SupplierRepository;
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -29,9 +26,6 @@ import java.util.Objects;
 
 @Service
 public class DrugServiceImp implements DrugService {
-
-    @PersistenceContext
-    private EntityManager entityManager;
     @Autowired
     private DrugRepository drugRepository;
 
@@ -175,12 +169,16 @@ public class DrugServiceImp implements DrugService {
     }
 
 
-    public List<DrugResponse> getAll(Long supplierId, Integer isSensitive, Country countryOFProduction, String shape, Gender gender) {
+    public List<DrugResponse> getAll(Long supplierId,
+                                     Integer isSensitive,
+                                     Country countryOFProduction,
+                                     String shape, Gender gender
+    ) {
         Specification<Drug> spec = Specification.where(null);
 
         if (supplierId != null) {
             spec = spec.and((root, query, builder) -> {
-                Join<Drug, Supplier> supplierJoin = root.join("supplier_id");
+                Join<Drug, Supplier> supplierJoin = root.join("supplier");
                 return builder.equal(supplierJoin.get("id"), supplierId);
             });
         }
@@ -210,17 +208,7 @@ public class DrugServiceImp implements DrugService {
         }
 
         List<Drug> drugs;
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Drug> cq = cb.createQuery(Drug.class);
-        Root<Drug> root = cq.from(Drug.class);
-        Predicate predicate = spec.toPredicate(root, cq, cb);
-        if (predicate == null) {
-            drugs = drugRepository.findAll();
-        } else {
-            cq.where(predicate);
-            TypedQuery<Drug> query = entityManager.createQuery(cq);
-            drugs = query.getResultList();
-        }
+        drugs = drugRepository.findAll(spec);
 
         List<DrugResponse> drugList = new ArrayList<>();
         for (Drug drug : drugs) {

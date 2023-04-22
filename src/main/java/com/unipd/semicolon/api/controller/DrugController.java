@@ -76,13 +76,13 @@ public class DrugController {
 
     @RequestMapping(value = "/drug", method = RequestMethod.GET)
     public ResponseEntity getAll(
-            @Nullable @RequestParam Country countryOFProduction,
-            @Nullable @RequestParam Integer isSensitive,
-            @Nullable @RequestParam Long supplierId,
-            @Nullable @RequestParam String shape,
-            @Nullable @RequestParam Gender gender) {
+            @RequestParam(required = false) Country countryOfProduction,
+            @RequestParam(required = false) Long supplierId,
+            @RequestParam(required = false) Gender gender,
+            @RequestParam(required = false) Integer isSensitive,
+            @RequestParam(required = false) String shape) {
         try {
-            return ResponseHelper.response(drugService.getAll(supplierId, isSensitive, countryOFProduction, shape, gender));
+            return ResponseHelper.response(drugService.getAll(supplierId, isSensitive, countryOfProduction, shape, gender));
         } catch (SQLException e) {
             return ResponseHelper.response(
                     " getAll ",
