@@ -3,7 +3,8 @@ package com.unipd.semicolon.api.controller;
 import com.unipd.semicolon.api.model.MaterialModel;
 import com.unipd.semicolon.api.util.helper.ResponseHelper;
 import com.unipd.semicolon.business.service.MaterialService;
-import com.unipd.semicolon.core.entity.Material;
+import com.unipd.semicolon.core.entity.enums.Country;
+import com.unipd.semicolon.core.entity.enums.Gender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,13 +13,12 @@ import java.time.LocalDate;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping(value = "/material")
 public class MaterialController {
 
     @Autowired
     private MaterialService materialService;
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/material", method = RequestMethod.POST)
     public ResponseEntity save(@RequestBody MaterialModel model) {
         return ResponseHelper
                 .response(materialService.save(
@@ -35,17 +35,17 @@ public class MaterialController {
                 ));
     }
 
-    @RequestMapping(value = "/getById", method = RequestMethod.GET)
-    public ResponseEntity getById(@PathVariable("getById") Long id) {
+    @RequestMapping(value = "/material/{id}", method = RequestMethod.GET)
+    public ResponseEntity getById(@PathVariable("id") Long id) {
         return ResponseHelper
                 .response(materialService.getById(id));
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
-    public ResponseEntity edit(@RequestBody MaterialModel model) {
+    @RequestMapping(value = "/material/{id}", method = RequestMethod.PUT)
+    public ResponseEntity edit(@PathVariable("id") Long id,@RequestBody MaterialModel model) {
         return ResponseHelper
                 .response(materialService.edit(
-                        model.getId(),
+                        id,
                         model.getName(),
                         model.getSupplier(),
                         model.getExpirationDate(),
@@ -59,7 +59,7 @@ public class MaterialController {
                 ));
     }
 
-    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
+    @RequestMapping(value = "/material", method = RequestMethod.GET)
     public ResponseEntity getAll() {
         return ResponseHelper
                 .response(materialService.getAll());
