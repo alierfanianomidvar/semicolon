@@ -7,6 +7,7 @@ import com.unipd.semicolon.business.service.DrugService;
 import com.unipd.semicolon.core.entity.enums.Country;
 import com.unipd.semicolon.core.entity.enums.Gender;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
@@ -83,7 +84,11 @@ public class DrugController {
         try {
             return ResponseHelper.response(drugService.getAll(supplierId, isSensitive, countryOFProduction, shape, gender));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return ResponseHelper.response(
+                    " getAll ",
+                    e.getMessage(),
+                    HttpStatus.NOT_ACCEPTABLE
+            );
         }
     }
 }
