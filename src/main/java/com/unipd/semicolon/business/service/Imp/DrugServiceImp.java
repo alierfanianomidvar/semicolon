@@ -100,7 +100,8 @@ public class DrugServiceImp implements DrugService {
             throw new IllegalArgumentException("Invalid input parameter");
         } else {
 
-            Drug drug = drugRepository.findById(drugId);
+            Drug drug = drugRepository.findById(drugId)
+                    .orElseThrow(() -> new IllegalStateException("Drug not found - " + drugId));
             if (drug == null) {
                 throw new NotFoundException();
             }
@@ -144,7 +145,8 @@ public class DrugServiceImp implements DrugService {
 
     @Override
     public DrugResponse getById(Long id) {
-        Drug drug = drugRepository.findById(id);
+        Drug drug = drugRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Drug not found - " + id));
 
         if (drug == null)
             throw new EntityNotFoundException("Drug Not Found with id" + id);
