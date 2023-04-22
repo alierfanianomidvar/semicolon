@@ -15,7 +15,8 @@ public interface StorageService {
             Material material,
             int amount,
             int threshold,
-            double discount
+            double discount,
+            String token
     );
     boolean edit(
             Long id_storage,
@@ -24,10 +25,12 @@ public interface StorageService {
             Material material,
             int amount,
             int threshold,
-            double discount
+            double discount,
+            String token
     );
     boolean delete(
-            Long id
+            Long id,
+            String token
     );
     StorageResponse getById(
             Long id
