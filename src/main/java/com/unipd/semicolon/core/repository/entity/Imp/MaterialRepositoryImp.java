@@ -32,7 +32,7 @@ public class MaterialRepositoryImp extends CustomRepository implements MaterialR
 
 
     @Override
-    public Material findMaterialById(Long id) {
+    public Material findById(Long id) {
         return findById(Material.class,id);
     }
 }
