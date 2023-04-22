@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -20,19 +21,23 @@ public class MaterialController {
 
     @RequestMapping(value = "/material", method = RequestMethod.POST)
     public ResponseEntity save(@RequestBody MaterialModel model) {
-        return ResponseHelper
-                .response(materialService.save(
-                        model.getName(),
-                        model.getSupplier(),
-                        model.getCountryOfProduction(),
-                        model.getExpirationDate(),
-                        model.getImage(),
-                        model.getGender(),
-                        model.getPrice(),
-                        model.getAgeGroup(),
-                        model.getLastModifiedDate(),
-                        model.getDescription()
-                ));
+        try {
+            return ResponseHelper
+                    .response(materialService.save(
+                            model.getName(),
+                            model.getSupplier(),
+                            model.getCountryOfProduction(),
+                            model.getExpirationDate(),
+                            model.getImage(),
+                            model.getGender(),
+                            model.getPrice(),
+                            model.getAgeGroup(),
+                            model.getLastModifiedDate(),
+                            model.getDescription()
+                    ));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @RequestMapping(value = "/material/{id}", method = RequestMethod.GET)
@@ -43,20 +48,24 @@ public class MaterialController {
 
     @RequestMapping(value = "/material/{id}", method = RequestMethod.PUT)
     public ResponseEntity edit(@PathVariable("id") Long id,@RequestBody MaterialModel model) {
-        return ResponseHelper
-                .response(materialService.edit(
-                        id,
-                        model.getName(),
-                        model.getSupplier(),
-                        model.getExpirationDate(),
-                        model.getImage(),
-                        model.getGender(),
-                        model.getAgeGroup(),
-                        model.getPrice(),
-                        model.getLastModifiedDate(),
-                        model.getDescription(),
-                        model.getCountryOfProduction()
-                ));
+        try {
+            return ResponseHelper
+                    .response(materialService.edit(
+                            id,
+                            model.getName(),
+                            model.getSupplier(),
+                            model.getExpirationDate(),
+                            model.getImage(),
+                            model.getGender(),
+                            model.getAgeGroup(),
+                            model.getPrice(),
+                            model.getLastModifiedDate(),
+                            model.getDescription(),
+                            model.getCountryOfProduction()
+                    ));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @GetMapping("/material")
