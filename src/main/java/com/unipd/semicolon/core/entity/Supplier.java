@@ -22,6 +22,7 @@ public class Supplier {
     @JsonManagedReference
     @OneToMany(mappedBy = "supplier")
     private List<Drug> drugs;
+    @JsonManagedReference
     @OneToMany(mappedBy = "supplier")
     private List<Material> materials;
 
