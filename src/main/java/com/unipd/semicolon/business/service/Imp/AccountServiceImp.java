@@ -2,10 +2,7 @@ package com.unipd.semicolon.business.service.Imp;
 
 import com.unipd.semicolon.business.exception.*;
 import com.unipd.semicolon.business.mapper.AccountMapper;
-import com.unipd.semicolon.business.service.LocalTimeService;
-import com.unipd.semicolon.business.service.AccountService;
-import com.unipd.semicolon.business.service.SecurityService;
-import com.unipd.semicolon.business.service.StringService;
+import com.unipd.semicolon.business.service.*;
 import com.unipd.semicolon.core.domain.AccountResponse;
 import com.unipd.semicolon.core.entity.Login;
 import com.unipd.semicolon.core.entity.User;
@@ -34,6 +31,10 @@ public class AccountServiceImp implements AccountService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private LogSystem logSystem;
+
+    private CustomException e;
 
     @Override
     public AccountResponse Login(
@@ -46,7 +47,9 @@ public class AccountServiceImp implements AccountService {
                     login.getUser().getRole().getRole()));
             login.setLastLoginDate(localTimeService.getLocalDateTime());
         } else {
-            throw new UserNameOrPasswordNotExitsException();
+            e = new UserNameOrPasswordNotExitsException();
+            logSystem.logUtil(e.getMsg());
+            throw e;
         }
         Login save = loginRepository.save(login);
         return AccountMapper.loginMapper(save);
@@ -57,7 +60,11 @@ public class AccountServiceImp implements AccountService {
             throws CustomException {
         Long id = Optional.ofNullable(securityService.getAccountId(token))
                 .map(Long::parseLong)
-                .orElseThrow(() -> new InvalidTokenException());
+                .orElseThrow(() -> {
+                        e = new InvalidTokenException();
+                        logSystem.logUtil(e.getMsg());
+                        return e;
+                });
         if (id != null && id != 0) {
             Optional<Login> login = loginRepository.findById(id);
             if (login.isPresent()) {
@@ -65,10 +72,14 @@ public class AccountServiceImp implements AccountService {
                 loginRepository.save(login.get());
                 return true;
             } else {
-                throw new UserExsitsException();
+                e = new UserExsitsException();
+                logSystem.logUtil(e.getMsg());
+                throw e;
             }
         } else {
-            throw new InvalidTokenException();
+            e = new InvalidTokenException();
+            logSystem.logUtil(e.getMsg());
+            throw e;
         }
     }
 
