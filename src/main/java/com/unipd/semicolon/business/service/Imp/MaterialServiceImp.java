@@ -141,12 +141,38 @@ public class MaterialServiceImp implements MaterialService {
             }
         }
 
-        @Override
-        public List<MaterialResponse> getAll(){
-            List<MaterialResponse> materialList = new ArrayList<>();
-            for (Material material : materialRepository.getAll()) {
-                materialList.add(MaterialMapper.materialResponse(material));
-            }
-            return materialList;
+    @Override
+    public List<MaterialResponse> getAll(
+            Country countryOfProduction,
+            Long supplierId,
+            Gender gender) {
+
+        Specification<Material> spec = Specification.where(null);
+
+        if (countryOfProduction != null) {
+            spec = spec.and((root, query, builder) -> {
+                return builder.equal(root.get("countryOfProduction"), countryOfProduction);
+            });
         }
+
+        if (supplierId != null) {
+            spec = spec.and((root, query, builder) -> {
+                Join<Material, Supplier> supplierJoin = root.join("supplier");
+                return builder.equal(supplierJoin.get("id"), supplierId);
+            });
+        }
+
+        if (gender != null) {
+            spec = spec.and((root, query, builder) -> {
+                return builder.equal(root.get("gender"), gender);
+            });
+        }
+
+        List<Material> materials = materialRepository.findAll(spec);
+        List<MaterialResponse> materialList = new ArrayList<>();
+        for (Material material : materials) {
+            materialList.add(MaterialMapper.materialResponse(material));
+        }
+        return materialList;
     }
+}

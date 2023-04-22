@@ -75,6 +75,6 @@ public class MaterialController {
             @RequestParam(required = false) Gender gender
     ) {
         return ResponseHelper
-                .response(materialService.getAll());
+                .response(materialService.getAll(countryOfProduction, supplierId, gender));
     }
 }
