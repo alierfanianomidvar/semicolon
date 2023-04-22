@@ -7,6 +7,7 @@ import com.unipd.semicolon.business.exception.InvalidTokenException;
 import com.unipd.semicolon.business.exception.UserExsitsException;
 import com.unipd.semicolon.business.exception.UserNameOrPasswordNotExitsException;
 import com.unipd.semicolon.business.service.AccountService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ public class AccountController {
     private AccountService accountService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @Operation(summary = "login", description = "will send all info of user and new token bane id and role.")
     public ResponseEntity login(@RequestBody LoginRequest model)
             throws CustomException {
         try {
