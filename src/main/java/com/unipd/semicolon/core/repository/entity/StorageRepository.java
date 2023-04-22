@@ -8,24 +8,29 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 public interface StorageRepository {
-    Storage save(
-            Storage storage
-    );
-    boolean delete(
-            Storage storage
-    );
+        Storage save(
+                        Storage storage);
 
-    Storage findStorageById(Long id);
+        boolean delete(
+                        Storage storage);
 
-    List<Storage> getAll();
+        Storage findStorageById(Long id);
 
-    Storage findStorageByPharmacyIdAndDrugId(
-            Long pharmacyId,
+        List<Storage> getAll();
+
+            Sto
+
+        age         
+
+        Long pharmacyId,
             Long drugId
     );
 
-    Storage findStorageByPharmacyIdAndMaterialId(
-            Long pharmacyId,
-            Long materialId
-    );
-}
+
+                Long pharmacyId,
+                        Long materialId
+                        Li
+
+    
+
+        
