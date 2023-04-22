@@ -26,7 +26,7 @@ public class StorageRepositoryImp extends CustomRepository implements StorageRep
     }
 
     @Override
-    public Storage findStorageById(Long id) {
+    public Storage findById(Long id) {
 
         return findById(Storage.class, id);
     }
