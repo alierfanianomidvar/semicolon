@@ -44,8 +44,8 @@ public class StorageRepositoryImp extends CustomRepository implements StorageRep
             Long pharmacyId,
             Long drugId) {
         return findQueryWrapper(entityManager.createQuery(
-                        "SELECT s FROM Storage s WHERE s.pharmacy.id =: pharmacyId AND s.drug.id =: drugId",
-                        Storage.class)
+                "SELECT s FROM Storage s WHERE s.pharmacy.id =: pharmacyId AND s.drug.id =: drugId",
+                Storage.class)
                 .setParameter("pharmacyId", pharmacyId)
                 .setParameter("drugId", drugId));
     }
@@ -53,9 +53,15 @@ public class StorageRepositoryImp extends CustomRepository implements StorageRep
     @Override
     public Storage findStorageByPharmacyIdAndMaterialId(Long pharmacyId, Long materialId) {
         return findQueryWrapper(entityManager.createQuery(
-                        "SELECT s FROM Storage s WHERE s.pharmacy.id =: pharmacyId AND s.drug.id =: materialId",
-                        Storage.class)
+                "SELECT s FROM Storage s WHERE s.pharmacy.id =: pharmacyId AND s.drug.id =: materialId",
+                Storage.class)
                 .setParameter("pharmacyId", pharmacyId)
                 .setParameter("materialId", materialId));
+    }
+
+    public List<Storage> findStoragesByPharmacyId(Long id) {
+        return listQueryWrapper(
+                entityManager.createQuery("SELECT s FROM Storage s WHERE s.pharmacy.id = :id ORDER BY s.id DESC",
+                        Storage.class));
     }
 }
