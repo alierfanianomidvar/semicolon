@@ -2,15 +2,18 @@ package com.unipd.semicolon.business.service.Imp;
 
 import com.unipd.semicolon.business.service.ReceiptService;
 import com.unipd.semicolon.core.entity.Drug;
+import com.unipd.semicolon.core.entity.Material;
 import com.unipd.semicolon.core.entity.Receipt;
 import com.unipd.semicolon.core.entity.enums.PaymentMethod;
 import com.unipd.semicolon.core.repository.entity.DrugRepository;
+import com.unipd.semicolon.core.repository.entity.MaterialRepository;
 import com.unipd.semicolon.core.repository.entity.ReceiptRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -23,13 +26,15 @@ public class ReceiptServiceImp implements ReceiptService {
     @Autowired
     private DrugRepository drugRepository;
 
-//    @Autowired
-//    private MaterialRepository materialRepository;
+    @Autowired
+    private MaterialRepository materialRepository;
 
+    @Autowired
+    private ValidationServiceImp validationServiceImp;
 
     @Override
-    public Receipt save(List<Long> drug_id,
-                        List<Long> material_id,
+    public Receipt save(List<Long> drugId,
+                        List<Long> materialId,
                         byte[] image,
                         Date date,
                         PaymentMethod paymentMethod)
@@ -38,34 +43,53 @@ public class ReceiptServiceImp implements ReceiptService {
             if (date == null || date.after(new Date())) {
                 throw new IllegalArgumentException("Receipt date cannot be null or in the future.");
             }
-            if (paymentMethod == null) {
-                throw new IllegalArgumentException("Payment method cannot be null.");
+            Calendar cal = Calendar.getInstance();
+            cal.setLenient(false);
+            cal.setTime(date);
+
+            if (!cal.getTime().equals(date)) {
+                throw new IllegalArgumentException("Invalid date");
             }
 
-            if(drugRepository.findById(drug_id.get(0))==null)
-            {
-                throw new EntityNotFoundException("Receipt with ID " + drug_id + " not found.");
-            }
-            else {
-                List<Drug> drugList = new ArrayList<>();
-                for (Long id : drug_id){
-                    drugList.add(drugRepository.findById(id));
+            validationServiceImp.validatePaymentMethod(paymentMethod);
+
+
+            for (Long id : drugId) {
+                if (drugRepository.findById(id) == null) {
+                    throw new EntityNotFoundException("Drug with ID " + id + " not found.");
                 }
-                //List<Drug> drugList = drugRepository.findById(drug_id);
-                //List<Material> materialList=materialRepository.findById(material_id).stream().toList();
-                if (drugList == null) {
-                    throw new EntityNotFoundException("Receipt with ID " + drug_id + " not found.");
-                }
-
-                Receipt receipt = new Receipt();
-                receipt.setReceiptDrugs(drugList);
-                receipt.setReceiptMaterials(null);
-                receipt.setImage(image);
-                receipt.setDate(date);
-                receipt.setPaymentMethod(paymentMethod);
-
-                return receiptRepository.save(receipt);
             }
+            for (Long id : materialId) {
+                if (materialRepository.findById(id) == null) {
+                    throw new EntityNotFoundException("Material with ID " + id + " not found.");
+                }
+            }
+            int maxSize = 10 * 1024 * 1024; // maximum size of 10 MB
+            if (image.length > maxSize) {
+                throw new IllegalArgumentException("Image size exceeds maximum size of 10 MB");
+            }
+            List<Drug> drugList = new ArrayList<>();
+            List<Material> materialList = new ArrayList<>();
+            for (Long id : drugId){
+                drugList.add(drugRepository.findById(id));
+            }
+            for (Long id : materialId){
+                materialList.add(materialRepository.findById(id));
+            }
+
+            if (drugList == null && materialList==null) {
+                throw new EntityNotFoundException("Drug list and material list are empty");
+            }
+
+            Receipt receipt = new Receipt();
+            receipt.setReceiptDrugs(drugList);
+            receipt.setReceiptMaterials(null);
+            receipt.setImage(image);
+            receipt.setDate(date);
+            receipt.setPaymentMethod(paymentMethod);
+
+            return receiptRepository.save(receipt);
+
         } catch (IllegalArgumentException e) {
             throw new RuntimeException("An error occurred while saving the receipt: " + e.getMessage(), e);
         } catch (EntityNotFoundException e) {

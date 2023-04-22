@@ -12,5 +12,5 @@ public interface MaterialRepository {
 
     public List<Material> getAll();
 
-    public Material findMaterialById(Long id);
+    public Material findById(Long id);
 }
