@@ -38,5 +38,6 @@ public interface MaterialService {
             Country countryOfProduction) throws SQLException;
 
     Material getById(Long id);
-    List<MaterialResponse> getAll();
+
+    List<MaterialResponse> getAll(Country countryOfProduction, Long supplierId, Gender gender);
 }
