@@ -37,4 +37,11 @@ public class StorageRepositoryImp extends CustomRepository implements StorageRep
                 "select g from Storage g order by g.id desc ",
                 Storage.class));
     }
+
+    @Override
+    public List<Storage> findStoragesByPharmacyId(Long id) {
+        return  listQueryWrapper(
+                entityManager.createQuery("SELECT s FROM Storage s WHERE s.pharmacy.id = :id ORDER BY s.id DESC",
+                Storage.class));
+    }
 }
