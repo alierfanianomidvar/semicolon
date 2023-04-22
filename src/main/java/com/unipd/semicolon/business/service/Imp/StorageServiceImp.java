@@ -77,19 +77,20 @@ public class StorageServiceImp implements StorageService {
 //                    return savedStorage;
 
 //                } else
-                    if (drugRepository.findById(drug.getId()) != null) {
-                    drugRepositoryById = drugRepository.findById(drug.getId());
-                Storage storage = new Storage(pharmacyRepositoryById,
-                        drugRepositoryById,
-                        null,
-                        amount,
-                        threshold,
-                        discount);
-                Storage savedStorage = storageRepository.save(storage);
+                if (drug.getId() != null) {
+                    drugRepositoryById = drugRepository.findById(drug.getId())
+                            .orElseThrow(() -> new IllegalStateException("Drug not found - " + drug.getId()));
+                    Storage storage = new Storage(pharmacyRepositoryById,
+                            drugRepositoryById,
+                            null,
+                            amount,
+                            threshold,
+                            discount);
+                    Storage savedStorage = storageRepository.save(storage);
                     if (savedStorage == null) {
                         throw new RuntimeException("Failed to save Storage");
                     }
-                return savedStorage;
+                    return savedStorage;
                 }
             }
             catch (NoSuchElementException e) {
