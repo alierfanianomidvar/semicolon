@@ -16,7 +16,10 @@ public class StorageController {
     private StorageService storageService;
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public ResponseEntity save(@RequestBody StorageModel model) {
+    public ResponseEntity save(
+            @RequestBody StorageModel model,
+            @RequestHeader("Authorization") String token
+    ) {
         return ResponseHelper
                 .response(storageService.save(
                         model.getPharmacy(),
@@ -24,7 +27,8 @@ public class StorageController {
                         model.getMaterial(),
                         model.getAmount(),
                         model.getThreshold(),
-                        model.getDiscount()
+                        model.getDiscount(),
+                        token
                 ));
     }
 
@@ -35,7 +39,11 @@ public class StorageController {
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
-    public ResponseEntity edit(@PathVariable("id") Long id, @RequestBody StorageModel model) {
+    public ResponseEntity edit(
+            @PathVariable("id") Long id,
+            @RequestBody StorageModel model,
+            @RequestHeader("Authorization") String token
+            ) {
         return ResponseHelper
                 .response(storageService.edit(
                         id,
@@ -44,13 +52,16 @@ public class StorageController {
                         model.getMaterial(),
                         model.getAmount(),
                         model.getThreshold(),
-                        model.getDiscount()
+                        model.getDiscount(),
+                        token
                 ));
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity deleteById(@PathVariable("id") Long id) {
-        storageService.delete(id);
+    public ResponseEntity deleteById(
+            @PathVariable("id") Long id,
+            @RequestHeader("Authorization") String token) {
+        storageService.delete(id, token);
         return ResponseHelper.response(true);
     }
 
