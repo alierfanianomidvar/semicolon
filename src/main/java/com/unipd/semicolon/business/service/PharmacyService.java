@@ -18,7 +18,8 @@ public interface PharmacyService {
             List<TimeTable> time_table,
             byte[] logo,
             List<Storage> storage,
-            List<User> staff) throws CustomException;
+            List<User> staff,
+            String token) throws CustomException;
 
     Boolean edit(
             Long id,
@@ -28,24 +29,32 @@ public interface PharmacyService {
             List<TimeTable> time_table,
             byte[] logo,
             List<Storage> storage,
-            List<User> staff
+            List<User> staff,
+            String token
 
     );
 
     Pharmacy get(Long id);
 
     // Add staff
-    Boolean addStaff(List<User> user_list, Long id);
+    Boolean addStaff(
+            List<User> user_list,
+            Long id,
+            String token);
 
     // Delete staff
-    Boolean deleteStaff(List<User> user_list);
+    Boolean deleteStaff(
+            List<User> user_list,
+            String token);
 
-    Boolean delete(Long id);
+    Boolean delete(Long id, String token);
 
     List<Pharmacy> getAll();
 
-    Pharmacy activation(Long id, PharmacyStatus status);
+    Pharmacy activation(Long id, PharmacyStatus status, String token);
 
     // Not sure if the list type should be user or userResponse
+
+    Boolean addStorageToPharmacy(Storage storage, Long pharmacyId);
 
 }
