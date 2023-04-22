@@ -59,8 +59,12 @@ public class MaterialController {
                 ));
     }
 
-    @RequestMapping(value = "/material", method = RequestMethod.GET)
-    public ResponseEntity getAll() {
+    @GetMapping("/material")
+    public ResponseEntity getAll(
+            @RequestParam(required = false) Country countryOfProduction,
+            @RequestParam(required = false) Long supplierId,
+            @RequestParam(required = false) Gender gender
+    ) {
         return ResponseHelper
                 .response(materialService.getAll());
     }
