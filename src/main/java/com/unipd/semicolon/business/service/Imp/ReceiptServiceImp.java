@@ -38,17 +38,7 @@ public class ReceiptServiceImp implements ReceiptService {
             Date date,
             PaymentMethod paymentMethod) {
         try {
-            if (date == null || date.after(new Date())) {
-                throw new IllegalArgumentException("Receipt date cannot be null or in the future.");
-            }
-            Calendar cal = Calendar.getInstance();
-            cal.setLenient(false);
-            cal.setTime(date);
-
-            if (!cal.getTime().equals(date)) {
-                throw new IllegalArgumentException("Invalid date");
-            }
-
+            validationServiceImp.validateDate(date, true);
             validationServiceImp.validatePaymentMethod(paymentMethod);
 
             for (Long id : drugId) {
@@ -62,9 +52,8 @@ public class ReceiptServiceImp implements ReceiptService {
                 }
             }
             int maxSize = 10 * 1024 * 1024; // maximum size of 10 MB
-            if (image.length > maxSize) {
-                throw new IllegalArgumentException("Image size exceeds maximum size of 10 MB");
-            }
+            validationServiceImp.validateImage(image, maxSize);
+
             List<Drug> drugList = new ArrayList<>();
             List<Material> materialList = new ArrayList<>();
             for (Long id : drugId) {
@@ -80,7 +69,7 @@ public class ReceiptServiceImp implements ReceiptService {
 
             Receipt receipt = new Receipt();
             receipt.setReceiptDrugs(drugList);
-            receipt.setReceiptMaterials(null);
+            receipt.setReceiptMaterials(materialList);
             receipt.setImage(image);
             receipt.setDate(date);
             receipt.setPaymentMethod(paymentMethod);
@@ -98,33 +87,62 @@ public class ReceiptServiceImp implements ReceiptService {
 
     @Override
     public Boolean edit(Long id,
-            List<Long> drugIds,
-            List<Long> material_id,
+            List<Long> drugId,
+            List<Long> materialId,
             byte[] image,
             Date date,
             PaymentMethod paymentMethod) {
         try {
+            validationServiceImp.validateDate(date, true);
+            if (paymentMethod != null) {
+                validationServiceImp.validatePaymentMethod(paymentMethod);
+            }
+
             Receipt receipt = receiptRepository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException("Receipt with ID " + id + " not found."));
 
-            if (receipt != null) {
-                // List<Drug> drugList = drugRepository.findById(drug_id).stream().toList();
-                // List<Material>
-                // materialList=materialRepository.findById(material_id).stream().toList();
-                List<Drug> drugList = new ArrayList<>();
-                for (Long drugId : drugIds) {
-                    Drug drug = drugRepository.findById(drugId)
-                            .orElseThrow(() -> new IllegalStateException("Drug not found - " + drugId));
-                    drugList.add(drug);
+            if (drugId != null) {
+                for (Long i : drugId) {
+                    if (drugRepository.findById(i) == null) {
+                        throw new EntityNotFoundException("Drug with ID " + i + " not found.");
+                    }
                 }
-                material_id = null;// after getting repository of material it will edit
-                // receipt.setReceiptDrugs(drugList);
-                receipt.setReceiptDrugs(null);
-                receipt.setReceiptMaterials(null);
-                receipt.setImage(image);
-                receipt.setDate(date);
-                receipt.setPaymentMethod(paymentMethod);
+            }
+            if (materialId != null) {
+                for (Long i : materialId) {
+                    if (materialRepository.findById(i) == null) {
+                        throw new EntityNotFoundException("Material with ID " + i + " not found.");
+                    }
+                }
+            }
 
+            List<Drug> drugList = new ArrayList<>();
+            List<Material> materialList = new ArrayList<>();
+            if (drugId != null) {
+                for (Long i : drugId) {
+                    drugList.add(drugRepository.findById(i));
+                }
+            }
+            if (materialId != null) {
+                for (Long i : materialId) {
+                    materialList.add(materialRepository.findById(i));
+                }
+            }
+
+            if (receipt != null) {
+                if (drugList != null) {
+                    receipt.setReceiptDrugs(drugList);
+                }
+                if (materialList != null) {
+                    receipt.setReceiptMaterials(materialList);
+                }
+                if (image != null) {
+                    receipt.setImage(image);
+                }
+                receipt.setDate(date);
+                if (paymentMethod != null) {
+                    receipt.setPaymentMethod(paymentMethod);
+                }
                 receiptRepository.save(receipt);
                 return true;
             }
@@ -143,7 +161,7 @@ public class ReceiptServiceImp implements ReceiptService {
         return receiptRepository.findAll();
     }
 
-    public Receipt getReceiptById(Long id) {
+    public Receipt getById(Long id) {
         return receiptRepository.findById(id).get();
     }
 
