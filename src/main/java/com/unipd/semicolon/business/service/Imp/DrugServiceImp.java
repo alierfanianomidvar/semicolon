@@ -120,7 +120,7 @@ public class DrugServiceImp implements DrugService {
                 drug.setName(name);
             }
             if (supplierId != null && supplierId > 0) {
-                Supplier supplier = supplierRepository.findById(supplierId);
+                Supplier supplier = supplierRepository.findBySupplierId(supplierId);
                 if (supplier != null)
                     drug.setSupplier(supplier);
             }
