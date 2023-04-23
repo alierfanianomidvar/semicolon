@@ -24,7 +24,7 @@ public interface SupplierService {
                         String email,
                         String telephoneNumber,
                         List<Drug> drugs,
-                        List<Material> materials) throws SQLException;
+                        List<Material> materials);
 
         boolean edit(
                         Long id,
@@ -33,9 +33,9 @@ public interface SupplierService {
                         String email,
                         String telephoneNumber,
                         List<Drug> drugs,
-                        List<Material> materials) throws SQLException;
+                        List<Material> materials);
 
         boolean remove(
-                        Long id) throws SQLException;
+                        Long id);
 
 }

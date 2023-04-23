@@ -60,6 +60,7 @@ public class Material {
     @ManyToMany(mappedBy = "receiptMaterials")
     private List<Receipt> receipts;
 
+    //just for check
 
     public Material() {
 
