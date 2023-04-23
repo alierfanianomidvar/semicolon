@@ -1,18 +1,28 @@
 package com.unipd.semicolon.business.service;
 
+import com.unipd.semicolon.business.exception.CustomException;
+import com.unipd.semicolon.core.entity.Role;
+import com.unipd.semicolon.core.entity.User;
+import com.unipd.semicolon.core.entity.enums.Gender;
 import com.unipd.semicolon.core.entity.enums.PaymentMethod;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public interface ValidationService {
-    void validatePaymentMethod(PaymentMethod paymentMethod);
-    void validateImage(byte[] image);
+    Boolean validatePaymentMethod(PaymentMethod paymentMethod);
 
-    void validateDate(Date date);
+    Boolean validateImage(byte[] image, int maxSize);
 
-    void validateEmail(String email);
+    Boolean validateDate(Date date, Boolean futureCheck);
 
-    void validateTelephoneNumber(String telephoneNumber);
+    Boolean validateEmail(String email);
 
-    void validatePrice(float price);
+    Boolean validateTelephoneNumber(String telephoneNumber);
+
+    Boolean validatePrice(float price);
+
+    Boolean validateBirthDate(LocalDateTime dateTime);
+
+    Boolean validateGender(Gender gender);
 }

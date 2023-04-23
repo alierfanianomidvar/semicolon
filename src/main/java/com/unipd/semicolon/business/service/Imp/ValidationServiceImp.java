@@ -1,22 +1,31 @@
 package com.unipd.semicolon.business.service.Imp;
 
+import com.unipd.semicolon.business.exception.CustomException;
+import com.unipd.semicolon.business.service.ValidationService;
+import com.unipd.semicolon.core.entity.Role;
+import com.unipd.semicolon.core.entity.User;
+import com.unipd.semicolon.core.entity.enums.Gender;
 import com.unipd.semicolon.core.entity.enums.PaymentMethod;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @Service
-public class ValidationServiceImp {
+public class ValidationServiceImp implements ValidationService {
 
-    //validate payment method
-    public void validatePaymentMethod(PaymentMethod paymentMethod) {
+    // validate payment method
+    @Override
+    public Boolean validatePaymentMethod(PaymentMethod paymentMethod) {
         if (paymentMethod == null) {
             throw new IllegalArgumentException("Payment method cannot be null");
         }
 
-        PaymentMethod[] allowedMethods = {PaymentMethod.CASH, PaymentMethod.CREDIT_CARD,
-                PaymentMethod.DEBIT_CARD, PaymentMethod.PAYPAL};
+        PaymentMethod[] allowedMethods = { PaymentMethod.CASH, PaymentMethod.CREDIT_CARD,
+                PaymentMethod.DEBIT_CARD, PaymentMethod.PAYPAL };
         boolean isValid = false;
 
         for (PaymentMethod allowedMethod : allowedMethods) {
@@ -29,24 +38,26 @@ public class ValidationServiceImp {
         if (!isValid) {
             throw new IllegalArgumentException("Invalid payment method");
         }
+        return true;
     }
 
-    //validate size of an input image
-    public void validateImage(byte[] image, int maxSize)
-    {
+    // validate size of an input image
+    @Override
+    public Boolean validateImage(byte[] image, int maxSize) {
         if (image.length > maxSize) {
-            throw new IllegalArgumentException("Image size exceeds maximum size of "+ (float) maxSize/(1024*1024)+" MB");
+            throw new IllegalArgumentException(
+                    "Image size exceeds maximum size of " + (float) maxSize / (1024 * 1024) + " MB");
         }
+        return true;
     }
 
-    public void validateDate(Date date, boolean futureCheck) {
-        if (date == null ) {
+    @Override
+    public Boolean validateDate(Date date, Boolean futureCheck) {
+        if (date == null) {
             throw new IllegalArgumentException("Date cannot be null");
         }
-        if(futureCheck)
-        {
-            if(date.after(new Date()))
-            {
+        if (futureCheck) {
+            if (date.after(new Date())) {
                 throw new IllegalArgumentException("Date cannot be in the future.");
             }
         }
@@ -57,9 +68,11 @@ public class ValidationServiceImp {
         if (!cal.getTime().equals(date)) {
             throw new IllegalArgumentException("Invalid date");
         }
+        return true;
     }
 
-    public void validateEmail(String email) {
+    @Override
+    public Boolean validateEmail(String email) {
         if (email == null || email.isEmpty()) {
             throw new IllegalArgumentException("Email cannot be null or empty");
         }
@@ -68,11 +81,11 @@ public class ValidationServiceImp {
         if (!email.matches(emailRegex)) {
             throw new IllegalArgumentException("Invalid email format");
         }
-
-
+        return true;
     }
 
-    public void validateTelephoneNumber(String telephoneNumber) {
+    @Override
+    public Boolean validateTelephoneNumber(String telephoneNumber) {
         if (telephoneNumber == null || telephoneNumber.isEmpty()) {
             throw new IllegalArgumentException("Telephone number cannot be null or empty");
         }
@@ -87,13 +100,47 @@ public class ValidationServiceImp {
         if (telephoneNumber.length() < minLength || telephoneNumber.length() > maxLength) {
             throw new IllegalArgumentException("Telephone number should be between 7 and 20 digits long");
         }
+        return true;
     }
 
-    public void validatePrice(float price) {
+    @Override
+    public Boolean validatePrice(float price) {
         if (price <= 0) {
             throw new IllegalArgumentException("Price should be greater than zero");
         }
+        return true;
 
+    }
+
+    @Override
+    public Boolean validateBirthDate(LocalDateTime birthDate) {
+        if (birthDate == null) {
+            // Birth date is null
+            throw new IllegalArgumentException("Date cannot be null.");
+        }
+
+        LocalDateTime now = LocalDateTime.now();
+        if (birthDate.isAfter(now)) {
+            // Birth date is in the future
+            throw new IllegalArgumentException("Date cannot be in the future.");
+        }
+
+        // Birth date is valid
+        return true;
+    }
+
+    @Override
+    public Boolean validateGender(Gender gender) {
+        List<Gender> allowedGenders = Arrays.asList(
+                Gender.FEMALE,
+                Gender.MALE,
+                Gender.NON_BINARY
+        );
+
+        if (gender == null || !allowedGenders.contains(gender)) {
+            throw new CustomException("Invalid gender");
+        }
+        return true;
     }
 
 }
