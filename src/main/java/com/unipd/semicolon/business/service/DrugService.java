@@ -8,6 +8,7 @@ import com.unipd.semicolon.core.entity.enums.Gender;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public interface DrugService {
@@ -16,7 +17,7 @@ public interface DrugService {
     Drug save(
             String name,
             Long supplier,
-            LocalDate expirationDate,
+            Date expirationDate,
             byte[] image,
             String shape,
             Gender gender,
@@ -27,13 +28,13 @@ public interface DrugService {
             int limitation,
             float price,
             Country countryOFProduction
-    ) throws SQLException;
+    ) throws Exception;
 
     Drug edit(
             Long id,
             String name,
             Long supplier,
-            LocalDate expirationDate,
+            Date expirationDate,
             byte[] image,
             String shape,
             Gender gender,
