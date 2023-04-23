@@ -1,10 +1,14 @@
 package com.unipd.semicolon.business.service.Imp;
 
+import com.unipd.semicolon.business.exception.CustomException;
 import com.unipd.semicolon.business.exception.NotFoundException;
 import com.unipd.semicolon.business.exception.UserExsitsException;
 import com.unipd.semicolon.business.mapper.UserMapper;
+import com.unipd.semicolon.business.service.AccountService;
+import com.unipd.semicolon.business.service.SecurityService;
 import com.unipd.semicolon.business.service.UserService;
 
+import com.unipd.semicolon.business.service.ValidationService;
 import com.unipd.semicolon.core.domain.UserResponse;
 import com.unipd.semicolon.core.entity.Login;
 import com.unipd.semicolon.core.entity.Role;
@@ -33,45 +37,72 @@ public class UserServiceImp implements UserService {
     @Autowired
     private RoleRepository roleRepository;
 
-//    @Autowired
-//    private LoginService loginService;
+    @Autowired
+    private SecurityService securityService;
+
+    @Autowired
+    private AccountService accountService;
+
+    @Autowired
+    private ValidationService validationService;
 
 
     @Override
-    public Boolean save(String username,
-                        String password,
-                        String name,
-                        String lastName,
-                        Gender gender,
-                        LocalDateTime birthDate,
-                        String phoneNumber,
-                        String address,
-                        Role role,
-                        String email,
-                        String accountStatus,
-                        byte[] profilePicture
+    public Login save(String username,
+                      String password,
+                      String name,
+                      String lastName,
+                      Gender gender,
+                      LocalDateTime birthDate,
+                      String phoneNumber,
+                      String address,
+                      Role role,
+                      String email,
+                      String accountStatus,
+                      byte[] profilePicture,
+                      String token
     ) {
 
-//        if (loginService.exists(username)) {
-//            throw new UserExsitsException();
-//        } else {
-//            Login login = loginService.creat(username, password);
-//
-//            User user = new User(name,
-//                    lastName,
-//                    gender,
-//                    birthDate,
-//                    phoneNumber,
-//                    address,
-//                    role,
-//                    email,
-//                    accountStatus,
-//                    profilePicture,
-//                    null);
-//
-//            userRepository.save(user);
-//        }
-        return false;
+        try {
+            String roleFromToken = securityService.getRoleFromToken(token);
+            if(roleFromToken.contains("admin")) {
+                if (accountService.findByUserName(username) != null) {
+                    throw new UserExsitsException();
+                } else {
+
+                    if (validationService.validateEmail(email)
+                            && validationService.validateTelephoneNumber(phoneNumber) &&
+                            validationService.validateBirthDate(birthDate) && validationService.validateImage(profilePicture, 2048) &&
+                            validationService.validateGender(gender)
+
+                    ) {
+                        User user = new User(name,
+                                lastName,
+                                gender,
+                                birthDate,
+                                phoneNumber,
+                                address,
+                                role,
+                                email,
+                                accountStatus,
+                                profilePicture,
+                                null);
+
+                        User save = userRepository.save(user);
+                        Login login = accountService.save(username, password, save);
+
+                        return login;
+                    } else {
+                        return null;
+                    }
+
+                }
+            } else {
+                throw new CustomException("You are not authorized!");
+            }
+        } catch (CustomException e) {
+            return null;
+        }
     }
 
     @Override
@@ -84,67 +115,98 @@ public class UserServiceImp implements UserService {
                         String address,
                         Role role,
                         String email,
-                        String  accountStatus,
-                        byte[] profilePicture
+                        String accountStatus,
+                        byte[] profilePicture,
+                        String token
     ) {
-        if (userId != null) {
-            // Retrieve the user from the database
-            if (userRepository.findUserById(userId) != null) {
-                User user = userRepository.findUserById(userId);
+        try {
+            String roleFromToken = securityService.getRoleFromToken(token);
+            if(roleFromToken.contains("admin")) {
+                if (userId != null) {
+                    // Retrieve the user from the database
+                    if (userRepository.findUserById(userId) != null) {
+                        User user = userRepository.findUserById(userId);
 
-                // Validate inputs
-                if (name != null && !name.isBlank()) {
-                    user.setName(name);
+                        // Validate inputs
+                        if (name != null && !name.isBlank()) {
+                            user.setName(name);
+                        }
+
+                        if (lastName != null && !lastName.isBlank()) {
+                            user.setLastName(lastName);
+                        }
+
+                        if (validationService.validateGender(gender)) {
+                            user.setGender(gender);
+                        }
+
+                        if (validationService.validateBirthDate(birthDate)) {
+                            user.setBirthDate(birthDate);
+                        }
+
+                        if (validationService.validateTelephoneNumber(phoneNumber)) {
+                            user.setPhoneNumber(phoneNumber);
+                        }
+
+                        if (address != null && !address.isBlank()) {
+                            user.setAddress(address);
+                        }
+
+                        if (role != null) {
+                            user.setRole(role);
+                        }
+
+                        if (validationService.validateEmail(email)) {
+                            user.setEmail(email);
+                        }
+
+                        if (accountStatus != null) {
+                            user.setAccountStatus(accountStatus);
+                        }
+
+                        if (profilePicture != null) {
+                            user.setProfilePicture(profilePicture);
+                        }
+
+
+                        // Save changes to the database
+                        userRepository.save(user);
+                        return true;
+                    } else {
+                        throw new CustomException("No such user exists in the database!");
+                    }
+                } else {
+                    throw new CustomException("No user id is passed!");
                 }
 
-                if (lastName != null && !lastName.isBlank()) {
-                    user.setLastName(lastName);
-                }
-
-                if (gender != null) {
-                    user.setGender(gender);
-                }
-
-                if (birthDate != null) {
-                    user.setBirthDate(birthDate);
-                }
-
-                if (phoneNumber != null) {
-                    user.setPhoneNumber(phoneNumber);
-                }
-
-                if (address != null && !address.isBlank()) {
-                    user.setAddress(address);
-                }
-
-                if (role != null) {
-                    user.setRole(role);
-                }
-
-                if (email != null && !email.isBlank()) {
-                    user.setEmail(email);
-                }
-
-                if (accountStatus != null) {
-                    user.setAccountStatus(accountStatus);
-                }
-
-                if (profilePicture != null) {
-                    user.setProfilePicture(profilePicture);
-                }
-
-
-                // Save changes to the database
-                userRepository.save(user);
-                return true;
+            } else {
+                throw new CustomException("You are not authorized!");
             }
+        } catch (CustomException e) {
+            return false;
         }
-        return false;
     }
 
     @Override
-    public Boolean changeStatus(Long Id) {
-        return null;
+    public Boolean changeStatus(Long id, String newStatus, String token) {
+        try {
+            String roleFromToken = securityService.getRoleFromToken(token);
+            if (roleFromToken.contains("admin")) {
+                if (userRepository.findUserById(id) != null) {
+                    User user = userRepository.findUserById(id);
+                    user.setAccountStatus(newStatus);
+                    userRepository.save(user);
+                    return true;
+                } else {
+                    throw new CustomException("User with the provided id does not exist in the database!");
+                }
+            } else {
+                throw new CustomException("You are not authorized!");
+            }
+        } catch (CustomException e) {
+            return false;
+        }
+
     }
 
     //
@@ -184,17 +246,23 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public boolean delete(Long id) {
-        if (id < 0) {
-            throw new IllegalArgumentException("Cannot delete null user!");
-        } else {
-            try {
-                User user = userRepository.findUserById(id);
-                userRepository.delete(user);
-                return true;
-            } catch (Exception e) {
-                return false;
+    public boolean delete(Long id, String token) {
+        try {
+            String roleFromToken = securityService.getRoleFromToken(token);
+            if(roleFromToken.contains("admin")) {
+                if (id < 0) {
+                    throw new IllegalArgumentException("Cannot delete null user!");
+                } else {
+                    User user = userRepository.findUserById(id);
+                    if (user != null) userRepository.delete(user);
+                    return true;
+                }
+            } else {
+                throw new CustomException("You are not Authorized!");
             }
+        } catch (CustomException e) {
+            return false;
         }
+
     }
 }
