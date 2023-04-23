@@ -6,20 +6,21 @@ import com.unipd.semicolon.core.entity.enums.OrderStatus;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 public class OrderModel {
     private Long id;
     private LocalDate orderDate;
-    private List<Drug> orderDrugs;
-    private List<Material> orderMaterials;
+    private Map<Long, Integer> orderDrugs;
+    private Map<Long, Integer> orderMaterials;
     private OrderStatus status;
     private float price;
     private boolean isActive;
 
     public OrderModel(
             LocalDate orderDate,
-            List<Drug> orderDrugs,
-            List<Material> orderMaterials,
+            Map<Long, Integer> orderDrugs,
+            Map<Long, Integer> orderMaterials,
             OrderStatus status,
             float price,
             boolean isActive) {
@@ -47,19 +48,19 @@ public class OrderModel {
         this.orderDate = orderDate;
     }
 
-    public List<Drug> getOrderDrugs() {
+    public Map<Long, Integer> getOrderDrugs() {
         return orderDrugs;
     }
 
-    public void setOrderDrugs(List<Drug> orderDrugs) {
+    public void setOrderDrugs(Map<Long, Integer> orderDrugs) {
         this.orderDrugs = orderDrugs;
     }
 
-    public List<Material> getOrderMaterials() {
+    public Map<Long, Integer> getOrderMaterials() {
         return orderMaterials;
     }
 
-    public void setOrderMaterials(List<Material> orderMaterials) {
+    public void setOrderMaterials(Map<Long, Integer> orderMaterials) {
         this.orderMaterials = orderMaterials;
     }
 

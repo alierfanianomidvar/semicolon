@@ -8,12 +8,13 @@ import com.unipd.semicolon.core.entity.enums.OrderStatus;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 public interface OrderService {
     Order save(
             LocalDate orderDate,
-            List<Drug> orderDrugs,
-            List<Material> orderMaterials,
+            Map<Long, Integer> orderDrugs,
+            Map<Long, Integer> orderMaterials,
             OrderStatus status,
             float price,
             boolean isActive
