@@ -7,8 +7,10 @@ import com.unipd.semicolon.core.entity.enums.Country;
 import com.unipd.semicolon.core.entity.enums.Gender;
 import jakarta.persistence.*;
 
+import javax.xml.crypto.Data;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -27,7 +29,7 @@ public class Drug {
     private Supplier supplier;
 
     @Column(name = "expiration_date")
-    private LocalDate expirationDate;
+    private Date expirationDate;
 
     @Column(name = "image")
     private byte[] image;
@@ -54,10 +56,11 @@ public class Drug {
     @Column(name = "price")
     private float price;
     //Why not @Enumerated(EnumType.STRING)??
+    @Enumerated(EnumType.STRING)
     @Column(name = "country_of_production")
     private Country countryOFProduction;
     @Column(name = "last_modified_date")
-    private LocalDateTime lastModifiedDate;
+    private Date lastModifiedDate;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "orderDrugs")
@@ -71,7 +74,19 @@ public class Drug {
 
     }
 
-    public Drug(String name, Supplier supplier, LocalDate expirationDate, byte[] image, String shape, Gender gender, AgeGroup ageGroup, boolean isSensitive, boolean needPrescription, String description, int limitation, float price, Country countryOFProduction ) {
+    public Drug(String name,
+                Supplier supplier,
+                Date expirationDate,
+                byte[] image,
+                String shape,
+                Gender gender,
+                AgeGroup ageGroup,
+                boolean isSensitive,
+                boolean needPrescription,
+                String description,
+                int limitation,
+                float price,
+                Country countryOFProduction ) {
         this.name = name;
         this.supplier = supplier;
         this.expirationDate = expirationDate;
@@ -90,7 +105,7 @@ public class Drug {
     public Drug(
             String name,
             Supplier supplier,
-            LocalDate expirationDate,
+            Date expirationDate,
             byte[] image,
             String shape,
             Gender gender,
@@ -101,7 +116,7 @@ public class Drug {
             int limitation,
             float price,
             Country countryOFProduction,
-            LocalDateTime lastModifiedDate,
+            Date lastModifiedDate,
             List<Order> orders, List<Receipt> receipts) {
         this.name = name;
         this.supplier = supplier;
@@ -143,11 +158,11 @@ public class Drug {
         this.supplier = supplier;
     }
 
-    public LocalDate getExpirationDate() {
+    public Date getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(LocalDate expirationDate) {
+    public void setExpirationDate(Date expirationDate) {
         this.expirationDate = expirationDate;
     }
 
@@ -231,11 +246,11 @@ public class Drug {
         this.countryOFProduction = countryOFProduction;
     }
 
-    public LocalDateTime getLastModifiedDate() {
+    public Date getLastModifiedDate() {
         return lastModifiedDate;
     }
 
-    public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
+    public void setLastModifiedDate(Date lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
 

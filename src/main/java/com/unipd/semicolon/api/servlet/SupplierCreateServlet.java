@@ -49,7 +49,7 @@ public class SupplierCreateServlet extends HttpServlet {
             address = String.valueOf(jo.getString("address"));
             email = String.valueOf(jo.getString("email"));
             telephoneNumber = String.valueOf(jo.getString("telephoneNumber"));
-            supplier = supplierService.create(name, address, email, telephoneNumber);
+            supplier = supplierService.save(name, address, email, telephoneNumber);
         } catch (JSONException ex) {
 //            throw new CreatePharmacyDataNotFound();
             m = new Message("Cannot create the employee data. The provided data not correct.",
