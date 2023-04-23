@@ -1,5 +1,6 @@
 package com.unipd.semicolon.core.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.unipd.semicolon.core.entity.enums.OrderStatus;
 import jakarta.persistence.*;
 
@@ -16,8 +17,8 @@ public class Order {
 
     @Column(name = "order_date")
     private LocalDate orderDate;
-
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @OneToMany(mappedBy = "order")
     private List<OrderProduct> orderProducts;
     @Enumerated(EnumType.STRING)
     @Column(name = "order_status")
@@ -98,6 +99,8 @@ public class Order {
     public void setActive(boolean active) {
         isActive = active;
     }
+
+
 }
 
 
