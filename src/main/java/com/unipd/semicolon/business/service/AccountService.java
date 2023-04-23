@@ -24,5 +24,7 @@ public interface AccountService {
             User user
     );
 
+    Login findByUserName(String username);
+
 
 }
