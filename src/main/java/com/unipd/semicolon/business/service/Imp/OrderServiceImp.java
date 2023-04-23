@@ -36,7 +36,7 @@ public class OrderServiceImp implements OrderService {
             float price,
             boolean isActive){
 
-        if (orderDate == null || price < 0) {
+        if (orderDate == null || status == null || price < 0) {
             throw new IllegalArgumentException("Invalid input parameter");
         }else {
             Order order = new Order(
@@ -78,7 +78,8 @@ public class OrderServiceImp implements OrderService {
             OrderStatus status,
             float price,
             boolean isActive) {
-        if (id == null || orderDate == null || orderDrugs == null || orderMaterials == null || price < 0) {
+        if (id == null || orderDate == null || orderDrugs == null || orderMaterials == null
+                || status == null || price < 0) {
             throw new IllegalArgumentException("Invalid input parameter");
         }else {
                 Order order = orderRepository.findOrderById(id);

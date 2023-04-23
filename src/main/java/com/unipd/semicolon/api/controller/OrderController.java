@@ -4,6 +4,7 @@ import com.unipd.semicolon.api.model.OrderModel;
 import com.unipd.semicolon.api.util.helper.ResponseHelper;
 import com.unipd.semicolon.business.service.OrderService;
 import com.unipd.semicolon.core.entity.Order;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +36,7 @@ public class OrderController {
                 .response(orderService.getById(id));
     }
 
+
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
     public ResponseEntity edit(@PathVariable("id") Long id, @RequestBody OrderModel model){
         return ResponseHelper
@@ -49,13 +51,13 @@ public class OrderController {
                 ));
     }
 
+    @Transactional
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteById(@PathVariable("id") Long id) {
         Order order = orderService.getById(id);
         orderService.delete(order);
         return ResponseHelper.response(true);
     }
-
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public ResponseEntity getAll() {
