@@ -50,7 +50,7 @@ public class OrderController {
         return ResponseHelper
                 .response(orderService.getAll());
     }
-/*DELIVERED*/
+
     @RequestMapping(value = "/status/{id}/{status}", method = RequestMethod.PATCH)
     public ResponseEntity status(@PathVariable("id") Long id,@PathVariable("status") OrderStatus status) {
         return ResponseHelper
