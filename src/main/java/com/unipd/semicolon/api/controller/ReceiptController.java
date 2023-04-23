@@ -38,7 +38,7 @@ public class ReceiptController {
 
     @GetMapping("/getReciept/{id}")
     public ResponseEntity<Receipt> getById(@PathVariable("id") Long id) {
-        Receipt receipt = receiptService.getReceiptById(id);
+        Receipt receipt = receiptService.getById(id);
         return ResponseHelper.response(receipt);
     }
 

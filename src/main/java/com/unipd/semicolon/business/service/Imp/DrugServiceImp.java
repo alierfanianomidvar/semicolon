@@ -1,6 +1,5 @@
 package com.unipd.semicolon.business.service.Imp;
 
-
 import com.unipd.semicolon.business.exception.NotFoundException;
 import com.unipd.semicolon.business.mapper.DrugMapper;
 import com.unipd.semicolon.business.service.DrugService;
@@ -21,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,12 +32,14 @@ public class DrugServiceImp implements DrugService {
     @Autowired
     private SupplierRepository supplierRepository;
 
+    @Autowired
+    private ValidationServiceImp validationServiceImp;
 
     @Override
     public Drug save(
             String name,
             Long supplierId,
-            LocalDate expirationDate,
+            Date expirationDate,
             byte[] image,
             String shape,
             Gender gender,
@@ -82,7 +84,7 @@ public class DrugServiceImp implements DrugService {
             Long drugId,
             String name,
             Long supplierId,
-            LocalDate expirationDate,
+            Date expirationDate,
             byte[] image,
             String shape,
             Gender gender,
@@ -93,11 +95,21 @@ public class DrugServiceImp implements DrugService {
             int limitation,
             float price,
             Country countryOFProduction) throws SQLException {
-        if (
-                drugId == null || drugId < 0
-        ) {
+        if (drugId == null || drugId < 0) {
             throw new IllegalArgumentException("Invalid input parameter");
         } else {
+            if (image != null) {
+                validationServiceImp.validateImage(image, 10 * 1024 * 1024);
+            }
+            if (expirationDate != null) {
+                validationServiceImp.validateDate(expirationDate, false);
+            }
+            if (price != 0) {
+                validationServiceImp.validatePrice(price);
+            }
+            if (limitation < 0) {
+                throw new IllegalArgumentException("Limitation amount can not be negative");
+            }
 
             Drug drug = drugRepository.findById(drugId)
                     .orElseThrow(() -> new IllegalStateException("Drug not found - " + drugId));
@@ -107,7 +119,7 @@ public class DrugServiceImp implements DrugService {
             if (name != null) {
                 drug.setName(name);
             }
-            if (supplierId != null && supplierId > 0 ) {
+            if (supplierId != null && supplierId > 0) {
                 Supplier supplier = supplierRepository.findById(supplierId);
                 if (supplier != null)
                     drug.setSupplier(supplier);
@@ -163,17 +175,14 @@ public class DrugServiceImp implements DrugService {
                     drug.getDescription(),
                     drug.getLimitation(),
                     drug.getPrice(),
-                    drug.getCountryOFProduction()
-            );
+                    drug.getCountryOFProduction());
         }
     }
 
-
     public List<DrugResponse> getAll(Long supplierId,
-                                     Integer isSensitive,
-                                     Country countryOFProduction,
-                                     String shape, Gender gender
-    ) {
+            Integer isSensitive,
+            Country countryOFProduction,
+            String shape, Gender gender) {
         Specification<Drug> spec = Specification.where(null);
 
         if (supplierId != null) {
