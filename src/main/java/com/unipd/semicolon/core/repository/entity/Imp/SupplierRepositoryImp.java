@@ -6,9 +6,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class SupplierRepositoryImp extends CustomRepository implements SupplierRepository {
-    public boolean saveSupplier(Supplier s) {
-        save(Supplier.class, s);
-        return true;
+    public Supplier saveSupplier(Supplier s) {
+        return save(Supplier.class, s);
+
     }
 
     public boolean deleteSupplier(Supplier s) {
