@@ -63,7 +63,7 @@ public class DrugServiceImp implements DrugService {
             if (limitation <= 0) {
                 throw new IllegalArgumentException("Limitation amount can not be negative");
             }
-            Supplier supplier = supplierRepository.findById(supplierId);
+            Supplier supplier = supplierRepository.findBySupplierId(supplierId);
             Drug drug = new Drug(
                     name,
                     supplier,
@@ -137,7 +137,7 @@ public class DrugServiceImp implements DrugService {
                 drug.setName(name);
             }
             if (supplierId != null && supplierId > 0 ) {
-                Supplier supplier = supplierRepository.findById(supplierId);
+                Supplier supplier = supplierRepository.findBySupplierId(supplierId);
                 if (supplier != null)
                     drug.setSupplier(supplier);
             }
