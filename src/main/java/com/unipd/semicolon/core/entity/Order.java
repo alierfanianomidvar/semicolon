@@ -1,5 +1,6 @@
 package com.unipd.semicolon.core.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.unipd.semicolon.core.entity.enums.OrderStatus;
 import jakarta.persistence.*;
@@ -14,7 +15,6 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(name = "order_date")
     private LocalDate orderDate;
     @JsonManagedReference
@@ -23,9 +23,11 @@ public class Order {
     @Enumerated(EnumType.STRING)
     @Column(name = "order_status")
     private OrderStatus status;
-
     @Column(name = "price")
     private float price;
+    @JsonBackReference
+    @ManyToOne
+    private Pharmacy pharmacy;
 
     //just for soft deleting
     @Column(name = "is_active")
@@ -44,11 +46,13 @@ public class Order {
             LocalDate orderDate,
             OrderStatus status,
             float price,
-            boolean isActive) {
+            boolean isActive,
+            Pharmacy pharmacy) {
         this.orderDate = orderDate;
         this.status = status;
         this.price = price;
         this.isActive = isActive;
+        this.pharmacy = pharmacy;
     }
 
 
@@ -100,7 +104,13 @@ public class Order {
         isActive = active;
     }
 
+    public Pharmacy getPharmacy() {
+        return pharmacy;
+    }
 
+    public void setPharmacy(Pharmacy pharmacy) {
+        this.pharmacy = pharmacy;
+    }
 }
 
 
