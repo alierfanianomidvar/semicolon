@@ -27,6 +27,7 @@ public class OrderServiceImp implements OrderService {
     @Autowired
     private MaterialRepository materialRepository;
 
+
     @Override
     public Order save(
             LocalDate orderDate,
@@ -92,6 +93,7 @@ public class OrderServiceImp implements OrderService {
                 order.setStatus(status);
                 order.setPrice(price);
                 order.setActive(isActive);
+                orderRepository.save(order);
                 return true;
         }
     }
