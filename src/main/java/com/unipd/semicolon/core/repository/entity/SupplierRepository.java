@@ -1,12 +1,13 @@
 package com.unipd.semicolon.core.repository.entity;
 
 import com.unipd.semicolon.core.entity.Supplier;
-
-import java.sql.SQLException;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SupplierRepository {
-    boolean editSupplier(Supplier s) throws SQLException;
-    boolean addSupplier(Supplier s) throws SQLException;
-    boolean removingSuppliers(Supplier s) throws SQLException;
-    Supplier findById(Long id) throws SQLException;
+    Supplier saveSupplier(Supplier s);
+
+    boolean deleteSupplier(Supplier s);
+
+    Supplier findBySupplierId(Long id);
+
 }
