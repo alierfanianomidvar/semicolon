@@ -7,8 +7,8 @@ public class OrderMapper {
     public static OrderResponse orderResponse(Order order){
         return new OrderResponse(
                 order.getOrderDate(),
-                order.getOrderDrugs(),
-                order.getOrderMaterials(),
+                null,
+                null,
                 order.getStatus(),
                 order.getPrice(),
                 order.isActive()
