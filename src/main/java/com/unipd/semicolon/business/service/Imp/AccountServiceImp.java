@@ -104,4 +104,9 @@ public class AccountServiceImp implements AccountService {
 
         return loginRepository.save(login);
     }
+
+    @Override
+    public Login findByUserName(String username) {
+        return loginRepository.findByUsername(username);
+    }
 }
