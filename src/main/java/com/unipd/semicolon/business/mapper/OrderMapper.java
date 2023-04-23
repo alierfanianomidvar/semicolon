@@ -6,7 +6,6 @@ import com.unipd.semicolon.core.entity.Order;
 public class OrderMapper {
     public static OrderResponse orderResponse(Order order){
         return new OrderResponse(
-                order.getId(),
                 order.getOrderDate(),
                 order.getOrderDrugs(),
                 order.getOrderMaterials(),

@@ -29,7 +29,6 @@ public class OrderServiceImp implements OrderService {
 
     @Override
     public Order save(
-            Long id,
             LocalDate orderDate,
             List<Drug> orderDrugs,
             List<Material> orderMaterials,
@@ -37,7 +36,7 @@ public class OrderServiceImp implements OrderService {
             float price,
             boolean isActive){
 
-        if (id == null || orderDate == null || price < 0) {
+        if (orderDate == null || price < 0) {
             throw new IllegalArgumentException("Invalid input parameter");
         }else {
             Order order = new Order(
@@ -115,6 +114,7 @@ public class OrderServiceImp implements OrderService {
         }
     }
 
+
     @Override
     public List<OrderResponse> getAll(){
         List<OrderResponse> orderList = new ArrayList<>();
@@ -123,5 +123,5 @@ public class OrderServiceImp implements OrderService {
         }
         return orderList;
     }
-
+    
 }

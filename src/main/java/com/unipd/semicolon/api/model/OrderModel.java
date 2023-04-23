@@ -17,14 +17,12 @@ public class OrderModel {
     private boolean isActive;
 
     public OrderModel(
-            Long id,
             LocalDate orderDate,
             List<Drug> orderDrugs,
             List<Material> orderMaterials,
             OrderStatus status,
             float price,
             boolean isActive) {
-        this.id = id;
         this.orderDate = orderDate;
         this.orderDrugs = orderDrugs;
         this.orderMaterials = orderMaterials;
