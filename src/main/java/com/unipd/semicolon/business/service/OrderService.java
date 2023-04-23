@@ -11,7 +11,6 @@ import java.util.List;
 
 public interface OrderService {
     Order save(
-            Long id,
             LocalDate orderDate,
             List<Drug> orderDrugs,
             List<Material> orderMaterials,

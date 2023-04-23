@@ -25,10 +25,11 @@ public class OrderRepositoryImp extends CustomRepository implements OrderReposit
         return findById(Order.class, id);
     }
 
+
     @Override
     public List<Order> getAll(){
         return listQueryWrapper(entityManager.createQuery
-                ("select g from Order g order by g.id desc ",Order.class));
+                ("SELECT g FROM Order g ORDER BY g.id desc ",Order.class));
     }
 
 }
