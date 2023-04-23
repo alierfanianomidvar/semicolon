@@ -34,7 +34,10 @@ public class SupplierController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity edit(@PathVariable("id") Long id, @RequestBody SupplierModel model) {
+    public ResponseEntity edit(
+            @PathVariable("id") Long id,
+            @RequestBody SupplierModel model
+    ) {
         return ResponseHelper
                 .response(supplierService.edit(
                         id,
