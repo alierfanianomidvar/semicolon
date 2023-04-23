@@ -49,7 +49,6 @@ public class OrderServiceImp implements OrderService {
 
         Order order = new Order(
                 orderDate,
-                null,
                 status,
                 price,
                 isActive);
@@ -79,45 +78,7 @@ public class OrderServiceImp implements OrderService {
         return save;
     }
 
-    @Override
-    public boolean edit(
-            Long id,
-            LocalDate orderDate,
-            List<Drug> orderDrugs,
-            List<Material> orderMaterials,
-            OrderStatus status,
-            float price,
-            boolean isActive) {
-        if (id == null) {
-            throw new IllegalArgumentException("Invalid input parameter");
-        } else {
-            Order order = orderRepository.findOrderById(id);
-            if (order == null) {
-                throw new EntityNotFoundException("Order Not Found with id" + id);
-            }
-            if (price > 0)
-                order.setPrice(price);
-            if (status != null)
-                order.setStatus(status);
 
-           /* if (!orderDrugs.isEmpty()) {
-                List<Drug> drugs = drugListCheck(orderDrugs);
-                order.setOrderDrugs(drugs);
-            } else if (!orderMaterials.isEmpty()) {
-                List<Material> materials = materialListCheck(orderMaterials);
-                order.setOrderMaterials(materials);
-            }*/
-
-            if (orderDate != null)
-                order.setOrderDate(orderDate);
-
-            if (isActive != order.isActive())
-                order.setActive(isActive);
-
-            orderRepository.save(order);
-            return true;
-        }
-    }
 
     @Override
     public void delete(Order order) {

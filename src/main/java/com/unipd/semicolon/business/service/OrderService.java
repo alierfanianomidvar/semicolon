@@ -20,15 +20,7 @@ public interface OrderService {
             boolean isActive
     );
 
-    boolean edit(
-            Long id,
-            LocalDate orderDate,
-            List<Drug> orderDrugs,
-            List<Material> orderMaterials,
-            OrderStatus status,
-            float price,
-            boolean isActive
-    );
+
 
     void delete (
             Order order
