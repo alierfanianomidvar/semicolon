@@ -1,6 +1,5 @@
 package com.unipd.semicolon.api.controller;
 
-
 import com.unipd.semicolon.api.model.DrugModel;
 import com.unipd.semicolon.api.util.helper.ResponseHelper;
 import com.unipd.semicolon.business.service.DrugService;
@@ -14,15 +13,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 
-
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
+@RequestMapping(value = "/drug")
 public class DrugController {
 
     @Autowired
     private DrugService drugService;
 
-    @RequestMapping(value = "/drug" ,method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ResponseEntity save(@RequestBody DrugModel model) {
         try {
             return ResponseHelper.response(drugService.save(
@@ -38,20 +37,21 @@ public class DrugController {
                     model.getDescription(),
                     model.getLimitation(),
                     model.getPrice(),
-                    model.getCountryOFProduction()
-            ));
+                    model.getCountryOFProduction()));
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    @RequestMapping(value = "/drug/{id}" , method = RequestMethod.GET)
-    public ResponseEntity getById(@PathVariable("id") Long id){
+    @RequestMapping(value = "/getDrug/{id}", method = RequestMethod.GET)
+    public ResponseEntity getById(@PathVariable("id") Long id) {
         return ResponseHelper.response(drugService.getById(id));
     }
 
-    @RequestMapping(value = "/drug/{id}" , method = RequestMethod.PUT)
-    public ResponseEntity edit(@PathVariable("id") Long id , @RequestBody DrugModel model){
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
+    public ResponseEntity edit(@PathVariable("id") Long id, @RequestBody DrugModel model) {
         try {
             return ResponseHelper.response(drugService.edit(
                     id,
@@ -67,8 +67,7 @@ public class DrugController {
                     model.getDescription(),
                     model.getLimitation(),
                     model.getPrice(),
-                    model.getCountryOFProduction()
-            ));
+                    model.getCountryOFProduction()));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -90,5 +89,9 @@ public class DrugController {
                     HttpStatus.NOT_ACCEPTABLE
             );
         }
+
+    @RequestMapping(value = "/alldrug", method = RequestMethod.GET)
+    public ResponseEntity getAll() {
+        return ResponseHelper.response(drugService.getAll());
     }
 }
