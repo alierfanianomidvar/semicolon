@@ -19,7 +19,10 @@ public class UserController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST) //@PostMapping("/add") we can write like this too.
     // Here we get the data on the body and not on the url.
-    public ResponseEntity save(@RequestBody UserModel model) { //always use model.
+    public ResponseEntity save(
+            @RequestBody UserModel model,
+            @RequestHeader("Authorization") String token
+    ) { //always use model.
         return ResponseHelper
                 .response(userService.save(
                         model.getUsername(),
@@ -33,12 +36,16 @@ public class UserController {
                         model.getRole(),
                         model.getEmail(),
                         model.getAccountStatus(),
-                        model.getProfilePicture()));
+                        model.getProfilePicture(),
+                        token));
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     //Here we want to update the data, so we use PUT and not POSt.
-    public ResponseEntity edit(@RequestBody UserModel model) {
+    public ResponseEntity edit(
+            @RequestBody UserModel model,
+            @RequestHeader("Authorization") String token
+    ) {
         return ResponseHelper
                 .response(userService.edit(
                                 model.getUserId(),
@@ -51,7 +58,8 @@ public class UserController {
                                 model.getRole(),
                                 model.getEmail(),
                                 model.getAccountStatus(),
-                                model.getProfilePicture()
+                                model.getProfilePicture(),
+                                token
                         )
                 );
     }
@@ -70,8 +78,20 @@ public class UserController {
 
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity deleteById(@PathVariable("id") Long id) {
-        userService.delete(id);
-        return ResponseHelper.response(true);
+    public ResponseEntity deleteById(
+            @PathVariable("id") Long id,
+            @RequestHeader("Authorization") String token
+            ) {
+
+        return ResponseHelper.response(userService.delete(id, token));
+    }
+
+    @RequestMapping(value = "/change-status/{id}/{newStatus}", method = RequestMethod.PATCH)
+    public ResponseEntity changeStatus(
+            @PathVariable("id") Long id,
+            @PathVariable("newStatus") String newStatus,
+            @RequestHeader("Authorization") String token
+    ) {
+        return ResponseHelper.response(userService.changeStatus(id, newStatus, token));
     }
 }
