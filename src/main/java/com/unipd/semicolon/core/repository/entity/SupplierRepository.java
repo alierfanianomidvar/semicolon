@@ -4,7 +4,7 @@ import com.unipd.semicolon.core.entity.Supplier;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SupplierRepository {
-    boolean saveSupplier(Supplier s);
+    Supplier saveSupplier(Supplier s);
 
     boolean deleteSupplier(Supplier s);
 
