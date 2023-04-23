@@ -3,10 +3,7 @@ package com.unipd.semicolon.business.service;
 
 import com.unipd.semicolon.core.domain.UserListExampleResponse;
 import com.unipd.semicolon.core.domain.UserResponse;
-import com.unipd.semicolon.core.entity.Pharmacy;
-import com.unipd.semicolon.core.entity.Role;
-import com.unipd.semicolon.core.entity.Storage;
-import com.unipd.semicolon.core.entity.User;
+import com.unipd.semicolon.core.entity.*;
 import com.unipd.semicolon.core.entity.enums.Gender;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +14,7 @@ import java.util.List;
 public interface UserService {
 
     //TODO: phone number is Long in Entity part => should change to String
-    Boolean save(
+    Login save(
             String username,
             String password,
             String name,
@@ -29,7 +26,8 @@ public interface UserService {
             Role role,
             String email,
             String accountStatus,
-            byte[] profilePicture
+            byte[] profilePicture,
+            String token
     );
 
     //For password retrieval we need to
@@ -44,13 +42,16 @@ public interface UserService {
                  Role role,
                  String email,
                  String accountStatus,
-                 byte[] profilePicture
+                 byte[] profilePicture,
+                 String token
     );
 
 
     //Id => userId
     Boolean changeStatus(
-            Long Id
+            Long id,
+            String newStatus,
+            String token
     );
 
     List<UserResponse> getAll();
@@ -61,5 +62,5 @@ public interface UserService {
 
     UserResponse getById(Long id);
 
-    boolean delete(Long user);
+    boolean delete(Long user, String token);
 }
