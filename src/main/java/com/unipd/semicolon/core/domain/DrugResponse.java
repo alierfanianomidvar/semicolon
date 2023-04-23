@@ -1,93 +1,37 @@
-package com.unipd.semicolon.core.entity;
+package com.unipd.semicolon.core.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.unipd.semicolon.core.entity.Order;
+import com.unipd.semicolon.core.entity.Receipt;
+import com.unipd.semicolon.core.entity.Supplier;
 import com.unipd.semicolon.core.entity.enums.AgeGroup;
 import com.unipd.semicolon.core.entity.enums.Country;
 import com.unipd.semicolon.core.entity.enums.Gender;
-import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
-@Table(name = "drug")
-public class Drug {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // will creat the uniq and respectively id
+public class DrugResponse {
+
     private Long id;
-
-    @Column(name = "name", length = 50, nullable = false)
     private String name;
-
-    @ManyToOne
-    @JsonBackReference
-    @JoinColumn(name = "supplier_id")
     private Supplier supplier;
-
-    @Column(name = "expiration_date")
     private LocalDate expirationDate;
-
-    @Column(name = "image")
     private byte[] image;
-
-    @Column(name = "shape")
     private String shape;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "gender")
     private Gender gender;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "age_group")
     private AgeGroup ageGroup;
-    @Column(name = "is_sensitive")
     private boolean isSensitive;
-    @Column(name = "need_prescription")
     private boolean needPrescription;
-    @Column(name = "description")
     private String description;
-
-    //num of drugs that patient can buy
-    @Column(name = "limitation")
     private int limitation;
-    @Column(name = "price")
     private float price;
-    //Why not @Enumerated(EnumType.STRING)??
-    @Column(name = "country_of_production")
     private Country countryOFProduction;
-    @Column(name = "last_modified_date")
     private LocalDateTime lastModifiedDate;
-
-    @JsonIgnore
-    @ManyToMany(mappedBy = "orderDrugs")
     private List<Order> orders;
-
-    @JsonIgnore
-    @ManyToMany(mappedBy = "receiptDrugs")
     private List<Receipt> receipts;
 
-    public Drug() {
-
-    }
-
-    public Drug(String name, Supplier supplier, LocalDate expirationDate, byte[] image, String shape, Gender gender, AgeGroup ageGroup, boolean isSensitive, boolean needPrescription, String description, int limitation, float price, Country countryOFProduction ) {
-        this.name = name;
-        this.supplier = supplier;
-        this.expirationDate = expirationDate;
-        this.image = image;
-        this.shape = shape;
-        this.gender = gender;
-        this.ageGroup = ageGroup;
-        this.isSensitive = isSensitive;
-        this.needPrescription = needPrescription;
-        this.description = description;
-        this.limitation = limitation;
-        this.price = price;
-        this.countryOFProduction = countryOFProduction;
-    }
-
-    public Drug(
+    public DrugResponse(
             String name,
             Supplier supplier,
             LocalDate expirationDate,
@@ -100,9 +44,7 @@ public class Drug {
             String description,
             int limitation,
             float price,
-            Country countryOFProduction,
-            LocalDateTime lastModifiedDate,
-            List<Order> orders, List<Receipt> receipts) {
+            Country countryOFProduction) {
         this.name = name;
         this.supplier = supplier;
         this.expirationDate = expirationDate;
@@ -120,7 +62,6 @@ public class Drug {
         this.orders = orders;
         this.receipts = receipts;
     }
-
 
 
     public Long getId() {
@@ -254,4 +195,5 @@ public class Drug {
     public void setReceipts(List<Receipt> receipts) {
         this.receipts = receipts;
     }
+
 }
