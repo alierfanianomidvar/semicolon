@@ -36,20 +36,6 @@ public class OrderController {
                 .response(orderService.getById(id));
     }
 
-//    @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
-//    public ResponseEntity edit(@PathVariable("id") Long id, @RequestBody OrderModel model){
-//        return ResponseHelper
-//                .response(orderService.edit(
-//                        id,
-//                        model.getOrderDate(),
-//                        model.getOrderDrugs(),
-//                        model.getOrderMaterials(),
-//                        model.getStatus(),
-//                        model.getPrice(),
-//                        model.isActive()
-//                ));
-//    }
-
     @Transactional
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteById(@PathVariable("id") Long id) {

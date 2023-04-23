@@ -41,12 +41,10 @@ public class Order {
 
     public Order(
             LocalDate orderDate,
-            List<OrderProduct> orderProducts,
             OrderStatus status,
             float price,
             boolean isActive) {
         this.orderDate = orderDate;
-        this.orderProducts = orderProducts;
         this.status = status;
         this.price = price;
         this.isActive = isActive;
