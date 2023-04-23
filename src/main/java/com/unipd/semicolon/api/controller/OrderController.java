@@ -4,6 +4,7 @@ import com.unipd.semicolon.api.model.OrderModel;
 import com.unipd.semicolon.api.util.helper.ResponseHelper;
 import com.unipd.semicolon.business.service.OrderService;
 import com.unipd.semicolon.core.entity.Order;
+import com.unipd.semicolon.core.entity.enums.OrderStatus;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,8 @@ public class OrderController {
                         model.getOrderMaterials(),
                         model.getStatus(),
                         model.getPrice(),
-                        model.isActive()
+                        model.isActive(),
+                        model.getPharmacy()
                 ));
     }
 
@@ -36,7 +38,6 @@ public class OrderController {
                 .response(orderService.getById(id));
     }
 
-    @Transactional
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteById(@PathVariable("id") Long id) {
         Order order = orderService.getById(id);
@@ -44,9 +45,18 @@ public class OrderController {
         return ResponseHelper.response(true);
     }
 
-    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
+    @RequestMapping(value = "/get-all", method = RequestMethod.GET)
     public ResponseEntity getAll() {
         return ResponseHelper
                 .response(orderService.getAll());
     }
+/*DELIVERED*/
+    @RequestMapping(value = "/status/{id}/{status}", method = RequestMethod.PATCH)
+    public ResponseEntity status(@PathVariable("id") Long id,@PathVariable("status") OrderStatus status) {
+        return ResponseHelper
+                .response(orderService.status(id,status));
+    }
+
+
+
 }

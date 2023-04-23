@@ -1,26 +1,18 @@
 package com.unipd.semicolon.business.service.Imp;
 
+import com.unipd.semicolon.business.exception.InvalidTokenException;
 import com.unipd.semicolon.business.mapper.OrderMapper;
 import com.unipd.semicolon.business.service.OrderService;
 import com.unipd.semicolon.core.domain.OrderResponse;
-import com.unipd.semicolon.core.entity.Drug;
-import com.unipd.semicolon.core.entity.Material;
-import com.unipd.semicolon.core.entity.Order;
-import com.unipd.semicolon.core.entity.OrderProduct;
+import com.unipd.semicolon.core.entity.*;
 import com.unipd.semicolon.core.entity.enums.OrderStatus;
-import com.unipd.semicolon.core.repository.entity.DrugRepository;
-import com.unipd.semicolon.core.repository.entity.MaterialRepository;
-import com.unipd.semicolon.core.repository.entity.OrderProductsRepository;
-import com.unipd.semicolon.core.repository.entity.OrderRepository;
+import com.unipd.semicolon.core.repository.entity.*;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class OrderServiceImp implements OrderService {
@@ -34,6 +26,10 @@ public class OrderServiceImp implements OrderService {
     @Autowired
     private OrderProductsRepository orderProductsRepository;
 
+    @Autowired
+    private PharmacyRepository pharmacyRepository;
+
+
     @Override
     public Order save(
             LocalDate orderDate,
@@ -41,7 +37,11 @@ public class OrderServiceImp implements OrderService {
             Map<Long, Integer> orderMaterials,
             OrderStatus status,
             float price,
-            boolean isActive) {
+            boolean isActive,
+            Pharmacy pharmacy) {
+
+        Pharmacy pharmacyExist = Optional.ofNullable(pharmacyRepository.findById(pharmacy.getId()))
+                .orElseThrow(() -> new EntityNotFoundException()).get();
 
         if (orderDrugs.isEmpty() && orderMaterials.isEmpty()) {
             throw new IllegalArgumentException("Invalid input parameter");
@@ -51,7 +51,8 @@ public class OrderServiceImp implements OrderService {
                 orderDate,
                 status,
                 price,
-                isActive);
+                isActive,
+                pharmacyExist);
         Order save = orderRepository.save(order);
 
         if (!orderDrugs.isEmpty()) {
@@ -99,7 +100,6 @@ public class OrderServiceImp implements OrderService {
         }
     }
 
-
     @Override
     public List<OrderResponse> getAll() {
         List<OrderResponse> orderList = new ArrayList<>();
@@ -109,6 +109,22 @@ public class OrderServiceImp implements OrderService {
         return orderList;
     }
 
+    @Override
+    public Order status(
+            Long orderId,
+            OrderStatus orderStatus
+    ) {
+        Order order = orderRepository.findOrderById(orderId);
+        if (order != null){
+            order.setStatus(orderStatus);
+            if(orderStatus.equals(OrderStatus.DELIVERED)){
+
+            }
+            return orderRepository.save(order);
+        } else {
+            throw new EntityNotFoundException();
+        }
+    }
 
     /* -----  private classes  ----- */
 

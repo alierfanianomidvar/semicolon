@@ -2,6 +2,7 @@ package com.unipd.semicolon.api.model;
 
 import com.unipd.semicolon.core.entity.Drug;
 import com.unipd.semicolon.core.entity.Material;
+import com.unipd.semicolon.core.entity.Pharmacy;
 import com.unipd.semicolon.core.entity.enums.OrderStatus;
 
 import java.time.LocalDate;
@@ -17,19 +18,23 @@ public class OrderModel {
     private float price;
     private boolean isActive;
 
+    private Pharmacy pharmacy;
+
     public OrderModel(
             LocalDate orderDate,
             Map<Long, Integer> orderDrugs,
             Map<Long, Integer> orderMaterials,
             OrderStatus status,
             float price,
-            boolean isActive) {
+            boolean isActive,
+            Pharmacy pharmacy) {
         this.orderDate = orderDate;
         this.orderDrugs = orderDrugs;
         this.orderMaterials = orderMaterials;
         this.status = status;
         this.price = price;
         this.isActive = isActive;
+        this.pharmacy = pharmacy;
     }
 
     public Long getId() {
@@ -88,4 +93,11 @@ public class OrderModel {
         isActive = active;
     }
 
+    public Pharmacy getPharmacy() {
+        return pharmacy;
+    }
+
+    public void setPharmacy(Pharmacy pharmacy) {
+        this.pharmacy = pharmacy;
+    }
 }
