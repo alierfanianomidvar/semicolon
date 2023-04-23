@@ -35,7 +35,12 @@ public class SupplierServiceImp implements SupplierService {
     }
 
     @Override
-    public Supplier create(String name, String address, String email, String telephoneNumber) throws SQLException {
+    public Supplier create(
+            String name,
+            String address,
+            String email,
+            String telephoneNumber
+    ) throws SQLException {
         if (name.isBlank() || address.isBlank() || email.isBlank() || telephoneNumber.isBlank()) {
             throw new CreatePharmacyDataNotFound();
         }
@@ -59,8 +64,14 @@ public class SupplierServiceImp implements SupplierService {
 
     @Transactional
     @Override
-    public Supplier save(String name, String address, String email, String telephoneNumber, List<Drug> drugs,
-            List<Material> materials) {
+    public Supplier save(
+            String name,
+            String address,
+            String email,
+            String telephoneNumber,
+            List<Drug> drugs,
+            List<Material> materials
+    ) {
         if (name == null || address == null || email == null ||
                 telephoneNumber == null || drugs == null || materials == null) {
             throw new IllegalArgumentException("Invalid input parameter");
@@ -69,19 +80,26 @@ public class SupplierServiceImp implements SupplierService {
                     name,
                     address,
                     email,
-                    telephoneNumber,
-                    drugs,
-                    materials);
+                    telephoneNumber
+            );
 
             supplierRepository.saveSupplier(supplier);
+            //First supplier is added to the database.
+            //TODO: Then we need to add the drugs and materials
             return supplier;
         }
     }
 
     @Transactional
     @Override
-    public boolean edit(Long id, String name, String address, String email, String telephoneNumber, List<Drug> drugs,
-            List<Material> materials) {
+    public boolean edit(Long id,
+                        String name,
+                        String address,
+                        String email,
+                        String telephoneNumber,
+                        List<Drug> drugs,
+                        List<Material> materials
+    ) {
         if (Objects.nonNull(supplierRepository.findBySupplierId(id))) {
             Supplier supplier = supplierRepository.findBySupplierId(id);
             if (name != null) {
@@ -116,6 +134,7 @@ public class SupplierServiceImp implements SupplierService {
             throw new IllegalArgumentException("Supplier with this id could not found!");
         }
         Supplier supplier = supplierRepository.findBySupplierId(id);
+        //TODO: before removing the supplier we need to remove every drug with the corresponding supplier id
         supplierRepository.deleteSupplier(supplier);
         return true;
     }
