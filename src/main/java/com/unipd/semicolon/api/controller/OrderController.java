@@ -36,7 +36,6 @@ public class OrderController {
                 .response(orderService.getById(id));
     }
 
-
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
     public ResponseEntity edit(@PathVariable("id") Long id, @RequestBody OrderModel model){
         return ResponseHelper
