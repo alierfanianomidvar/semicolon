@@ -17,12 +17,8 @@ public class Order {
     @Column(name = "order_date")
     private LocalDate orderDate;
 
-    @ManyToMany
-    private List<Drug> orderDrugs;
-
-    @ManyToMany
-    private List<Material> orderMaterials;
-
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderProduct> orderProducts;
     @Enumerated(EnumType.STRING)
     @Column(name = "order_status")
     private OrderStatus status;
@@ -45,14 +41,12 @@ public class Order {
 
     public Order(
             LocalDate orderDate,
-            List<Drug> orderDrugs,
-            List<Material> orderMaterials,
+            List<OrderProduct> orderProducts,
             OrderStatus status,
             float price,
             boolean isActive) {
         this.orderDate = orderDate;
-        this.orderDrugs = orderDrugs;
-        this.orderMaterials = orderMaterials;
+        this.orderProducts = orderProducts;
         this.status = status;
         this.price = price;
         this.isActive = isActive;
@@ -75,20 +69,12 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public List<Drug> getOrderDrugs() {
-        return orderDrugs;
+    public List<OrderProduct> getOrderProducts() {
+        return orderProducts;
     }
 
-    public void setOrderDrugs(List<Drug> orderDrugs) {
-        this.orderDrugs = orderDrugs;
-    }
-
-    public List<Material> getOrderMaterials() {
-        return orderMaterials;
-    }
-
-    public void setOrderMaterials(List<Material> orderMaterials) {
-        this.orderMaterials = orderMaterials;
+    public void setOrderProducts(List<OrderProduct> orderProducts) {
+        this.orderProducts = orderProducts;
     }
 
     public OrderStatus getStatus() {
