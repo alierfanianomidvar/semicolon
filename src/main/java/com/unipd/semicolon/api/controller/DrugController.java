@@ -13,12 +13,13 @@ import java.sql.SQLException;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
+@RequestMapping(value = "/drug")
 public class DrugController {
 
     @Autowired
     private DrugService drugService;
 
-    @RequestMapping(value = "/drug" ,method = RequestMethod.POST)
+    @RequestMapping(value = "/save" ,method = RequestMethod.POST)
     public ResponseEntity save(@RequestBody DrugModel model) {
         try {
             return ResponseHelper.response(drugService.save(
@@ -38,15 +39,17 @@ public class DrugController {
             ));
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
-    @RequestMapping(value = "/drug/{id}" , method = RequestMethod.GET)
+    @RequestMapping(value = "/getDrug/{id}" , method = RequestMethod.GET)
     public ResponseEntity getById(@PathVariable("id") Long id){
         return ResponseHelper.response(drugService.getById(id));
     }
 
-    @RequestMapping(value = "/drug/{id}" , method = RequestMethod.PUT)
+    @RequestMapping(value = "/edit/{id}" , method = RequestMethod.PUT)
     public ResponseEntity edit(@PathVariable("id") Long id , @RequestBody DrugModel model){
         try {
             return ResponseHelper.response(drugService.edit(
@@ -70,7 +73,7 @@ public class DrugController {
         }
     }
 
-    @RequestMapping(value = "/drug" , method = RequestMethod.GET )
+    @RequestMapping(value = "/alldrug" , method = RequestMethod.GET )
     public ResponseEntity getAll(){
         return ResponseHelper.response(drugService.getAll());
     }
