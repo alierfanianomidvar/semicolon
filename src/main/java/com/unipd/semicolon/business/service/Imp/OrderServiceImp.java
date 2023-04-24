@@ -5,6 +5,7 @@ import com.unipd.semicolon.business.exception.EntityNotFoundException;
 import com.unipd.semicolon.business.exception.InvalidParameterException;
 import com.unipd.semicolon.business.mapper.OrderMapper;
 import com.unipd.semicolon.business.service.OrderService;
+import com.unipd.semicolon.business.service.StorageService;
 import com.unipd.semicolon.core.domain.OrderResponse;
 import com.unipd.semicolon.core.entity.*;
 import com.unipd.semicolon.core.entity.enums.OrderStatus;
@@ -30,6 +31,9 @@ public class OrderServiceImp implements OrderService {
     @Autowired
     private PharmacyRepository pharmacyRepository;
 
+    @Autowired
+    private StorageService storageService;
+
 
     @Override
     public Order save(
@@ -39,7 +43,7 @@ public class OrderServiceImp implements OrderService {
             OrderStatus status,
             float price,
             boolean isActive,
-            Pharmacy pharmacy) throws CustomException{
+            Pharmacy pharmacy) throws CustomException {
 
 
         Pharmacy pharmacyExist = pharmacyRepository.findById(pharmacy.getId())
@@ -117,9 +121,31 @@ public class OrderServiceImp implements OrderService {
             OrderStatus orderStatus
     ) {
         Order order = orderRepository.findOrderById(orderId);
-        if (order != null){
+        if (order != null) {
             order.setStatus(orderStatus);
-            if(orderStatus.equals(OrderStatus.DELIVERED)){
+            if (orderStatus.equals(OrderStatus.DELIVERED)) {
+                for (OrderProduct orderProduct : order.getOrderProducts()) {
+                    Storage storage = storageService.storageExist(
+                            order.getPharmacy(),
+                            orderProduct.getDrug(),
+                            orderProduct.getMaterial()
+                    );
+                    if (storage != null) {
+                        storageService.updateStorage(
+                                storage,
+                                orderProduct.getQuantity() + storage.getAmount()
+                        );
+                    } else {
+                        storageService.save(
+                                order.getPharmacy(),
+                                orderProduct.getDrug(),
+                                orderProduct.getMaterial(),
+                                orderProduct.getQuantity(),
+                                1,
+                                1
+                        );
+                    }
+                }
 
             }
             return orderRepository.save(order);

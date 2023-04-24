@@ -8,6 +8,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 @Repository
 public class StorageRepositoryImp extends CustomRepository implements StorageRepository {
 
@@ -36,5 +37,25 @@ public class StorageRepositoryImp extends CustomRepository implements StorageRep
         return listQueryWrapper(entityManager.createQuery(
                 "select g from Storage g order by g.id desc ",
                 Storage.class));
+    }
+
+    @Override
+    public Storage findStorageByPharmacyIdAndDrugId(
+            Long pharmacyId,
+            Long drugId) {
+        return findQueryWrapper(entityManager.createQuery(
+                        "SELECT s FROM Storage s WHERE s.pharmacy.id =: pharmacyId AND s.drug.id =: drugId",
+                        Storage.class)
+                .setParameter("pharmacyId", pharmacyId)
+                .setParameter("drugId", drugId));
+    }
+
+    @Override
+    public Storage findStorageByPharmacyIdAndMaterialId(Long pharmacyId, Long materialId) {
+        return findQueryWrapper(entityManager.createQuery(
+                        "SELECT s FROM Storage s WHERE s.pharmacy.id =: pharmacyId AND s.drug.id =: materialId",
+                        Storage.class)
+                .setParameter("pharmacyId", pharmacyId)
+                .setParameter("materialId", materialId));
     }
 }

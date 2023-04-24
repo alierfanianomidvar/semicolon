@@ -50,14 +50,12 @@ public class StorageServiceImp implements StorageService {
             throw new IllegalArgumentException("Either drug or material must be specified");
         } else if (drug != null && material != null) {
             throw new IllegalArgumentException("Both drug and material cannot be specified at the same time. Please specify only one.");
-        } else
-        {
+        } else {
             // Declare variables to store the found entities
             Pharmacy pharmacyRepositoryById = null;
             Material materialRepositoryById = null;
             Drug drugRepositoryById = null;
-            try
-            {
+            try {
                 if (pharmacyRepository.findById(pharmacy.getId()).isPresent()) {
                     pharmacyRepositoryById = pharmacyRepository.findById(pharmacy.getId()).get();
                 }
@@ -92,8 +90,7 @@ public class StorageServiceImp implements StorageService {
                     }
                     return savedStorage;
                 }
-            }
-            catch (NoSuchElementException e) {
+            } catch (NoSuchElementException e) {
                 throw new IllegalArgumentException("Invalid input parameter: " + e.getMessage());
             } catch (DataAccessException e) {
                 throw new RuntimeException("Failed to access data: " + e.getMessage());
@@ -175,5 +172,27 @@ public class StorageServiceImp implements StorageService {
             storageList.add(StorageMapper.storageResponse(storage));
         }
         return storageList;
+    }
+
+    @Override
+    public boolean updateStorage(
+            Storage storage,
+            int amount) {
+        storage.setAmount(amount);
+        return storageRepository.save(storage) != null;
+    }
+
+    @Override
+    public Storage storageExist(
+            Pharmacy pharmacy,
+            Drug drug,
+            Material material) {
+        Storage storage = null;
+        if (drug != null) {
+            storage = storageRepository.findStorageByPharmacyIdAndDrugId(pharmacy.getId(), drug.getId());
+        } else if (material != null) {
+            storage = storageRepository.findStorageByPharmacyIdAndMaterialId(pharmacy.getId(), material.getId());
+        }
+        return storage;
     }
 }
