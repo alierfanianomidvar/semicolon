@@ -50,5 +50,10 @@ public interface DrugService {
     DrugResponse getById(Long id);
 
 
-    List<DrugResponse> getAll();
+    List<DrugResponse> getAll(
+            Long supplierId,
+            Integer isSensitive,
+            Country countryOFProduction,
+            String shape,
+            Gender gender) throws SQLException;
 }
