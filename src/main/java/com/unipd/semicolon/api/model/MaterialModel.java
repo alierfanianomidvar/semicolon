@@ -13,7 +13,7 @@ import java.util.List;
 public class MaterialModel {
     private Long id;
     private String name;
-    private Supplier supplier;
+    private Long supplier;
     private Country countryOfProduction;
     private LocalDate expirationDate;
     private byte[] image;
@@ -29,7 +29,7 @@ public class MaterialModel {
 
     public MaterialModel(
             String name,
-            Supplier supplier,
+            Long supplier,
             LocalDate expirationDate,
             byte[] image,
             Gender gender,
@@ -70,11 +70,11 @@ public class MaterialModel {
     public void setName(String name) {
         this.name = name;
     }
-    public Supplier getSupplier() {
+    public Long getSupplier() {
         return supplier;
     }
 
-    public void setSupplier(Supplier supplier) {
+    public void setSupplier(Long supplier) {
         this.supplier = supplier;
     }
 

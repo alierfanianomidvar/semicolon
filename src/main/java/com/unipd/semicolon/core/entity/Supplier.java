@@ -23,6 +23,7 @@ public class Supplier {
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.REMOVE)
     private List<Drug> drugs;
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
     private List<Material> materials;
 
     public Supplier() {
