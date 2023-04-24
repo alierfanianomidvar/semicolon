@@ -56,10 +56,10 @@ public class SupplierServiceImp implements SupplierService {
 
     @Override
     public Object findBySupplierId(Long id) {
-        if (Objects.isNull(supplierRepository.findBySupplierId(id))) {
+        if (Objects.isNull(supplierRepository.findById(id))) {
             throw new EntityNotFoundException("Supplier Not Found with id" + id);
         }
-        return supplierRepository.findBySupplierId(id);
+        return supplierRepository.findById(id);
     }
 
     @Transactional
@@ -100,8 +100,8 @@ public class SupplierServiceImp implements SupplierService {
                         List<Drug> drugs,
                         List<Material> materials
     ) {
-        if (Objects.nonNull(supplierRepository.findBySupplierId(id))) {
-            Supplier supplier = supplierRepository.findBySupplierId(id);
+        if (Objects.nonNull(supplierRepository.findById(id))) {
+            Supplier supplier = supplierRepository.findById(id);
             if (name != null) {
                 supplier.setName(name);
             }
@@ -130,10 +130,10 @@ public class SupplierServiceImp implements SupplierService {
     @Transactional
     @Override
     public boolean remove(Long id) {
-        if (Objects.isNull(supplierRepository.findBySupplierId(id))) {
+        if (Objects.isNull(supplierRepository.findById(id))) {
             throw new IllegalArgumentException("Supplier with this id could not found!");
         }
-        Supplier supplier = supplierRepository.findBySupplierId(id);
+        Supplier supplier = supplierRepository.findById(id);
         //TODO: before removing the supplier we need to remove every drug with the corresponding supplier id
         supplierRepository.deleteSupplier(supplier);
         return true;
