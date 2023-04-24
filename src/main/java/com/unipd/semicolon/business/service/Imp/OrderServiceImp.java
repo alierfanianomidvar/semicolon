@@ -134,12 +134,9 @@ public class OrderServiceImp implements OrderService {
 
         Map<Drug, Integer> newMapDrug = new HashMap<>();
         for (Long drugId : orderDrugList.keySet()) {
-            Drug drug = drugRepository.findById(drugId);
-            if (drug != null) {
-                newMapDrug.put(drug, orderDrugList.get(drugId));
-            } else {
-                throw new EntityNotFoundException();
-            }
+            Drug drug = drugRepository.findById(drugId)
+                    .orElseThrow(() -> new EntityNotFoundException("Drug not found - " + drugId));
+            newMapDrug.put(drug, orderDrugList.get(drugId));
         }
         return newMapDrug;
     }
@@ -147,12 +144,9 @@ public class OrderServiceImp implements OrderService {
     private Map<Material, Integer> materialListCheck(Map<Long, Integer> materialList) {
         Map<Material, Integer> newMaterialMap = new HashMap<>();
         for (Long materialId : materialList.keySet()) {
-            Material material = materialRepository.findMaterialById(materialId);
-            if (material != null) {
-                newMaterialMap.put(material, materialList.get(materialId));
-            } else {
-                throw new EntityNotFoundException();
-            }
+            Material material = materialRepository.findById(materialId)
+                    .orElseThrow(() -> new EntityNotFoundException("Material not found - " + materialId));
+            newMaterialMap.put(material, materialList.get(materialId));
         }
         return newMaterialMap;
     }
