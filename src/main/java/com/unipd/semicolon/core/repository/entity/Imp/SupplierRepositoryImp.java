@@ -17,7 +17,7 @@ public class SupplierRepositoryImp extends CustomRepository implements SupplierR
     }
 
     @Override
-    public Supplier findBySupplierId(Long id) {
+    public Supplier findById(Long id) {
         return findById(Supplier.class, id);
     }
 }
