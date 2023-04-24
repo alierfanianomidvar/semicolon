@@ -1,13 +1,14 @@
 package com.unipd.semicolon.business.service.Imp;
 
-import com.unipd.semicolon.business.exception.InvalidTokenException;
+import com.unipd.semicolon.business.exception.CustomException;
+import com.unipd.semicolon.business.exception.EntityNotFoundException;
+import com.unipd.semicolon.business.exception.InvalidParameterException;
 import com.unipd.semicolon.business.mapper.OrderMapper;
 import com.unipd.semicolon.business.service.OrderService;
 import com.unipd.semicolon.core.domain.OrderResponse;
 import com.unipd.semicolon.core.entity.*;
 import com.unipd.semicolon.core.entity.enums.OrderStatus;
 import com.unipd.semicolon.core.repository.entity.*;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,13 +39,14 @@ public class OrderServiceImp implements OrderService {
             OrderStatus status,
             float price,
             boolean isActive,
-            Pharmacy pharmacy) {
+            Pharmacy pharmacy) throws CustomException{
 
-        Pharmacy pharmacyExist = Optional.ofNullable(pharmacyRepository.findById(pharmacy.getId()))
-                .orElseThrow(() -> new EntityNotFoundException()).get();
+
+        Pharmacy pharmacyExist = pharmacyRepository.findById(pharmacy.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Pharmacy does not exist"));
 
         if (orderDrugs.isEmpty() && orderMaterials.isEmpty()) {
-            throw new IllegalArgumentException("Invalid input parameter");
+            throw new InvalidParameterException();
         }
 
         Order order = new Order(
@@ -90,7 +92,7 @@ public class OrderServiceImp implements OrderService {
     }
 
     @Override
-    public Order getById(Long id) {
+    public Order getById(Long id) throws CustomException {
 
         Order order = orderRepository.findOrderById(id);
         if (order != null) {

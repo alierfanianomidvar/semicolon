@@ -1,8 +1,7 @@
 package com.unipd.semicolon.business.service;
 
+import com.unipd.semicolon.business.exception.CustomException;
 import com.unipd.semicolon.core.domain.OrderResponse;
-import com.unipd.semicolon.core.entity.Drug;
-import com.unipd.semicolon.core.entity.Material;
 import com.unipd.semicolon.core.entity.Order;
 import com.unipd.semicolon.core.entity.Pharmacy;
 import com.unipd.semicolon.core.entity.enums.OrderStatus;
@@ -20,7 +19,7 @@ public interface OrderService {
             float price,
             boolean isActive,
             Pharmacy pharmacy
-    );
+    ) throws CustomException;
 
     void delete (
             Order order
@@ -28,7 +27,7 @@ public interface OrderService {
 
     Order getById(
             Long id
-    );
+    ) throws CustomException;
 
     List<OrderResponse> getAll();
 
