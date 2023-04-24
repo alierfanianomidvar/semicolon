@@ -13,9 +13,9 @@ import com.unipd.semicolon.core.entity.enums.Gender;
 import com.unipd.semicolon.core.repository.entity.DrugRepository;
 import com.unipd.semicolon.core.repository.entity.SupplierRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.hibernate.service.spi.ServiceException;
+import jakarta.persistence.criteria.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -26,7 +26,6 @@ import java.util.Objects;
 
 @Service
 public class DrugServiceImp implements DrugService {
-
     @Autowired
     private DrugRepository drugRepository;
 
@@ -100,7 +99,8 @@ public class DrugServiceImp implements DrugService {
             throw new IllegalArgumentException("Invalid input parameter");
         } else {
 
-            Drug drug = drugRepository.findById(drugId);
+            Drug drug = drugRepository.findById(drugId)
+                    .orElseThrow(() -> new IllegalStateException("Drug not found - " + drugId));
             if (drug == null) {
                 throw new NotFoundException();
             }
@@ -144,7 +144,8 @@ public class DrugServiceImp implements DrugService {
 
     @Override
     public DrugResponse getById(Long id) {
-        Drug drug = drugRepository.findById(id);
+        Drug drug = drugRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Drug not found - " + id));
 
         if (drug == null)
             throw new EntityNotFoundException("Drug Not Found with id" + id);
@@ -168,19 +169,50 @@ public class DrugServiceImp implements DrugService {
     }
 
 
-    @Override
-    public List<DrugResponse> getAll() {
+    public List<DrugResponse> getAll(Long supplierId,
+                                     Integer isSensitive,
+                                     Country countryOFProduction,
+                                     String shape, Gender gender
+    ) {
+        Specification<Drug> spec = Specification.where(null);
+
+        if (supplierId != null) {
+            spec = spec.and((root, query, builder) -> {
+                Join<Drug, Supplier> supplierJoin = root.join("supplier");
+                return builder.equal(supplierJoin.get("id"), supplierId);
+            });
+        }
+
+        if (isSensitive != null) {
+            spec = spec.and((root, query, builder) -> {
+                return builder.equal(root.get("isSensitive"), isSensitive == 1);
+            });
+        }
+
+        if (countryOFProduction != null) {
+            spec = spec.and((root, query, builder) -> {
+                return builder.equal(root.get("countryOFProduction"), countryOFProduction);
+            });
+        }
+
+        if (shape != null && !shape.isEmpty()) {
+            spec = spec.and((root, query, builder) -> {
+                return builder.like(builder.lower(root.get("shape")), "%" + shape.toLowerCase() + "%");
+            });
+        }
+
+        if (gender != null) {
+            spec = spec.and((root, query, builder) -> {
+                return builder.equal(root.get("gender"), gender);
+            });
+        }
+
+        List<Drug> drugs;
+        drugs = drugRepository.findAll(spec);
+
         List<DrugResponse> drugList = new ArrayList<>();
-        try {
-            List<Drug> drugs = drugRepository.getAll();
-            if (drugs == null || drugs.isEmpty()) {
-                throw new NotFoundException();
-            }
-            for (Drug drug : drugs) {
-                drugList.add(DrugMapper.drugResponse(drug));
-            }
-        } catch (DataAccessException ex) {
-            throw new ServiceException("Failed to retrieve drugs.", ex);
+        for (Drug drug : drugs) {
+            drugList.add(DrugMapper.drugResponse(drug));
         }
         return drugList;
     }
