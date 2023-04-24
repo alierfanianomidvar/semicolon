@@ -39,7 +39,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/logout/{token}", method = RequestMethod.POST)
-    public ResponseEntity login(@PathVariable String token)
+    public ResponseEntity logout(@PathVariable String token)
             throws CustomException {
         try {
             return ResponseHelper.response(accountService.LogOut(token));

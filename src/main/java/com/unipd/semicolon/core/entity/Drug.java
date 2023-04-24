@@ -60,8 +60,8 @@ public class Drug {
     private LocalDateTime lastModifiedDate;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "orderDrugs")
-    private List<Order> orders;
+    @OneToMany(mappedBy = "drug")
+    private List<OrderProduct> orders;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "receiptDrugs")
@@ -71,7 +71,20 @@ public class Drug {
 
     }
 
-    public Drug(String name, Supplier supplier, LocalDate expirationDate, byte[] image, String shape, Gender gender, AgeGroup ageGroup, boolean isSensitive, boolean needPrescription, String description, int limitation, float price, Country countryOFProduction ) {
+    public Drug(
+            String name,
+            Supplier supplier,
+            LocalDate expirationDate,
+            byte[] image,
+            String shape,
+            Gender gender,
+            AgeGroup ageGroup,
+            boolean isSensitive,
+            boolean needPrescription,
+            String description,
+            int limitation,
+            float price,
+            Country countryOFProduction) {
         this.name = name;
         this.supplier = supplier;
         this.expirationDate = expirationDate;
@@ -102,7 +115,7 @@ public class Drug {
             float price,
             Country countryOFProduction,
             LocalDateTime lastModifiedDate,
-            List<Order> orders, List<Receipt> receipts) {
+            List<Receipt> receipts) {
         this.name = name;
         this.supplier = supplier;
         this.expirationDate = expirationDate;
@@ -117,10 +130,8 @@ public class Drug {
         this.price = price;
         this.countryOFProduction = countryOFProduction;
         this.lastModifiedDate = lastModifiedDate;
-        this.orders = orders;
         this.receipts = receipts;
     }
-
 
 
     public Long getId() {
@@ -239,19 +250,19 @@ public class Drug {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
-
     public List<Receipt> getReceipts() {
         return receipts;
     }
 
     public void setReceipts(List<Receipt> receipts) {
         this.receipts = receipts;
+    }
+
+    public List<OrderProduct> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<OrderProduct> orders) {
+        this.orders = orders;
     }
 }

@@ -54,9 +54,9 @@ public class Material {
     @Column(name = "description")
     private String description;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "orderMaterials")
-    private List<Order> orders;
+//    @JsonIgnore
+//    @ManyToMany(mappedBy = "orderMaterials")
+//    private List<Order> orders;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "receiptMaterials")
@@ -68,7 +68,17 @@ public class Material {
 
     }
 
-    public Material(String name, Supplier supplier, Country countryOfProduction, LocalDate expirationDate, byte[] image, Gender gender, float price, AgeGroup ageGroup, LocalDate lastModifiedDate, String description) {
+    public Material(
+            String name,
+            Supplier supplier,
+            Country countryOfProduction,
+            LocalDate expirationDate,
+            byte[] image,
+            Gender gender,
+            float price,
+            AgeGroup ageGroup,
+            LocalDate lastModifiedDate,
+            String description) {
         this.name = name;
         this.supplier = supplier;
         this.countryOfProduction = countryOfProduction;
@@ -92,7 +102,6 @@ public class Material {
             AgeGroup ageGroup,
             LocalDate lastModifiedDate,
             String description,
-            List<Order> orders,
             List<Receipt> receipts) {
         this.name = name;
         this.supplier = supplier;
@@ -104,7 +113,6 @@ public class Material {
         this.ageGroup = ageGroup;
         this.lastModifiedDate = lastModifiedDate;
         this.description = description;
-        this.orders = orders;
         this.receipts = receipts;
     }
 
@@ -190,14 +198,6 @@ public class Material {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
     }
 
     public List<Receipt> getReceipts() {
