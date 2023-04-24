@@ -28,7 +28,7 @@ public class ReceiptServiceImp implements ReceiptService {
 
 
     @Override
-    public Receipt save(List<Long> drug_id,
+    public Receipt save(List<Long> drugIds,
                         List<Long> material_id,
                         byte[] image,
                         Date date,
@@ -41,21 +41,15 @@ public class ReceiptServiceImp implements ReceiptService {
             if (paymentMethod == null) {
                 throw new IllegalArgumentException("Payment method cannot be null.");
             }
-
-            if(drugRepository.findById(drug_id.get(0))==null)
-            {
-                throw new EntityNotFoundException("Receipt with ID " + drug_id + " not found.");
-            }
             else {
                 List<Drug> drugList = new ArrayList<>();
-                for (Long id : drug_id){
-                    drugList.add(drugRepository.findById(id));
+                for (Long id : drugIds){
+                    Drug drug = drugRepository.findById(id)
+                            .orElseThrow(() -> new IllegalStateException("Drug not found - " + id));
+                    drugList.add(drug);
                 }
                 //List<Drug> drugList = drugRepository.findById(drug_id);
                 //List<Material> materialList=materialRepository.findById(material_id).stream().toList();
-                if (drugList == null) {
-                    throw new EntityNotFoundException("Receipt with ID " + drug_id + " not found.");
-                }
 
                 Receipt receipt = new Receipt();
                 receipt.setReceiptDrugs(drugList);
@@ -78,7 +72,7 @@ public class ReceiptServiceImp implements ReceiptService {
 
     @Override
     public Boolean edit(Long id,
-                        List<Long> drug_id,
+                        List<Long> drugIds,
                         List<Long> material_id,
                         byte[] image,
                         Date date,
@@ -92,8 +86,10 @@ public class ReceiptServiceImp implements ReceiptService {
                 //List<Drug> drugList = drugRepository.findById(drug_id).stream().toList();
                 //List<Material> materialList=materialRepository.findById(material_id).stream().toList();
                 List<Drug> drugList = new ArrayList<>();
-                for (Long drugId : drug_id){
-                    drugList.add(drugRepository.findById(drugId));
+                for (Long drugId : drugIds) {
+                    Drug drug = drugRepository.findById(drugId)
+                            .orElseThrow(() -> new IllegalStateException("Drug not found - " + drugId));
+                    drugList.add(drug);
                 }
                 material_id=null;//after getting repository of material it will edit
     //          receipt.setReceiptDrugs(drugList);

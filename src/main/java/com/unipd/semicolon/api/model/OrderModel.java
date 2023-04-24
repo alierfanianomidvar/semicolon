@@ -1,67 +1,48 @@
-package com.unipd.semicolon.core.entity;
+package com.unipd.semicolon.api.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.unipd.semicolon.core.entity.Drug;
+import com.unipd.semicolon.core.entity.Material;
+import com.unipd.semicolon.core.entity.Pharmacy;
 import com.unipd.semicolon.core.entity.enums.OrderStatus;
-import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
-@Entity
-@Table(name = "orders")
-public class Order {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class OrderModel {
     private Long id;
-    @Column(name = "order_date")
     private LocalDate orderDate;
-    @JsonManagedReference
-    @OneToMany(mappedBy = "order")
-    private List<OrderProduct> orderProducts;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "order_status")
+    private Map<Long, Integer> orderDrugs;
+    private Map<Long, Integer> orderMaterials;
     private OrderStatus status;
-    @Column(name = "price")
     private float price;
-    @JsonBackReference
-    @ManyToOne
-    private Pharmacy pharmacy;
-
-    //just for soft deleting
-    @Column(name = "is_active")
     private boolean isActive;
 
+    private Pharmacy pharmacy;
 
-    /*-------------------------------------------
-    ----------------Constructors-----------------
-    -------------------------------------------*/
-
-    public Order() {
-
-    }
-
-    public Order(
+    public OrderModel(
             LocalDate orderDate,
+            Map<Long, Integer> orderDrugs,
+            Map<Long, Integer> orderMaterials,
             OrderStatus status,
             float price,
             boolean isActive,
             Pharmacy pharmacy) {
         this.orderDate = orderDate;
+        this.orderDrugs = orderDrugs;
+        this.orderMaterials = orderMaterials;
         this.status = status;
         this.price = price;
         this.isActive = isActive;
         this.pharmacy = pharmacy;
     }
 
-
-    /*-------------------------------------------
-        ----------------Getters and Setters-----------------
-        -------------------------------------------*/
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public LocalDate getOrderDate() {
@@ -72,12 +53,20 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public List<OrderProduct> getOrderProducts() {
-        return orderProducts;
+    public Map<Long, Integer> getOrderDrugs() {
+        return orderDrugs;
     }
 
-    public void setOrderProducts(List<OrderProduct> orderProducts) {
-        this.orderProducts = orderProducts;
+    public void setOrderDrugs(Map<Long, Integer> orderDrugs) {
+        this.orderDrugs = orderDrugs;
+    }
+
+    public Map<Long, Integer> getOrderMaterials() {
+        return orderMaterials;
+    }
+
+    public void setOrderMaterials(Map<Long, Integer> orderMaterials) {
+        this.orderMaterials = orderMaterials;
     }
 
     public OrderStatus getStatus() {
@@ -112,5 +101,3 @@ public class Order {
         this.pharmacy = pharmacy;
     }
 }
-
-

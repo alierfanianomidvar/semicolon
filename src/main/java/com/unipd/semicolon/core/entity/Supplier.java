@@ -20,10 +20,10 @@ public class Supplier {
     @Column(name = "telephone_number")
     private String telephoneNumber;
     @JsonManagedReference
-    @OneToMany(mappedBy = "supplier")
+    @OneToMany(mappedBy = "supplier", cascade = CascadeType.REMOVE)
     private List<Drug> drugs;
+    @OneToMany(mappedBy = "supplier", cascade = CascadeType.REMOVE)
     @JsonManagedReference
-    @OneToMany(mappedBy = "supplier")
     private List<Material> materials;
 
     public Supplier() {

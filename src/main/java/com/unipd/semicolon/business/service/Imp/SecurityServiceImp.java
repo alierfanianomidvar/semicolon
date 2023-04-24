@@ -3,6 +3,7 @@ package com.unipd.semicolon.business.service.Imp;
 import com.unipd.semicolon.business.exception.CustomException;
 import com.unipd.semicolon.business.exception.InvalidTokenException;
 import com.unipd.semicolon.business.service.LocalTimeService;
+import com.unipd.semicolon.business.service.LogSystem;
 import com.unipd.semicolon.business.service.SecurityService;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class SecurityServiceImp implements SecurityService {
     @Autowired
     private LocalTimeService localTimeService;
 
+    @Autowired
+    private LogSystem logSystem;
+
     @Value("${security.jwt.token.secret-key:secret-key}")  // the secret-key
     private String secretKey;
 
@@ -27,7 +31,7 @@ public class SecurityServiceImp implements SecurityService {
     @Override
     public String createToken(String accountId, String role) {
         Claims claims = Jwts.claims().setSubject(accountId);
-        claims.put("Role" , role);
+        claims.put("Role", role);
 
         Date validity = new Date(localTimeService.nowTime() + validityInMilliseconds * 1000000);
 
@@ -54,7 +58,14 @@ public class SecurityServiceImp implements SecurityService {
     public String getAccountId(String token) throws CustomException {
         try {
             return (getParseToken(token).getBody().getSubject());
-        } catch (CustomException e){
+        } catch (CustomException e) {
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            logSystem.logUtil(
+                    "Class caller : " + elements[1].getClassName()
+                            + " | " +
+                            "Method :" +
+                            elements[1].getMethodName());
             throw e;
         }
     }
@@ -64,7 +75,17 @@ public class SecurityServiceImp implements SecurityService {
         try {
             return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
         } catch (JwtException | IllegalArgumentException e) {
-            throw new InvalidTokenException();
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            logSystem.logUtil(
+                    "Class caller : " + elements[1].getClassName()
+                            + " | " +
+                            "Method :" +
+                            elements[1].getMethodName()
+                            + "|" +
+                            " Msg : "
+                            + e.getMessage());
+            throw e;
         }
     }
 }
