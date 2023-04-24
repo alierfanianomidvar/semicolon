@@ -14,7 +14,6 @@ public class Pharmacy {
     private Long id;
     @Column(name = "name")
     private String name;
-
     @Column(name = "address")
     private String address;
     @Column(name = "telephoneNumber")
@@ -36,6 +35,9 @@ public class Pharmacy {
     @Column(name = "status")
     private PharmacyStatus status;
 
+    @JsonManagedReference
+    @OneToMany(mappedBy = "pharmacy")
+    private List<Order> orders;
 
     public Pharmacy() {
 
@@ -128,5 +130,13 @@ public class Pharmacy {
 
     public void setStatus(PharmacyStatus status) {
         this.status = status;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }
