@@ -17,6 +17,7 @@ public interface StorageService {
             int threshold,
             double discount
     );
+
     boolean edit(
             Long id_storage,
             Pharmacy pharmacy,
@@ -26,11 +27,27 @@ public interface StorageService {
             int threshold,
             double discount
     );
+
     boolean delete(
             Long id
     );
+
     StorageResponse getById(
             Long id
     );
+
     List<StorageResponse> getAll();
+
+    boolean updateStorage(
+            Storage storage,
+            int amount
+    );
+
+
+    Storage storageExist(
+            Pharmacy pharmacy,
+            Drug drug,
+            Material material
+    );
+
 }

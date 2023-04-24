@@ -18,4 +18,14 @@ public interface StorageRepository {
     Storage findStorageById(Long id);
 
     List<Storage> getAll();
+
+    Storage findStorageByPharmacyIdAndDrugId(
+            Long pharmacyId,
+            Long drugId
+    );
+
+    Storage findStorageByPharmacyIdAndMaterialId(
+            Long pharmacyId,
+            Long materialId
+    );
 }
