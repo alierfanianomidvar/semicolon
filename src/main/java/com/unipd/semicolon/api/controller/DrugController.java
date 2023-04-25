@@ -90,8 +90,5 @@ public class DrugController {
             );
         }
 
-    @RequestMapping(value = "/alldrug", method = RequestMethod.GET)
-    public ResponseEntity getAll() {
-        return ResponseHelper.response(drugService.getAll());
     }
 }

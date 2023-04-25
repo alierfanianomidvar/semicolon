@@ -57,10 +57,10 @@ public class ReceiptServiceImp implements ReceiptService {
             List<Drug> drugList = new ArrayList<>();
             List<Material> materialList = new ArrayList<>();
             for (Long id : drugId) {
-                drugList.add(drugRepository.findById(id));
+                drugList.add(drugRepository.findById(id).get());
             }
             for (Long id : materialId) {
-                materialList.add(materialRepository.findById(id));
+                materialList.add(materialRepository.findById(id).get());
             }
 
             if (drugList == null && materialList == null) {
@@ -120,12 +120,12 @@ public class ReceiptServiceImp implements ReceiptService {
             List<Material> materialList = new ArrayList<>();
             if (drugId != null) {
                 for (Long i : drugId) {
-                    drugList.add(drugRepository.findById(i));
+                    drugList.add(drugRepository.findById(i).get());
                 }
             }
             if (materialId != null) {
                 for (Long i : materialId) {
-                    materialList.add(materialRepository.findById(i));
+                    materialList.add(materialRepository.findById(i).get());
                 }
             }
 

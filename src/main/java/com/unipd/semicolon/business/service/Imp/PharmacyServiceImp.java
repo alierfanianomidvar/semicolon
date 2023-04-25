@@ -394,7 +394,7 @@ public class PharmacyServiceImp implements PharmacyService {
     private Boolean createStorage(Storage storage, Pharmacy pharmacy) {
         if (storage.getDrug() != null) {
             // check for validity of the drug
-            Drug drug = drugRepository.findById(storage.getDrug().getId());
+            Drug drug = drugRepository.findById(storage.getDrug().getId()).get();
             if (drug == null) {
                 throw new CustomException("Drug with id " + storage.getDrug().getId() + " does not exist!");
             } else {
@@ -411,7 +411,7 @@ public class PharmacyServiceImp implements PharmacyService {
 
         } else if (storage.getMaterial() != null) {
             // similar check for material
-            Material material = materialRepository.findById(storage.getMaterial().getId());
+            Material material = materialRepository.findById(storage.getMaterial().getId()).get();
             if (material == null) {
                 throw new CustomException("Material with id " + storage.getMaterial().getId() + " does not exist!");
             } else {

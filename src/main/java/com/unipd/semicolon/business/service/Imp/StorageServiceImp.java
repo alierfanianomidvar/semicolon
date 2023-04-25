@@ -71,7 +71,7 @@ public class StorageServiceImp implements StorageService {
                         // check material
                         if (material != null) {
                             if (materialRepository.findById(material.getId()) != null) {
-                                materialRepositoryById = materialRepository.findById(material.getId());
+                                materialRepositoryById = materialRepository.findById(material.getId()).get();
                                 Storage storage = new Storage(pharmacyRepositoryById,
                                         null,
                                         materialRepositoryById,
@@ -89,7 +89,7 @@ public class StorageServiceImp implements StorageService {
                         }
                         if (drug != null) {
                             if (drugRepository.findById(drug.getId()) != null) {
-                                drugRepositoryById = drugRepository.findById(drug.getId());
+                                drugRepositoryById = drugRepository.findById(drug.getId()).get();
                                 Storage storage = new Storage(pharmacyRepositoryById,
                                         drugRepositoryById,
                                         null,
