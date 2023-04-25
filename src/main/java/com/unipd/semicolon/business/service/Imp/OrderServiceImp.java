@@ -1,9 +1,11 @@
 package com.unipd.semicolon.business.service.Imp;
 
+import com.unipd.semicolon.business.enums.OrderReport;
 import com.unipd.semicolon.business.exception.CustomException;
 import com.unipd.semicolon.business.exception.EntityNotFoundException;
 import com.unipd.semicolon.business.exception.InvalidParameterException;
 import com.unipd.semicolon.business.mapper.OrderMapper;
+import com.unipd.semicolon.business.service.LocalTimeService;
 import com.unipd.semicolon.business.service.OrderService;
 import com.unipd.semicolon.business.service.StorageService;
 import com.unipd.semicolon.core.domain.OrderResponse;
@@ -15,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.time.LocalDate;
+import java.time.YearMonth;
 
 @Service
 public class OrderServiceImp implements OrderService {
@@ -33,6 +37,9 @@ public class OrderServiceImp implements OrderService {
 
     @Autowired
     private StorageService storageService;
+
+    @Autowired
+    private LocalTimeService localTimeService;
 
 
     @Override
@@ -108,11 +115,7 @@ public class OrderServiceImp implements OrderService {
 
     @Override
     public List<OrderResponse> getAll() {
-        List<OrderResponse> orderList = new ArrayList<>();
-        for (Order order : orderRepository.getAll()) {
-            orderList.add(OrderMapper.orderResponse(order));
-        }
-        return orderList;
+        return OrderMapper.orderResponse(orderRepository.getAll());
     }
 
     @Override
@@ -151,6 +154,43 @@ public class OrderServiceImp implements OrderService {
             return orderRepository.save(order);
         } else {
             throw new EntityNotFoundException();
+        }
+    }
+
+    @Override
+    public List<OrderResponse> reportBaseDate(OrderReport orderReport, Short num) {
+
+        switch (orderReport) {
+            case THIS_WEEK:
+                return OrderMapper.orderResponse(orderRepository.getAllBetweenDate(
+                        localTimeService.firstDayOfThisWeek(),
+                        localTimeService.getLocalDate().plusDays(1) // We need the last day.
+                ));
+            case LAST_WEEK:
+                Map<String, LocalDate> dayOfWeek = localTimeService.firstAndLastDayOfWeek(num);
+                return OrderMapper.orderResponse(orderRepository.getAllBetweenDate(
+                        dayOfWeek.get("start"),
+                        dayOfWeek.get("end").plusDays(1)
+                ));
+            case THIS_MONTH:
+                return OrderMapper.orderResponse(orderRepository.getAllBetweenDate(
+                        localTimeService.firstDayOfThisMonth(),
+                        localTimeService.getLocalDate().plusDays(1)
+                ));
+            case LAST_MONTH:
+                Map<String, LocalDate> dayOfMonth = localTimeService.firstAndLastDayOfMonth(num);
+                return OrderMapper.orderResponse(orderRepository.getAllBetweenDate(
+                        dayOfMonth.get("start"),
+                        dayOfMonth.get("end").plusDays(1)
+                ));
+            case THIS_YEAR:
+                return OrderMapper.orderResponse(orderRepository.getAllBetweenDate(
+                        localTimeService.firstDayOfYear(),
+                        localTimeService.getLocalDate().plusDays(1)
+                ));
+            default:
+                return getAll();
+
         }
     }
 
