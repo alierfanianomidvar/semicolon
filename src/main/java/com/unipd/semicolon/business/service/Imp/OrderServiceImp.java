@@ -136,13 +136,15 @@ public class OrderServiceImp implements OrderService {
                                 orderProduct.getQuantity() + storage.getAmount()
                         );
                     } else {
+                        //TODO: validation to use the correct token
                         storageService.save(
                                 order.getPharmacy(),
                                 orderProduct.getDrug(),
                                 orderProduct.getMaterial(),
                                 orderProduct.getQuantity(),
                                 1,
-                                1
+                                1,
+                                ""
                         );
                     }
                 }

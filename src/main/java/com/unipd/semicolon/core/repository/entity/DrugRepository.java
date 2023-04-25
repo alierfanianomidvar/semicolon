@@ -11,6 +11,7 @@ import com.unipd.semicolon.core.entity.enums.Country;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface DrugRepository extends JpaRepository<Drug, Long>, JpaSpecificationExecutor<Drug> {
@@ -18,10 +19,25 @@ public interface DrugRepository extends JpaRepository<Drug, Long>, JpaSpecificat
     Drug save(
             Drug drug);
 
-    List<Drug> getAll();
+//    List<Drug> getAll();
 
-    Drug findById(Long id);
+    Optional<Drug> findById(Long id);
 
-    List<Drug> searchDrug(String name, Supplier supplier, Date expirationDate, String shape, AgeGroup ageGroup,
-            Country countryOFProduction);
+//    List<Drug> searchDrug(
+//            String name,
+//            Supplier supplier,
+//            Date expirationDate,
+//            String shape,
+//            AgeGroup ageGroup,
+//            Country countryOFProduction
+//    );
+
+    List<Drug> findDrugsByNameAndSupplierAndExpirationDateAndShapeAndAgeGroupAndCountryOFProduction(
+            String name,
+            Supplier supplier,
+            Date expirationDate,
+            String shape,
+            AgeGroup ageGroup,
+            Country countryOFProduction
+    );
 }
