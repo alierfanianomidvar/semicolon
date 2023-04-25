@@ -1,5 +1,6 @@
 package com.unipd.semicolon.business.service;
 
+import com.unipd.semicolon.business.enums.OrderReport;
 import com.unipd.semicolon.business.exception.CustomException;
 import com.unipd.semicolon.core.domain.OrderResponse;
 import com.unipd.semicolon.core.entity.Order;
@@ -32,4 +33,6 @@ public interface OrderService {
     List<OrderResponse> getAll();
 
     Order status(Long orderId, OrderStatus orderStatus);
+
+    List<OrderResponse> reportBaseDate(OrderReport orderReport, Short num);
 }

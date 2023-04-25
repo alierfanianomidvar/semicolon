@@ -2,10 +2,12 @@ package com.unipd.semicolon.api.controller;
 
 import com.unipd.semicolon.api.model.OrderModel;
 import com.unipd.semicolon.api.util.helper.ResponseHelper;
+import com.unipd.semicolon.business.enums.OrderReport;
 import com.unipd.semicolon.business.exception.EntityNotFoundException;
 import com.unipd.semicolon.business.exception.InvalidParameterException;
 import com.unipd.semicolon.business.service.OrderService;
 import com.unipd.semicolon.core.entity.Order;
+import com.unipd.semicolon.core.entity.enums.Country;
 import com.unipd.semicolon.core.entity.enums.OrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -86,6 +88,23 @@ public class OrderController {
                     "ID : " + id
                             + "|" +
                             "Status :" + status,
+                    e.getMsg(),
+                    e.getStatus()
+            );
+        }
+    }
+
+    @RequestMapping(value = "/report", method = RequestMethod.GET)
+    public ResponseEntity report(@RequestParam(required = false) OrderReport orderReport,
+                                 @RequestParam(required = false) Short num) {
+        try {
+            return ResponseHelper
+                    .response(orderService.reportBaseDate(orderReport, num));
+        } catch (EntityNotFoundException e) {
+            return ResponseHelper.response(
+                    "ID : " + 1
+                            + "|" +
+                            "Status :" + 2,
                     e.getMsg(),
                     e.getStatus()
             );
