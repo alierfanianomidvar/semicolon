@@ -10,6 +10,7 @@ import com.unipd.semicolon.business.service.OrderService;
 import com.unipd.semicolon.core.entity.Order;
 import com.unipd.semicolon.core.entity.enums.Country;
 import com.unipd.semicolon.core.entity.enums.OrderStatus;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,9 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
+    @Operation(summary = "Saving order",
+            description = "Saving the order base the info")
     public ResponseEntity save(@RequestBody OrderModel model) {
         try {
             return ResponseHelper
@@ -57,7 +60,9 @@ public class OrderController {
         }
     }
 
-    @RequestMapping(value = "/getById/{id}/{token}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/{token}", method = RequestMethod.GET)
+    @Operation(summary = "Getting order base an id.",
+            description = "we will send order id and token.")
     public ResponseEntity getById(
             @PathVariable("id") Long id,
             @PathVariable("token") String token) {
@@ -79,7 +84,9 @@ public class OrderController {
         }
     }
 
-    @RequestMapping(value = "/delete/{id}/{token}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}/{token}", method = RequestMethod.DELETE)
+    @Operation(summary = "Deleting order",
+            description = "we will send order id and token.")
     public ResponseEntity deleteById(
             @PathVariable("token") String token,
             @PathVariable("id") Long id) {
@@ -101,7 +108,9 @@ public class OrderController {
                 .response(orderService.getAll());
     }
 
-    @RequestMapping(value = "/status/{id}/{status}/{token}", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/{id}/{status}/{token}", method = RequestMethod.PATCH)
+    @Operation(summary = "Changing the status of order",
+            description = "we will send order order id, status(Ex: DELIVERED) and  token.")
     public ResponseEntity status(
             @PathVariable("id") Long id,
             @PathVariable("status") OrderStatus status,
