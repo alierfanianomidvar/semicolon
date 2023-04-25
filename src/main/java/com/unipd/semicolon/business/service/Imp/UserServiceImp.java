@@ -24,9 +24,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -89,7 +91,10 @@ public class UserServiceImp implements UserService {
                                 null);
 
                         User save = userRepository.save(user);
-                        Login login = accountService.save(username, password, save);
+                        Login login = accountService.save(
+                                username == null ? email : username,
+                                password == null ? generatePassword(8) : password,
+                                save);
 
                         return login;
                     } else {
@@ -264,5 +269,14 @@ public class UserServiceImp implements UserService {
             return false;
         }
 
+    }
+
+    private String generatePassword(int length) {
+        final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
+        SecureRandom random = new SecureRandom();
+        return random.ints(length, 0, CHARACTERS.length())
+                .mapToObj(CHARACTERS::charAt)
+                .map(Object::toString)
+                .collect(Collectors.joining());
     }
 }
