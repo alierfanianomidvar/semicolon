@@ -2,6 +2,7 @@ package com.unipd.semicolon.business.service;
 
 import com.unipd.semicolon.core.domain.DrugResponse;
 import com.unipd.semicolon.core.entity.Drug;
+import com.unipd.semicolon.core.entity.Supplier;
 import com.unipd.semicolon.core.entity.enums.AgeGroup;
 import com.unipd.semicolon.core.entity.enums.Country;
 import com.unipd.semicolon.core.entity.enums.Gender;
@@ -28,7 +29,7 @@ public interface DrugService {
             int limitation,
             float price,
             Country countryOFProduction
-    ) throws Exception;
+    ) throws SQLException;
 
     Drug edit(
             Long id,
@@ -57,4 +58,13 @@ public interface DrugService {
             Country countryOFProduction,
             String shape,
             Gender gender) throws SQLException;
+
+    List<Drug> findDrugsByNameAndSupplierAndExpirationDateAndShapeAndAgeGroupAndCountryOFProduction(
+            String name,
+            Supplier supplier,
+            Date expirationDate,
+            String shape,
+            AgeGroup ageGroup,
+            Country countryOFProduction
+    );
 }
