@@ -44,9 +44,12 @@ public class ValidationServiceImp implements ValidationService {
     // validate size of an input image
     @Override
     public Boolean validateImage(byte[] image, int maxSize) {
-        if (image.length > maxSize) {
-            throw new IllegalArgumentException(
-                    "Image size exceeds maximum size of " + (float) maxSize / (1024 * 1024) + " MB");
+        if (image != null) {
+            if (image.length > maxSize) {
+                throw new IllegalArgumentException(
+                        "Image size exceeds maximum size of " + (float) maxSize / (1024 * 1024) + " MB");
+            }
+            return true;
         }
         return true;
     }
