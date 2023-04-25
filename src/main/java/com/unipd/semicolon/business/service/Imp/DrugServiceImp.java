@@ -225,4 +225,23 @@ public class DrugServiceImp implements DrugService {
         }
         return drugList;
     }
+
+    @Override
+    public List<Drug> findDrugsByNameAndSupplierAndExpirationDateAndShapeAndAgeGroupAndCountryOFProduction(
+            String name,
+            Supplier supplier,
+            Date expirationDate,
+            String shape,
+            AgeGroup ageGroup,
+            Country countryOFProduction
+    ) {
+        return drugRepository.findDrugsByNameAndSupplierAndExpirationDateAndShapeAndAgeGroupAndCountryOFProduction(
+                name,
+                supplier,
+                expirationDate,
+                shape,
+                ageGroup,
+                countryOFProduction
+        );
+    }
 }
