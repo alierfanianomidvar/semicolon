@@ -17,8 +17,9 @@ public class OrderModel {
     private OrderStatus status;
     private float price;
     private boolean isActive;
-
     private Pharmacy pharmacy;
+
+    private String token;
 
     public OrderModel(
             LocalDate orderDate,
@@ -27,7 +28,8 @@ public class OrderModel {
             OrderStatus status,
             float price,
             boolean isActive,
-            Pharmacy pharmacy) {
+            Pharmacy pharmacy,
+            String token) {
         this.orderDate = orderDate;
         this.orderDrugs = orderDrugs;
         this.orderMaterials = orderMaterials;
@@ -35,6 +37,7 @@ public class OrderModel {
         this.price = price;
         this.isActive = isActive;
         this.pharmacy = pharmacy;
+        this.token = token;
     }
 
     public Long getId() {
@@ -99,5 +102,13 @@ public class OrderModel {
 
     public void setPharmacy(Pharmacy pharmacy) {
         this.pharmacy = pharmacy;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

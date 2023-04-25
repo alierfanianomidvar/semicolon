@@ -5,6 +5,7 @@ import com.unipd.semicolon.api.util.helper.ResponseHelper;
 import com.unipd.semicolon.business.enums.OrderReport;
 import com.unipd.semicolon.business.exception.EntityNotFoundException;
 import com.unipd.semicolon.business.exception.InvalidParameterException;
+import com.unipd.semicolon.business.exception.PermissionException;
 import com.unipd.semicolon.business.service.OrderService;
 import com.unipd.semicolon.core.entity.Order;
 import com.unipd.semicolon.core.entity.enums.Country;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping(value = "/order")
-
 public class OrderController {
     @Autowired
     private OrderService orderService;
@@ -26,7 +26,7 @@ public class OrderController {
         try {
             return ResponseHelper
                     .response(orderService.save(
-                            model.getOrderDate(),
+                            model.getToken(),
                             model.getOrderDrugs(),
                             model.getOrderMaterials(),
                             model.getStatus(),
@@ -34,6 +34,12 @@ public class OrderController {
                             model.isActive(),
                             model.getPharmacy()
                     ));
+        } catch (PermissionException e) {
+            return ResponseHelper.response(
+                    e.getData(),
+                    e.getMsg(),
+                    e.getStatus()
+            );
         } catch (EntityNotFoundException e) {
             return ResponseHelper.response(
                     "Entity ID :" + model.getPharmacy().getId(),
@@ -51,11 +57,19 @@ public class OrderController {
         }
     }
 
-    @RequestMapping(value = "/getById/{id}", method = RequestMethod.GET)
-    public ResponseEntity getById(@PathVariable("id") Long id) {
+    @RequestMapping(value = "/getById/{id}/{token}", method = RequestMethod.GET)
+    public ResponseEntity getById(
+            @PathVariable("id") Long id,
+            @PathVariable("token") String token) {
         try {
             return ResponseHelper
-                    .response(orderService.getById(id));
+                    .response(orderService.getById(token, id));
+        } catch (PermissionException e) {
+            return ResponseHelper.response(
+                    e.getData(),
+                    e.getMsg(),
+                    e.getStatus()
+            );
         } catch (EntityNotFoundException e) {
             return ResponseHelper.response(
                     "",
@@ -65,11 +79,20 @@ public class OrderController {
         }
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity deleteById(@PathVariable("id") Long id) {
-        Order order = orderService.getById(id);
-        orderService.delete(order);
-        return ResponseHelper.response(true);
+    @RequestMapping(value = "/delete/{id}/{token}", method = RequestMethod.DELETE)
+    public ResponseEntity deleteById(
+            @PathVariable("token") String token,
+            @PathVariable("id") Long id) {
+        try {
+            orderService.delete(token, id);
+            return ResponseHelper.response(true);
+        } catch (PermissionException e) {
+            return ResponseHelper.response(
+                    e.getData(),
+                    e.getMsg(),
+                    e.getStatus()
+            );
+        }
     }
 
     @RequestMapping(value = "/get-all", method = RequestMethod.GET)
@@ -78,11 +101,20 @@ public class OrderController {
                 .response(orderService.getAll());
     }
 
-    @RequestMapping(value = "/status/{id}/{status}", method = RequestMethod.PATCH)
-    public ResponseEntity status(@PathVariable("id") Long id, @PathVariable("status") OrderStatus status) {
+    @RequestMapping(value = "/status/{id}/{status}/{token}", method = RequestMethod.PATCH)
+    public ResponseEntity status(
+            @PathVariable("id") Long id,
+            @PathVariable("status") OrderStatus status,
+            @PathVariable("token") String token) {
         try {
             return ResponseHelper
-                    .response(orderService.status(id, status));
+                    .response(orderService.status(token, id, status));
+        } catch (PermissionException e) {
+            return ResponseHelper.response(
+                    e.getData(),
+                    e.getMsg(),
+                    e.getStatus()
+            );
         } catch (EntityNotFoundException e) {
             return ResponseHelper.response(
                     "ID : " + id
@@ -95,11 +127,22 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/report", method = RequestMethod.GET)
-    public ResponseEntity report(@RequestParam(required = false) OrderReport orderReport,
-                                 @RequestParam(required = false) Short num) {
+    public ResponseEntity report(
+            @RequestParam(required = true) String token,
+            @RequestParam(required = false) OrderReport orderReport,
+            @RequestParam(required = false) Short num) {
         try {
             return ResponseHelper
-                    .response(orderService.reportBaseDate(orderReport, num));
+                    .response(orderService.reportBaseDate(
+                            token,
+                            orderReport,
+                            num));
+        } catch (PermissionException e) {
+            return ResponseHelper.response(
+                    e.getData(),
+                    e.getMsg(),
+                    e.getStatus()
+            );
         } catch (EntityNotFoundException e) {
             return ResponseHelper.response(
                     "ID : " + 1
