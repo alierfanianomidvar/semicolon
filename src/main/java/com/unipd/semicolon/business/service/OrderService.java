@@ -7,13 +7,12 @@ import com.unipd.semicolon.core.entity.Order;
 import com.unipd.semicolon.core.entity.Pharmacy;
 import com.unipd.semicolon.core.entity.enums.OrderStatus;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
 public interface OrderService {
     Order save(
-            LocalDate orderDate,
+            String token,
             Map<Long, Integer> orderDrugs,
             Map<Long, Integer> orderMaterials,
             OrderStatus status,
@@ -22,17 +21,26 @@ public interface OrderService {
             Pharmacy pharmacy
     ) throws CustomException;
 
-    void delete (
-            Order order
+    void delete(
+           String token,
+           Long id
     );
 
     Order getById(
+            String token,
             Long id
     ) throws CustomException;
 
     List<OrderResponse> getAll();
 
-    Order status(Long orderId, OrderStatus orderStatus);
+    Order status(
+            String token,
+            Long orderId,
+            OrderStatus orderStatus) throws CustomException;
 
-    List<OrderResponse> reportBaseDate(OrderReport orderReport, Short num);
+
+    List<OrderResponse> reportBaseDate(
+            String token,
+            OrderReport orderReport,
+            Short num) throws CustomException;
 }
