@@ -38,8 +38,6 @@ public class DrugController {
                     model.getLimitation(),
                     model.getPrice(),
                     model.getCountryOFProduction()));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
