@@ -21,9 +21,9 @@ public class StorageReportResponse {
     @Override
     public String toString() {
         return  String.join("\n",
-                "Pharmacy id: " + pharmacyId + " { ",
-                "Number of drugs: " + drugCount + " and Drug price: " + String.format("%.2f €", drugPrice),
-                "Number of materials: " + materialCount + " and Material price: " + String.format("%.2f €", materialPrice),
+                "Pharmacy id: " + pharmacyId + " : { ",
+                "   Number of drugs: " + drugCount + " and Drug price: " + String.format("%.2f €", drugPrice),
+                "   Number of materials: " + materialCount + " and Material price: " + String.format("%.2f €", materialPrice),
                 " } "
         );
 
