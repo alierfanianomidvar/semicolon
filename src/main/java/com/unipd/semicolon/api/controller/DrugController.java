@@ -21,72 +21,65 @@ public class DrugController {
     @Autowired
     private DrugService drugService;
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity save(@RequestBody DrugModel model) {
-        try {
-            return ResponseHelper.response(drugService.save(
-                    model.getName(),
-                    model.getSupplier(),
-                    model.getExpirationDate(),
-                    model.getImage(),
-                    model.getShape(),
-                    model.getGender(),
-                    model.getAgeGroup(),
-                    model.getIsSensitive(),
-                    model.getNeedPrescription(),
-                    model.getDescription(),
-                    model.getLimitation(),
-                    model.getPrice(),
-                    model.getCountryOFProduction()));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return ResponseHelper.response(drugService.save(
+                model.getName(),
+                model.getSupplier(),
+                model.getExpirationDate(),
+                model.getImage(),
+                model.getShape(),
+                model.getGender(),
+                model.getAgeGroup(),
+                model.getIsSensitive(),
+                model.getNeedPrescription(),
+                model.getDescription(),
+                model.getLimitation(),
+                model.getPrice(),
+                model.getCountryOFProduction()));
     }
 
-    @RequestMapping(value = "/getDrug/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity getById(@PathVariable("id") Long id) {
         return ResponseHelper.response(drugService.getById(id));
     }
 
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
-    public ResponseEntity edit(@PathVariable("id") Long id, @RequestBody DrugModel model) {
-        try {
-            return ResponseHelper.response(drugService.edit(
-                    id,
-                    model.getName(),
-                    model.getSupplier(),
-                    model.getExpirationDate(),
-                    model.getImage(),
-                    model.getShape(),
-                    model.getGender(),
-                    model.getAgeGroup(),
-                    model.getIsSensitive(),
-                    model.getNeedPrescription(),
-                    model.getDescription(),
-                    model.getLimitation(),
-                    model.getPrice(),
-                    model.getCountryOFProduction()));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity edit(
+            @PathVariable("id") Long id,
+            @RequestBody DrugModel model) throws SQLException {
+
+        return ResponseHelper.response(drugService.edit(
+                id,
+                model.getName(),
+                model.getSupplier(),
+                model.getExpirationDate(),
+                model.getImage(),
+                model.getShape(),
+                model.getGender(),
+                model.getAgeGroup(),
+                model.getIsSensitive(),
+                model.getNeedPrescription(),
+                model.getDescription(),
+                model.getLimitation(),
+                model.getPrice(),
+                model.getCountryOFProduction()));
+
     }
 
-    @RequestMapping(value = "/drug", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity getAll(
             @RequestParam(required = false) Country countryOfProduction,
             @RequestParam(required = false) Long supplierId,
             @RequestParam(required = false) Gender gender,
             @RequestParam(required = false) Integer isSensitive,
-            @RequestParam(required = false) String shape) {
-        try {
-            return ResponseHelper.response(drugService.getAll(supplierId, isSensitive, countryOfProduction, shape, gender));
-        } catch (SQLException e) {
-            return ResponseHelper.response(
-                    " getAll ",
-                    e.getMessage(),
-                    HttpStatus.NOT_ACCEPTABLE
-            );
-        }
-
+            @RequestParam(required = false) String shape) throws SQLException {
+        return ResponseHelper.response(
+                drugService.getAll(
+                        supplierId,
+                        isSensitive,
+                        countryOfProduction,
+                        shape,
+                        gender));
     }
 }
