@@ -23,7 +23,8 @@ public class StorageReportResponse {
         return  String.join("\n",
                 "Pharmacy id: " + pharmacyId + " { ",
                 "Number of drugs: " + drugCount + " and Drug price: " + String.format("%.2f €", drugPrice),
-                "Number of materials: " + materialCount + " and Material price: " + String.format("%.2f €", materialPrice) + " } "
+                "Number of materials: " + materialCount + " and Material price: " + String.format("%.2f €", materialPrice),
+                " } "
         );
 
     }
