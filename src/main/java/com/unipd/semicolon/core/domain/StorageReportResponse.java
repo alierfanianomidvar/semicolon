@@ -9,6 +9,8 @@ public class StorageReportResponse {
     private float drugPrice;
     private float materialPrice;
 
+    public StorageReportResponse() {
+    }
 
     public StorageReportResponse(Long pharmacyId, int drugCount, int materialCount, float drugPrice, float materialPrice) {
         this.pharmacyId = pharmacyId;
@@ -16,6 +18,26 @@ public class StorageReportResponse {
         this.materialCount = materialCount;
         this.drugPrice = drugPrice;
         this.materialPrice = materialPrice;
+    }
+
+    public Long getPharmacyId() {
+        return pharmacyId;
+    }
+
+    public int getDrugCount() {
+        return drugCount;
+    }
+
+    public int getMaterialCount() {
+        return materialCount;
+    }
+
+    public float getDrugPrice() {
+        return drugPrice;
+    }
+
+    public float getMaterialPrice() {
+        return materialPrice;
     }
 
     @Override

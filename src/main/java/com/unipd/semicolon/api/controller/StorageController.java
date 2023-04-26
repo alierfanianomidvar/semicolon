@@ -78,12 +78,37 @@ public class StorageController {
 
 
     @RequestMapping(value = "/report/{pharmacyId}", method = RequestMethod.GET)
-    public ResponseEntity reportStorageByPharmacyId(@PathVariable("pharmacyId") Long pharmacyId) {
+    public ResponseEntity<String> reportStorageByPharmacyId(@PathVariable("pharmacyId") Long pharmacyId) {
 
         pharmacyRepository.findById(pharmacyId).orElseThrow(
                 () -> new IllegalStateException("Pharmacy is not found by id = " + pharmacyId
         ));
 
+        StorageReportResponse response = getStorageReportResponse(pharmacyId);
+
+        return ResponseHelper.okJson(response);
+    }
+
+    @RequestMapping(value = "/report/getAll", method = RequestMethod.GET)
+    public ResponseEntity<String> reportStorageAllPharmacies() {
+
+        List<StorageResponse> storageList = storageService.getAll();
+        HashMap<Long, StorageResponse> storagesByPharmacy = new HashMap<>();
+        List<StorageReportResponse> responseEntities = new ArrayList<>();
+
+        for (StorageResponse storage : storageList) {
+            storagesByPharmacy.put(storage.getPharmacy().getId(), storage);
+        }
+
+        for (Long id : storagesByPharmacy.keySet()) {
+            responseEntities.add(getStorageReportResponse(id));
+        }
+
+        return ResponseHelper.okJsonList(responseEntities);
+    }
+
+
+    private StorageReportResponse getStorageReportResponse(Long pharmacyId) {
         List<Storage> storageList = storageService.getAllByPharmacyId(pharmacyId);
 
         float drugPrice = 0f;
@@ -107,25 +132,6 @@ public class StorageController {
             }
         }
 
-        StorageReportResponse response = new StorageReportResponse(pharmacyId, drugCount, materialCount, drugPrice, materialPrice);
-        return ResponseEntity.ok(response.toString());
+        return new StorageReportResponse(pharmacyId, drugCount, materialCount, drugPrice, materialPrice);
     }
-
-    @RequestMapping(value = "/report/getAll", method = RequestMethod.GET)
-    public ResponseEntity reportStorageAllPharmacies() {
-
-        List<StorageResponse> storageList = storageService.getAll();
-        HashMap<Long, StorageResponse> storagesByPharmacy = new HashMap<>();
-        List<Object> responseEntities = new ArrayList<>();
-
-        for (StorageResponse storage : storageList) {
-            storagesByPharmacy.put(storage.getPharmacy().getId(), storage);
-        }
-
-        for (Long id : storagesByPharmacy.keySet()) {
-            responseEntities.add(reportStorageByPharmacyId(id).getBody().toString());
-        }
-        return ResponseEntity.ok(responseEntities);
-    }
-
 }
