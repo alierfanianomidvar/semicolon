@@ -152,7 +152,7 @@ public class SupplierServiceImp implements SupplierService {
                 throw new CustomException("You are not authorized!");
             }
 
-        } catch (CustomException | SQLException e) {
+        } catch (Exception e) {
             return null;
         }
 
@@ -243,7 +243,7 @@ public class SupplierServiceImp implements SupplierService {
                 throw new CustomException("You are not authorized!");
             }
 
-        } catch (CustomException | SQLException e) {
+        } catch (Exception e) {
             return false;
         }
 
