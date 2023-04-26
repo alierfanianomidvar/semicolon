@@ -1,5 +1,6 @@
 package com.unipd.semicolon.business.service.Imp;
 
+import com.unipd.semicolon.business.exception.CustomException;
 import com.unipd.semicolon.business.exception.NotFoundException;
 import com.unipd.semicolon.business.mapper.DrugMapper;
 import com.unipd.semicolon.business.service.DrugService;
@@ -49,7 +50,7 @@ public class DrugServiceImp implements DrugService {
             String description,
             int limitation,
             float price,
-            Country countryOFProduction) throws Exception {
+            Country countryOFProduction) throws CustomException {
         Objects.requireNonNull(name, "Name is null");
         Objects.requireNonNull(supplierId, "Supplier is null");
         if (image != null) {
@@ -86,7 +87,7 @@ public class DrugServiceImp implements DrugService {
         ) == null) {
             drugRepository.save(drug);
         } else {
-            throw new Exception("item already exist in drug list");
+            throw new CustomException("item already exist in drug list");
         }
         return drug;
     }
