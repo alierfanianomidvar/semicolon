@@ -2,7 +2,7 @@ package com.unipd.semicolon.business.service.Imp;
 
 import com.unipd.semicolon.business.exception.CustomException;
 import com.unipd.semicolon.business.exception.NotFoundException;
-import com.unipd.semicolon.business.exception.UserExsitsException;
+import com.unipd.semicolon.business.exception.UserExistsException;
 import com.unipd.semicolon.business.mapper.UserMapper;
 import com.unipd.semicolon.business.service.AccountService;
 import com.unipd.semicolon.business.service.SecurityService;
@@ -69,7 +69,7 @@ public class UserServiceImp implements UserService {
             String roleFromToken = securityService.getRoleFromToken(token);
             if(roleFromToken.contains("admin")) {
                 if (accountService.findByUserName(username) != null) {
-                    throw new UserExsitsException();
+                    throw new UserExistsException();
                 } else {
 
                     if (validationService.validateEmail(email)
