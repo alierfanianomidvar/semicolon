@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class StorageServiceImp implements StorageService {
@@ -195,4 +196,16 @@ public class StorageServiceImp implements StorageService {
         }
         return storage;
     }
+
+    @Override
+    public List<Storage> getAllByPharmacyId(Long pharmacyId) {
+        List<Storage> storageList = storageRepository.getAll();
+
+        List<Storage> filteredStorageList = storageList.stream()
+                .filter(obj -> obj.getPharmacy().getId().equals(pharmacyId))
+                .collect(Collectors.toList());
+
+        return filteredStorageList;
+    }
+
 }
