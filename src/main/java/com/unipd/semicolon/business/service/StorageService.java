@@ -18,6 +18,7 @@ public interface StorageService {
             double discount,
             String token
     );
+
     boolean edit(
             Long id_storage,
             Pharmacy pharmacy,
@@ -28,12 +29,28 @@ public interface StorageService {
             double discount,
             String token
     );
+
     boolean delete(
             Long id,
             String token
     );
+
     StorageResponse getById(
             Long id
     );
+
     List<StorageResponse> getAll();
+
+    boolean updateStorage(
+            Storage storage,
+            int amount
+    );
+
+
+    Storage storageExist(
+            Pharmacy pharmacy,
+            Drug drug,
+            Material material
+    );
+
 }
