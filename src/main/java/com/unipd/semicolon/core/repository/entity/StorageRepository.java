@@ -28,4 +28,5 @@ public interface StorageRepository {
             Long pharmacyId,
             Long materialId
     );
+
 }
