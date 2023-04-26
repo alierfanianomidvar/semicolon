@@ -2,12 +2,12 @@ package com.unipd.semicolon.business.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class UserNameOrPasswordNotExitsException extends CustomException {
+public class UserNameOrPasswordNotExistsException extends CustomException {
 
     private String username;
     private String password;
 
-    public UserNameOrPasswordNotExitsException(
+    public UserNameOrPasswordNotExistsException(
             String username,
             String password) {
         super("user_name_or_password_not_exists", HttpStatus.NOT_FOUND);

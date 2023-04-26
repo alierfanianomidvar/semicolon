@@ -1,8 +1,18 @@
 package com.unipd.semicolon.business.exception;
 
+import org.springframework.http.HttpStatus;
+
 public class InvalidTokenException extends CustomException {
 
-  public InvalidTokenException() {
-    super("Invalid_Token_Exception");
-  }
+    private String token;
+
+    public InvalidTokenException(String token) {
+        this.setMsg("Invalid_Token_Exception");
+        this.setStatus(HttpStatus.FORBIDDEN);
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
+    }
 }

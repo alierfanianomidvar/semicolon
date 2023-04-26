@@ -2,9 +2,9 @@ package com.unipd.semicolon.business.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class UserExsitsException extends CustomException {
+public class UserExistsException extends CustomException {
 
-  public UserExsitsException() {
+  public UserExistsException() {
     super("user_do_not_exist", HttpStatus.NOT_FOUND);
   }
 }
