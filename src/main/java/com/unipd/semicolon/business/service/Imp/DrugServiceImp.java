@@ -52,13 +52,13 @@ public class DrugServiceImp implements DrugService {
             Country countryOFProduction) throws SQLException {
         Objects.requireNonNull(name, "Name is null");
         Objects.requireNonNull(supplierId, "Supplier is null");
-        Objects.requireNonNull(expirationDate, "Expiration date is null");
-        Objects.requireNonNull(shape, "Shape is null");
-        Objects.requireNonNull(gender, "Gender is null");
-        Objects.requireNonNull(ageGroup, "Age group is null");
-        Objects.requireNonNull(countryOFProduction, "Country of production is null");
-        if (limitation <= 0 || price < 0.0 || price > Float.MAX_VALUE) {
-            throw new IllegalArgumentException("Invalid input parameter");
+        if (image != null) {
+            validationServiceImp.validateImage(image, 10 * 1024 * 1024);
+        }
+        validationServiceImp.validateDate(expirationDate, false);
+        validationServiceImp.validatePrice(price);
+        if (limitation <= 0) {
+            throw new IllegalArgumentException("Limitation amount can not be negative");
         }
         Supplier supplier = supplierRepository.findById(supplierId);
         Drug drug = new Drug(
@@ -75,7 +75,19 @@ public class DrugServiceImp implements DrugService {
                 limitation,
                 price,
                 countryOFProduction);
-        drugRepository.save(drug);
+
+        if (drugRepository.findDrugsByNameAndSupplierAndExpirationDateAndShapeAndAgeGroupAndCountryOFProduction(
+                drug.getName(),
+                drug.getSupplier(),
+                drug.getExpirationDate(),
+                drug.getShape(),
+                drug.getAgeGroup(),
+                drug.getCountryOFProduction()
+        ) == null) {
+            drugRepository.save(drug);
+        } else {
+            throw new Exception("item already exist in drug list");
+        }
         return drug;
     }
 
@@ -180,9 +192,9 @@ public class DrugServiceImp implements DrugService {
     }
 
     public List<DrugResponse> getAll(Long supplierId,
-            Integer isSensitive,
-            Country countryOFProduction,
-            String shape, Gender gender) {
+                                     Integer isSensitive,
+                                     Country countryOFProduction,
+                                     String shape, Gender gender) {
         Specification<Drug> spec = Specification.where(null);
 
         if (supplierId != null) {
