@@ -29,7 +29,7 @@ public interface DrugService {
             int limitation,
             float price,
             Country countryOFProduction
-    ) throws SQLException;
+    ) throws Exception;
 
     Drug edit(
             Long id,
