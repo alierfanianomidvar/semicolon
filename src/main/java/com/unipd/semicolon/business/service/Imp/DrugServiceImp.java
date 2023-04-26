@@ -49,7 +49,7 @@ public class DrugServiceImp implements DrugService {
             String description,
             int limitation,
             float price,
-            Country countryOFProduction) throws SQLException {
+            Country countryOFProduction) throws Exception {
         Objects.requireNonNull(name, "Name is null");
         Objects.requireNonNull(supplierId, "Supplier is null");
         if (image != null) {
