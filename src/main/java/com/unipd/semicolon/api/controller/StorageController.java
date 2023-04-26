@@ -2,17 +2,18 @@ package com.unipd.semicolon.api.controller;
 
 import com.unipd.semicolon.api.model.StorageModel;
 import com.unipd.semicolon.api.util.helper.ResponseHelper;
-import com.unipd.semicolon.business.exception.EntityNotFoundException;
-import com.unipd.semicolon.business.exception.InvalidParameterException;
 import com.unipd.semicolon.business.service.StorageService;
+import com.unipd.semicolon.core.domain.StorageReportResponse;
+import com.unipd.semicolon.core.domain.StorageResponse;
 import com.unipd.semicolon.core.entity.*;
 import com.unipd.semicolon.core.repository.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.NoSuchElementException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -76,54 +77,55 @@ public class StorageController {
     }
 
 
-    //new
-    @RequestMapping(value = "/report/{id}", method = RequestMethod.GET)
-    public ResponseEntity reportStorage(@PathVariable("id") Long id, @RequestBody StorageModel model) {
+    @RequestMapping(value = "/report/{pharmacyId}", method = RequestMethod.GET)
+    public ResponseEntity reportStorageByPharmacyId(@PathVariable("pharmacyId") Long pharmacyId) {
 
-        Pharmacy pharmacy = model.getPharmacy();
-        Drug drug = model.getDrug();
-        Material material = model.getMaterial();
+        pharmacyRepository.findById(pharmacyId).orElseThrow(
+                () -> new IllegalStateException("Pharmacy is not found by id = " + pharmacyId
+        ));
 
-        Pharmacy pharmacyRepositoryById = null;
-        Material materialRepositoryById = null;
-        Drug drugRepositoryById = null;
+        List<Storage> storageList = storageService.getAllByPharmacyId(pharmacyId);
 
         float drugPrice = 0f;
         float materialPrice = 0f;
 
+        int drugCount = 0;
+        int materialCount = 0;
 
-        if (storageService.getById(id) != null && pharmacyRepository.findById(pharmacy.getId()).isPresent()) {
-            //pharmacyRepositoryById = pharmacyRepository.findById(pharmacy.getId()).get();
-            try {
-                if (drug.getId() != null) {
-                    drugRepositoryById = drugRepository.findById(drug.getId())
-                            .orElseThrow(() -> new IllegalStateException("Drug not found - " + drug.getId()));
+        for (Storage storage : storageList) {
+            Drug drug = storage.getDrug();
+            Material material = storage.getMaterial();
 
-                    // Calculating the price of the drug
-                    drugPrice = model.getAmount() * drugRepositoryById.getPrice();
-                } else if (material.getId() != null) {
-                    materialRepositoryById = materialRepository.findById(material.getId())
-                            .orElseThrow(() -> new IllegalStateException("Material not found - " + material.getId()));
+            if (drug != null) {
+                drugPrice += drug.getPrice() * storage.getAmount();
+                drugCount += 1;
+            }
 
-                    // Calculating the price of the material
-                    materialPrice = model.getAmount() * materialRepositoryById.getPrice();
-                } else {
-                    throw new IllegalArgumentException("Neither drug nor material was provided.");
-                }
-            } catch (EntityNotFoundException e) {
-                return ResponseHelper.response(
-                        "DRUG ID :" + model.getDrug().getId(),
-                        e.getMsg(),
-                        e.getStatus()
-                //      ", MATERIAL ID : " +model.getMaterial().getId(),
-                //        e.getMsg(),
-                //        e.getStatus()
-                );
-            } catch (DataAccessException e) {
-                throw new RuntimeException("Failed to access data: " + e.getMessage());
+            if (material != null) {
+                materialPrice += material.getPrice() * storage.getAmount();
+                materialCount += 1;
             }
         }
-        return ResponseEntity.ok("Drug price: " + drugPrice + ", Material price: " + materialPrice);
+
+        StorageReportResponse response = new StorageReportResponse(pharmacyId, drugCount, materialCount, drugPrice, materialPrice);
+        return ResponseEntity.ok(response.toString());
     }
-    //
+
+    @RequestMapping(value = "/report/getAll", method = RequestMethod.GET)
+    public ResponseEntity reportStorageAllPharmacies() {
+
+        List<StorageResponse> storageList = storageService.getAll();
+        HashMap<Long, StorageResponse> storagesByPharmacy = new HashMap<>();
+        List<Object> responseEntities = new ArrayList<>();
+
+        for (StorageResponse storage : storageList) {
+            storagesByPharmacy.put(storage.getPharmacy().getId(), storage);
+        }
+
+        for (Long id : storagesByPharmacy.keySet()) {
+            responseEntities.add(reportStorageByPharmacyId(id).getBody().toString());
+        }
+        return ResponseEntity.ok(responseEntities);
+    }
+
 }

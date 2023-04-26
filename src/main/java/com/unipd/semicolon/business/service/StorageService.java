@@ -33,4 +33,9 @@ public interface StorageService {
             Long id
     );
     List<StorageResponse> getAll();
+
+    List<Storage> getAllByPharmacyId(
+            Long id
+    );
+
 }
