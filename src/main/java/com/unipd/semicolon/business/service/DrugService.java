@@ -1,5 +1,6 @@
 package com.unipd.semicolon.business.service;
 
+import com.unipd.semicolon.business.exception.CustomException;
 import com.unipd.semicolon.core.domain.DrugResponse;
 import com.unipd.semicolon.core.entity.Drug;
 import com.unipd.semicolon.core.entity.Supplier;
@@ -29,7 +30,7 @@ public interface DrugService {
             int limitation,
             float price,
             Country countryOFProduction
-    ) throws Exception;
+    ) throws CustomException;
 
     Drug edit(
             Long id,
