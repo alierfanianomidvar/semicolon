@@ -8,6 +8,6 @@ public interface SupplierRepository {
 
     boolean deleteSupplier(Supplier s);
 
-    Supplier findBySupplierId(Long id);
+    Supplier findById(Long id);
 
 }

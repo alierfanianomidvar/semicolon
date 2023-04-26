@@ -15,13 +15,12 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping(value = "/pharmacy")
 public class PharmacyController {
 
     @Autowired
     private PharmacyService pharmacyService;
 
-    @PostMapping("/save")
+    @PostMapping("/pharmacy")
     public ResponseEntity save(
             @RequestBody PharmacyModel model,
             @RequestHeader("Authorization") String token
@@ -38,7 +37,7 @@ public class PharmacyController {
                         token));
     }
 
-    @PutMapping("/edit/{id}")
+    @PutMapping("/pharmacy/{id}")
     public ResponseEntity edit(
             @PathVariable("id") Long id,
             @RequestBody PharmacyModel model,
@@ -56,7 +55,7 @@ public class PharmacyController {
                         token));
     }
 
-    @PutMapping("/add-staff/{id}")
+    @PutMapping("/pharmacy/{id}/add-staff")
     public ResponseEntity addStaff(
             @PathVariable("id") Long id,
             @RequestBody List<User> model,
@@ -65,7 +64,7 @@ public class PharmacyController {
         return ResponseHelper.response(pharmacyService.addStaff(model, id, token));
     }
 
-    @DeleteMapping("/delete-staff")
+    @DeleteMapping("/pharmacy/delete-staff")
     public ResponseEntity deleteStaff(
             @RequestBody List<User> staffList,
             @RequestHeader("Authorization") String token
@@ -73,13 +72,13 @@ public class PharmacyController {
         return ResponseHelper.response(pharmacyService.deleteStaff(staffList, token));
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/pharmacy/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
         return ResponseHelper
                 .response(pharmacyService.get(id));
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/pharmacy/{id}")
     public ResponseEntity delete(
             @PathVariable("id") Long id,
             @RequestHeader("Authorization") String token
@@ -88,13 +87,13 @@ public class PharmacyController {
                 .response(pharmacyService.delete(id, token));
     }
 
-    @GetMapping("/get-all")
+    @GetMapping("/pharmacy")
     public ResponseEntity getAll() {
         return ResponseHelper.response(pharmacyService.getAll());
 
     }
 
-    @RequestMapping(value = {"{pharmacyId}"}, method = RequestMethod.PATCH,
+    @RequestMapping(value = {"/pharmacy/{pharmacyId}"}, method = RequestMethod.PATCH,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity pharmacyActivation(@PathVariable("pharmacyId") Long pharmacyId,
                                              @RequestBody PharmacyModel status,

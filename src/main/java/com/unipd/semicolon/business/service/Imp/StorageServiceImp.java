@@ -44,20 +44,20 @@ public class StorageServiceImp implements StorageService {
 
     @Override
     public Storage save(Pharmacy pharmacy,
-                        Drug drug,
-                        Material material,
-                        int amount,
-                        int threshold,
-                        double discount,
-                        String token
-                        ) {
+            Drug drug,
+            Material material,
+            int amount,
+            int threshold,
+            double discount,
+            String token) {
         Objects.requireNonNull(pharmacy, "Pharmacy is null"); // Check that pharmacy is not null
         if (amount <= 0 || threshold <= 0 || discount < 0.0 || discount > 100.0) {
             throw new IllegalArgumentException("Invalid input parameter");
         } else if (drug == null && material == null) {
             throw new IllegalArgumentException("Either drug or material must be specified");
         } else if (drug != null && material != null) {
-            throw new IllegalArgumentException("Both drug and material cannot be specified at the same time. Please specify only one.");
+            throw new IllegalArgumentException(
+                    "Both drug and material cannot be specified at the same time. Please specify only one.");
         } else {
             // Declare variables to store the found entities
             Pharmacy pharmacyRepositoryById = null;
@@ -68,10 +68,10 @@ public class StorageServiceImp implements StorageService {
                 if (roleFromToken.contains("admin")) {
                     if (pharmacyRepository.findById(pharmacy.getId()).isPresent()) {
                         pharmacyRepositoryById = pharmacyRepository.findById(pharmacy.getId()).get();
-                        //check material
+                        // check material
                         if (material != null) {
                             if (materialRepository.findById(material.getId()) != null) {
-                                materialRepositoryById = materialRepository.findById(material.getId());
+                                materialRepositoryById = materialRepository.findById(material.getId()).get();
                                 Storage storage = new Storage(pharmacyRepositoryById,
                                         null,
                                         materialRepositoryById,
@@ -89,7 +89,7 @@ public class StorageServiceImp implements StorageService {
                         }
                         if (drug != null) {
                             if (drugRepository.findById(drug.getId()) != null) {
-                                drugRepositoryById = drugRepository.findById(drug.getId());
+                                drugRepositoryById = drugRepository.findById(drug.getId()).get();
                                 Storage storage = new Storage(pharmacyRepositoryById,
                                         drugRepositoryById,
                                         null,
@@ -109,7 +109,6 @@ public class StorageServiceImp implements StorageService {
                     }
                 }
 
-
             } catch (NoSuchElementException e) {
                 throw new IllegalArgumentException("Invalid input parameter: " + e.getMessage());
             } catch (DataAccessException e) {
@@ -121,23 +120,21 @@ public class StorageServiceImp implements StorageService {
         return null;
     }
 
-
     @Override
     public boolean edit(Long storageId,
-                        Pharmacy pharmacy,
-                        Drug drug,
-                        Material material,
-                        int amount,
-                        int threshold,
-                        double discount,
-                        String token
-                        ) {
+            Pharmacy pharmacy,
+            Drug drug,
+            Material material,
+            int amount,
+            int threshold,
+            double discount,
+            String token) {
         if (storageId == null || storageId < 0) {
             throw new IllegalArgumentException("storageId is null");
         } else {
             try {
                 String roleFromToken = securityService.getRoleFromToken(token);
-                if(roleFromToken.contains("admin")) {
+                if (roleFromToken.contains("admin")) {
                     Storage storage = storageRepository.findById(storageId);
                     if (storage == null) {
                         throw new NotFoundException();
@@ -172,7 +169,7 @@ public class StorageServiceImp implements StorageService {
         } else {
             try {
                 String roleFromToken = securityService.getRoleFromToken(token);
-                if(roleFromToken.contains("admin")) {
+                if (roleFromToken.contains("admin")) {
                     Storage storage = storageRepository.findById(id);
                     storageRepository.delete(storage);
                     return true;
@@ -199,8 +196,7 @@ public class StorageServiceImp implements StorageService {
                     storage.getMaterial(),
                     storage.getAmount(),
                     storage.getThreshold(),
-                    storage.getDiscount()
-            );
+                    storage.getDiscount());
         }
     }
 
@@ -211,5 +207,27 @@ public class StorageServiceImp implements StorageService {
             storageList.add(StorageMapper.storageResponse(storage));
         }
         return storageList;
+    }
+
+    @Override
+    public boolean updateStorage(
+            Storage storage,
+            int amount) {
+        storage.setAmount(amount);
+        return storageRepository.save(storage) != null;
+    }
+
+    @Override
+    public Storage storageExist(
+            Pharmacy pharmacy,
+            Drug drug,
+            Material material) {
+        Storage storage = null;
+        if (drug != null) {
+            storage = storageRepository.findStorageByPharmacyIdAndDrugId(pharmacy.getId(), drug.getId());
+        } else if (material != null) {
+            storage = storageRepository.findStorageByPharmacyIdAndMaterialId(pharmacy.getId(), material.getId());
+        }
+        return storage;
     }
 }

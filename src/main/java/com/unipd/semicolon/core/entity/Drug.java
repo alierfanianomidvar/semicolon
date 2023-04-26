@@ -50,12 +50,12 @@ public class Drug {
     @Column(name = "description")
     private String description;
 
-    //num of drugs that patient can buy
+    // num of drugs that patient can buy
     @Column(name = "limitation")
     private int limitation;
     @Column(name = "price")
     private float price;
-    //Why not @Enumerated(EnumType.STRING)??
+    // Why not @Enumerated(EnumType.STRING)??
     @Enumerated(EnumType.STRING)
     @Column(name = "country_of_production")
     private Country countryOFProduction;
@@ -63,8 +63,8 @@ public class Drug {
     private Date lastModifiedDate;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "orderDrugs")
-    private List<Order> orders;
+    @OneToMany(mappedBy = "drug")
+    private List<OrderProduct> orders;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "receiptDrugs")
@@ -75,18 +75,18 @@ public class Drug {
     }
 
     public Drug(String name,
-                Supplier supplier,
-                Date expirationDate,
-                byte[] image,
-                String shape,
-                Gender gender,
-                AgeGroup ageGroup,
-                boolean isSensitive,
-                boolean needPrescription,
-                String description,
-                int limitation,
-                float price,
-                Country countryOFProduction ) {
+            Supplier supplier,
+            Date expirationDate,
+            byte[] image,
+            String shape,
+            Gender gender,
+            AgeGroup ageGroup,
+            boolean isSensitive,
+            boolean needPrescription,
+            String description,
+            int limitation,
+            float price,
+            Country countryOFProduction) {
         this.name = name;
         this.supplier = supplier;
         this.expirationDate = expirationDate;
@@ -132,11 +132,8 @@ public class Drug {
         this.price = price;
         this.countryOFProduction = countryOFProduction;
         this.lastModifiedDate = lastModifiedDate;
-        this.orders = orders;
         this.receipts = receipts;
     }
-
-
 
     public Long getId() {
         return id;
@@ -254,19 +251,19 @@ public class Drug {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
-
     public List<Receipt> getReceipts() {
         return receipts;
     }
 
     public void setReceipts(List<Receipt> receipts) {
         this.receipts = receipts;
+    }
+
+    public List<OrderProduct> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<OrderProduct> orders) {
+        this.orders = orders;
     }
 }
