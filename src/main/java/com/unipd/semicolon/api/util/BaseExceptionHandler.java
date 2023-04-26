@@ -2,6 +2,7 @@ package com.unipd.semicolon.api.util;
 
 import com.unipd.semicolon.api.util.helper.ResponseHelper;
 import com.unipd.semicolon.business.exception.InvalidTokenException;
+import com.unipd.semicolon.business.exception.IllegalArgumentException;
 import com.unipd.semicolon.business.exception.UserExistsException;
 import com.unipd.semicolon.business.exception.UserNameOrPasswordNotExistsException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -71,6 +72,16 @@ public class BaseExceptionHandler {
                 e.getClass(),
                 e.getMessage(),
                 HttpStatus.SERVICE_UNAVAILABLE
+        );
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Object> IllegalArgumentException(
+            IllegalArgumentException e) {
+        return ResponseHelper.response(
+                e.getClass(),
+                e.getMsg(),
+                e.getStatus()
         );
     }
 
