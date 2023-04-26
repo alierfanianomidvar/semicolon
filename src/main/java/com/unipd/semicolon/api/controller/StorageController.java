@@ -10,12 +10,11 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping(value = "/storage")
 public class StorageController {
     @Autowired
     private StorageService storageService;
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/storage", method = RequestMethod.POST)
     public ResponseEntity save(
             @RequestBody StorageModel model,
             @RequestHeader("Authorization") String token
@@ -32,13 +31,13 @@ public class StorageController {
                 ));
     }
 
-    @RequestMapping(value = "/getByID/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/storage/{id}", method = RequestMethod.GET)
     public ResponseEntity getById(@PathVariable("id") Long id) {
         return ResponseHelper
                 .response(storageService.getById(id));
     }
 
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/storage/{id}", method = RequestMethod.PUT)
     public ResponseEntity edit(
             @PathVariable("id") Long id,
             @RequestBody StorageModel model,
@@ -57,7 +56,7 @@ public class StorageController {
                 ));
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/storage/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteById(
             @PathVariable("id") Long id,
             @RequestHeader("Authorization") String token) {
@@ -65,7 +64,7 @@ public class StorageController {
         return ResponseHelper.response(true);
     }
 
-    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
+    @RequestMapping(value = "/storage", method = RequestMethod.GET)
     public ResponseEntity getAll() {
         return ResponseHelper
                 .response(storageService.getAll());
