@@ -43,11 +43,14 @@ public interface StorageService {
             int amount
     );
 
-
     Storage storageExist(
             Pharmacy pharmacy,
             Drug drug,
             Material material
+    );
+
+    List<Storage> getAllByPharmacyId(
+            Long id
     );
 
 }
