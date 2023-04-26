@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.sql.SQLException;
+
 @ControllerAdvice
 public class BaseExceptionHandler {
 
@@ -59,6 +61,16 @@ public class BaseExceptionHandler {
                 e.getClass(),
                 e.getMsg(),
                 e.getStatus()
+        );
+    }
+
+    @ExceptionHandler(SQLException.class)
+    public ResponseEntity<Object> SQLException(
+            SQLException e) {
+        return ResponseHelper.response(
+                e.getClass(),
+                e.getMessage(),
+                HttpStatus.SERVICE_UNAVAILABLE
         );
     }
 
