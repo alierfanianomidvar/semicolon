@@ -9,15 +9,13 @@ import com.unipd.semicolon.core.entity.Storage;
 import java.util.List;
 
 public interface StorageService {
-    Storage save(
-            Pharmacy pharmacy,
-            Drug drug,
-            Material material,
-            int amount,
-            int threshold,
-            double discount,
-            String token
-    );
+    Storage save(Long pharmacyId,
+                 List<Long> drugId,
+                 List<Long> materialId,
+                 int amount,
+                 int threshold,
+                 double discount,
+                 String token);
 
     boolean edit(
             Long id_storage,
