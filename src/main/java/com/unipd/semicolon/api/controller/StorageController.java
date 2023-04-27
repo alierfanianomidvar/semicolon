@@ -21,9 +21,9 @@ public class StorageController {
     ) {
         return ResponseHelper
                 .response(storageService.save(
-                        model.getPharmacy(),
-                        model.getDrug(),
-                        model.getMaterial(),
+                        model.getPharmacyId(),
+                        model.getDrugId(),
+                        model.getMaterialId(),
                         model.getAmount(),
                         model.getThreshold(),
                         model.getDiscount(),

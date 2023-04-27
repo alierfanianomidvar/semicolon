@@ -43,19 +43,19 @@ public class StorageServiceImp implements StorageService {
     private SecurityService securityService;
 
     @Override
-    public Storage save(Pharmacy pharmacy,
-            Drug drug,
-            Material material,
+    public Storage save(Long pharmacyId,
+            List<Long> drugId,
+            List<Long> materialId,
             int amount,
             int threshold,
             double discount,
             String token) {
-        Objects.requireNonNull(pharmacy, "Pharmacy is null"); // Check that pharmacy is not null
+        Objects.requireNonNull(pharmacyId, "Pharmacy is null"); // Check that pharmacy is not null
         if (amount <= 0 || threshold <= 0 || discount < 0.0 || discount > 100.0) {
             throw new IllegalArgumentException("Invalid input parameter");
-        } else if (drug == null && material == null) {
+        } else if (drugId == null && materialId == null) {
             throw new IllegalArgumentException("Either drug or material must be specified");
-        } else if (drug != null && material != null) {
+        } else if (drugId != null && materialId != null) {
             throw new IllegalArgumentException(
                     "Both drug and material cannot be specified at the same time. Please specify only one.");
         } else {
@@ -63,44 +63,60 @@ public class StorageServiceImp implements StorageService {
             Pharmacy pharmacyRepositoryById = null;
             Material materialRepositoryById = null;
             Drug drugRepositoryById = null;
+            List<Drug> drugList = new ArrayList<>();
+            List<Material> materialList = new ArrayList<>();
+//            if (drugId != null) {
+//                for (Long i : drugId) {
+//                    drugList.add(drugRepository.findById(i).get());
+//                }
+//            }
+//            if (materialId != null) {
+//                for (Long i : materialId) {
+//                    materialList.add(materialRepository.findById(i).get());
+//                }
+//            }
             try {
                 String roleFromToken = securityService.getRoleFromToken(token);
                 if (roleFromToken.contains("admin")) {
-                    if (pharmacyRepository.findById(pharmacy.getId()).isPresent()) {
-                        pharmacyRepositoryById = pharmacyRepository.findById(pharmacy.getId()).get();
+                    if (pharmacyRepository.findById(pharmacyId).isPresent()) {
+                        pharmacyRepositoryById = pharmacyRepository.findById(pharmacyId).get();
                         // check material
-                        if (material != null) {
-                            if (materialRepository.findById(material.getId()) != null) {
-                                materialRepositoryById = materialRepository.findById(material.getId()).get();
-                                Storage storage = new Storage(pharmacyRepositoryById,
-                                        null,
-                                        materialRepositoryById,
-                                        amount,
-                                        threshold,
-                                        discount);
+                        if (materialId != null) {
+                            for (Long i : materialId) {
+                                if (materialRepository.findById(i) != null) {
+                                    materialRepositoryById = materialRepository.findById(i).get();
+                                    Storage storage = new Storage(pharmacyRepositoryById,
+                                            null,
+                                            materialRepositoryById,
+                                            amount,
+                                            threshold,
+                                            discount);
 
-                                Storage savedStorage = storageRepository.save(storage);
-                                if (savedStorage == null) {
-                                    throw new RuntimeException("Failed to save Storage");
+                                    Storage savedStorage = storageRepository.save(storage);
+                                    if (savedStorage == null) {
+                                        throw new RuntimeException("Failed to save Storage");
+                                    }
+                                    return savedStorage;
+
                                 }
-                                return savedStorage;
-
                             }
                         }
-                        if (drug != null) {
-                            if (drugRepository.findById(drug.getId()) != null) {
-                                drugRepositoryById = drugRepository.findById(drug.getId()).get();
-                                Storage storage = new Storage(pharmacyRepositoryById,
-                                        drugRepositoryById,
-                                        null,
-                                        amount,
-                                        threshold,
-                                        discount);
-                                Storage savedStorage = storageRepository.save(storage);
-                                if (savedStorage == null) {
-                                    throw new RuntimeException("Failed to save Storage");
+                        if (drugId != null) {
+                            for (Long i : drugId) {
+                                if (drugRepository.findById(i) != null) {
+                                    drugRepositoryById = drugRepository.findById(i).get();
+                                    Storage storage = new Storage(pharmacyRepositoryById,
+                                            drugRepositoryById,
+                                            null,
+                                            amount,
+                                            threshold,
+                                            discount);
+                                    Storage savedStorage = storageRepository.save(storage);
+                                    if (savedStorage == null) {
+                                        throw new RuntimeException("Failed to save Storage");
+                                    }
+                                    return savedStorage;
                                 }
-                                return savedStorage;
                             }
                         }
 

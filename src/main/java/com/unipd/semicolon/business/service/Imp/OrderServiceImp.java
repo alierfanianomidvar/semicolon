@@ -137,10 +137,14 @@ public class OrderServiceImp implements OrderService {
                         );
                     } else {
                         //TODO: validation to use the correct token
+                        List<Long> drugList = new ArrayList<>();
+                        drugList.add(orderProduct.getDrug().getId());
+                        List<Long> materialList = new ArrayList<>();
+                        materialList.add(orderProduct.getMaterial().getId());
                         storageService.save(
-                                order.getPharmacy(),
-                                orderProduct.getDrug(),
-                                orderProduct.getMaterial(),
+                                order.getPharmacy().getId(),
+                                drugList,
+                                materialList,
                                 orderProduct.getQuantity(),
                                 1,
                                 1,

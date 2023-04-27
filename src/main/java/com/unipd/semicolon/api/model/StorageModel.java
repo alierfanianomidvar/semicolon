@@ -4,11 +4,16 @@ import com.unipd.semicolon.core.entity.Drug;
 import com.unipd.semicolon.core.entity.Material;
 import com.unipd.semicolon.core.entity.Pharmacy;
 
+import java.util.List;
+
 public class StorageModel {
     private Long id;
     private Pharmacy pharmacy;
+    private Long pharmacyId;
     private Material material;
+    private List<Long> materialId;
     private Drug drug;
+    private List<Long> drugId;
     private int amount;
     private int threshold;
 
@@ -23,6 +28,21 @@ public class StorageModel {
         this.pharmacy = pharmacy;
         this.drug = drug;
         this.material = material;
+        this.amount = amount;
+        this.threshold = threshold;
+        this.discount = discount;
+    }
+
+    public StorageModel(Long pharmacyId,
+                        List<Long> materialId,
+                        List<Long> drugId,
+                        int amount,
+                        int threshold,
+                        double discount)
+    {
+        this.pharmacyId = pharmacyId;
+        this.materialId = materialId;
+        this.drugId = drugId;
         this.amount = amount;
         this.threshold = threshold;
         this.discount = discount;
@@ -79,4 +99,28 @@ public class StorageModel {
     public double getDiscount() {return discount;}
 
     public void setDiscount(double discount) {this.discount = discount;}
+
+    public Long getPharmacyId() {
+        return pharmacyId;
+    }
+
+    public void setPharmacyId(Long pharmacyId) {
+        this.pharmacyId = pharmacyId;
+    }
+
+    public List<Long> getMaterialId() {
+        return materialId;
+    }
+
+    public void setMaterialId(List<Long> materialId) {
+        this.materialId = materialId;
+    }
+
+    public List<Long> getDrugId() {
+        return drugId;
+    }
+
+    public void setDrugId(List<Long> drugId) {
+        this.drugId = drugId;
+    }
 }

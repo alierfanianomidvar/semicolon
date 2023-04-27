@@ -1,6 +1,7 @@
 package com.unipd.semicolon.business.service.Imp;
 
 import com.unipd.semicolon.business.service.ReceiptService;
+import com.unipd.semicolon.business.service.ValidationService;
 import com.unipd.semicolon.core.entity.Drug;
 import com.unipd.semicolon.core.entity.Material;
 import com.unipd.semicolon.core.entity.Receipt;
@@ -9,6 +10,7 @@ import com.unipd.semicolon.core.repository.entity.DrugRepository;
 import com.unipd.semicolon.core.repository.entity.MaterialRepository;
 import com.unipd.semicolon.core.repository.entity.ReceiptRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +31,7 @@ public class ReceiptServiceImp implements ReceiptService {
     private MaterialRepository materialRepository;
 
     @Autowired
-    private ValidationServiceImp validationServiceImp;
+    private ValidationService validationService;
 
     @Override
     public Receipt save(List<Long> drugId,
@@ -38,29 +40,37 @@ public class ReceiptServiceImp implements ReceiptService {
             Date date,
             PaymentMethod paymentMethod) {
         try {
-            validationServiceImp.validateDate(date, true);
-            validationServiceImp.validatePaymentMethod(paymentMethod);
+            validationService.validateDate(date, true);
+            validationService.validatePaymentMethod(paymentMethod);
 
-            for (Long id : drugId) {
-                if (drugRepository.findById(id) == null) {
-                    throw new EntityNotFoundException("Drug with ID " + id + " not found.");
+            if(drugId != null) {
+                for (Long id : drugId) {
+                    if (drugRepository.findById(id) == null) {
+                        throw new EntityNotFoundException("Drug with ID " + id + " not found.");
+                    }
                 }
             }
-            for (Long id : materialId) {
-                if (materialRepository.findById(id) == null) {
-                    throw new EntityNotFoundException("Material with ID " + id + " not found.");
+            if(materialId!= null) {
+                for (Long id : materialId) {
+                    if (materialRepository.findById(id) == null) {
+                        throw new EntityNotFoundException("Material with ID " + id + " not found.");
+                    }
                 }
             }
             int maxSize = 10 * 1024 * 1024; // maximum size of 10 MB
-            validationServiceImp.validateImage(image, maxSize);
+            validationService.validateImage(image, maxSize);
 
             List<Drug> drugList = new ArrayList<>();
             List<Material> materialList = new ArrayList<>();
-            for (Long id : drugId) {
-                drugList.add(drugRepository.findById(id).get());
+            if(drugId!= null) {
+                for (Long id : drugId) {
+                    drugList.add(drugRepository.findById(id).get());
+                }
             }
-            for (Long id : materialId) {
-                materialList.add(materialRepository.findById(id).get());
+            if(materialId!= null) {
+                for (Long id : materialId) {
+                    materialList.add(materialRepository.findById(id).get());
+                }
             }
 
             if (drugList == null && materialList == null) {
@@ -93,9 +103,9 @@ public class ReceiptServiceImp implements ReceiptService {
             Date date,
             PaymentMethod paymentMethod) {
         try {
-            validationServiceImp.validateDate(date, true);
+            validationService.validateDate(date, true);
             if (paymentMethod != null) {
-                validationServiceImp.validatePaymentMethod(paymentMethod);
+                validationService.validatePaymentMethod(paymentMethod);
             }
 
             Receipt receipt = receiptRepository.findById(id)
