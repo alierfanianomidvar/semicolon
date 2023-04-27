@@ -82,9 +82,9 @@ public class StorageController {
 
         pharmacyRepository.findById(pharmacyId).orElseThrow(
                 () -> new IllegalStateException("Pharmacy is not found by id = " + pharmacyId
-        ));
+                ));
 
-        StorageReportResponse response = getStorageReportResponse(pharmacyId);
+        StorageReportResponse response = storageService.getStorageReportResponse(pharmacyId);
 
         return ResponseHelper.okJson(response);
     }
@@ -92,46 +92,9 @@ public class StorageController {
     @RequestMapping(value = "/report/getAll", method = RequestMethod.GET)
     public ResponseEntity<String> reportStorageAllPharmacies() {
 
-        List<StorageResponse> storageList = storageService.getAll();
-        HashMap<Long, StorageResponse> storagesByPharmacy = new HashMap<>();
-        List<StorageReportResponse> responseEntities = new ArrayList<>();
-
-        for (StorageResponse storage : storageList) {
-            storagesByPharmacy.put(storage.getPharmacy().getId(), storage);
-        }
-
-        for (Long id : storagesByPharmacy.keySet()) {
-            responseEntities.add(getStorageReportResponse(id));
-        }
+        List<StorageReportResponse> responseEntities = storageService.getAllStorageReports();
 
         return ResponseHelper.okJsonList(responseEntities);
     }
 
-
-    private StorageReportResponse getStorageReportResponse(Long pharmacyId) {
-        List<Storage> storageList = storageService.getAllByPharmacyId(pharmacyId);
-
-        float drugPrice = 0f;
-        float materialPrice = 0f;
-
-        int drugCount = 0;
-        int materialCount = 0;
-
-        for (Storage storage : storageList) {
-            Drug drug = storage.getDrug();
-            Material material = storage.getMaterial();
-
-            if (drug != null) {
-                drugPrice += drug.getPrice() * storage.getAmount();
-                drugCount += 1;
-            }
-
-            if (material != null) {
-                materialPrice += material.getPrice() * storage.getAmount();
-                materialCount += 1;
-            }
-        }
-
-        return new StorageReportResponse(pharmacyId, drugCount, materialCount, drugPrice, materialPrice);
-    }
 }
