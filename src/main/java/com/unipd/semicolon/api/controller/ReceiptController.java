@@ -3,17 +3,11 @@ package com.unipd.semicolon.api.controller;
 import com.unipd.semicolon.api.model.ReceiptModel;
 import com.unipd.semicolon.api.util.helper.ResponseHelper;
 import com.unipd.semicolon.business.service.ReceiptService;
-import com.unipd.semicolon.core.entity.Drug;
-import com.unipd.semicolon.core.entity.Material;
 import com.unipd.semicolon.core.entity.Receipt;
-import com.unipd.semicolon.core.entity.enums.PaymentMethod;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController

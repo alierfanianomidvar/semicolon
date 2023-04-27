@@ -4,15 +4,11 @@ import com.unipd.semicolon.api.model.StorageModel;
 import com.unipd.semicolon.api.util.helper.ResponseHelper;
 import com.unipd.semicolon.business.service.StorageService;
 import com.unipd.semicolon.core.domain.StorageReportResponse;
-import com.unipd.semicolon.core.domain.StorageResponse;
-import com.unipd.semicolon.core.entity.*;
 import com.unipd.semicolon.core.repository.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
