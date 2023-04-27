@@ -24,6 +24,7 @@ public class Pharmacy {
     @Column(name = "logo")
     private byte[] logo;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "pharmacy")
     private List<Storage> storage;
 
