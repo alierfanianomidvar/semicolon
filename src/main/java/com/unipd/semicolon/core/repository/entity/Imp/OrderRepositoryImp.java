@@ -5,6 +5,7 @@ import com.unipd.semicolon.core.repository.entity.OrderRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -18,6 +19,17 @@ public class OrderRepositoryImp extends CustomRepository implements OrderReposit
     @Override
     public void delete(Order order) {
         delete(Order.class, order);
+    }
+
+    @Override
+    public List<Order> getAllBetweenDate(
+            LocalDate startDate,
+            LocalDate endDate) {
+        return listQueryWrapper(entityManager.createQuery
+                        ("SELECT o FROM Order o WHERE o.orderDate BETWEEN :startDate AND :endDate", Order.class)
+                .setParameter("startDate", startDate)
+                .setParameter("endDate", endDate));
+
     }
 
     @Override

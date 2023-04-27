@@ -3,18 +3,35 @@ package com.unipd.semicolon.api.controller;
 import com.unipd.semicolon.api.model.StorageModel;
 import com.unipd.semicolon.api.util.helper.ResponseHelper;
 import com.unipd.semicolon.business.service.StorageService;
-import com.unipd.semicolon.core.entity.Storage;
+import com.unipd.semicolon.core.domain.StorageReportResponse;
+import com.unipd.semicolon.core.domain.StorageResponse;
+import com.unipd.semicolon.core.entity.*;
+import com.unipd.semicolon.core.repository.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
+@RequestMapping(value = "/storage")
 public class StorageController {
     @Autowired
     private StorageService storageService;
 
-    @RequestMapping(value = "/storage", method = RequestMethod.POST)
+    //new
+    @Autowired
+    private PharmacyRepository pharmacyRepository;
+    @Autowired
+    private DrugRepository drugRepository;
+    @Autowired
+    private MaterialRepository materialRepository;
+    //
+
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ResponseEntity save(
             @RequestBody StorageModel model,
             @RequestHeader("Authorization") String token
@@ -69,4 +86,22 @@ public class StorageController {
         return ResponseHelper
                 .response(storageService.getAll());
     }
+
+
+    @RequestMapping(value = "/report/{pharmacyId}", method = RequestMethod.GET)
+    public ResponseEntity<String> reportStorageByPharmacyId(@PathVariable("pharmacyId") Long pharmacyId) {
+
+        StorageReportResponse response = storageService.getStorageReportResponse(pharmacyId);
+
+        return ResponseHelper.okJson(response);
+    }
+
+    @RequestMapping(value = "/report/getAll", method = RequestMethod.GET)
+    public ResponseEntity<String> reportStorageAllPharmacies() {
+
+        List<StorageReportResponse> responseEntities = storageService.getAllStorageReports();
+
+        return ResponseHelper.okJsonList(responseEntities);
+    }
+
 }

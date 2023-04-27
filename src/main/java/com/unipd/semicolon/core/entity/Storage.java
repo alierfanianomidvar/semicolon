@@ -7,6 +7,7 @@ import java.util.List;
 @Entity
 @Table(name = "storage")
 public class Storage {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
