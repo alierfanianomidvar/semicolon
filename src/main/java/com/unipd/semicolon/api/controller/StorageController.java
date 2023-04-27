@@ -17,7 +17,6 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping(value = "/storage")
 public class StorageController {
     @Autowired
     private StorageService storageService;
@@ -31,7 +30,7 @@ public class StorageController {
     private MaterialRepository materialRepository;
     //
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/storage", method = RequestMethod.POST)
     public ResponseEntity save(
             @RequestBody StorageModel model,
             @RequestHeader("Authorization") String token
@@ -88,7 +87,7 @@ public class StorageController {
     }
 
 
-    @RequestMapping(value = "/report/{pharmacyId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/storage/report/{pharmacyId}", method = RequestMethod.GET)
     public ResponseEntity<String> reportStorageByPharmacyId(@PathVariable("pharmacyId") Long pharmacyId) {
 
         StorageReportResponse response = storageService.getStorageReportResponse(pharmacyId);
@@ -96,7 +95,7 @@ public class StorageController {
         return ResponseHelper.okJson(response);
     }
 
-    @RequestMapping(value = "/report/getAll", method = RequestMethod.GET)
+    @RequestMapping(value = "/storage/report", method = RequestMethod.GET)
     public ResponseEntity<String> reportStorageAllPharmacies() {
 
         List<StorageReportResponse> responseEntities = storageService.getAllStorageReports();
