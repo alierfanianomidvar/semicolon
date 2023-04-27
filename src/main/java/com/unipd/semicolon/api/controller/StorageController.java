@@ -80,10 +80,6 @@ public class StorageController {
     @RequestMapping(value = "/report/{pharmacyId}", method = RequestMethod.GET)
     public ResponseEntity<String> reportStorageByPharmacyId(@PathVariable("pharmacyId") Long pharmacyId) {
 
-        pharmacyRepository.findById(pharmacyId).orElseThrow(
-                () -> new IllegalStateException("Pharmacy is not found by id = " + pharmacyId
-                ));
-
         StorageReportResponse response = storageService.getStorageReportResponse(pharmacyId);
 
         return ResponseHelper.okJson(response);
