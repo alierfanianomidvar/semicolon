@@ -145,7 +145,6 @@ public class OrderServiceImp implements OrderService {
             OrderStatus orderStatus
     ) throws CustomException {
         if (securityService.getRoleFromToken(token).contains("admin")) {
-            {
                 Order order = orderRepository.findOrderById(orderId);
                 if (order != null) {
                     order.setStatus(orderStatus);
@@ -179,17 +178,17 @@ public class OrderServiceImp implements OrderService {
                             }
                         }
 
+                    }
+                    return orderRepository.save(order);
+                } else {
+                    logSystem.logUtil("No order with this id exist , id : " + orderId);
+                    throw new EntityNotFoundException("No order with this id exist");
                 }
-                return orderRepository.save(order);
-            } else {
-                logSystem.logUtil("No order with this id exist , id : " + orderId);
-                throw new EntityNotFoundException("No order with this id exist");
+            } else{
+                logSystem.logUtil("permission denied , token : " + token);
+                throw new PermissionException(token);
             }
-        } else {
-            logSystem.logUtil("permission denied , token : " + token);
-            throw new PermissionException(token);
         }
-    }
 
     @Override
     public List<OrderResponse> reportBaseDate(
@@ -235,7 +234,6 @@ public class OrderServiceImp implements OrderService {
             throw new PermissionException(token);
                 }
             }
-        }
 
     /* -----  private classes  ----- */
 
