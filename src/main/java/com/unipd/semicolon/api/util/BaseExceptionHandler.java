@@ -1,11 +1,9 @@
 package com.unipd.semicolon.api.util;
 
 import com.unipd.semicolon.api.util.helper.ResponseHelper;
-import com.unipd.semicolon.business.exception.InvalidTokenException;
+import com.unipd.semicolon.business.exception.*;
 import com.unipd.semicolon.business.exception.IllegalArgumentException;
 import com.unipd.semicolon.business.exception.IllegalStateException;
-import com.unipd.semicolon.business.exception.UserExistsException;
-import com.unipd.semicolon.business.exception.UserNameOrPasswordNotExistsException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
@@ -95,5 +93,16 @@ public class BaseExceptionHandler {
                 e.getStatus()
         );
     }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Object> EntityNotFoundException(
+            EntityNotFoundException e) {
+        return ResponseHelper.response(
+                e.getClass(),
+                e.getMsg(),
+                e.getStatus()
+        );
+    }
+
 
 }
