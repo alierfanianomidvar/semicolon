@@ -207,6 +207,11 @@ public class StorageServiceImp implements StorageService {
     }
 
     public StorageReportResponse getStorageReportResponse(Long pharmacyId) {
+
+        pharmacyRepository.findById(pharmacyId).orElseThrow(
+                () -> new IllegalStateException("Pharmacy is not found by id = " + pharmacyId
+                ));
+
         List<Storage> storageList = getAllByPharmacyId(pharmacyId);
 
         float drugPrice = 0f;
