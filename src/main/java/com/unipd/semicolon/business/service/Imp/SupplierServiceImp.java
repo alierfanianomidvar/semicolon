@@ -2,6 +2,7 @@ package com.unipd.semicolon.business.service.Imp;
 
 import com.unipd.semicolon.business.exception.CreatePharmacyDataNotFound;
 import com.unipd.semicolon.business.exception.CustomException;
+import com.unipd.semicolon.business.exception.PermissionException;
 import com.unipd.semicolon.business.exception.PharmacyExistsException;
 import com.unipd.semicolon.business.service.*;
 import com.unipd.semicolon.core.dao.SupplierDao;
@@ -52,24 +53,21 @@ public class SupplierServiceImp implements SupplierService {
             String telephoneNumber,
             String token
     ) throws SQLException {
-        try {
-            String roleFromToken = securityService.getRoleFromToken(token);
-            if(roleFromToken.equals("superAdmin")) {
-                if (name.isBlank() || address.isBlank() || email.isBlank() || telephoneNumber.isBlank()) {
-                    throw new CreatePharmacyDataNotFound();
-                }
-                List<Supplier> suppliers = supplierDao.findByEmail(email);
-                if (suppliers.toArray().length > 0) {
-                    throw new PharmacyExistsException();
-                }
 
-                Supplier supplier = new Supplier(name, address, email, telephoneNumber);
-                return supplierDao.create(supplier);
-            } else {
-                throw new CustomException("You are not authorized!");
+        String roleFromToken = securityService.getRoleFromToken(token);
+        if (roleFromToken.equals("superAdmin")) {
+            if (name.isBlank() || address.isBlank() || email.isBlank() || telephoneNumber.isBlank()) {
+                throw new CreatePharmacyDataNotFound();
             }
-        } catch (CustomException | SQLException e) {
-            throw e;
+            List<Supplier> suppliers = supplierDao.findByEmail(email);
+            if (suppliers.toArray().length > 0) {
+                throw new PharmacyExistsException();
+            }
+
+            Supplier supplier = new Supplier(name, address, email, telephoneNumber);
+            return supplierDao.create(supplier);
+        } else {
+            throw new PermissionException(token);
         }
 
     }
@@ -93,25 +91,103 @@ public class SupplierServiceImp implements SupplierService {
             List<Material> materials,
             String token
     ) throws SQLException {
-        try {
-            String roleFromToken = securityService.getRoleFromToken(token);
-            if(roleFromToken.equals("superAdmin")) {
-                if (name == null || address == null || email == null ||
-                        telephoneNumber == null || drugs == null || materials == null) {
-                    throw new IllegalArgumentException("Invalid input parameter");
-                } else {
-                    Supplier supplier = new Supplier(
-                            name,
-                            address,
-                            email,
-                            telephoneNumber
-                    );
+        String roleFromToken = securityService.getRoleFromToken(token);
+        if (roleFromToken.equals("superAdmin")) {
+            if (name == null || address == null || email == null ||
+                    telephoneNumber == null || drugs == null || materials == null) {
+                throw new IllegalArgumentException("Invalid input parameter");
+            } else {
+                Supplier supplier = new Supplier(
+                        name,
+                        address,
+                        email,
+                        telephoneNumber
+                );
 
-                    supplierRepository.saveSupplier(supplier);
-                    //First supplier is added to the database.
-                    //add drugs if not null
-                    if(!drugs.isEmpty()) {
-                        for (Drug drug: drugs) {
+                supplierRepository.saveSupplier(supplier);
+                //First supplier is added to the database.
+                //add drugs if not null
+                if (!drugs.isEmpty()) {
+                    for (Drug drug : drugs) {
+                        drugService.save(
+                                drug.getName(),
+                                drug.getSupplier().getId(),
+                                drug.getExpirationDate(),
+                                drug.getImage(),
+                                drug.getShape(),
+                                drug.getGender(),
+                                drug.getAgeGroup(),
+                                drug.isSensitive(),
+                                drug.isNeedPrescription(),
+                                drug.getDescription(),
+                                drug.getLimitation(),
+                                drug.getPrice(),
+                                drug.getCountryOFProduction()
+                        );
+                    }
+                }
+
+                if (!materials.isEmpty()) {
+                    for (Material material : materials) {
+                        materialService.save(
+                                material.getName(),
+                                material.getSupplier().getId(),
+                                material.getCountryOfProduction(),
+                                material.getExpirationDate(),
+                                material.getImage(),
+                                material.getGender(),
+                                material.getPrice(),
+                                material.getAgeGroup(),
+                                material.getLastModifiedDate(),
+                                material.getDescription()
+                        );
+                    }
+                }
+                return supplier;
+            }
+        } else {
+            throw new PermissionException(token);
+        }
+
+    }
+
+    @Transactional
+    @Override
+    public boolean edit(Long id,
+                        String name,
+                        String address,
+                        String email,
+                        String telephoneNumber,
+                        List<Drug> drugs,
+                        List<Material> materials,
+                        String token
+    ) throws SQLException {
+        String roleFromToken = securityService.getRoleFromToken(token);
+        if (roleFromToken.equals("superAdmin")) {
+            if (Objects.nonNull(supplierRepository.findById(id))) {
+                Supplier supplier = supplierRepository.findById(id);
+                if (name != null) {
+                    supplier.setName(name);
+                }
+                if (address != null) {
+                    supplier.setAddress(address);
+                }
+                if (email != null) {
+                    supplier.setEmail(email);
+                }
+                if (telephoneNumber != null) {
+                    supplier.setTelephoneNumber(telephoneNumber);
+                }
+                if (drugs != null && !drugs.isEmpty()) {
+                    for (Drug drug : drugs) {
+                        if (drugService.findDrugsByNameAndSupplierAndExpirationDateAndShapeAndAgeGroupAndCountryOFProduction(
+                                drug.getName(),
+                                drug.getSupplier(),
+                                drug.getExpirationDate(),
+                                drug.getShape(),
+                                drug.getAgeGroup(),
+                                drug.getCountryOFProduction()
+                        ).isEmpty()) {
                             drugService.save(
                                     drug.getName(),
                                     drug.getSupplier().getId(),
@@ -128,123 +204,35 @@ public class SupplierServiceImp implements SupplierService {
                                     drug.getCountryOFProduction()
                             );
                         }
-                    }
 
-                    if(!materials.isEmpty()) {
-                        for (Material material: materials) {
-                            materialService.save(
-                                    material.getName(),
-                                    material.getSupplier().getId(),
-                                    material.getCountryOfProduction(),
-                                    material.getExpirationDate(),
-                                    material.getImage(),
-                                    material.getGender(),
-                                    material.getPrice(),
-                                    material.getAgeGroup(),
-                                    material.getLastModifiedDate(),
-                                    material.getDescription()
-                            );
-                        }
                     }
-                    return supplier;
+                    supplier.setDrugs(drugs);
                 }
-            } else {
-                throw new CustomException("You are not authorized!");
-            }
-
-        } catch (CustomException | SQLException e) {
-            throw e;
-        }
-
-    }
-
-    @Transactional
-    @Override
-    public boolean edit(Long id,
-                        String name,
-                        String address,
-                        String email,
-                        String telephoneNumber,
-                        List<Drug> drugs,
-                        List<Material> materials,
-                        String token
-    ) throws SQLException {
-        try {
-            String roleFromToken = securityService.getRoleFromToken(token);
-            if(roleFromToken.equals("superAdmin")) {
-                if (Objects.nonNull(supplierRepository.findById(id))) {
-                    Supplier supplier = supplierRepository.findById(id);
-                    if (name != null) {
-                        supplier.setName(name);
+                if (materials != null && !materials.isEmpty()) {
+                    //TODO: first we need to check if the drug or material exist
+                    for (Material material : materials) {
+                        materialService.save(
+                                material.getName(),
+                                material.getSupplier().getId(),
+                                material.getCountryOfProduction(),
+                                material.getExpirationDate(),
+                                material.getImage(),
+                                material.getGender(),
+                                material.getPrice(),
+                                material.getAgeGroup(),
+                                material.getLastModifiedDate(),
+                                material.getDescription()
+                        );
                     }
-                    if (address != null) {
-                        supplier.setAddress(address);
-                    }
-                    if (email != null) {
-                        supplier.setEmail(email);
-                    }
-                    if (telephoneNumber != null) {
-                        supplier.setTelephoneNumber(telephoneNumber);
-                    }
-                    if (drugs != null && !drugs.isEmpty()) {
-                        for (Drug drug: drugs) {
-                            if(drugService.findDrugsByNameAndSupplierAndExpirationDateAndShapeAndAgeGroupAndCountryOFProduction(
-                                    drug.getName(),
-                                    drug.getSupplier(),
-                                    drug.getExpirationDate(),
-                                    drug.getShape(),
-                                    drug.getAgeGroup(),
-                                    drug.getCountryOFProduction()
-                            ).isEmpty()) {
-                                drugService.save(
-                                        drug.getName(),
-                                        drug.getSupplier().getId(),
-                                        drug.getExpirationDate(),
-                                        drug.getImage(),
-                                        drug.getShape(),
-                                        drug.getGender(),
-                                        drug.getAgeGroup(),
-                                        drug.isSensitive(),
-                                        drug.isNeedPrescription(),
-                                        drug.getDescription(),
-                                        drug.getLimitation(),
-                                        drug.getPrice(),
-                                        drug.getCountryOFProduction()
-                                );
-                            }
-
-                        }
-                        supplier.setDrugs(drugs);
-                    }
-                    if (materials != null && !materials.isEmpty()) {
-                        //TODO: first we need to check if the drug or material exist
-                        for (Material material: materials) {
-                            materialService.save(
-                                    material.getName(),
-                                    material.getSupplier().getId(),
-                                    material.getCountryOfProduction(),
-                                    material.getExpirationDate(),
-                                    material.getImage(),
-                                    material.getGender(),
-                                    material.getPrice(),
-                                    material.getAgeGroup(),
-                                    material.getLastModifiedDate(),
-                                    material.getDescription()
-                            );
-                        }
-                        supplier.setMaterials(materials);
-                    }
-                    supplierRepository.saveSupplier(supplier);
-                    return true;
-                } else {
-                    return false;
+                    supplier.setMaterials(materials);
                 }
+                supplierRepository.saveSupplier(supplier);
+                return true;
             } else {
-                throw new CustomException("You are not authorized!");
+                return false;
             }
-
-        } catch (Exception e) {
-            throw e;
+        } else {
+            throw new PermissionException(token);
         }
 
     }

@@ -19,7 +19,7 @@ public interface SupplierService {
 
         Object findBySupplierId(Long id);
 
-        public Supplier save(
+        Supplier save(
                         String name,
                         String address,
                         String email,

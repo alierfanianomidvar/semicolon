@@ -2,7 +2,9 @@ package com.unipd.semicolon.business.service.Imp;
 
 import com.unipd.semicolon.business.exception.CustomException;
 import com.unipd.semicolon.business.exception.NotFoundException;
+import com.unipd.semicolon.business.exception.PermissionException;
 import com.unipd.semicolon.business.exception.UserExistsException;
+import com.unipd.semicolon.business.exception.EntityNotFoundException;
 import com.unipd.semicolon.business.mapper.UserMapper;
 import com.unipd.semicolon.business.service.AccountService;
 import com.unipd.semicolon.business.service.SecurityService;
@@ -17,7 +19,6 @@ import com.unipd.semicolon.core.entity.enums.Gender;
 import com.unipd.semicolon.core.repository.entity.RoleRepository;
 import com.unipd.semicolon.core.repository.entity.UserRepository;
 
-import jakarta.persistence.EntityNotFoundException;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -64,49 +65,44 @@ public class UserServiceImp implements UserService {
                       byte[] profilePicture,
                       String token
     ) {
-
-        try {
-            String roleFromToken = securityService.getRoleFromToken(token);
-            if(roleFromToken.contains("admin")) {
-                if (accountService.findByUserName(username) != null) {
-                    throw new UserExistsException();
-                } else {
-
-                    if (validationService.validateEmail(email)
-                            && validationService.validateTelephoneNumber(phoneNumber) &&
-                            validationService.validateBirthDate(birthDate) && validationService.validateImage(profilePicture, 2048) &&
-                            validationService.validateGender(gender)
-
-                    ) {
-                        User user = new User(name,
-                                lastName,
-                                gender,
-                                birthDate,
-                                phoneNumber,
-                                address,
-                                role,
-                                email,
-                                accountStatus,
-                                profilePicture,
-                                null);
-
-                        User save = userRepository.save(user);
-                        Login login = accountService.save(
-                                username == null ? email : username,
-                                password == null ? generatePassword(8) : password,
-                                save);
-
-                        return login;
-                    } else {
-                        return null;
-                    }
-
-                }
+        String roleFromToken = securityService.getRoleFromToken(token);
+        if (roleFromToken.contains("admin")) {
+            if (accountService.findByUserName(username) != null) {
+                throw new UserExistsException();
             } else {
-                throw new CustomException("You are not authorized!");
+
+                if (validationService.validateEmail(email)
+                        && validationService.validateTelephoneNumber(phoneNumber) &&
+                        validationService.validateBirthDate(birthDate) && validationService.validateImage(profilePicture, 2048) &&
+                        validationService.validateGender(gender)
+
+                ) {
+                    User user = new User(name,
+                            lastName,
+                            gender,
+                            birthDate,
+                            phoneNumber,
+                            address,
+                            role,
+                            email,
+                            accountStatus,
+                            profilePicture,
+                            null);
+
+                    User save = userRepository.save(user);
+                    Login login = accountService.save(
+                            username == null ? email : username,
+                            password == null ? generatePassword(8) : password,
+                            save);
+
+                    return login;
+                } else {
+                    return null;
+                }
+
             }
-        } catch (CustomException e) {
-            throw e;
+        } else {
+            throw new PermissionException(token);
         }
     }
 
@@ -124,92 +120,84 @@ public class UserServiceImp implements UserService {
                         byte[] profilePicture,
                         String token
     ) {
-        try {
-            String roleFromToken = securityService.getRoleFromToken(token);
-            if(roleFromToken.contains("admin")) {
-                if (userId != null) {
-                    // Retrieve the user from the database
-                    if (userRepository.findUserById(userId) != null) {
-                        User user = userRepository.findUserById(userId);
+        String roleFromToken = securityService.getRoleFromToken(token);
+        if (roleFromToken.contains("admin")) {
+            if (userId != null) {
+                // Retrieve the user from the database
+                if (userRepository.findUserById(userId) != null) {
+                    User user = userRepository.findUserById(userId);
 
-                        // Validate inputs
-                        if (name != null && !name.isBlank()) {
-                            user.setName(name);
-                        }
-
-                        if (lastName != null && !lastName.isBlank()) {
-                            user.setLastName(lastName);
-                        }
-
-                        if (validationService.validateGender(gender)) {
-                            user.setGender(gender);
-                        }
-
-                        if (validationService.validateBirthDate(birthDate)) {
-                            user.setBirthDate(birthDate);
-                        }
-
-                        if (validationService.validateTelephoneNumber(phoneNumber)) {
-                            user.setPhoneNumber(phoneNumber);
-                        }
-
-                        if (address != null && !address.isBlank()) {
-                            user.setAddress(address);
-                        }
-
-                        if (role != null) {
-                            user.setRole(role);
-                        }
-
-                        if (validationService.validateEmail(email)) {
-                            user.setEmail(email);
-                        }
-
-                        if (accountStatus != null) {
-                            user.setAccountStatus(accountStatus);
-                        }
-
-                        if (profilePicture != null) {
-                            user.setProfilePicture(profilePicture);
-                        }
-
-
-                        // Save changes to the database
-                        userRepository.save(user);
-                        return true;
-                    } else {
-                        throw new CustomException("No such user exists in the database!");
+                    // Validate inputs
+                    if (name != null && !name.isBlank()) {
+                        user.setName(name);
                     }
-                } else {
-                    throw new CustomException("No user id is passed!");
-                }
 
+                    if (lastName != null && !lastName.isBlank()) {
+                        user.setLastName(lastName);
+                    }
+
+                    if (validationService.validateGender(gender)) {
+                        user.setGender(gender);
+                    }
+
+                    if (validationService.validateBirthDate(birthDate)) {
+                        user.setBirthDate(birthDate);
+                    }
+
+                    if (validationService.validateTelephoneNumber(phoneNumber)) {
+                        user.setPhoneNumber(phoneNumber);
+                    }
+
+                    if (address != null && !address.isBlank()) {
+                        user.setAddress(address);
+                    }
+
+                    if (role != null) {
+                        user.setRole(role);
+                    }
+
+                    if (validationService.validateEmail(email)) {
+                        user.setEmail(email);
+                    }
+
+                    if (accountStatus != null) {
+                        user.setAccountStatus(accountStatus);
+                    }
+
+                    if (profilePicture != null) {
+                        user.setProfilePicture(profilePicture);
+                    }
+
+
+                    // Save changes to the database
+                    userRepository.save(user);
+                    return true;
+                } else {
+                    throw new EntityNotFoundException("No such user exists in the database!");
+                }
             } else {
-                throw new CustomException("You are not authorized!");
+                throw new CustomException("No user id is passed!");
             }
-        } catch (CustomException e) {
-            throw e;
+
+        } else {
+            throw new PermissionException(token);
         }
     }
 
     @Override
     public Boolean changeStatus(Long id, String newStatus, String token) {
-        try {
-            String roleFromToken = securityService.getRoleFromToken(token);
-            if (roleFromToken.contains("admin")) {
-                if (userRepository.findUserById(id) != null) {
-                    User user = userRepository.findUserById(id);
-                    user.setAccountStatus(newStatus);
-                    userRepository.save(user);
-                    return true;
-                } else {
-                    throw new CustomException("User with the provided id does not exist in the database!");
-                }
+        String roleFromToken = securityService.getRoleFromToken(token);
+        if (roleFromToken.contains("admin")) {
+            if (userRepository.findUserById(id) != null) {
+                User user = userRepository.findUserById(id);
+                user.setAccountStatus(newStatus);
+                userRepository.save(user);
+                return true;
             } else {
-                throw new CustomException("You are not authorized!");
+                throw new EntityNotFoundException("User with the provided id does not exist in the database!");
             }
-        } catch (CustomException e) {
-            throw e;
+        } else {
+            throw new PermissionException(token);
         }
 
     }
@@ -218,16 +206,12 @@ public class UserServiceImp implements UserService {
     @Override
     public List<UserResponse> getAll() {
         List<UserResponse> userList = new ArrayList<>();
-        try {
-            List<User> users = userRepository.getAll();
-            if (users == null || users.isEmpty()) {
-                throw new NotFoundException();
-            }
-            for (User user : users) {
-                userList.add(UserMapper.userResponse(user));
-            }
-        } catch (DataAccessException ex) {
-            throw new ServiceException("Failed to retrieve users.", ex);
+        List<User> users = userRepository.getAll();
+        if (users == null || users.isEmpty()) {
+            throw new NotFoundException();
+        }
+        for (User user : users) {
+            userList.add(UserMapper.userResponse(user));
         }
         return userList;
     }
@@ -252,21 +236,17 @@ public class UserServiceImp implements UserService {
 
     @Override
     public boolean delete(Long id, String token) {
-        try {
-            String roleFromToken = securityService.getRoleFromToken(token);
-            if(roleFromToken.contains("admin")) {
-                if (id < 0) {
-                    throw new IllegalArgumentException("Cannot delete null user!");
-                } else {
-                    User user = userRepository.findUserById(id);
-                    if (user != null) userRepository.delete(user);
-                    return true;
-                }
+        String roleFromToken = securityService.getRoleFromToken(token);
+        if (roleFromToken.contains("admin")) {
+            if (id < 0) {
+                throw new IllegalArgumentException("Cannot delete null user!");
             } else {
-                throw new CustomException("You are not Authorized!");
+                User user = userRepository.findUserById(id);
+                if (user != null) userRepository.delete(user);
+                return true;
             }
-        } catch (CustomException e) {
-            throw e;
+        } else {
+            throw new PermissionException(token);
         }
 
     }
