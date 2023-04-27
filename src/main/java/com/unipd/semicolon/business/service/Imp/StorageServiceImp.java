@@ -129,12 +129,10 @@ public class StorageServiceImp implements StorageService {
                 throw new InvalidTokenException(token);
             }
         } catch (CustomException e) {
-            return null;
+            throw e;
         } catch (RuntimeException e) {
-            return null;
+            throw e;
         }
-
-
         return null;
     }
 
@@ -176,9 +174,9 @@ public class StorageServiceImp implements StorageService {
                 throw new InvalidTokenException(token);
             }
         } catch (InvalidTokenException e) {
-            return false;
+            throw e;
         } catch (IllegalArgumentException e) {
-            return false;
+            throw e;
         }
     }
 
@@ -198,7 +196,7 @@ public class StorageServiceImp implements StorageService {
                 }
 
             } catch (Exception e) {
-                return false;
+                throw e;
             }
         }
     }

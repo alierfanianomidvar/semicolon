@@ -69,7 +69,7 @@ public class SupplierServiceImp implements SupplierService {
                 throw new CustomException("You are not authorized!");
             }
         } catch (CustomException | SQLException e) {
-            return null;
+            throw e;
         }
 
     }
@@ -92,7 +92,7 @@ public class SupplierServiceImp implements SupplierService {
             List<Drug> drugs,
             List<Material> materials,
             String token
-    ) {
+    ) throws SQLException {
         try {
             String roleFromToken = securityService.getRoleFromToken(token);
             if(roleFromToken.equals("superAdmin")) {
@@ -152,8 +152,8 @@ public class SupplierServiceImp implements SupplierService {
                 throw new CustomException("You are not authorized!");
             }
 
-        } catch (Exception e) {
-            return null;
+        } catch (CustomException | SQLException e) {
+            throw e;
         }
 
     }
@@ -168,7 +168,7 @@ public class SupplierServiceImp implements SupplierService {
                         List<Drug> drugs,
                         List<Material> materials,
                         String token
-    ) {
+    ) throws SQLException {
         try {
             String roleFromToken = securityService.getRoleFromToken(token);
             if(roleFromToken.equals("superAdmin")) {
@@ -244,7 +244,7 @@ public class SupplierServiceImp implements SupplierService {
             }
 
         } catch (Exception e) {
-            return false;
+            throw e;
         }
 
     }
