@@ -1,6 +1,7 @@
 package com.unipd.semicolon.business.service.Imp;
 
 import com.unipd.semicolon.business.exception.CustomException;
+import com.unipd.semicolon.business.exception.IllegalArgumentException;
 import com.unipd.semicolon.business.exception.InvalidParameterException;
 import com.unipd.semicolon.business.exception.IllegalStateException;
 import com.unipd.semicolon.business.service.AccountService;
@@ -10,6 +11,7 @@ import com.unipd.semicolon.business.service.PharmacyService;
 import com.unipd.semicolon.core.entity.*;
 import com.unipd.semicolon.core.repository.entity.*;
 import com.unipd.semicolon.core.repository.entity.TTableRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.unipd.semicolon.core.entity.Pharmacy;
@@ -82,15 +84,15 @@ public class PharmacyServiceImp implements PharmacyService {
 
             if (roleFromToken.contains("admin")) {
                 if (name == null)
-                    throw new CustomException("Name is not specified!");
+                    throw new IllegalArgumentException("Name is not specified!");
                 if (address == null)
-                    throw new CustomException("Address is not specified!");
+                    throw new IllegalArgumentException("Address is not specified!");
                 if (time_table == null)
-                    throw new CustomException("time_table can not be null! Pass an empty list instead");
+                    throw new IllegalArgumentException("time_table can not be null! Pass an empty list instead");
                 if (storages == null)
-                    throw new CustomException("storage can not be null! Pass an empty list instead");
+                    throw new IllegalArgumentException("storage can not be null! Pass an empty list instead");
                 if (staff == null)
-                    throw new CustomException("staff can not be null! Pass an empty list instead");
+                    throw new IllegalArgumentException("staff can not be null! Pass an empty list instead");
                 if (tell_number != null) {
                     // Check if Phone number is valid
                     String regex = "(\\+39|0039)?(3[0-9]{2})(\\s|-)?([0-9]{7})";
@@ -134,7 +136,7 @@ public class PharmacyServiceImp implements PharmacyService {
                         for (User user : staff) {
                             User userById = userRepository.findUserById(user.getId());
                             if (userById == null)
-                                throw new CustomException("The user with id " + user.getId() + "does not exist!");
+                                throw new IllegalArgumentException("The user with id " + user.getId() + "does not exist!");
                             userById.setPharmacy(save);
                             userRepository.save(userById);
                         }
@@ -189,14 +191,14 @@ public class PharmacyServiceImp implements PharmacyService {
                             // Check if the time format is valid
                             String regex = "^([0-1][0-9]|[2][0-3]):([0-5][0-9])$";
                             if (!entry.getFrom_hour().matches(regex) || !entry.getTo_hour().matches(regex)) {
-                                throw new CustomException("Invalid time format for TimeTable entry: " + entry.getId());
+                                throw new IllegalArgumentException("Invalid time format for TimeTable entry: " + entry.getId());
                             }
 
                             // Check if from_hour is before to_hour
                             LocalTime fromTime = LocalTime.parse(entry.getFrom_hour());
                             LocalTime toTime = LocalTime.parse(entry.getTo_hour());
                             if (toTime.isBefore(fromTime)) {
-                                throw new CustomException("Invalid time table entry: " + entry.getId() + " - to_hour should be after from_hour");
+                                throw new IllegalArgumentException("Invalid time table entry: " + entry.getId() + " - to_hour should be after from_hour");
                             }
                         }
                     // Set the new time table only if all entries pass the validation
@@ -208,7 +210,7 @@ public class PharmacyServiceImp implements PharmacyService {
                     pharmacyRepository.save(pharmacy);
                     return true;
                 } else {
-                    throw new CustomException("Pharmacy does not exist!");
+                    throw new EntityNotFoundException("Pharmacy does not exist!");
                 }
             } else {
                 throw new CustomException("User not authorized!");
@@ -237,7 +239,7 @@ public class PharmacyServiceImp implements PharmacyService {
             String roleFromToken = securityService.getRoleFromToken(token);
             if (roleFromToken.contains("admin")) {
                 Pharmacy pharmacy = pharmacyRepository.findById(pharmacyId)
-                        .orElseThrow(() -> new CustomException("Pharmacy with ID " + pharmacyId + " not found!"));
+                        .orElseThrow(() -> new EntityNotFoundException("Pharmacy with ID " + pharmacyId + " not found!"));
 
                 for (User staffMember : staffList) {
                     User existingStaffMember = userRepository.findUserById(staffMember.getId());
