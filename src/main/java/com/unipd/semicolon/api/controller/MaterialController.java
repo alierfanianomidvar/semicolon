@@ -20,24 +20,20 @@ public class MaterialController {
     private MaterialService materialService;
 
     @RequestMapping(value = "/material", method = RequestMethod.POST)
-    public ResponseEntity save(@RequestBody MaterialModel model) {
-        try {
-            return ResponseHelper
-                    .response(materialService.save(
-                            model.getName(),
-                            model.getSupplier(),
-                            model.getCountryOfProduction(),
-                            model.getExpirationDate(),
-                            model.getImage(),
-                            model.getGender(),
-                            model.getPrice(),
-                            model.getAgeGroup(),
-                            model.getLastModifiedDate(),
-                            model.getDescription()
-                    ));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public ResponseEntity save(@RequestBody MaterialModel model) throws SQLException {
+        return ResponseHelper
+                .response(materialService.save(
+                        model.getName(),
+                        model.getSupplier(),
+                        model.getCountryOfProduction(),
+                        model.getExpirationDate(),
+                        model.getImage(),
+                        model.getGender(),
+                        model.getPrice(),
+                        model.getAgeGroup(),
+                        model.getLastModifiedDate(),
+                        model.getDescription()
+                ));
     }
 
     @RequestMapping(value = "/material/{id}", method = RequestMethod.GET)
@@ -47,25 +43,23 @@ public class MaterialController {
     }
 
     @RequestMapping(value = "/material/{id}", method = RequestMethod.PUT)
-    public ResponseEntity edit(@PathVariable("id") Long id,@RequestBody MaterialModel model) {
-        try {
-            return ResponseHelper
-                    .response(materialService.edit(
-                            id,
-                            model.getName(),
-                            model.getSupplier(),
-                            model.getExpirationDate(),
-                            model.getImage(),
-                            model.getGender(),
-                            model.getAgeGroup(),
-                            model.getPrice(),
-                            model.getLastModifiedDate(),
-                            model.getDescription(),
-                            model.getCountryOfProduction()
-                    ));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public ResponseEntity edit(@PathVariable("id") Long id, @RequestBody MaterialModel model) throws SQLException {
+
+        return ResponseHelper
+                .response(materialService.edit(
+                        id,
+                        model.getName(),
+                        model.getSupplier(),
+                        model.getExpirationDate(),
+                        model.getImage(),
+                        model.getGender(),
+                        model.getAgeGroup(),
+                        model.getPrice(),
+                        model.getLastModifiedDate(),
+                        model.getDescription(),
+                        model.getCountryOfProduction()
+                ));
+
     }
 
     @GetMapping("/material")

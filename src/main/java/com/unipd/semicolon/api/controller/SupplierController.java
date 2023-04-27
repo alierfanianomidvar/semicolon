@@ -21,7 +21,7 @@ public class SupplierController {
                 .response(supplierService.findBySupplierId(id));
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity add(
             @RequestBody SupplierModel model,
             @RequestHeader("Authorization") String token
