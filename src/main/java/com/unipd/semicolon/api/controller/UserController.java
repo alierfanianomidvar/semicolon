@@ -17,7 +17,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST) //@PostMapping("/add") we can write like this too.
+    @RequestMapping(value = "", method = RequestMethod.POST) //@PostMapping("/add") we can write like this too.
     // Here we get the data on the body and not on the url.
     public ResponseEntity save(
             @RequestBody UserModel model,
@@ -40,15 +40,16 @@ public class UserController {
                         token));
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     //Here we want to update the data, so we use PUT and not POSt.
     public ResponseEntity edit(
+            @PathVariable("id") Long id,
             @RequestBody UserModel model,
             @RequestHeader("Authorization") String token
     ) {
         return ResponseHelper
                 .response(userService.edit(
-                                model.getUserId(),
+                                id,
                                 model.getName(),
                                 model.getLastName(),
                                 model.getGender(),
@@ -64,13 +65,13 @@ public class UserController {
                 );
     }
 
-    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity getAll() {
         return ResponseHelper
                 .response(userService.getAll());
     }
 
-    @RequestMapping(value = "/getById/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity getById(@PathVariable("id") Long id) {
         return ResponseHelper
                 .response(userService.getById(id));
@@ -81,7 +82,7 @@ public class UserController {
     public ResponseEntity deleteById(
             @PathVariable("id") Long id,
             @RequestHeader("Authorization") String token
-            ) {
+    ) {
 
         return ResponseHelper.response(userService.delete(id, token));
     }
