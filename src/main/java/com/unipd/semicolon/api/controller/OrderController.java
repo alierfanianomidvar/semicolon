@@ -26,39 +26,17 @@ public class OrderController {
     @Operation(summary = "Saving order",
             description = "Saving the order base the info")
     public ResponseEntity save(@RequestBody OrderModel model) {
-        try {
-            return ResponseHelper
-                    .response(orderService.save(
-                            model.getToken(),
-                            model.getOrderDate(),
-                            model.getOrderDrugs(),
-                            model.getOrderMaterials(),
-                            model.getStatus(),
-                            model.getPrice(),
-                            model.isActive(),
-                            model.getPharmacy()
-                    ));
-        } catch (PermissionException e) {
-            return ResponseHelper.response(
-                    e.getData(),
-                    e.getMsg(),
-                    e.getStatus()
-            );
-        } catch (EntityNotFoundException e) {
-            return ResponseHelper.response(
-                    "Entity ID :" + model.getPharmacy().getId(),
-                    e.getMsg(),
-                    e.getStatus()
-            );
-        } catch (InvalidParameterException e) {
-            return ResponseHelper.response(
-                    " drags size : " + model.getOrderDrugs().size()
-                            + "|" +
-                            " Material size : " + model.getOrderMaterials().size(),
-                    e.getMsg(),
-                    e.getStatus()
-            );
-        }
+        return ResponseHelper
+                .response(orderService.save(
+                        model.getToken(),
+                        model.getOrderDate(),
+                        model.getOrderDrugs(),
+                        model.getOrderMaterials(),
+                        model.getStatus(),
+                        model.getPrice(),
+                        model.isActive(),
+                        model.getPharmacy()
+                ));
     }
 
     @RequestMapping(value = "/{id}/{token}", method = RequestMethod.GET)
@@ -67,22 +45,8 @@ public class OrderController {
     public ResponseEntity getById(
             @PathVariable("id") Long id,
             @PathVariable("token") String token) {
-        try {
-            return ResponseHelper
-                    .response(orderService.getById(token, id));
-        } catch (PermissionException e) {
-            return ResponseHelper.response(
-                    e.getData(),
-                    e.getMsg(),
-                    e.getStatus()
-            );
-        } catch (EntityNotFoundException e) {
-            return ResponseHelper.response(
-                    "",
-                    e.getMsg(),
-                    e.getStatus()
-            );
-        }
+        return ResponseHelper
+                .response(orderService.getById(token, id));
     }
 
     @RequestMapping(value = "/{id}/{token}", method = RequestMethod.DELETE)
@@ -91,16 +55,9 @@ public class OrderController {
     public ResponseEntity deleteById(
             @PathVariable("token") String token,
             @PathVariable("id") Long id) {
-        try {
-            orderService.delete(token, id);
-            return ResponseHelper.response(true);
-        } catch (PermissionException e) {
-            return ResponseHelper.response(
-                    e.getData(),
-                    e.getMsg(),
-                    e.getStatus()
-            );
-        }
+
+        orderService.delete(token, id);
+        return ResponseHelper.response(true);
     }
 
     @RequestMapping(value = "/get-all", method = RequestMethod.GET)
@@ -116,24 +73,8 @@ public class OrderController {
             @PathVariable("id") Long id,
             @PathVariable("status") OrderStatus status,
             @PathVariable("token") String token) {
-        try {
-            return ResponseHelper
-                    .response(orderService.status(token, id, status));
-        } catch (PermissionException e) {
-            return ResponseHelper.response(
-                    e.getData(),
-                    e.getMsg(),
-                    e.getStatus()
-            );
-        } catch (EntityNotFoundException e) {
-            return ResponseHelper.response(
-                    "ID : " + id
-                            + "|" +
-                            "Status :" + status,
-                    e.getMsg(),
-                    e.getStatus()
-            );
-        }
+        return ResponseHelper
+                .response(orderService.status(token, id, status));
     }
 
     @RequestMapping(value = "/report", method = RequestMethod.GET)
@@ -141,27 +82,11 @@ public class OrderController {
             @RequestParam(required = true) String token,
             @RequestParam(required = false) OrderReport orderReport,
             @RequestParam(required = false) Short num) {
-        try {
-            return ResponseHelper
-                    .response(orderService.reportBaseDate(
-                            token,
-                            orderReport,
-                            num));
-        } catch (PermissionException e) {
-            return ResponseHelper.response(
-                    e.getData(),
-                    e.getMsg(),
-                    e.getStatus()
-            );
-        } catch (EntityNotFoundException e) {
-            return ResponseHelper.response(
-                    "ID : " + 1
-                            + "|" +
-                            "Status :" + 2,
-                    e.getMsg(),
-                    e.getStatus()
-            );
-        }
+        return ResponseHelper
+                .response(orderService.reportBaseDate(
+                        token,
+                        orderReport,
+                        num));
     }
 
 
