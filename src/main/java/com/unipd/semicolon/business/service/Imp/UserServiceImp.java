@@ -106,7 +106,7 @@ public class UserServiceImp implements UserService {
                 throw new CustomException("You are not authorized!");
             }
         } catch (CustomException e) {
-            return null;
+            throw e;
         }
     }
 
@@ -188,7 +188,7 @@ public class UserServiceImp implements UserService {
                 throw new CustomException("You are not authorized!");
             }
         } catch (CustomException e) {
-            return false;
+            throw e;
         }
     }
 
@@ -209,7 +209,7 @@ public class UserServiceImp implements UserService {
                 throw new CustomException("You are not authorized!");
             }
         } catch (CustomException e) {
-            return false;
+            throw e;
         }
 
     }
@@ -266,7 +266,7 @@ public class UserServiceImp implements UserService {
                 throw new CustomException("You are not Authorized!");
             }
         } catch (CustomException e) {
-            return false;
+            throw e;
         }
 
     }
