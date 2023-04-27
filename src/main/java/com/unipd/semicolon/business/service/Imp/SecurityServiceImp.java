@@ -85,7 +85,7 @@ public class SecurityServiceImp implements SecurityService {
                             + "|" +
                             " Msg : "
                             + e.getMessage());
-            throw e;
+            throw new InvalidTokenException(token);
         }
     }
 }
