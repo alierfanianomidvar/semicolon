@@ -2,8 +2,7 @@ package com.unipd.semicolon.business.service.Imp;
 
 import com.unipd.semicolon.business.exception.CustomException;
 import com.unipd.semicolon.business.service.ValidationService;
-import com.unipd.semicolon.core.entity.Role;
-import com.unipd.semicolon.core.entity.User;
+import com.unipd.semicolon.business.exception.IllegalArgumentException;
 import com.unipd.semicolon.core.entity.enums.Gender;
 import com.unipd.semicolon.core.entity.enums.PaymentMethod;
 import org.springframework.stereotype.Service;
@@ -24,8 +23,8 @@ public class ValidationServiceImp implements ValidationService {
             throw new IllegalArgumentException("Payment method cannot be null");
         }
 
-        PaymentMethod[] allowedMethods = { PaymentMethod.CASH, PaymentMethod.CREDIT_CARD,
-                PaymentMethod.DEBIT_CARD, PaymentMethod.PAYPAL };
+        PaymentMethod[] allowedMethods = {PaymentMethod.CASH, PaymentMethod.CREDIT_CARD,
+                PaymentMethod.DEBIT_CARD, PaymentMethod.PAYPAL};
         boolean isValid = false;
 
         for (PaymentMethod allowedMethod : allowedMethods) {
