@@ -1,6 +1,8 @@
 package com.unipd.semicolon.business.service.Imp;
 
 import com.unipd.semicolon.business.exception.CustomException;
+import com.unipd.semicolon.business.exception.IllegalArgumentException;
+import com.unipd.semicolon.business.exception.InvalidTokenException;
 import com.unipd.semicolon.business.exception.NotFoundException;
 import com.unipd.semicolon.business.mapper.StorageMapper;
 import com.unipd.semicolon.business.service.SecurityService;
@@ -16,12 +18,10 @@ import com.unipd.semicolon.core.repository.entity.PharmacyRepository;
 import com.unipd.semicolon.core.repository.entity.StorageRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 
 @Service
@@ -44,27 +44,30 @@ public class StorageServiceImp implements StorageService {
 
     @Override
     public Storage save(Long pharmacyId,
-            List<Long> drugId,
-            List<Long> materialId,
-            int amount,
-            int threshold,
-            double discount,
-            String token) {
-        Objects.requireNonNull(pharmacyId, "Pharmacy is null"); // Check that pharmacy is not null
-        if (amount <= 0 || threshold <= 0 || discount < 0.0 || discount > 100.0) {
-            throw new IllegalArgumentException("Invalid input parameter");
-        } else if (drugId == null && materialId == null) {
-            throw new IllegalArgumentException("Either drug or material must be specified");
-        } else if (drugId != null && materialId != null) {
-            throw new IllegalArgumentException(
-                    "Both drug and material cannot be specified at the same time. Please specify only one.");
-        } else {
-            // Declare variables to store the found entities
-            Pharmacy pharmacyRepositoryById = null;
-            Material materialRepositoryById = null;
-            Drug drugRepositoryById = null;
-            List<Drug> drugList = new ArrayList<>();
-            List<Material> materialList = new ArrayList<>();
+                        List<Long> drugId,
+                        List<Long> materialId,
+                        int amount,
+                        int threshold,
+                        double discount,
+                        String token) {
+        try {
+            String roleFromToken = securityService.getRoleFromToken(token);
+            if (roleFromToken.contains("admin")) {
+                Objects.requireNonNull(pharmacyId, "Pharmacy is null"); // Check that pharmacy is not null
+                if (amount <= 0 || threshold <= 0 || discount < 0.0 || discount > 100.0) {
+                    throw new IllegalArgumentException("Invalid input parameter");
+                } else if (drugId == null && materialId == null) {
+                    throw new IllegalArgumentException("Either drug or material must be specified");
+                } else if (drugId != null && materialId != null) {
+                    throw new IllegalArgumentException(
+                            "Both drug and material cannot be specified at the same time. Please specify only one.");
+                } else {
+                    // Declare variables to store the found entities
+                    Pharmacy pharmacyRepositoryById = null;
+                    Material materialRepositoryById = null;
+                    Drug drugRepositoryById = null;
+                    List<Drug> drugList = new ArrayList<>();
+                    List<Material> materialList = new ArrayList<>();
 //            if (drugId != null) {
 //                for (Long i : drugId) {
 //                    drugList.add(drugRepository.findById(i).get());
@@ -75,9 +78,6 @@ public class StorageServiceImp implements StorageService {
 //                    materialList.add(materialRepository.findById(i).get());
 //                }
 //            }
-            try {
-                String roleFromToken = securityService.getRoleFromToken(token);
-                if (roleFromToken.contains("admin")) {
                     if (pharmacyRepository.findById(pharmacyId).isPresent()) {
                         pharmacyRepositoryById = pharmacyRepository.findById(pharmacyId).get();
                         // check material
@@ -123,34 +123,36 @@ public class StorageServiceImp implements StorageService {
                     } else {
                         throw new CustomException("Pharmacy does not exist!");
                     }
-                }
 
-            } catch (NoSuchElementException e) {
-                throw new IllegalArgumentException("Invalid input parameter: " + e.getMessage());
-            } catch (DataAccessException e) {
-                throw new RuntimeException("Failed to access data: " + e.getMessage());
-            } catch (CustomException e) {
-                return null;
+                }
+            } else {
+                throw new InvalidTokenException(token);
             }
+        } catch (CustomException e) {
+            return null;
+        } catch (RuntimeException e) {
+            return null;
         }
+
+
         return null;
     }
 
     @Override
     public boolean edit(Long storageId,
-            Pharmacy pharmacy,
-            Drug drug,
-            Material material,
-            int amount,
-            int threshold,
-            double discount,
-            String token) {
-        if (storageId == null || storageId < 0) {
-            throw new IllegalArgumentException("storageId is null");
-        } else {
-            try {
-                String roleFromToken = securityService.getRoleFromToken(token);
-                if (roleFromToken.contains("admin")) {
+                        Pharmacy pharmacy,
+                        Drug drug,
+                        Material material,
+                        int amount,
+                        int threshold,
+                        double discount,
+                        String token) {
+        try {
+            String roleFromToken = securityService.getRoleFromToken(token);
+            if (roleFromToken.contains("admin")) {
+                if (storageId == null || storageId < 0) {
+                    throw new IllegalArgumentException("storageId is null");
+                } else {
                     Storage storage = storageRepository.findById(storageId);
                     if (storage == null) {
                         throw new NotFoundException();
@@ -169,12 +171,14 @@ public class StorageServiceImp implements StorageService {
                         storage.setDiscount(discount);
                     storageRepository.save(storage);
                     return true;
-                } else {
-                    throw new CustomException("User not authorized!");
                 }
-            } catch (CustomException e) {
-                return false;
+            } else {
+                throw new InvalidTokenException(token);
             }
+        } catch (InvalidTokenException e) {
+            return false;
+        } catch (IllegalArgumentException e) {
+            return false;
         }
     }
 
