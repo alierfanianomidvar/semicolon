@@ -3,6 +3,7 @@ package com.unipd.semicolon.business.service.Imp;
 import com.unipd.semicolon.business.exception.NotFoundException;
 import com.unipd.semicolon.business.mapper.StorageMapper;
 import com.unipd.semicolon.business.service.StorageService;
+import com.unipd.semicolon.core.domain.StorageReportResponse;
 import com.unipd.semicolon.core.domain.StorageResponse;
 import com.unipd.semicolon.core.entity.Drug;
 import com.unipd.semicolon.core.entity.Material;
@@ -16,10 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class StorageServiceImp implements StorageService {
@@ -195,4 +194,64 @@ public class StorageServiceImp implements StorageService {
         }
         return storage;
     }
+
+    @Override
+    public List<Storage> getAllByPharmacyId(Long pharmacyId) {
+        List<Storage> storageList = storageRepository.getAll();
+
+        List<Storage> filteredStorageList = storageList.stream()
+                .filter(obj -> obj.getPharmacy().getId().equals(pharmacyId))
+                .collect(Collectors.toList());
+
+        return filteredStorageList;
+    }
+
+    public StorageReportResponse getStorageReportResponse(Long pharmacyId) {
+
+        pharmacyRepository.findById(pharmacyId).orElseThrow(
+                () -> new IllegalStateException("Pharmacy is not found by id = " + pharmacyId
+                ));
+
+        List<Storage> storageList = getAllByPharmacyId(pharmacyId);
+
+        float drugPrice = 0f;
+        float materialPrice = 0f;
+
+        int drugCount = 0;
+        int materialCount = 0;
+
+        for (Storage storage : storageList) {
+            Drug drug = storage.getDrug();
+            Material material = storage.getMaterial();
+
+            if (drug != null) {
+                drugPrice += drug.getPrice() * storage.getAmount();
+                drugCount += 1;
+            }
+
+            if (material != null) {
+                materialPrice += material.getPrice() * storage.getAmount();
+                materialCount += 1;
+            }
+        }
+
+        return new StorageReportResponse(pharmacyId, drugCount, materialCount, drugPrice, materialPrice);
+    }
+
+    public List<StorageReportResponse> getAllStorageReports() {
+        List<StorageResponse> storageList = getAll();
+        HashMap<Long, StorageReportResponse> storagesByPharmacy = new HashMap<>();
+        List<StorageReportResponse> responseEntities = new ArrayList<>();
+
+        for (StorageResponse storage : storageList) {
+            storagesByPharmacy.put(storage.getPharmacy().getId(), getStorageReportResponse(storage.getPharmacy().getId()));
+        }
+
+        for (Long id : storagesByPharmacy.keySet()) {
+            responseEntities.add(storagesByPharmacy.get(id));
+        }
+
+        return responseEntities;
+    }
+
 }
