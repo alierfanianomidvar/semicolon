@@ -1,9 +1,7 @@
 package com.unipd.semicolon.business.service.Imp;
 
-import com.unipd.semicolon.business.exception.CustomException;
+import com.unipd.semicolon.business.exception.*;
 import com.unipd.semicolon.business.exception.IllegalArgumentException;
-import com.unipd.semicolon.business.exception.InvalidTokenException;
-import com.unipd.semicolon.business.exception.NotFoundException;
 import com.unipd.semicolon.business.mapper.StorageMapper;
 import com.unipd.semicolon.business.service.SecurityService;
 import com.unipd.semicolon.business.service.StorageService;
@@ -21,6 +19,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.IllegalStateException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -50,24 +49,23 @@ public class StorageServiceImp implements StorageService {
                         int threshold,
                         double discount,
                         String token) {
-        try {
-            String roleFromToken = securityService.getRoleFromToken(token);
-            if (roleFromToken.contains("admin")) {
-                Objects.requireNonNull(pharmacyId, "Pharmacy is null"); // Check that pharmacy is not null
-                if (amount <= 0 || threshold <= 0 || discount < 0.0 || discount > 100.0) {
-                    throw new IllegalArgumentException("Invalid input parameter");
-                } else if (drugId == null && materialId == null) {
-                    throw new IllegalArgumentException("Either drug or material must be specified");
-                } else if (drugId != null && materialId != null) {
-                    throw new IllegalArgumentException(
-                            "Both drug and material cannot be specified at the same time. Please specify only one.");
-                } else {
-                    // Declare variables to store the found entities
-                    Pharmacy pharmacyRepositoryById = null;
-                    Material materialRepositoryById = null;
-                    Drug drugRepositoryById = null;
-                    List<Drug> drugList = new ArrayList<>();
-                    List<Material> materialList = new ArrayList<>();
+        String roleFromToken = securityService.getRoleFromToken(token);
+        if (roleFromToken.contains("admin")) {
+            Objects.requireNonNull(pharmacyId, "Pharmacy is null"); // Check that pharmacy is not null
+            if (amount <= 0 || threshold <= 0 || discount < 0.0 || discount > 100.0) {
+                throw new IllegalArgumentException("Invalid input parameter");
+            } else if (drugId == null && materialId == null) {
+                throw new IllegalArgumentException("Either drug or material must be specified");
+            } else if (drugId != null && materialId != null) {
+                throw new IllegalArgumentException(
+                        "Both drug and material cannot be specified at the same time. Please specify only one.");
+            } else {
+                // Declare variables to store the found entities
+                Pharmacy pharmacyRepositoryById = null;
+                Material materialRepositoryById = null;
+                Drug drugRepositoryById = null;
+                List<Drug> drugList = new ArrayList<>();
+                List<Material> materialList = new ArrayList<>();
 //            if (drugId != null) {
 //                for (Long i : drugId) {
 //                    drugList.add(drugRepository.findById(i).get());
@@ -78,60 +76,55 @@ public class StorageServiceImp implements StorageService {
 //                    materialList.add(materialRepository.findById(i).get());
 //                }
 //            }
-                    if (pharmacyRepository.findById(pharmacyId).isPresent()) {
-                        pharmacyRepositoryById = pharmacyRepository.findById(pharmacyId).get();
-                        // check material
-                        if (materialId != null) {
-                            for (Long i : materialId) {
-                                if (materialRepository.findById(i) != null) {
-                                    materialRepositoryById = materialRepository.findById(i).get();
-                                    Storage storage = new Storage(pharmacyRepositoryById,
-                                            null,
-                                            materialRepositoryById,
-                                            amount,
-                                            threshold,
-                                            discount);
+                if (pharmacyRepository.findById(pharmacyId).isPresent()) {
+                    pharmacyRepositoryById = pharmacyRepository.findById(pharmacyId).get();
+                    // check material
+                    if (materialId != null) {
+                        for (Long i : materialId) {
+                            if (materialRepository.findById(i) != null) {
+                                materialRepositoryById = materialRepository.findById(i).get();
+                                Storage storage = new Storage(pharmacyRepositoryById,
+                                        null,
+                                        materialRepositoryById,
+                                        amount,
+                                        threshold,
+                                        discount);
 
-                                    Storage savedStorage = storageRepository.save(storage);
-                                    if (savedStorage == null) {
-                                        throw new RuntimeException("Failed to save Storage");
-                                    }
-                                    return savedStorage;
-
+                                Storage savedStorage = storageRepository.save(storage);
+                                if (savedStorage == null) {
+                                    throw new RuntimeException("Failed to save Storage");
                                 }
+                                return savedStorage;
+
                             }
                         }
-                        if (drugId != null) {
-                            for (Long i : drugId) {
-                                if (drugRepository.findById(i) != null) {
-                                    drugRepositoryById = drugRepository.findById(i).get();
-                                    Storage storage = new Storage(pharmacyRepositoryById,
-                                            drugRepositoryById,
-                                            null,
-                                            amount,
-                                            threshold,
-                                            discount);
-                                    Storage savedStorage = storageRepository.save(storage);
-                                    if (savedStorage == null) {
-                                        throw new RuntimeException("Failed to save Storage");
-                                    }
-                                    return savedStorage;
+                    }
+                    if (drugId != null) {
+                        for (Long i : drugId) {
+                            if (drugRepository.findById(i) != null) {
+                                drugRepositoryById = drugRepository.findById(i).get();
+                                Storage storage = new Storage(pharmacyRepositoryById,
+                                        drugRepositoryById,
+                                        null,
+                                        amount,
+                                        threshold,
+                                        discount);
+                                Storage savedStorage = storageRepository.save(storage);
+                                if (savedStorage == null) {
+                                    throw new RuntimeException("Failed to save Storage");
                                 }
+                                return savedStorage;
                             }
                         }
-
-                    } else {
-                        throw new CustomException("Pharmacy does not exist!");
                     }
 
+                } else {
+                    throw new NotFoundException();
                 }
-            } else {
-                throw new InvalidTokenException(token);
+
             }
-        } catch (CustomException e) {
-            throw e;
-        } catch (RuntimeException e) {
-            throw e;
+        } else {
+            throw new PermissionException(token);
         }
         return null;
     }
@@ -145,38 +138,32 @@ public class StorageServiceImp implements StorageService {
                         int threshold,
                         double discount,
                         String token) {
-        try {
-            String roleFromToken = securityService.getRoleFromToken(token);
-            if (roleFromToken.contains("admin")) {
-                if (storageId == null || storageId < 0) {
-                    throw new IllegalArgumentException("storageId is null");
-                } else {
-                    Storage storage = storageRepository.findById(storageId);
-                    if (storage == null) {
-                        throw new NotFoundException();
-                    }
-                    if (pharmacy != null)
-                        storage.setPharmacy(pharmacy);
-                    if (drug != null)
-                        storage.setDrug(drug);
-                    if (material != null)
-                        storage.setMaterial(material);
-                    if (amount > 0)
-                        storage.setAmount(amount);
-                    if (threshold > 0)
-                        storage.setThreshold(threshold);
-                    if (discount >= 0 && discount <= 100)
-                        storage.setDiscount(discount);
-                    storageRepository.save(storage);
-                    return true;
-                }
+        String roleFromToken = securityService.getRoleFromToken(token);
+        if (roleFromToken.contains("admin")) {
+            if (storageId == null || storageId < 0) {
+                throw new IllegalArgumentException("storageId is null");
             } else {
-                throw new InvalidTokenException(token);
+                Storage storage = storageRepository.findById(storageId);
+                if (storage == null) {
+                    throw new NotFoundException();
+                }
+                if (pharmacy != null)
+                    storage.setPharmacy(pharmacy);
+                if (drug != null)
+                    storage.setDrug(drug);
+                if (material != null)
+                    storage.setMaterial(material);
+                if (amount > 0)
+                    storage.setAmount(amount);
+                if (threshold > 0)
+                    storage.setThreshold(threshold);
+                if (discount >= 0 && discount <= 100)
+                    storage.setDiscount(discount);
+                storageRepository.save(storage);
+                return true;
             }
-        } catch (InvalidTokenException e) {
-            throw e;
-        } catch (IllegalArgumentException e) {
-            throw e;
+        } else {
+            throw new PermissionException(token);
         }
     }
 
@@ -192,7 +179,7 @@ public class StorageServiceImp implements StorageService {
                     storageRepository.delete(storage);
                     return true;
                 } else {
-                    throw new CustomException("User not authorized!");
+                    throw new PermissionException(token);
                 }
 
             } catch (Exception e) {
