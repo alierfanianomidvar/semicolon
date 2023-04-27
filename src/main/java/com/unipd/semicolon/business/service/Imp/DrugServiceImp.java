@@ -1,11 +1,11 @@
 package com.unipd.semicolon.business.service.Imp;
 
-import com.unipd.semicolon.business.exception.CustomException;
-import com.unipd.semicolon.business.exception.NotFoundException;
+import com.unipd.semicolon.business.exception.*;
 import com.unipd.semicolon.business.exception.IllegalArgumentException;
 import com.unipd.semicolon.business.exception.IllegalStateException;
 import com.unipd.semicolon.business.mapper.DrugMapper;
 import com.unipd.semicolon.business.service.DrugService;
+import com.unipd.semicolon.business.service.ValidationService;
 import com.unipd.semicolon.core.domain.DrugResponse;
 import com.unipd.semicolon.core.entity.Drug;
 import com.unipd.semicolon.core.entity.Supplier;
@@ -21,7 +21,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,7 +35,7 @@ public class DrugServiceImp implements DrugService {
     private SupplierRepository supplierRepository;
 
     @Autowired
-    private ValidationServiceImp validationServiceImp;
+    private ValidationService validationService;
 
     @Override
     public Drug save(
@@ -56,10 +55,10 @@ public class DrugServiceImp implements DrugService {
         Objects.requireNonNull(name, "Name is null");
         Objects.requireNonNull(supplierId, "Supplier is null");
         if (image != null) {
-            validationServiceImp.validateImage(image, 10 * 1024 * 1024);
+            validationService.validateImage(image, 10 * 1024 * 1024);
         }
-        validationServiceImp.validateDate(expirationDate, false);
-        validationServiceImp.validatePrice(price);
+        validationService.validateDate(expirationDate, false);
+        validationService.validatePrice(price);
         if (limitation <= 0) {
             throw new IllegalArgumentException("Limitation amount can not be negative");
         }
@@ -86,10 +85,10 @@ public class DrugServiceImp implements DrugService {
                 drug.getShape(),
                 drug.getAgeGroup(),
                 drug.getCountryOFProduction()
-        ) == null) {
+        ).isEmpty() ) {
             drugRepository.save(drug);
         } else {
-            throw new CustomException("item already exist in drug list");
+            throw new DrugExistsException();
         }
         return drug;
     }
@@ -114,13 +113,13 @@ public class DrugServiceImp implements DrugService {
             throw new IllegalArgumentException("Invalid input parameter");
         } else {
             if (image != null) {
-                validationServiceImp.validateImage(image, 10 * 1024 * 1024);
+                validationService.validateImage(image, 10 * 1024 * 1024);
             }
             if (expirationDate != null) {
-                validationServiceImp.validateDate(expirationDate, false);
+                validationService.validateDate(expirationDate, false);
             }
             if (price != 0) {
-                validationServiceImp.validatePrice(price);
+                validationService.validatePrice(price);
             }
             if (limitation < 0) {
                 throw new IllegalArgumentException("Limitation amount can not be negative");
