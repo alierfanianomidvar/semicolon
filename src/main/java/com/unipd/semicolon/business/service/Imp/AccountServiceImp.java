@@ -47,7 +47,7 @@ public class AccountServiceImp implements AccountService {
                     login.getUser().getRole().getRole()));
             login.setLastLoginDate(localTimeService.getLocalDateTime());
         } else {
-            e = new UserNameOrPasswordNotExitsException();
+            e = new UserNameOrPasswordNotExistsException(username, password);
             logSystem.logUtil(e.getMsg());
             throw e;
         }
@@ -61,9 +61,9 @@ public class AccountServiceImp implements AccountService {
         Long id = Optional.ofNullable(securityService.getAccountId(token))
                 .map(Long::parseLong)
                 .orElseThrow(() -> {
-                        e = new InvalidTokenException();
-                        logSystem.logUtil(e.getMsg());
-                        return e;
+                    e = new InvalidTokenException(token);
+                    logSystem.logUtil(e.getMsg());
+                    return e;
                 });
         if (id != null && id != 0) {
             Optional<Login> login = loginRepository.findById(id);
@@ -72,12 +72,12 @@ public class AccountServiceImp implements AccountService {
                 loginRepository.save(login.get());
                 return true;
             } else {
-                e = new UserExsitsException();
+                e = new UserExistsException();
                 logSystem.logUtil(e.getMsg());
                 throw e;
             }
         } else {
-            e = new InvalidTokenException();
+            e = new InvalidTokenException(token);
             logSystem.logUtil(e.getMsg());
             throw e;
         }

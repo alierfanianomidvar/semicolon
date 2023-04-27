@@ -4,8 +4,7 @@ import com.unipd.semicolon.api.model.LoginRequest;
 import com.unipd.semicolon.api.util.helper.ResponseHelper;
 import com.unipd.semicolon.business.exception.CustomException;
 import com.unipd.semicolon.business.exception.InvalidTokenException;
-import com.unipd.semicolon.business.exception.UserExsitsException;
-import com.unipd.semicolon.business.exception.UserNameOrPasswordNotExitsException;
+import com.unipd.semicolon.business.exception.UserExistsException;
 import com.unipd.semicolon.business.service.AccountService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,43 +19,21 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     @Operation(summary = "login", description = "will send all info of user and new token bane id and role.")
     public ResponseEntity login(@RequestBody LoginRequest model)
             throws CustomException {
-        try {
-            return ResponseHelper.response(accountService.Login(
-                    model.getUsername(),
-                    model.getPassword()));
+        return ResponseHelper.response(accountService.Login(
+                model.getUsername(),
+                model.getPassword()));
 
-        } catch (UserNameOrPasswordNotExitsException e) {
-            return ResponseHelper.response(
-                    model.getUsername() + " | " + model.getPassword(),
-                    e.getMsg(),
-                    e.getStatus()
-            );
-        }
     }
 
-    @RequestMapping(value = "/logout/{token}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{token}", method = RequestMethod.POST)
+    @Operation(summary = "logout", description = "remove the token from login entity.")
     public ResponseEntity logout(@PathVariable String token)
             throws CustomException {
-        try {
-            return ResponseHelper.response(accountService.LogOut(token));
-
-        } catch (InvalidTokenException e) {
-            return ResponseHelper.response(
-                    token,
-                    e.getMsg(),
-                    e.getStatus()
-            );
-        } catch (UserExsitsException e) {
-            return ResponseHelper.response(
-                    token,
-                    e.getMsg(),
-                    e.getStatus()
-            );
-        }
+        return ResponseHelper.response(accountService.LogOut(token));
     }
 
 
