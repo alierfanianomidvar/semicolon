@@ -13,20 +13,12 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
+@RequestMapping(value = "/storage")
 public class StorageController {
     @Autowired
     private StorageService storageService;
 
-    //new
-    @Autowired
-    private PharmacyRepository pharmacyRepository;
-    @Autowired
-    private DrugRepository drugRepository;
-    @Autowired
-    private MaterialRepository materialRepository;
-    //
-
-    @RequestMapping(value = "/storage", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity save(
             @RequestBody StorageModel model,
             @RequestHeader("Authorization") String token
@@ -43,13 +35,13 @@ public class StorageController {
                 ));
     }
 
-    @RequestMapping(value = "/storage/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity getById(@PathVariable("id") Long id) {
         return ResponseHelper
                 .response(storageService.getById(id));
     }
 
-    @RequestMapping(value = "/storage/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity edit(
             @PathVariable("id") Long id,
             @RequestBody StorageModel model,
@@ -68,7 +60,7 @@ public class StorageController {
                 ));
     }
 
-    @RequestMapping(value = "/storage/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteById(
             @PathVariable("id") Long id,
             @RequestHeader("Authorization") String token) {
@@ -76,14 +68,14 @@ public class StorageController {
         return ResponseHelper.response(true);
     }
 
-    @RequestMapping(value = "/storage", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity getAll() {
         return ResponseHelper
                 .response(storageService.getAll());
     }
 
 
-    @RequestMapping(value = "/storage/report/{pharmacyId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/report/{pharmacyId}", method = RequestMethod.GET)
     public ResponseEntity<String> reportStorageByPharmacyId(@PathVariable("pharmacyId") Long pharmacyId) {
 
         StorageReportResponse response = storageService.getStorageReportResponse(pharmacyId);
@@ -91,7 +83,7 @@ public class StorageController {
         return ResponseHelper.okJson(response);
     }
 
-    @RequestMapping(value = "/storage/report", method = RequestMethod.GET)
+    @RequestMapping(value = "/report", method = RequestMethod.GET)
     public ResponseEntity<String> reportStorageAllPharmacies() {
 
         List<StorageReportResponse> responseEntities = storageService.getAllStorageReports();
