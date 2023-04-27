@@ -1,5 +1,6 @@
 package com.unipd.semicolon.business.service;
 
+import com.unipd.semicolon.core.domain.StorageReportResponse;
 import com.unipd.semicolon.core.domain.StorageResponse;
 import com.unipd.semicolon.core.entity.Drug;
 import com.unipd.semicolon.core.entity.Material;
@@ -44,11 +45,20 @@ public interface StorageService {
             int amount
     );
 
-
     Storage storageExist(
             Pharmacy pharmacy,
             Drug drug,
             Material material
     );
+
+    List<Storage> getAllByPharmacyId(
+            Long id
+    );
+
+    StorageReportResponse getStorageReportResponse(
+            Long pharmacyId
+    );
+
+    List<StorageReportResponse> getAllStorageReports();
 
 }

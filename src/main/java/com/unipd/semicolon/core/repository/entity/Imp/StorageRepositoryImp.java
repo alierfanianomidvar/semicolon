@@ -1,7 +1,5 @@
 package com.unipd.semicolon.core.repository.entity.Imp;
 
-import com.unipd.semicolon.core.entity.Drug;
-import com.unipd.semicolon.core.entity.Pharmacy;
 import com.unipd.semicolon.core.entity.Storage;
 import com.unipd.semicolon.core.repository.entity.StorageRepository;
 import jakarta.transaction.Transactional;
