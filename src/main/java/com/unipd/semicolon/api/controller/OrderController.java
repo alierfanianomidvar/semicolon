@@ -30,6 +30,7 @@ public class OrderController {
             return ResponseHelper
                     .response(orderService.save(
                             model.getToken(),
+                            model.getOrderDate(),
                             model.getOrderDrugs(),
                             model.getOrderMaterials(),
                             model.getStatus(),
