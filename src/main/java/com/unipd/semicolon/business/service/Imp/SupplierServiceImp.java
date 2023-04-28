@@ -55,7 +55,7 @@ public class SupplierServiceImp implements SupplierService {
     ) throws SQLException {
 
         String roleFromToken = securityService.getRoleFromToken(token);
-        if (roleFromToken.equals("superAdmin")) {
+        if (roleFromToken.equals("superadmin")) {
             if (name.isBlank() || address.isBlank() || email.isBlank() || telephoneNumber.isBlank()) {
                 throw new CreatePharmacyDataNotFound();
             }
@@ -92,7 +92,7 @@ public class SupplierServiceImp implements SupplierService {
             String token
     ) throws SQLException {
         String roleFromToken = securityService.getRoleFromToken(token);
-        if (roleFromToken.equals("superAdmin")) {
+        if (roleFromToken.equals("superadmin")) {
             if (name == null || address == null || email == null ||
                     telephoneNumber == null || drugs == null || materials == null) {
                 throw new IllegalArgumentException("Invalid input parameter");
@@ -163,7 +163,7 @@ public class SupplierServiceImp implements SupplierService {
                         String token
     ) throws SQLException {
         String roleFromToken = securityService.getRoleFromToken(token);
-        if (roleFromToken.equals("superAdmin")) {
+        if (roleFromToken.equals("superadmin")) {
             if (Objects.nonNull(supplierRepository.findById(id))) {
                 Supplier supplier = supplierRepository.findById(id);
                 if (name != null) {
