@@ -9,6 +9,7 @@ import com.unipd.semicolon.core.entity.enums.Gender;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 public class DrugResponse {
@@ -16,7 +17,7 @@ public class DrugResponse {
     private Long id;
     private String name;
     private Supplier supplier;
-    private LocalDate expirationDate;
+    private Date expirationDate;
     private byte[] image;
     private String shape;
     private Gender gender;
@@ -34,7 +35,7 @@ public class DrugResponse {
     public DrugResponse(
             String name,
             Supplier supplier,
-            LocalDate expirationDate,
+            Date expirationDate,
             byte[] image,
             String shape,
             Gender gender,
@@ -84,11 +85,11 @@ public class DrugResponse {
         this.supplier = supplier;
     }
 
-    public LocalDate getExpirationDate() {
+    public Date getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(LocalDate expirationDate) {
+    public void setExpirationDate(Date expirationDate) {
         this.expirationDate = expirationDate;
     }
 

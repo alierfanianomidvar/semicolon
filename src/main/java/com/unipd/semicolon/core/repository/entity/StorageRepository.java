@@ -15,7 +15,7 @@ public interface StorageRepository {
             Storage storage
     );
 
-    Storage findStorageById(Long id);
+    Storage findById(Long id);
 
     List<Storage> getAll();
 
@@ -28,5 +28,7 @@ public interface StorageRepository {
             Long pharmacyId,
             Long materialId
     );
+    List<Storage> findStoragesByPharmacyId (Long id);
+
 
 }

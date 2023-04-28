@@ -3,17 +3,11 @@ package com.unipd.semicolon.api.controller;
 import com.unipd.semicolon.api.model.ReceiptModel;
 import com.unipd.semicolon.api.util.helper.ResponseHelper;
 import com.unipd.semicolon.business.service.ReceiptService;
-import com.unipd.semicolon.core.entity.Drug;
-import com.unipd.semicolon.core.entity.Material;
 import com.unipd.semicolon.core.entity.Receipt;
-import com.unipd.semicolon.core.entity.enums.PaymentMethod;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -24,8 +18,8 @@ public class ReceiptController {
     private ReceiptService receiptService;
 
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public ResponseEntity save(@RequestBody ReceiptModel receipt){
+    @RequestMapping(value = "", method = RequestMethod.POST)
+    public ResponseEntity save(@RequestBody ReceiptModel receipt) {
         return ResponseHelper
                 .response(receiptService.save(
                         receipt.getList_drug_id(),
@@ -36,28 +30,23 @@ public class ReceiptController {
     }
 
 
-    @GetMapping("/getReciept/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Receipt> getById(@PathVariable("id") Long id) {
-        Receipt receipt = receiptService.getReceiptById(id);
-        return ResponseHelper.response(receipt);
+        return ResponseHelper.response(receiptService.getById(id));
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public ResponseEntity edit(@RequestBody ReceiptModel receiptModel)
-    {
-        Long id=receiptModel.getId();
-        List<Long> drugIds = receiptModel.getList_drug_id();
-        List<Long> materialIds = receiptModel.getList_material_id();
-        byte[] image = receiptModel.getImage();
-        Date date = receiptModel.getDate();
-        PaymentMethod paymentMethod = receiptModel.getPaymentMethod();
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity edit(
+            @PathVariable("id") Long id,
+            @RequestBody ReceiptModel receiptModel) {
         return ResponseHelper
-                .response(receiptService.edit(id,
-                        drugIds,
-                        materialIds,
-                        image,
-                        date,
-                        paymentMethod));
+                .response(receiptService.edit(
+                        id,
+                        receiptModel.getList_drug_id(),
+                        receiptModel.getList_material_id(),
+                        receiptModel.getImage(),
+                        receiptModel.getDate(),
+                        receiptModel.getPaymentMethod()));
 
     }
 //

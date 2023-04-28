@@ -10,14 +10,13 @@ import com.unipd.semicolon.core.entity.Storage;
 import java.util.List;
 
 public interface StorageService {
-    Storage save(
-            Pharmacy pharmacy,
-            Drug drug,
-            Material material,
-            int amount,
-            int threshold,
-            double discount
-    );
+    Storage save(Long pharmacyId,
+                 List<Long> drugId,
+                 List<Long> materialId,
+                 int amount,
+                 int threshold,
+                 double discount,
+                 String token);
 
     boolean edit(
             Long id_storage,
@@ -26,11 +25,13 @@ public interface StorageService {
             Material material,
             int amount,
             int threshold,
-            double discount
+            double discount,
+            String token
     );
 
     boolean delete(
-            Long id
+            Long id,
+            String token
     );
 
     StorageResponse getById(

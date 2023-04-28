@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
+
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping(value = "/supplier")
@@ -21,8 +23,11 @@ public class SupplierController {
                 .response(supplierService.findBySupplierId(id));
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ResponseEntity add(@RequestBody SupplierModel model) {
+    @RequestMapping(value = "", method = RequestMethod.POST)
+    public ResponseEntity add(
+            @RequestBody SupplierModel model,
+            @RequestHeader("Authorization") String token
+    ) throws SQLException {
         return ResponseHelper
                 .response(supplierService.save(
                         model.getName(),
@@ -30,14 +35,16 @@ public class SupplierController {
                         model.getEmail(),
                         model.getTelephoneNumber(),
                         model.getDrugs(),
-                        model.getMaterials()));
+                        model.getMaterials(),
+                        token));
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity edit(
             @PathVariable("id") Long id,
-            @RequestBody SupplierModel model
-    ) {
+            @RequestBody SupplierModel model,
+            @RequestHeader("Authorization") String token
+    ) throws SQLException {
         return ResponseHelper
                 .response(supplierService.edit(
                         id,
@@ -46,13 +53,17 @@ public class SupplierController {
                         model.getEmail(),
                         model.getTelephoneNumber(),
                         model.getDrugs(),
-                        model.getMaterials()));
+                        model.getMaterials(),
+                        token));
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity remove(@PathVariable("id") Long id) {
+    public ResponseEntity remove(
+            @PathVariable("id") Long id,
+            @RequestHeader("Authorization") String token
+    ) {
         return ResponseHelper
-                .response(supplierService.remove(id));
+                .response(supplierService.remove(id, token));
     }
 
 }

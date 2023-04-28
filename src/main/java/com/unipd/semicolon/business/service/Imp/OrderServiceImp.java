@@ -47,6 +47,7 @@ public class OrderServiceImp implements OrderService {
     @Override
     public Order save(
             String token,
+            LocalDate orderDate,
             Map<Long, Integer> orderDrugs,
             Map<Long, Integer> orderMaterials,
             OrderStatus status,
@@ -144,44 +145,50 @@ public class OrderServiceImp implements OrderService {
             OrderStatus orderStatus
     ) throws CustomException {
         if (securityService.getRoleFromToken(token).contains("admin")) {
-            Order order = orderRepository.findOrderById(orderId);
-            if (order != null) {
-                order.setStatus(orderStatus);
-                if (orderStatus.equals(OrderStatus.DELIVERED)) {
-                    for (OrderProduct orderProduct : order.getOrderProducts()) {
-                        Storage storage = storageService.storageExist(
-                                order.getPharmacy(),
-                                orderProduct.getDrug(),
-                                orderProduct.getMaterial()
-                        );
-                        if (storage != null) {
-                            storageService.updateStorage(
-                                    storage,
-                                    orderProduct.getQuantity() + storage.getAmount()
-                            );
-                        } else {
-                            storageService.save(
+                Order order = orderRepository.findOrderById(orderId);
+                if (order != null) {
+                    order.setStatus(orderStatus);
+                    if (orderStatus.equals(OrderStatus.DELIVERED)) {
+                        for (OrderProduct orderProduct : order.getOrderProducts()) {
+                            Storage storage = storageService.storageExist(
                                     order.getPharmacy(),
                                     orderProduct.getDrug(),
-                                    orderProduct.getMaterial(),
-                                    orderProduct.getQuantity(),
-                                    1,
-                                    1
+                                    orderProduct.getMaterial()
                             );
+                            if (storage != null) {
+                                storageService.updateStorage(
+                                        storage,
+                                        orderProduct.getQuantity() + storage.getAmount()
+                                );
+                            } else {
+                                //TODO: validation to use the correct token
+                                List<Long> drugList = new ArrayList<>();
+                                drugList.add(orderProduct.getDrug().getId());
+                                List<Long> materialList = new ArrayList<>();
+                                materialList.add(orderProduct.getMaterial().getId());
+                                storageService.save(
+                                        order.getPharmacy().getId(),
+                                        drugList,
+                                        materialList,
+                                        orderProduct.getQuantity(),
+                                        1,
+                                        1,
+                                        ""
+                                );
+                            }
                         }
-                    }
 
+                    }
+                    return orderRepository.save(order);
+                } else {
+                    logSystem.logUtil("No order with this id exist , id : " + orderId);
+                    throw new EntityNotFoundException("No order with this id exist");
                 }
-                return orderRepository.save(order);
-            } else {
-                logSystem.logUtil("No order with this id exist , id : " + orderId);
-                throw new EntityNotFoundException("No order with this id exist");
+            } else{
+                logSystem.logUtil("permission denied , token : " + token);
+                throw new PermissionException(token);
             }
-        } else {
-            logSystem.logUtil("permission denied , token : " + token);
-            throw new PermissionException(token);
         }
-    }
 
     @Override
     public List<OrderResponse> reportBaseDate(
@@ -222,11 +229,11 @@ public class OrderServiceImp implements OrderService {
                     return getAll();
 
             }
-        } else {
+                } else {
             logSystem.logUtil("permission denied , token : " + token);
             throw new PermissionException(token);
-        }
-    }
+                }
+            }
 
     /* -----  private classes  ----- */
 
