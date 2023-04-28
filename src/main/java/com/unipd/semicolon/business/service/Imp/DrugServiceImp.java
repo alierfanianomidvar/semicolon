@@ -1,9 +1,11 @@
 package com.unipd.semicolon.business.service.Imp;
 
-
-import com.unipd.semicolon.business.exception.NotFoundException;
+import com.unipd.semicolon.business.exception.*;
+import com.unipd.semicolon.business.exception.IllegalArgumentException;
+import com.unipd.semicolon.business.exception.IllegalStateException;
 import com.unipd.semicolon.business.mapper.DrugMapper;
 import com.unipd.semicolon.business.service.DrugService;
+import com.unipd.semicolon.business.service.ValidationService;
 import com.unipd.semicolon.core.domain.DrugResponse;
 import com.unipd.semicolon.core.entity.Drug;
 import com.unipd.semicolon.core.entity.Supplier;
@@ -19,8 +21,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,12 +34,14 @@ public class DrugServiceImp implements DrugService {
     @Autowired
     private SupplierRepository supplierRepository;
 
+    @Autowired
+    private ValidationService validationService;
 
     @Override
     public Drug save(
             String name,
             Long supplierId,
-            LocalDate expirationDate,
+            Date expirationDate,
             byte[] image,
             String shape,
             Gender gender,
@@ -47,16 +51,16 @@ public class DrugServiceImp implements DrugService {
             String description,
             int limitation,
             float price,
-            Country countryOFProduction) throws SQLException {
+            Country countryOFProduction) throws CustomException {
         Objects.requireNonNull(name, "Name is null");
         Objects.requireNonNull(supplierId, "Supplier is null");
-        Objects.requireNonNull(expirationDate, "Expiration date is null");
-        Objects.requireNonNull(shape, "Shape is null");
-        Objects.requireNonNull(gender, "Gender is null");
-        Objects.requireNonNull(ageGroup, "Age group is null");
-        Objects.requireNonNull(countryOFProduction, "Country of production is null");
-        if (limitation <= 0 || price < 0.0 || price > Float.MAX_VALUE) {
-            throw new IllegalArgumentException("Invalid input parameter");
+        if (image != null) {
+            validationService.validateImage(image, 10 * 1024 * 1024);
+        }
+        validationService.validateDate(expirationDate, false);
+        validationService.validatePrice(price);
+        if (limitation <= 0) {
+            throw new IllegalArgumentException("Limitation amount can not be negative");
         }
         Supplier supplier = supplierRepository.findById(supplierId);
         Drug drug = new Drug(
@@ -73,7 +77,19 @@ public class DrugServiceImp implements DrugService {
                 limitation,
                 price,
                 countryOFProduction);
-        drugRepository.save(drug);
+
+        if (drugRepository.findDrugsByNameAndSupplierAndExpirationDateAndShapeAndAgeGroupAndCountryOFProduction(
+                drug.getName(),
+                drug.getSupplier(),
+                drug.getExpirationDate(),
+                drug.getShape(),
+                drug.getAgeGroup(),
+                drug.getCountryOFProduction()
+        ).isEmpty() ) {
+            drugRepository.save(drug);
+        } else {
+            throw new DrugExistsException();
+        }
         return drug;
     }
 
@@ -82,7 +98,7 @@ public class DrugServiceImp implements DrugService {
             Long drugId,
             String name,
             Long supplierId,
-            LocalDate expirationDate,
+            Date expirationDate,
             byte[] image,
             String shape,
             Gender gender,
@@ -93,11 +109,21 @@ public class DrugServiceImp implements DrugService {
             int limitation,
             float price,
             Country countryOFProduction) throws SQLException {
-        if (
-                drugId == null || drugId < 0
-        ) {
+        if (drugId == null || drugId < 0) {
             throw new IllegalArgumentException("Invalid input parameter");
         } else {
+            if (image != null) {
+                validationService.validateImage(image, 10 * 1024 * 1024);
+            }
+            if (expirationDate != null) {
+                validationService.validateDate(expirationDate, false);
+            }
+            if (price != 0) {
+                validationService.validatePrice(price);
+            }
+            if (limitation < 0) {
+                throw new IllegalArgumentException("Limitation amount can not be negative");
+            }
 
             Drug drug = drugRepository.findById(drugId)
                     .orElseThrow(() -> new IllegalStateException("Drug not found - " + drugId));
@@ -107,7 +133,7 @@ public class DrugServiceImp implements DrugService {
             if (name != null) {
                 drug.setName(name);
             }
-            if (supplierId != null && supplierId > 0 ) {
+            if (supplierId != null && supplierId > 0) {
                 Supplier supplier = supplierRepository.findById(supplierId);
                 if (supplier != null)
                     drug.setSupplier(supplier);
@@ -163,17 +189,14 @@ public class DrugServiceImp implements DrugService {
                     drug.getDescription(),
                     drug.getLimitation(),
                     drug.getPrice(),
-                    drug.getCountryOFProduction()
-            );
+                    drug.getCountryOFProduction());
         }
     }
-
 
     public List<DrugResponse> getAll(Long supplierId,
                                      Integer isSensitive,
                                      Country countryOFProduction,
-                                     String shape, Gender gender
-    ) {
+                                     String shape, Gender gender) {
         Specification<Drug> spec = Specification.where(null);
 
         if (supplierId != null) {
@@ -215,5 +238,24 @@ public class DrugServiceImp implements DrugService {
             drugList.add(DrugMapper.drugResponse(drug));
         }
         return drugList;
+    }
+
+    @Override
+    public List<Drug> findDrugsByNameAndSupplierAndExpirationDateAndShapeAndAgeGroupAndCountryOFProduction(
+            String name,
+            Supplier supplier,
+            Date expirationDate,
+            String shape,
+            AgeGroup ageGroup,
+            Country countryOFProduction
+    ) {
+        return drugRepository.findDrugsByNameAndSupplierAndExpirationDateAndShapeAndAgeGroupAndCountryOFProduction(
+                name,
+                supplier,
+                expirationDate,
+                shape,
+                ageGroup,
+                countryOFProduction
+        );
     }
 }

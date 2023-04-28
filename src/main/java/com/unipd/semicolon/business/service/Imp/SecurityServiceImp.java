@@ -51,7 +51,7 @@ public class SecurityServiceImp implements SecurityService {
     @Override
     public String getRoleFromToken(String token) {
         Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
-        return (String) claims.get("role");
+        return (String) claims.get("Role");
     }
 
     @Override
@@ -85,7 +85,7 @@ public class SecurityServiceImp implements SecurityService {
                             + "|" +
                             " Msg : "
                             + e.getMessage());
-            throw e;
+            throw new InvalidTokenException(token);
         }
     }
 }

@@ -7,12 +7,13 @@ import com.unipd.semicolon.core.entity.Order;
 import com.unipd.semicolon.core.entity.Pharmacy;
 import com.unipd.semicolon.core.entity.enums.OrderStatus;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-
 public interface OrderService {
     Order save(
             String token,
+            LocalDate orderDate,
             Map<Long, Integer> orderDrugs,
             Map<Long, Integer> orderMaterials,
             OrderStatus status,

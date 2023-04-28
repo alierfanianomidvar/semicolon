@@ -21,8 +21,11 @@ public class PharmacyController {
     @Autowired
     private PharmacyService pharmacyService;
 
-    @PostMapping("/save")
-    public ResponseEntity save(@RequestBody PharmacyModel model) {
+    @PostMapping("")
+    public ResponseEntity save(
+            @RequestBody PharmacyModel model,
+            @RequestHeader("Authorization") String token
+    ) {
         return ResponseHelper
                 .response(pharmacyService.save(
                         model.getName(),
@@ -31,13 +34,15 @@ public class PharmacyController {
                         model.getTimeTable(),
                         model.getLogoPath(),
                         model.getStorage(),
-                        model.getStaff()));
+                        model.getStaff(),
+                        token));
     }
 
-    @PutMapping("/edit/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity edit(
             @PathVariable("id") Long id,
-            @RequestBody PharmacyModel model) {
+            @RequestBody PharmacyModel model,
+            @RequestHeader("Authorization") String token) {
         return ResponseHelper
                 .response(pharmacyService.edit(
                         id,
@@ -47,51 +52,40 @@ public class PharmacyController {
                         model.getTimeTable(),
                         model.getLogoPath(),
                         model.getStorage(),
-                        model.getStaff()));
+                        model.getStaff(),
+                        token));
     }
 
-    @PutMapping("/add-staff/{id}")
+    @PutMapping("/{id}/add-staff")
     public ResponseEntity addStaff(
             @PathVariable("id") Long id,
-            @RequestBody UserModel[] model) {
-        List<User> users = new ArrayList<>();
-        for (UserModel userModel : model) {
-            User user = new User();
-            if (userModel.getUserId() != null)
-                user.setId(userModel.getUserId());
-            user.setName(userModel.getName());
-            user.setLastName(userModel.getLastName());
-            user.setBirthDate(userModel.getBirthDate());
-            user.setGender(userModel.getGender());
-            user.setPhoneNumber(userModel.getPhoneNumber());
-            user.setAddress(userModel.getAddress());
-            user.setEmail(userModel.getEmail());
-            user.setAccountStatus(userModel.getAccountStatus());
-            user.setProfilePicture(userModel.getProfilePicture());
-            user.setRole(userModel.getRole());
+            @RequestBody List<User> model,
+            @RequestHeader("Authorization") String token) {
 
-            // Add the user to the list of staff members
-            users.add(user);
-        }
-
-        return ResponseHelper.response(pharmacyService.addStaff(users, id));
+        return ResponseHelper.response(pharmacyService.addStaff(model, id, token));
     }
 
-    @DeleteMapping("/delete-staff")
-    public ResponseEntity deleteStaff(@RequestBody List<User> staffList) {
-        return ResponseHelper.response(pharmacyService.deleteStaff(staffList));
+    @DeleteMapping("")
+    public ResponseEntity deleteStaff(
+            @RequestBody List<User> staffList,
+            @RequestHeader("Authorization") String token
+    ) {
+        return ResponseHelper.response(pharmacyService.deleteStaff(staffList, token));
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
         return ResponseHelper
                 .response(pharmacyService.get(id));
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity delete(@PathVariable("id") Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(
+            @PathVariable("id") Long id,
+            @RequestHeader("Authorization") String token
+    ) {
         return ResponseHelper
-                .response(pharmacyService.delete(id));
+                .response(pharmacyService.delete(id, token));
     }
 
     @GetMapping("/get-all")
@@ -100,10 +94,12 @@ public class PharmacyController {
 
     }
 
-    @RequestMapping(value = {"{pharmacyId}"}, method = RequestMethod.PATCH,
+    @RequestMapping(value = {"/{pharmacyId}"}, method = RequestMethod.PATCH,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity pharmacyActivation(@PathVariable("pharmacyId") Long pharmacyId,
-                                             @RequestBody PharmacyModel status){
-        return ResponseHelper.response(pharmacyService.activation(pharmacyId, status.getStatus()));
+                                             @RequestBody PharmacyModel status,
+                                             @RequestHeader("Authorization") String token
+    ) {
+        return ResponseHelper.response(pharmacyService.activation(pharmacyId, status.getStatus(), token));
     }
 }

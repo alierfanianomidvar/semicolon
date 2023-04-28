@@ -1,5 +1,6 @@
 package com.unipd.semicolon.core.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -12,6 +13,7 @@ public class Storage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "id_pharmacy")
     private Pharmacy pharmacy;

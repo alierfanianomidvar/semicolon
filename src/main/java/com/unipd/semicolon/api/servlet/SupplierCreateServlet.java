@@ -37,6 +37,10 @@ public class SupplierCreateServlet extends HttpServlet {
         String address = null;
         String email = null;
         String telephoneNumber = null;
+        //TODO: token is something that is passed through request header
+        // user need to access it propely. the token defiend below is just for removing the errors
+        // it is incorrect to use the token like this
+        String token = "";
 
 
         String jsonString = IOUtils.toString(req.getReader());
@@ -49,7 +53,7 @@ public class SupplierCreateServlet extends HttpServlet {
             address = String.valueOf(jo.getString("address"));
             email = String.valueOf(jo.getString("email"));
             telephoneNumber = String.valueOf(jo.getString("telephoneNumber"));
-            supplier = supplierService.create(name, address, email, telephoneNumber);
+            supplier = supplierService.create(name, address, email, telephoneNumber, token);
         } catch (JSONException ex) {
 //            throw new CreatePharmacyDataNotFound();
             m = new Message("Cannot create the employee data. The provided data not correct.",

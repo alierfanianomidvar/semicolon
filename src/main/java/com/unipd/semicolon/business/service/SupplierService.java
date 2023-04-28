@@ -14,17 +14,20 @@ public interface SupplierService {
         Supplier create(String name,
                         String address,
                         String email,
-                        String telephoneNumber) throws SQLException;
+                        String telephoneNumber,
+                        String token) throws SQLException;
 
         Object findBySupplierId(Long id);
 
-        public Supplier save(
+        Supplier save(
                         String name,
                         String address,
                         String email,
                         String telephoneNumber,
                         List<Drug> drugs,
-                        List<Material> materials);
+                        List<Material> materials,
+                        String token
+        ) throws SQLException;
 
         boolean edit(
                         Long id,
@@ -33,9 +36,13 @@ public interface SupplierService {
                         String email,
                         String telephoneNumber,
                         List<Drug> drugs,
-                        List<Material> materials);
+                        List<Material> materials,
+                        String token
+        ) throws SQLException;
 
         boolean remove(
-                        Long id);
+                Long id,
+                String token
+        );
 
 }

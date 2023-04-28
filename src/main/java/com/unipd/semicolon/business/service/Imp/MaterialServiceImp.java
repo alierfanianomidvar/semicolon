@@ -1,7 +1,8 @@
 package com.unipd.semicolon.business.service.Imp;
 
-
 import com.unipd.semicolon.business.exception.NotFoundException;
+import com.unipd.semicolon.business.exception.IllegalArgumentException;
+import com.unipd.semicolon.business.exception.IllegalStateException;
 import com.unipd.semicolon.business.mapper.MaterialMapper;
 import com.unipd.semicolon.business.service.MaterialService;
 import com.unipd.semicolon.core.domain.MaterialResponse;
@@ -46,7 +47,7 @@ public class MaterialServiceImp implements MaterialService {
         Supplier supplier = null;
         if (name == null ||
                 gender == null || price < 0
-                 || countryOfProduction == null) {
+                || countryOfProduction == null) {
             throw new IllegalArgumentException("Invalid input parameter");
         } else {
             if (supplierId != null) {
@@ -65,8 +66,7 @@ public class MaterialServiceImp implements MaterialService {
                     price,
                     ageGroup,
                     lastModifiedDate,
-                    description
-            );
+                    description);
             materialRepository.save(material);
             return material;
         }
@@ -93,53 +93,53 @@ public class MaterialServiceImp implements MaterialService {
             supplier = supplierRepository.findById(supplierId);
             Material material = materialRepository.findById(id)
                     .orElseThrow(() -> new IllegalStateException("Material not found - " + id));
-                    if (material == null) {
-                        throw new NotFoundException();
-                    }
-                    if(name != null) {
-                        material.setName(name);
-                    }
-                    if(supplier != null) {
-                        material.setSupplier(supplier);
-                    }
-                    if(countryOfProduction != null) {
-                        material.setCountryOfProduction(countryOfProduction);
-                    }
-                    if (expirationDate != null) {
-                        material.setExpirationDate(expirationDate);
-                    }
-                    if (image != null) {
-                        material.setImage(image);
-                    }
-                    if (gender != null) {
-                        material.setGender(gender);
-                    }
-                    if (price < 0) {
-                        material.setPrice(price);
-                    }
-                    if (ageGroup != null) {
-                        material.setAgeGroup(ageGroup);
-                    }
-                    if (lastModifiedDate != null) {
-                        material.setLastModifiedDate(lastModifiedDate);
-                    }
-                    if (description != null) {
-                        material.setDescription(description);
-                    }
-                    return true;
-                }
+            if (material == null) {
+                throw new NotFoundException();
+            }
+            if (name != null) {
+                material.setName(name);
+            }
+            if (supplier != null) {
+                material.setSupplier(supplier);
+            }
+            if (countryOfProduction != null) {
+                material.setCountryOfProduction(countryOfProduction);
+            }
+            if (expirationDate != null) {
+                material.setExpirationDate(expirationDate);
+            }
+            if (image != null) {
+                material.setImage(image);
+            }
+            if (gender != null) {
+                material.setGender(gender);
+            }
+            if (price < 0) {
+                material.setPrice(price);
+            }
+            if (ageGroup != null) {
+                material.setAgeGroup(ageGroup);
+            }
+            if (lastModifiedDate != null) {
+                material.setLastModifiedDate(lastModifiedDate);
+            }
+            if (description != null) {
+                material.setDescription(description);
+            }
+            return true;
+        }
     }
 
-        @Override
-        public Material getById(Long id){
-            Material material = materialRepository.findById(id)
-                    .orElseThrow(() -> new IllegalStateException("Material not found - " + id));
-            if (material != null) {
-                return material;
-            } else {
-                throw new EntityNotFoundException("Material Not Found with id" + id);
-            }
+    @Override
+    public Material getById(Long id) {
+        Material material = materialRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Material not found - " + id));
+        if (material != null) {
+            return material;
+        } else {
+            throw new EntityNotFoundException("Material Not Found with id" + id);
         }
+    }
 
     @Override
     public List<MaterialResponse> getAll(
