@@ -1,5 +1,6 @@
 package com.unipd.semicolon.core.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 
@@ -10,6 +11,7 @@ public class TimeTable {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // will creat the uniq and respectively id
     private Long id;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "pharmacy_id")
     private Pharmacy pharmacy;
