@@ -34,4 +34,3 @@ public class ResponseStructure<T> {
         this.data = data;
     }
 }
-
