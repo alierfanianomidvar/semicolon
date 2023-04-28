@@ -18,6 +18,7 @@ public class Pharmacy {
     private String address;
     @Column(name = "telephoneNumber")
     private String telephoneNumber;
+    @JsonManagedReference
     @OneToMany(mappedBy = "pharmacy")
     private List<TimeTable> time_table;
 
