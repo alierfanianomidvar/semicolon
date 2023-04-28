@@ -2,9 +2,9 @@ package com.unipd.semicolon.business.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class NotFoundException extends CustomException {
+public class DoseNotExistException extends CustomException {
 
-  public NotFoundException() {
+  public DoseNotExistException() {
     super("not_found", HttpStatus.NOT_FOUND);
     this.setData("not_found");
   }
