@@ -26,8 +26,10 @@ public class UserRepositoryImp extends CustomRepository implements UserRepositor
     @Override
     public Boolean deleteByPharmacyId(Long id) {
         List<User> userList = findAllByPharmacyId(id);
-        for (User user : userList) {
-            delete(User.class, user);
+        if(userList != null) {
+            for (User user : userList) {
+                delete(User.class, user);
+            }
         }
         return true;
         /*
