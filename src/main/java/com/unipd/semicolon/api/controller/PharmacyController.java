@@ -65,7 +65,7 @@ public class PharmacyController {
         return ResponseHelper.response(pharmacyService.addStaff(model, id, token));
     }
 
-    @DeleteMapping("")
+    @DeleteMapping("{id}/delete-staff")
     public ResponseEntity deleteStaff(
             @RequestBody List<User> staffList,
             @RequestHeader("Authorization") String token
