@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
+
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping(value = "/supplier")
@@ -25,7 +27,7 @@ public class SupplierController {
     public ResponseEntity add(
             @RequestBody SupplierModel model,
             @RequestHeader("Authorization") String token
-    ) {
+    ) throws SQLException {
         return ResponseHelper
                 .response(supplierService.save(
                         model.getName(),
@@ -42,7 +44,7 @@ public class SupplierController {
             @PathVariable("id") Long id,
             @RequestBody SupplierModel model,
             @RequestHeader("Authorization") String token
-    ) {
+    ) throws SQLException {
         return ResponseHelper
                 .response(supplierService.edit(
                         id,
