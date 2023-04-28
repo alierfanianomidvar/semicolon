@@ -19,19 +19,6 @@ public class StorageModel {
 
     private double discount;
 
-    public StorageModel(Pharmacy pharmacy,
-                        Material material,
-                        Drug drug,
-                        int amount,
-                        int threshold,
-                        double discount) {
-        this.pharmacy = pharmacy;
-        this.drug = drug;
-        this.material = material;
-        this.amount = amount;
-        this.threshold = threshold;
-        this.discount = discount;
-    }
 
     public StorageModel(Long pharmacyId,
                         List<Long> materialId,
