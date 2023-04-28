@@ -19,10 +19,8 @@ import com.unipd.semicolon.core.entity.enums.Gender;
 import com.unipd.semicolon.core.repository.entity.RoleRepository;
 import com.unipd.semicolon.core.repository.entity.UserRepository;
 
-import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
