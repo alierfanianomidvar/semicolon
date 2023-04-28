@@ -174,7 +174,7 @@ public class PharmacyServiceImp implements PharmacyService {
                         throw new IllegalArgumentException("Invalid phone number!");
                     }
                 }
-                if (time_table != null)
+                if (time_table != null) {
                     for (TimeTable entry : time_table) {
                         // Check if the time format is valid
                         String regex = "^([0-1][0-9]|[2][0-3]):([0-5][0-9])$";
@@ -189,8 +189,9 @@ public class PharmacyServiceImp implements PharmacyService {
                             throw new IllegalArgumentException("Invalid time table entry: " + entry.getId() + " - to_hour should be after from_hour");
                         }
                     }
-                // Set the new time table only if all entries pass the validation
-                pharmacy.setTime_table(time_table);
+                    // Set the new time table only if all entries pass the validation
+                    pharmacy.setTime_table(time_table);
+                }
                 if (logo != null)
                     pharmacy.setLogo(logo);
                 if (staff != null)
