@@ -1,3 +1,3 @@
 $(function(){
-    $("#navbar-html").load("navbar.html");
+    $("#navbar-html").load("sidebar.html");
 });
