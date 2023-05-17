@@ -10,7 +10,7 @@ export default class materialUrls extends BaseApiUrl {
     };
 
     static GET_BY_ID = {
-        url: `${BaseApiUrl.BASE_URL}//${materialUrls.MATERIAL_BASE_URL}/`,
+        url: `${BaseApiUrl.BASE_URL}/${materialUrls.MATERIAL_BASE_URL}/`,
         method: 'POST'
     };
 
