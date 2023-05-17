@@ -1,17 +1,29 @@
 class Router {
     sendHttpRequest(method, url, data) {
-        return fetch(url)
+        const requestOptions = {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+
+        if (data) {
+            requestOptions.body = JSON.stringify(data);
+        }
+
+        return fetch(url, requestOptions)
             .then(res => {
-                if (res["status"] == 200) {
-                    console.log(res);
+                if (res.ok) {
                     return res.json();
                 } else {
-                    console.log(res["status"])
+                    throw new Error('Request failed');
                 }
-
+            }).catch(error => {
+                console.error('Error fetching data:', error);
+                // throw an error or return a default value
+                throw error;
             });
     }
-
 
     getData(url, params) {
         if (params) {
@@ -19,9 +31,13 @@ class Router {
         }
         this.sendHttpRequest('GET', url)
             .then(responseData => {
-                console.log("ali")
-                console.log(responseData['data']);
+                console.log(responseData['data'])
                 return responseData['data'];
             });
     }
+
+    postData(url, data) {
+        return this.sendHttpRequest('POST', url, data);
+    }
+
 }
