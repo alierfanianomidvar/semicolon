@@ -44,5 +44,9 @@ class Router {
         return this.sendHttpRequest('PUT', url, data);
     }
 
+    deleteData(url) {
+        return this.sendHttpRequest('DELETE', url);
+    }
+
 
 }
