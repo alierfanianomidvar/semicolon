@@ -56,7 +56,7 @@ public class PharmacyController {
                         token));
     }
 
-    @PutMapping("/{id}/add-staff")
+    @PutMapping("/add-staff/{id}")
     public ResponseEntity addStaff(
             @PathVariable("id") Long id,
             @RequestBody List<User> model,
@@ -65,7 +65,7 @@ public class PharmacyController {
         return ResponseHelper.response(pharmacyService.addStaff(model, id, token));
     }
 
-    @DeleteMapping("{id}/delete-staff")
+    @DeleteMapping("/delete-staff/{id}")
     public ResponseEntity deleteStaff(
             @RequestBody List<User> staffList,
             @RequestHeader("Authorization") String token
