@@ -40,4 +40,9 @@ class Router {
         return this.sendHttpRequest('POST', url, data);
     }
 
+    putData(url, data) {
+        return this.sendHttpRequest('PUT', url, data);
+    }
+
+
 }
