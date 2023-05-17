@@ -2,7 +2,7 @@ import BaseApiUrl from './baseUrl';
 
 export default class drugUrls extends BaseApiUrl {
 
-    static DRUG_BASE_URL = '';
+    static DRUG_BASE_URL = 'drug';
 
     static ADD = {
         url: `${BaseApiUrl.BASE_URL}/${drugUrls.DRUG_BASE_URL}`,
