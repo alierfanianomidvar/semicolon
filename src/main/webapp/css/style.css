@@ -1,12 +1,13 @@
+@import url('./constants/colors.css');
 body {
-    background-color: #FFFFFF;
+    background-color: var(--background-color);
     font-family: 'Raleway', sans-serif;
 }
 
 .btn-custom {
-    background-color: #E9ECEF;
+    background-color: var(--primary-color);
 }
 
 .sidebar-custom{
-    background-color: #e8e5e5;
+    background-color: var(--side-bar-color);
 }
