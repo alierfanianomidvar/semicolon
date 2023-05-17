@@ -19,7 +19,7 @@ export default class orderUrls extends BaseApiUrl {
         method: 'DELETE'
     };
 
-    static GET_ALL = {
+    static GET = {
         url: `${BaseApiUrl.BASE_URL}/${orderUrls.ORDER_BASE_URL}/get-all`,
         method: 'GET',
     };
