@@ -1,6 +1,6 @@
 import BaseApiUrl from './baseUrl';
 
-export default class supplierUrls extends BaseApiUrl {
+class supplierUrls extends BaseApiUrl {
 
     static SUPPLIER_BASE_URL = 'supplier';
 
@@ -31,3 +31,5 @@ export default class supplierUrls extends BaseApiUrl {
 
 
 }
+
+export default supplierUrls;

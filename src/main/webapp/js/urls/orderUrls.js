@@ -1,6 +1,6 @@
 import BaseApiUrl from './baseUrl';
 
-export default class orderUrls extends BaseApiUrl {
+class orderUrls extends BaseApiUrl {
 
     static ORDER_BASE_URL = 'order';
 
@@ -40,3 +40,5 @@ export default class orderUrls extends BaseApiUrl {
     };
 
 }
+
+export default orderUrls;

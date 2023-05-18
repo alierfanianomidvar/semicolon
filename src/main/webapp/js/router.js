@@ -1,9 +1,10 @@
 class Router {
-    sendHttpRequest(method, url, data) {
+    sendHttpRequest(method, url, data, token) {
         const requestOptions = {
             method: method,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': token
             }
         };
 
@@ -25,28 +26,32 @@ class Router {
             });
     }
 
-    getData(url, params) {
-        if (params) {
-            url += '?' + Object.keys(params).map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`).join('&');
+    createFetch(endpoint, pathVariable, params, token, data) {
+
+        if (!(endpoint.method in {GET: 1, POST: 1, PUT: 1, DELETE: 1, PATCH: 1})) {
+            throw new Error(`Invalid HTTP method: ${endpoint.method}`);
         }
-        this.sendHttpRequest('GET', url)
+
+        let url = endpoint.url;
+
+        if (pathVariable) {
+            url += pathVariable;
+        }
+        if (params) {
+            url += '?' + Object.keys(params).map(
+                key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`).join('&');
+        }
+
+        const urlObject = {
+            url: url,
+            method: endpoint.method
+        };
+
+        this.sendHttpRequest(urlObject.method, urlObject.url, data, token)
             .then(responseData => {
                 console.log(responseData['data'])
                 return responseData['data'];
             });
     }
-
-    postData(url, data) {
-        return this.sendHttpRequest('POST', url, data);
-    }
-
-    putData(url, data) {
-        return this.sendHttpRequest('PUT', url, data);
-    }
-
-    deleteData(url) {
-        return this.sendHttpRequest('DELETE', url);
-    }
-
 
 }
