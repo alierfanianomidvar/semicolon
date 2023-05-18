@@ -1,14 +1,23 @@
+@import url('./constants/colors.css');
 #sidebar {
     background-color: #f8f9fa;
-    border-right: 1px solid #dee2e6;
-    padding: 20px;
-    width: 250px;
+    border-right: 1px solid black;
+    padding: 0.5rem;
+    width: 20rem;
+    height: 100%;
 }
 
 .logo-container {
     display: flex;
+    flex-direction: row;
     align-items: center;
-    margin-bottom: 20px;
+    justify-content: start; /* Add this line */
+    margin-bottom: 0.6rem;
+    margin-top: 0.6rem;
+}
+
+.logo-container h3 {
+    margin-left: 10px; /* Add this line to add some space between logo and text */
 }
 
 .logo-container img {
@@ -20,12 +29,21 @@
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    background-color: var(--primary-color);
+    border-radius: 0.5rem;
+}
+
+.profile-container h5 {
+    margin-top: 10px;
 }
 
 .profile-container img {
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 10px;
+    height: 3.2rem;
+    width: 3.2rem;
+    border-radius: 20%;
+    margin-inline: 10px;
+    overflow: hidden;
+    background-color: var(--secondary-color);
 }
 
 .user-info {
@@ -35,7 +53,7 @@
 
 .general-section ul {
     list-style: none;
-    margin: 0;
+    margin: 1rem;
     padding: 0;
 }
 
@@ -46,13 +64,16 @@
 }
 
 .general-section li img {
-    height: 20px;
+    height: 2.6rem;
+    width: 2.6rem;
     margin-right: 10px;
+    background-color: var(--primary-color);
+    border-radius: 0.5rem;
 }
 
 .settings-section ul {
     list-style: none;
-    margin: 0;
+    margin: 1rem;
     padding: 0;
 }
 
@@ -63,6 +84,10 @@
 }
 
 .settings-section li img {
-    height: 20px;
+    height: 2.6rem;
+    width: 2.6rem;
+    border-radius: 0.5rem;
     margin-right: 10px;
+    overflow: hidden;
+    background-color: var(--primary-color);
 }
