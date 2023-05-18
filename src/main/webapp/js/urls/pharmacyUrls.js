@@ -1,6 +1,7 @@
 import BaseApiUrl from './baseUrl';
+import orderUrls from "./orderUrls";
 
-export default class pharmacyUrls extends BaseApiUrl {
+class pharmacyUrls extends BaseApiUrl {
 
     static PHARMACY_BASE_URL = 'pharmacy';
 
@@ -45,3 +46,5 @@ export default class pharmacyUrls extends BaseApiUrl {
     };
 
 }
+
+export default pharmacyUrls;

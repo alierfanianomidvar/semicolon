@@ -1,6 +1,7 @@
-import BaseApiUrl from './baseUrl';
+import BaseApiUrl from './baseUrl.js';
 
-export default class storageUrls extends BaseApiUrl {
+
+class storageUrls extends BaseApiUrl {
 
     static STORAGE_BASE_URL = 'storage';
 
@@ -42,3 +43,4 @@ export default class storageUrls extends BaseApiUrl {
 
 
 }
+export default storageUrls;

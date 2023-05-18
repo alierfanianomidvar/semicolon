@@ -1,6 +1,6 @@
 import BaseApiUrl from './baseUrl';
 
-export default class receiptUrls extends BaseApiUrl {
+class receiptUrls extends BaseApiUrl {
 
     static RECEIPT_BASE_URL = 'receipt';
 
@@ -20,3 +20,4 @@ export default class receiptUrls extends BaseApiUrl {
     };
 
 }
+export default receiptUrls;

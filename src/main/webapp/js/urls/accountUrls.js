@@ -1,6 +1,6 @@
 import BaseApiUrl from './baseUrl';
 
-export default class accountUrls extends BaseApiUrl {
+class accountUrls extends BaseApiUrl {
 
     static LOGIN = {
         url: `${BaseApiUrl.BASE_URL}/account`,
@@ -8,8 +8,9 @@ export default class accountUrls extends BaseApiUrl {
     };
 
     static LOGOUT = {
-        url: `${ApiUrls.BASE_URL}/account/`,
+        url: `${BaseApiUrl.BASE_URL}/account/`,
         method: 'POST'
     };
 
 }
+export default accountUrls;

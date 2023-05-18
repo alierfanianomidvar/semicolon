@@ -1,6 +1,6 @@
 import BaseApiUrl from './baseUrl';
 
-export default class drugUrls extends BaseApiUrl {
+class drugUrls extends BaseApiUrl {
 
     static DRUG_BASE_URL = 'drug';
 
@@ -31,3 +31,5 @@ export default class drugUrls extends BaseApiUrl {
         }
     };
 }
+
+export default drugUrls;

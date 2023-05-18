@@ -1,6 +1,6 @@
 import BaseApiUrl from './baseUrl';
 
-export default class materialUrls extends BaseApiUrl {
+class materialUrls extends BaseApiUrl {
 
     static MATERIAL_BASE_URL = 'material';
 
@@ -29,3 +29,5 @@ export default class materialUrls extends BaseApiUrl {
         }
     };
 }
+
+export default materialUrls;

@@ -1,6 +1,6 @@
 import BaseApiUrl from './baseUrl';
 
-export default class userUrls extends BaseApiUrl {
+class userUrls extends BaseApiUrl {
 
     static USER_BASE_URL = 'user';
 
@@ -38,3 +38,5 @@ export default class userUrls extends BaseApiUrl {
 
 
 }
+
+export default userUrls;
