@@ -11,7 +11,7 @@ export default class supplierUrls extends BaseApiUrl {
 
     static GET_BY_ID = {
         url: `${BaseApiUrl.BASE_URL}/${supplierUrls.SUPPLIER_BASE_URL}/`, //NOTE: ADD THIS TO URL /{id}
-        method: 'POST'
+        method: 'GET'
     };
 
     static EDIT = {
