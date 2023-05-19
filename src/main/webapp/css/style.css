@@ -8,6 +8,7 @@ body {
     color: white;
     border-color: var(--primary-color);
     background-color: var(--primary-color);
+    color: whitesmoke;
 }
 
 .btn-custom:hover {
