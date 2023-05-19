@@ -1,0 +1,46 @@
+@import url("./constants/colors.css");
+.container {
+    padding: 2rem;
+    border: 1px solid var(--background-image-color);
+    border-radius: 0.5rem;
+}
+
+.add-btn {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    border-radius: 0.3rem;
+    border: none;
+    width: 6rem;
+}
+
+#col-product-type {
+    display: flex;
+    flex-direction: column;
+}
+
+.selected-option {
+    background-color: #ffffff !important;
+    color: #fff;
+}
+
+#toggleButton .btn:not(.active) {
+    border: 1px solid var(--background-image-color);
+    background-color: inherit; /* Background color for inactive buttons */
+    color: var(--dark-color); /* Text color for inactive buttons */
+}
+
+#toggleButton .btn.active {
+    border: 1px solid var(--background-image-color);
+    background-color: var(--primary-color); /* Background color for active button */
+    color: #ffffff; /* Text color for active button */
+}
+
+.btn:focus {
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.btn-group-toggle .btn.active {
+    border: none; /* Remove border for the active button */
+    box-shadow: none; /* Remove box shadow for the active button */
+}
