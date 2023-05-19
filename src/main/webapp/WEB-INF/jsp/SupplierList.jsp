@@ -20,6 +20,7 @@
             border-radius: 2% !important;
             overflow: hidden;
         }
+
         table th, table td {
             padding: 8px;
             text-align: left;
@@ -27,32 +28,39 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
         table th {
             background-color: #42C3AA !important;
-            color: black  !important;
+            color: black !important;
             white-space: nowrap;
         }
+
         table tr:hover {
             background-color: #f5f5f5;
         }
+
         @media screen and (max-width: 1000px) {
             table {
                 overflow-x: auto !important; /* Add horizontal scrollbar */
             }
+
             table tr, table td, table th {
                 border: none;
             }
+
             table th {
                 background-color: #42C3AA !important;
                 color: white;
                 border: none;
             }
+
             table td {
                 border: none;
                 text-align: right;
                 padding-right: 30px;
                 position: relative;
             }
+
             table td::before {
                 content: attr(data-label);
                 position: absolute;
@@ -61,6 +69,24 @@
                 padding-left: 8px;
                 font-weight: bold;
                 text-align: left;
+            }
+        }
+
+        .search-box {
+            margin-bottom: 20px;
+        }
+
+        .add-btn {
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 576px) {
+            .search-box {
+                margin-bottom: 10px;
+            }
+
+            .add-btn {
+                margin-bottom: 10px;
             }
         }
 
@@ -78,40 +104,110 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-<!-- display the message -->
-<c:import url="include/show-message.jsp"/>
+
 <div class="container-fluid">
     <div class="row">
-        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 sidebar-custom" >
-            <%@include  file="../../pages/sidebar.html" %>
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 sidebar-custom">
+            <%@include file="../../pages/sidebar.html" %>
+            <!-- display the message -->
+            <c:import url="include/show-message.jsp"/>
         </div>
         <div class="col-12 col-md-9">
-            <c:if test='${not empty suppliers && !message.error}'>
-                <div class="container">
-                    <div class="table-responsive">
-                        <table class="table table-hover " style="border-radius: 20px !important;">
-                            <thead>
-                            <tr class="table-success">
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Address</th>
-                                <th>Telephone Number</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <c:forEach items="${suppliers}" var="supplier">
-                                <tr>
-                                    <td>${supplier.name}</td>
-                                    <td>${supplier.email}</td>
-                                    <td>${supplier.address}</td>
-                                    <td>${supplier.telephoneNumber}</td>
-                                </tr>
-                            </c:forEach>
-                            </tbody>
-                        </table>
+            <div class="row" style="margin-top: 2%">
+                <div class="col-lg-12">
+                    <h4 style="margin-bottom: 1%; font-weight: bold;">Supplier</h4>
+                </div>
+                <div class="col-lg-6">
+                    <div class="search-box">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search...">
+                        </div>
                     </div>
                 </div>
-            </c:if>
+                <div class="col-lg-6">
+                    <div class="add-btn text-lg-right">
+                        <button class="btn btn-custom">Add supplier</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div test='${not empty suppliers && !message.error}'>
+                        <div class="table-responsive">
+                            <table class="table table-hover " style="border-radius: 20px !important;">
+                                <thead>
+                                <tr class="table-success">
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Address</th>
+                                    <th>Telephone Number</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach items="${suppliers}" var="supplier">
+                                    <tr>
+                                        <td>${supplier.name}</td>
+                                        <td>${supplier.email}</td>
+                                        <td>${supplier.address}</td>
+                                        <td>${supplier.telephoneNumber}</td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row" style="margin-top: 2%">
+        <div class="col-lg-6">
+            <div class="search-box">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search...">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="add-btn text-lg-right">
+                <button class="btn btn-primary">Add</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Column 1</th>
+                    <th>Column 2</th>
+                    <th>Column 3</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Row 1, Column 1</td>
+                    <td>Row 1, Column 2</td>
+                    <td>Row 1, Column 3</td>
+                </tr>
+                <tr>
+                    <td>Row 2, Column 1</td>
+                    <td>Row 2, Column 2</td>
+                    <td>Row 2, Column 3</td>
+                </tr>
+                <tr>
+                    <td>Row 3, Column 1</td>
+                    <td>Row 3, Column 2</td>
+                    <td>Row 3, Column 3</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
