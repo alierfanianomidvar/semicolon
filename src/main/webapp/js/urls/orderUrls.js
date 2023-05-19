@@ -6,27 +6,32 @@ class orderUrls extends BaseApiUrl {
 
     static ADD = {
         url: `${BaseApiUrl.BASE_URL}/${orderUrls.ORDER_BASE_URL}`,
-        method: 'POST'
+        method: 'POST',
+        token: false
     };
 
     static GET_BY_ID = {
         url: `${BaseApiUrl.BASE_URL}/${orderUrls.ORDER_BASE_URL}/`, //NOTE: ADD THIS TO URL /{id}/{token}
-        method: 'POST'
+        method: 'POST',
+        token: true
     };
 
     static DELETE_BY_ID = {
         url: `${BaseApiUrl.BASE_URL}/${orderUrls.ORDER_BASE_URL}/`, //NOTE: ADD THIS TO URL /{id}/{token}
-        method: 'DELETE'
+        method: 'DELETE',
+        token: true
     };
 
     static GET = {
         url: `${BaseApiUrl.BASE_URL}/${orderUrls.ORDER_BASE_URL}/get-all`,
         method: 'GET',
+        token: false
     };
 
     static STATUS = {
-        url: `${BaseApiUrl.BASE_URL}/${orderUrls.ORDER_BASE_URL}/`, //NOTE: ADD THIS TO URL /{id}/{status}/{token}
-        method: 'PATCH'
+        url: `${BaseApiUrl.BASE_URL}/${orderUrls.ORDER_BASE_URL}/`, //NOTE: ADD THIS TO URL /{id}/{status}
+        method: 'PATCH',
+        token: true
     };
 
     static REPORT = {
@@ -36,7 +41,8 @@ class orderUrls extends BaseApiUrl {
             token: '',
             orderReport: '',
             num: 0
-        }
+        },
+        token: true
     };
 
 }

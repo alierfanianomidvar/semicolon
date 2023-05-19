@@ -6,17 +6,20 @@ class drugUrls extends BaseApiUrl {
 
     static ADD = {
         url: `${BaseApiUrl.BASE_URL}/${drugUrls.DRUG_BASE_URL}`,
-        method: 'POST'
+        method: 'POST',
+        token: false
     };
 
     static GET_BY_ID = {
         url: `${BaseApiUrl.BASE_URL}//${drugUrls.DRUG_BASE_URL}/`,
-        method: 'POST'
+        method: 'POST',
+        token: false
     };
 
     static EDIT = {
         url: `${BaseApiUrl.BASE_URL}/${drugUrls.DRUG_BASE_URL}/`,
-        method: 'PUT'
+        method: 'PUT',
+        token: false
     };
 
     static GET_ALL = {
@@ -28,7 +31,8 @@ class drugUrls extends BaseApiUrl {
             gender: '',
             isSensitive: '',
             shape: ''
-        }
+        },
+        token: false
     };
 }
 
