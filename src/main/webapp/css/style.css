@@ -6,6 +6,7 @@ body {
 
 .btn-custom {
     background-color: var(--primary-color);
+    color: whitesmoke;
 }
 
 .sidebar-custom{
