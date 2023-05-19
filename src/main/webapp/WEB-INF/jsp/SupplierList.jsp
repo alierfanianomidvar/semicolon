@@ -106,8 +106,9 @@
         $(document).ready(function() {
             $('.search-box input[type="text"]').on('keyup', function() {
                 var searchText = $(this).val().toLowerCase();
-                $('table tbody tr').filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(searchText) > -1);
+                $('table tbody tr').each(function() {
+                    var rowText = $(this).text().toLowerCase();
+                    $(this).toggle(rowText.indexOf(searchText) > -1);
                 });
             });
         });
