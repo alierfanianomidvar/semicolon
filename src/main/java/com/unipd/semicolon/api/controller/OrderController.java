@@ -34,21 +34,21 @@ public class OrderController {
                 ));
     }
 
-    @RequestMapping(value = "/{id}/{token}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @Operation(summary = "Getting order base an id.",
             description = "we will send order id and token.")
     public ResponseEntity getById(
             @PathVariable("id") Long id,
-            @PathVariable("token") String token) {
+            @RequestHeader("Authorization") String token) {
         return ResponseHelper
                 .response(orderService.getById(token, id));
     }
 
-    @RequestMapping(value = "/{id}/{token}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @Operation(summary = "Deleting order",
             description = "we will send order id and token.")
     public ResponseEntity deleteById(
-            @PathVariable("token") String token,
+            @RequestHeader("Authorization") String token,
             @PathVariable("id") Long id) {
 
         orderService.delete(token, id);
@@ -61,20 +61,20 @@ public class OrderController {
                 .response(orderService.getAll());
     }
 
-    @RequestMapping(value = "/{id}/{status}/{token}", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/{id}/{status}", method = RequestMethod.PATCH)
     @Operation(summary = "Changing the status of order",
             description = "we will send order order id, status(Ex: DELIVERED) and  token.")
     public ResponseEntity status(
             @PathVariable("id") Long id,
             @PathVariable("status") OrderStatus status,
-            @PathVariable("token") String token) {
+            @RequestHeader("Authorization") String token) {
         return ResponseHelper
                 .response(orderService.status(token, id, status));
     }
 
     @RequestMapping(value = "/report", method = RequestMethod.GET)
     public ResponseEntity report(
-            @RequestParam(required = true) String token,
+            @RequestHeader("Authorization") String token,
             @RequestParam(required = false) OrderReport orderReport,
             @RequestParam(required = false) Short num) {
         return ResponseHelper

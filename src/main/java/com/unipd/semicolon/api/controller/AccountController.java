@@ -29,9 +29,9 @@ public class AccountController {
 
     }
 
-    @RequestMapping(value = "/{token}", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     @Operation(summary = "logout", description = "remove the token from login entity.")
-    public ResponseEntity logout(@PathVariable String token)
+    public ResponseEntity logout(@RequestHeader("Authorization") String token)
             throws CustomException {
         return ResponseHelper.response(accountService.LogOut(token));
     }
