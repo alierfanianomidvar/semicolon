@@ -44,7 +44,8 @@ class storageUrls extends BaseApiUrl {
 
     static STATUS = {
         url: `${BaseApiUrl.BASE_URL}/${storageUrls.STORAGE_BASE_URL}/report`,
-        method: 'GET'
+        method: 'GET',
+        token: false
     };
 
 

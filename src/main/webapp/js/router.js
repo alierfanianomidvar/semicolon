@@ -31,6 +31,9 @@ class Router {
         if (!(endpoint.method in {GET: 1, POST: 1, PUT: 1, DELETE: 1, PATCH: 1})) {
             throw new Error(`Invalid HTTP method: ${endpoint.method}`);
         }
+        if (endpoint.token && !token){
+            throw new Error(`Invalid request, token is needed.`);
+        }
 
         let url = endpoint.url;
 
