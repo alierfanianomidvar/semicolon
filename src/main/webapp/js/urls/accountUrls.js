@@ -4,12 +4,14 @@ class accountUrls extends BaseApiUrl {
 
     static LOGIN = {
         url: `${BaseApiUrl.BASE_URL}/account`,
-        method: 'GET'
+        method: 'GET',
+        token: false
     };
 
     static LOGOUT = {
         url: `${BaseApiUrl.BASE_URL}/account/`,
-        method: 'POST'
+        method: 'POST',
+        token: true
     };
 
 }

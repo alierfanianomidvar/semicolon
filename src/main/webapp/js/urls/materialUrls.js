@@ -6,17 +6,20 @@ class materialUrls extends BaseApiUrl {
 
     static ADD = {
         url: `${BaseApiUrl.BASE_URL}/${materialUrls.MATERIAL_BASE_URL}`,
-        method: 'POST'
+        method: 'POST',
+        token: false
     };
 
     static GET_BY_ID = {
         url: `${BaseApiUrl.BASE_URL}/${materialUrls.MATERIAL_BASE_URL}/`,
-        method: 'POST'
+        method: 'POST',
+        token: false
     };
 
     static EDIT = {
         url: `${BaseApiUrl.BASE_URL}/${materialUrls.MATERIAL_BASE_URL}/`,
-        method: 'PUT'
+        method: 'PUT',
+        token: false
     };
 
     static GET_ALL = {
@@ -26,7 +29,8 @@ class materialUrls extends BaseApiUrl {
             countryOfProduction: '',
             supplierId: '',
             gender: ''
-        }
+        },
+        token: false
     };
 }
 
