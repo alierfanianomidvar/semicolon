@@ -4,6 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <meta charset="UTF-8">
     <title>semicolon</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
@@ -30,7 +32,7 @@
         }
 
         table th {
-            background-color: #42C3AA !important;
+            background-color: whitesmoke !important;
             color: black !important;
             white-space: nowrap;
         }
@@ -49,7 +51,7 @@
             }
 
             table th {
-                background-color: #42C3AA !important;
+                background-color: whitesmoke;
                 color: white;
                 border: none;
             }
@@ -100,6 +102,16 @@
             background-color: #f2f2f2;
         }
     </style>
+    <script>
+        $(document).ready(function() {
+            $('.search-box input[type="text"]').on('keyup', function() {
+                var searchText = $(this).val().toLowerCase();
+                $('table tbody tr').filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(searchText) > -1);
+                });
+            });
+        });
+    </script>
 
     <link rel="stylesheet" href="../css/style.css">
 </head>
@@ -120,7 +132,8 @@
                 <div class="col-lg-6">
                     <div class="search-box">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search...">
+                            <input type="text" class="form-control" placeholder="Search..."
+                                   id="search-input">
                         </div>
                     </div>
                 </div>
@@ -134,9 +147,9 @@
                 <div class="col">
                     <div test='${not empty suppliers && !message.error}'>
                         <div class="table-responsive">
-                            <table class="table table-hover " style="border-radius: 20px !important;">
+                            <table class="table table-hover " style="border-radius: 10px !important;">
                                 <thead>
-                                <tr class="table-success">
+                                <tr class="">
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Address</th>
@@ -162,55 +175,6 @@
     </div>
 </div>
 
-<div class="container">
-    <div class="row" style="margin-top: 2%">
-        <div class="col-lg-6">
-            <div class="search-box">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search...">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="add-btn text-lg-right">
-                <button class="btn btn-primary">Add</button>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Column 1</th>
-                    <th>Column 2</th>
-                    <th>Column 3</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>Row 1, Column 1</td>
-                    <td>Row 1, Column 2</td>
-                    <td>Row 1, Column 3</td>
-                </tr>
-                <tr>
-                    <td>Row 2, Column 1</td>
-                    <td>Row 2, Column 2</td>
-                    <td>Row 2, Column 3</td>
-                </tr>
-                <tr>
-                    <td>Row 3, Column 1</td>
-                    <td>Row 3, Column 2</td>
-                    <td>Row 3, Column 3</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
 </body>
