@@ -1,12 +1,30 @@
+@import url('./constants/colors.css');
 body {
-    background-color: #FFFFFF;
+    background-color: var(--background-color);
     font-family: 'Raleway', sans-serif;
 }
 
 .btn-custom {
-    background-color: #E9ECEF;
+    color: white;
+    border-color: var(--primary-color);
+    background-color: var(--primary-color);
+}
+
+.btn-custom:hover {
+    color: white;
+    border-color: var(--primary-hover-color);
+    background-color: var(--primary-hover-color);
+    box-shadow: none;
+}
+
+.btn-custom-secondary{
+    background-color: var(--gray-color);
 }
 
 .sidebar-custom{
-    background-color: #e8e5e5;
+    background-color: var(--side-bar-color);
+}
+
+.rounded-xl{
+    border-radius: 16px;
 }
