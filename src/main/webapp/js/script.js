@@ -14,37 +14,38 @@ fetch('sidebar.html')
                 }
                 item.style.backgroundColor = '#DEF3EE';
                 selectedItem = item;
+                //TODO: Need to fix the url for each page
                 switch (item.id) {
                     case "receipt":
-                        await loadPage("storage.html", "", "Storage");
+                        await loadPage("receipt.html", "", "Receipt", "receipt_list");
                         break;
                     case "product":
-                        await loadPage("storage.html", "", "Storage");
+                        await loadPage("product.html", "", "Product", "products");
                         break;
                     case "storage":
 
-                        await loadPage("storage.html", "", "Storage");
+                        await loadPage("storage.html", "", "Storage", "storage");
                         break;
                     case "order":
-                        await loadPage("storage.html", "", "Storage");
+                        await loadPage("order.html", "", "Order", "order");
                         break;
                     case "supplier":
-                        await loadPage("storage.html", "", "Storage");
+                        await loadPage("supplier.html", "", "Supplier", "supplier");
                         break;
                     case "report":
-                        await loadPage("storage.html", "", "Storage");
+                        await loadPage("report.html", "", "Report", "report");
                         break;
                     case "user":
-                        await loadPage("storage.html", "", "Storage");
+                        await loadPage("user.html", "", "UserInfo", "user");
                         break;
                     case "setting":
-                        await loadPage("storage.html", "", "Storage");
+                        await loadPage("setting.html", "", "Setting", "setting");
                         break;
                     default:
                         break;
                 }
-                // Do something when the <li> element is clicked, such as navigate to a new page or show/hide content
-                console.log('You clicked on an <li> element!');
+                // // Do something when the <li> element is clicked, such as navigate to a new page or show/hide content
+                // console.log('You clicked on an <li> element!');
             });
         });
     });
@@ -57,7 +58,7 @@ window.addEventListener('popstate', event => {
 });
 
 // Function to load the content of a page into the "main-content" div
-async function loadPage(page, url, title, pushState = true) {
+async function loadPage(page, url, title, route, pushState = true) {
     const response = await fetch(page);
     const data = await response.text();
 
@@ -69,10 +70,13 @@ async function loadPage(page, url, title, pushState = true) {
     const apiData = await apiResponse.json();
 
     // Update the contents of the page with the data returned from the API
-    // const element = document.getElementById('api-data');
-    // element.innerHTML = apiData;
+    const element = document.getElementById('user-info');
+    const headerElement = element.querySelector('h5')
+    const paragraphElement = element.querySelector('p')
+    headerElement.textContent = "use apidata to give the right name"
+    paragraphElement.textContent = "use apidata to give the right role"
 
     if (pushState) {
-        history.pushState({ page, title }, title, page);
+        history.pushState({ page, title }, title, `/${route}`);
     }
 }
