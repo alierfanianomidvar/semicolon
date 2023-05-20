@@ -10,3 +10,9 @@ $(function () {
 
 
 });
+
+//routing
+$(window).on('hashchange load', function () {
+    var route = window.location.hash.replace('#', '') || 'home';
+    $("#main-html").load(`${route}.html`);
+});
