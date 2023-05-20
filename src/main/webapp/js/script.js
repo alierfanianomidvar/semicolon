@@ -12,6 +12,8 @@ $(function () {
 
 //routing
 $(window).on('hashchange load', function () {
+    document.getElementById("hidden-content").innerHTML=document.title ;
+    document.title=window.location.hash;
     var route = window.location.hash.replace('#', '') || 'home';
     $("#main-content").load(`${route}.html`);
 });
