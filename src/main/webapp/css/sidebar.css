@@ -63,13 +63,22 @@
     padding: 0;
 }
 
-.general-section li {
+.general-section li a {
+    color: black;
     display: flex;
     align-items: center;
     margin-bottom: 10px;
     border-radius: 0.5rem;
     padding: 0.2rem;
-    cursor: pointer;
+}
+
+.general-section li a:hover {
+    text-decoration: none;
+    color: black;
+}
+
+.general-section li:target{
+    background-color: #DEF3EE;
 }
 
 .general-section li img {
@@ -86,10 +95,20 @@
     padding: 0;
 }
 
-.settings-section li {
+.settings-section li a {
+    color: black;
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+}
+
+.settings-section li a:hover{
+    text-decoration: none;
+    color: black;
+}
+
+.settings-section li:target {
+    background-color: #DEF3EE;
 }
 
 .settings-section li img {
