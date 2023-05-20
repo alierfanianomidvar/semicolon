@@ -3,6 +3,7 @@ body, html {
     background-color: #DEF3EE !important;
 }
 
+/* Card */
 .card {
     display: flex;
     flex-direction: column;
@@ -25,7 +26,7 @@ h1 {
 }
 
 p {
-    font-size: 1em;
+    font-size: 1rem;
     user-select: none;
 }
 
@@ -35,11 +36,11 @@ label {
     user-select: none;
 }
 
-/* Style for email and password input fields */
+/* Input Fields */
 input[type="email"],
 input[type="password"] {
     width: 20rem;
-    font-size: 1em;
+    font-size: 1rem;
     border: 0.0625rem solid lightgray;
     border-radius: 0.25rem;
 }
@@ -57,7 +58,38 @@ input[type="password"]::placeholder {
     user-select: none;
 }
 
-/* Style for submit button */
+/* Checkbox */
+.card .custom-control-input[type="checkbox"] {
+    width: 0.75rem;
+    height: 0.75rem;
+    vertical-align: middle;
+}
+
+/* label of checkbox*/
+.card .custom-checkbox .custom-control-label {
+    font-size: 0.75rem !important;
+    line-height: 1.5rem !important;
+    vertical-align: middle !important;
+    color: gray !important;
+    user-select: none !important;
+}
+
+/* Green style for checked state of custom control checkbox */
+.card .custom-control-input[type="checkbox"]:checked + .custom-control-label::before {
+    background-color: #42C3AA !important;
+    border-color: lightgray !important;
+    outline: none;
+    box-shadow: none;
+}
+
+/* Remove the halo effect in focused state of custom control checkbox */
+.card .custom-control-input[type="checkbox"]:focus + .custom-control-label::before {
+    border-color: lightgray !important;
+    outline: none;
+    box-shadow: none;
+}
+
+/* Button */
 .card button[type="submit"] {
     width: 20rem;
     background-color: #42C3AA;
@@ -65,8 +97,8 @@ input[type="password"]::placeholder {
     border: none;
     border-radius: 0.30rem;
     cursor: pointer;
-    font-size: 1em;
-    margin-top: 1.5rem;
+    font-size: 1rem;
+    margin-top: 1rem;
     font-weight: bold;
 }
 
@@ -87,40 +119,4 @@ button.custom-button:focus {
     color: white;
     outline: none;
     box-shadow: none !important;
-}
-
-/* Style for custom control checkboxes */
-.card .custom-control-input[type="checkbox"] {
-    width: 0.75rem;
-    height: 0.75rem;
-    margin-right: 0.5rem;
-    vertical-align: middle;
-}
-
-.card .custom-checkbox .custom-control-label {
-    font-size: 0.75rem !important;
-    line-height: 1.5rem !important;
-    vertical-align: middle !important;
-    color: gray !important;
-    user-select: none !important;
-}
-
-.card .custom-control-inline .custom-control-input[type="checkbox"] {
-    margin-right: 0.25rem;
-    font-size: 0.8rem;
-}
-
-/* Green style for checked state of custom control checkbox */
-.card .custom-control-input[type="checkbox"]:checked + .custom-control-label::before {
-    background-color: #42C3AA !important;
-    border-color: lightgray !important;
-    outline: none;
-    box-shadow: none;
-}
-
-/* Remove the halo effect in focused state of custom control checkbox */
-.card .custom-control-input[type="checkbox"]:focus + .custom-control-label::before {
-    border-color: lightgray !important;
-    outline: none;
-    box-shadow: none;
 }
