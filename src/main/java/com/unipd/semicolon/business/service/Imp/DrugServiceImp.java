@@ -63,6 +63,9 @@ public class DrugServiceImp implements DrugService {
             throw new IllegalArgumentException("Limitation amount can not be negative");
         }
         Supplier supplier = supplierRepository.findById(supplierId);
+        if (supplier == null) {
+            throw new IllegalArgumentException("Supplier should be defined");
+        }
         Drug drug = new Drug(
                 name,
                 supplier,
