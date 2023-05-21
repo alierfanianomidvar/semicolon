@@ -76,23 +76,20 @@ label {
 }
 
 /* Input Fields */
-input[type="email"],
-input[type="password"] {
+.form-control{
     width: 20rem;
     font-size: 1rem;
     border: 0.0625rem solid lightgray;
     border-radius: 0.25rem;
 }
 
-input[type="email"]:focus,
-input[type="password"]:focus {
+.form-control:focus {
     outline: none;
     box-shadow: none;
     border-color: #42C3AA;
 }
 
-input[type="email"]::placeholder,
-input[type="password"]::placeholder {
+.form-control::placeholder{
     color: #999;
     user-select: none;
 }
@@ -158,4 +155,36 @@ button.custom-button:focus {
     color: white;
     outline: none;
     box-shadow: none !important;
+}
+
+@media (max-width: 767px) {
+    body {
+        background-color: white !important;
+    }
+
+    .background-image1 {
+        display: none;
+    }
+
+    .background-image2 {
+        display: none;
+    }
+
+    .container {
+        display: grid;
+        overflow: auto;
+    }
+
+    /* Card */
+    .card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: left;
+        border-radius: 0;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        border: none;
+    }
 }
