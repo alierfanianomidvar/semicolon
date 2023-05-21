@@ -1,3 +1,5 @@
+import storageUrls from "./urls/storageUrls";
+
 async function sendData() {
     // Prepare data as an object
     const data = {
@@ -12,30 +14,11 @@ async function sendData() {
         countryOfProduction: document.getElementById("country-of-production").value,
         limitation: document.getElementById("limitation").value,
         price: document.getElementById("price").value,
-
-        // Add more properties as needed
     };
-
+    validateForm()
     // Modify the URL to the appropriate endpoint on your backend
-    const url = "https://example.com/api/data";
-
-    // Configure the fetch request
-    const options = {
-        method: "POST", // Adjust the method as needed (e.g., GET, POST, etc.)
-        headers: {
-            "Content-Type": "application/json", // Adjust the content type as needed
-        },
-        body: JSON.stringify(data), // Convert the data to JSON format
-    };
-
-    // Send the fetch request
-    try {
-        const response = await fetch(url, options);
-        const responseData = await response.json();
-        return responseData;
-    } catch (error) {
-        throw new Error("Error sending data: " + error.message);
-    }
+    const router = new Router()
+    return router.createFetch(storageUrls.ADD)
 }
 
 function validateForm() {
