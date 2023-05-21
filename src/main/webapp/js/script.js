@@ -5,9 +5,7 @@ import storageUrls from "./urls/storageUrls.js";
 import orderUrls from "./urls/orderUrls.js";
 import supplierUrls from "./urls/supplierUrls.js";
 import userUrls from "./urls/userUrls.js";
-import Router from "./router";
 $(function () {
-    $("#navbar-html").load("sidebar.html");
 
     // TODO : we must call the api like this example ->
 
