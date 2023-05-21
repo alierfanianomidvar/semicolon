@@ -1,6 +1,8 @@
 :root {
     --primary-color: #42C3AA;
-    --background-image-color: #E1E4E7;
+    --primary-hover-color: #62c2b0;
+    --background-color: #E1E4E7;
+    --side-bar-color: #F2F9F9ED;
     --secondary-color: #DEF3EE;
     --success-color: #28a745;
     --danger-color: #dc3545;
@@ -11,4 +13,5 @@
     --second-btn-color: #E9ECEF;
     --white-color : #FAFAFA;
     --other-btn-hover : #e7e7e7;
+    --gray-color :#e9ecef;
 }
