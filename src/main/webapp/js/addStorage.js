@@ -1,4 +1,4 @@
-import storageUrls from "./urls/storageUrls";
+import storageUrls from "./urls/storageUrls.js";
 
 async function sendData() {
     // Prepare data as an object

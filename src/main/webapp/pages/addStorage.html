@@ -1,106 +1,110 @@
-<h5>Add Storage</h5>
 <div class="container">
-    <div class="row">
-        <div class="col-md-3">
-            <div class="form-group" id="col-product-type">
-                <label>Product Type:</label>
-                <div class="btn-group" id="toggleButton" role="group">
-                    <button type="button" class="btn btn-primary">Drug</button>
-                    <button type="button" class="btn btn-secondary">Material</button>
+    <h5 class="h5 mb-5 mt-4">Add Storage</h5>
+    <form action="" class="card rounded-xl">
+        <div class="card-body p-4">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <div class="form-group" id="col-product-type">
+                        <label>Product Type:</label>
+                        <div class="btn-group" id="toggleButton" role="group">
+                            <button type="button" class="btn btn-primary">Drug</button>
+                            <button type="button" class="btn btn-secondary">Material</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="product-name">Product Name:</label>
+                        <input type="text" class="form-control" id="product-name">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="supplier">Supplier:</label>
+                        <select class="form-control" id="supplier">
+                            <option>Supplier A</option>
+                            <option>Supplier B</option>
+                            <option>Supplier C</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="gender">Gender:</label>
+                        <select class="form-control" id="gender">
+                            <option>Male</option>
+                            <option>Female</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="product-name">Product Name:</label>
-                <input type="text" class="form-control" id="product-name">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="shape">Shape:</label>
+                        <select class="form-control" id="shape">
+                            <option>Round</option>
+                            <option>Square</option>
+                            <option>Rectangle</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="age-group">Age Group:</label>
+                        <select class="form-control" id="age-group">
+                            <option>0-5 years</option>
+                            <option>6-12 years</option>
+                            <option>13-18 years</option>
+                            <option>Adults</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="sensitivity">Sensitivity:</label>
+                        <select class="form-control" id="sensitivity">
+                            <option>Low</option>
+                            <option>Medium</option>
+                            <option>High</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="expiration-date">Expiration Date:</label>
+                        <input type="date" class="form-control" id="expiration-date">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="country-of-production">Country of Production:</label>
+                        <select class="form-control" id="country-of-production">
+                            <option>Country A</option>
+                            <option>Country B</option>
+                            <option>Country C</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="price">Price:</label>
+                        <input type="text" class="form-control" id="price">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="limitation">Limitation:</label>
+                        <input type="text" class="form-control" id="limitation">
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex">
+                <button class="cancel-btn p-2">Cancel</button>
+                <button class="add-btn ml-auto p-2" id="add-btn" onclick="sendData()">Add</button>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="supplier">Supplier:</label>
-                <select class="form-control" id="supplier">
-                    <option>Supplier A</option>
-                    <option>Supplier B</option>
-                    <option>Supplier C</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="gender">Gender:</label>
-                <select class="form-control" id="gender">
-                    <option>Male</option>
-                    <option>Female</option>
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="shape">Shape:</label>
-                <select class="form-control" id="shape">
-                    <option>Round</option>
-                    <option>Square</option>
-                    <option>Rectangle</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="age-group">Age Group:</label>
-                <select class="form-control" id="age-group">
-                    <option>0-5 years</option>
-                    <option>6-12 years</option>
-                    <option>13-18 years</option>
-                    <option>Adults</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="sensitivity">Sensitivity:</label>
-                <select class="form-control" id="sensitivity">
-                    <option>Low</option>
-                    <option>Medium</option>
-                    <option>High</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="expiration-date">Expiration Date:</label>
-                <input type="date" class="form-control" id="expiration-date">
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="country-of-production">Country of Production:</label>
-                <select class="form-control" id="country-of-production">
-                    <option>Country A</option>
-                    <option>Country B</option>
-                    <option>Country C</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="price">Price:</label>
-                <input type="text" class="form-control" id="price">
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="limitation">Limitation:</label>
-                <input type="text" class="form-control" id="limitation">
-            </div>
-        </div>
-    </div>
-    <div class="d-flex">
-    <button class="cancel-btn p-2">Cancel</button>
-    <button class="add-btn ml-auto p-2" id="add-btn" onclick="sendData()">Add</button>
-    </div>
+    </form>
 </div>
