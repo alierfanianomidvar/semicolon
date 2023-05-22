@@ -1,0 +1,51 @@
+<script>
+
+    function rWord(r){let t,n="bcdfghjklmnpqrstvwxyz",a="aeiou",e=function(r){return Math.floor(Math.random()*r)},o="";r=parseInt(r,10),n=n.split(""),a=a.split("");for(t=0;t<r/2;t++){var l=n[e(n.length)],p=a[e(a.length)];o+=0===t?l.toUpperCase():l,o+=2*t<r-1?p:""}return o}
+
+    $(document).ready(function() {
+        // Generate a big table
+        for(let n=0;n<1000;n++){
+            var row = $("<tr>");
+            $("#sampleTableA").find("thead th").each(function() {
+                $("<td>",{
+                    html: rWord(8),
+                    style:"padding:2px;"
+                }).appendTo($(row));
+            });
+            row.appendTo($("#sampleTableA").find("tbody"));
+        }
+
+
+        // And make them fancy
+        let fancyTableA = $("#sampleTableA").fancyTable({
+            sortColumn:0,
+            pagination: true,
+            perPage:5,
+            globalSearch:true
+        });
+    });
+</script>
+<div class="container">
+
+        <h2 class="h2 mb-5 mt-4">Users</h2>
+
+        <!-- Filters -->
+
+
+        <div class="border rounded-xl bg-white">
+            <table id="sampleTableA" class="table table-striped sampleTable">
+                <thead>
+                <tr>
+                    <th>Col A</th>
+                    <th>Col B</th>
+                    <th>Col C</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <!--    <iframe src="shared/table.html"></iframe>-->
