@@ -1,22 +1,22 @@
-// Define the accountUrls object
-const accountUrls = {
-    LOGIN: "your-login-url"
-};
-
 function sendData() {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
     // Validate email and password
     if (!validateForm(email, password)) {
-        return;
+        return false;
     }
 
     const router = new Router();
     return router.createFetch(accountUrls.LOGIN);
 }
 
-function validateForm(email, password) {
+function validateForm(event) {
+    event.preventDefault(); // Prevent default form submission behavior
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
     // Email validation regex pattern
     const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
