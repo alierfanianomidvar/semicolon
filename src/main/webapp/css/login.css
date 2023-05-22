@@ -68,8 +68,13 @@ label {
 }
 
 #password{
-    margin-right: 0;
     max-width: none !important;
+    z-index: 1;
+    width: 2rem !important;
+}
+
+#password:focus{
+    z-index: 1;
 }
 
 .input-group-append {
@@ -78,7 +83,6 @@ label {
 }
 
 .input-group-append .btn {
-    margin-left: -2rem;
     background: white;
     border-color: lightgray;
     padding-bottom: 0.4rem;
@@ -88,6 +92,13 @@ label {
 
 #password-toggle{
     margin-right: 0;
+    z-index: 2;
+    background: #42C3AA;
+    border-color: #42C3AA; !important;
+}
+
+#password-icon{
+    color: white;
 }
 
 /* Checkbox */
@@ -246,5 +257,4 @@ button.custom-button:focus {
         width: 100% !important;
         max-width: none !important;
     }
-
 }
