@@ -1,4 +1,4 @@
-function rWord(r) {
+export function rWord(r) {
     let t, n = "bcdfghjklmnpqrstvwxyz", a = "aeiou", e = function (r) {
         return Math.floor(Math.random() * r)
     }, o = "";
@@ -10,7 +10,7 @@ function rWord(r) {
     return o
 }
 
-$(document).ready(function () {
+export function createTable(type) {
     // Generate a big table
     for (let n = 0; n < 1000; n++) {
         let row = $("<tr>");
@@ -19,17 +19,23 @@ $(document).ready(function () {
             let name = rWord(8);
 
             if (index === 0) {
-                let image = $("<img>", {
-                    src: "../images/users.svg", // Replace "path_to_round_image" with the actual path to the round image
-                    class: "rounded-image", // Add a CSS class for styling if needed
-                    style: "width: 40px; height: 40px; margin-right: 20px; border: 1px solid lightgreen; border-radius: 50%;"  // Adjust the width, height, and margin as desired
-                });
-                let cell = $("<td>", {
-                    style: "padding: 2px;"
-                });
-                cell.append(image);
-                //cell.append(name);
-                cell.appendTo(row);
+                if(type === "user") {
+                    let image = $("<img>", {
+                        src: "../images/users.svg", // Replace "path_to_round_image" with the actual path to the round image
+                        class: "rounded-image", // Add a CSS class for styling if needed
+                        style: "width: 40px; height: 40px; margin-right: 20px; border: 1px solid lightgreen; border-radius: 50%;"  // Adjust the width, height, and margin as desired
+                    });
+                    let cell = $("<td>", {
+                        style: "padding: 2px;"
+                    });
+                    cell.append(image);
+                    //cell.append(name);
+                    cell.appendTo(row);
+                }
+                else {
+
+                }
+
             } else {
                 $("<td>", {
                     html: name,
@@ -54,4 +60,4 @@ $(document).ready(function () {
         perPage: 5,
         globalSearch: true
     });
-});
+}
