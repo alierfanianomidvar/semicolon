@@ -62,6 +62,34 @@ label {
     user-select: none;
 }
 
+#email{
+    margin-right: 0;
+    max-width: none !important;
+}
+
+#password{
+    margin-right: 0;
+    max-width: none !important;
+}
+
+.input-group-append {
+    display: flex;
+    align-items: flex-start;
+}
+
+.input-group-append .btn {
+    margin-left: -2rem;
+    background: white;
+    border-color: lightgray;
+    padding-bottom: 0.4rem;
+    outline: none;
+    box-shadow: none;
+}
+
+#password-toggle{
+    margin-right: 0;
+}
+
 /* Checkbox */
 .card .custom-control-input[type="checkbox"] {
     width: 0.75rem;
@@ -200,7 +228,12 @@ button.custom-button:focus {
 
     .form-control {
         width: 100% !important;
-        max-width: none !important;
+        max-width: 90% !important;
+    }
+
+    .email{
+        width: 100% !important;
+        max-width: 100% !important;
     }
 
     /* Checkbox */
@@ -212,5 +245,13 @@ button.custom-button:focus {
     .card button[type="submit"] {
         width: 100% !important;
         max-width: none !important;
+    }
+
+    .form-group.input-group {
+
+    }
+
+    .form-group.input-group .input-group-append {
+
     }
 }
