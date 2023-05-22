@@ -1,4 +1,4 @@
-import BaseApiUrl from './baseUrl';
+import BaseApiUrl from './baseUrl.js';
 
 class userUrls extends BaseApiUrl {
 
