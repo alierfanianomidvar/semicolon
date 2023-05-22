@@ -15,16 +15,15 @@ async function sendData() {
         limitation: document.getElementById("limitation").value,
         price: document.getElementById("price").value,
     };
-    validateForm()
+    validateForm();
     // Modify the URL to the appropriate endpoint on your backend
-    const router = new Router()
-    return router.createFetch(storageUrls.ADD)
+    const router = new Router();
+    return router.createFetch(storageUrls.ADD);
 }
 
 function validateForm() {
     // Validate name field
-    const name = document.getElementById("productName").value;
-    console.log(name)
+    const name = document.getElementById("product-name").value;
     if (name === "") {
         alert("Please enter a name.");
         return false;
@@ -44,29 +43,20 @@ function validateForm() {
         return false;
     }
 
-    const addButton = document.getElementById("add-btn")
-    addButton.addEventListener("click", async function () {
-        if (validateForm()) {
-            try {
-                const responseData = await sendData();
-                console.log("Data sent to the backend:", responseData);
-                // Add any additional actions or logic here based on the response from the backend
-            } catch (error) {
-                console.error("Error sending data:", error);
-            }
-        }
-    });
+    return true;
 }
 
-const buttons = document.querySelectorAll('#toggleButton button');
-
-// Add event listeners to the buttons
-buttons.forEach(button => {
-    button.addEventListener('click', function() {
-        // Remove the "active" class from all buttons
-        buttons.forEach(btn => btn.classList.remove('active'));
-
-        // Add the "active" class to the clicked button
-        this.classList.add('active');
-    });
+document.getElementById("mamad-btn").addEventListener("click",  async function () {
+    if (validateForm()) {
+        try {
+            const responseData = await sendData();
+            console.log("Data sent to the backend:", responseData);
+            // Add any additional actions or logic here based on the response from the backend
+        } catch (error) {
+            console.error("Error sending data:", error);
+        }
+    } else {
+        alert("Form is empty or contains invalid values.");
+    }
+    console.log("hi")
 });
