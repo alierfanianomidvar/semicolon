@@ -226,14 +226,14 @@ button.custom-button:focus {
         max-width: none !important;
     }
 
-    .form-control {
-        width: 100% !important;
-        max-width: 90% !important;
-    }
-
-    .email{
+    #email{
         width: 100% !important;
         max-width: 100% !important;
+    }
+
+    #password{
+        width: 75% !important;
+
     }
 
     /* Checkbox */
@@ -247,11 +247,4 @@ button.custom-button:focus {
         max-width: none !important;
     }
 
-    .form-group.input-group {
-
-    }
-
-    .form-group.input-group .input-group-append {
-
-    }
 }
