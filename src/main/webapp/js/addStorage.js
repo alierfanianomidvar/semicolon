@@ -1,6 +1,6 @@
 import storageUrls from "./urls/storageUrls.js";
 
-async function sendData() {
+export async function sendData() {
     // Prepare data as an object
     const data = {
         productType: document.getElementById("product-type").value,
@@ -21,7 +21,7 @@ async function sendData() {
     return router.createFetch(storageUrls.ADD);
 }
 
-function validateForm() {
+export function validateForm() {
     // Validate name field
     const name = document.getElementById("product-name").value;
     if (name === "") {
@@ -46,17 +46,19 @@ function validateForm() {
     return true;
 }
 
-document.getElementById("mamad-btn").addEventListener("click",  async function () {
-    if (validateForm()) {
-        try {
-            const responseData = await sendData();
-            console.log("Data sent to the backend:", responseData);
-            // Add any additional actions or logic here based on the response from the backend
-        } catch (error) {
-            console.error("Error sending data:", error);
+export function addStorage(){
+    document.getElementById("mamad-btn").addEventListener("click",  async function () {
+        if (validateForm()) {
+            try {
+                const responseData = await sendData();
+                console.log("Data sent to the backend:", responseData);
+                // Add any additional actions or logic here based on the response from the backend
+            } catch (error) {
+                console.error("Error sending data:", error);
+            }
+        } else {
+            alert("Form is empty or contains invalid values.");
         }
-    } else {
-        alert("Form is empty or contains invalid values.");
-    }
-    console.log("hi")
-});
+        console.log("hi")
+    });
+}
