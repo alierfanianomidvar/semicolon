@@ -1,22 +1,46 @@
 function sendData() {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
+    const keepLoggedIn = document.getElementById("keepLoggedIn").checked;
 
     // Validate email and password
     if (!validateForm(email, password)) {
         return false;
     }
 
-    const router = new Router();
-    return router.createFetch(accountUrls.LOGIN);
+    const loginData = {
+        email: email,
+        password: password,
+        keepLoggedIn: keepLoggedIn
+    };
+
+    fetch("http://localhost:8081/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(loginData)
+    })
+        .then(response => {
+            if (response.ok) {
+                // Login successful, handle accordingly
+                console.log("Login successful");
+                // Redirect to the dashboard or perform other actions
+            } else {
+                // Login failed, handle accordingly
+                console.error("Login failed");
+                showError("Login failed. Please try again.");
+            }
+        })
+        .catch(error => {
+            console.error("Login failed:", error);
+            showError("An error occurred during login. Please try again.");
+        });
+
+    return false; // Prevent form submission
 }
 
-function validateForm(event) {
-    event.preventDefault(); // Prevent default form submission behavior
-
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-
+function validateForm(email, password) {
     // Email validation regex pattern
     const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -40,6 +64,13 @@ function validateForm(event) {
 
     // All validations passed
     return true;
+}
+
+function showError(message) {
+    // Show error message to the user, e.g., using Bootstrap alert
+    const errorElement = document.getElementById("error-message");
+    errorElement.textContent = message;
+    errorElement.style.display = "block";
 }
 
 function togglePasswordVisibility() {
