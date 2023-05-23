@@ -20,34 +20,47 @@ export async function sendData() {
     const router = new Router();
     return router.createFetch(storageUrls.ADD);
 }
-
 export function validateForm() {
+    // Reset validation styles
+    const form = document.getElementById("add-storage");
+    Array.from(form.elements).forEach((element) => {
+        element.classList.remove("is-invalid");
+        element.classList.remove("is-valid");
+    });
+
     // Validate name field
-    const name = document.getElementById("product-name").value;
-    if (name === "") {
-        alert("Please enter a name.");
+    const name = document.getElementById("product-name");
+    if (name.value.trim() === "") {
+        name.classList.add("is-invalid");
         return false;
+    } else {
+        name.classList.add("is-valid");
     }
 
     // Validate limitation field
-    const limitation = document.getElementById("limitation").value;
-    if (isNaN(limitation)) {
-        alert("Limitation must be a number.");
+    const limitation = document.getElementById("limitation");
+    if (isNaN(limitation.value) || limitation.value.trim() === "") {
+        limitation.classList.add("is-invalid");
         return false;
+    } else {
+        limitation.classList.add("is-valid");
     }
 
     // Validate price field
-    const price = document.getElementById("price").value;
-    if (isNaN(price)) {
-        alert("Price must be a number.");
+    const price = document.getElementById("price");
+    if (isNaN(price.value) || price.value.trim() === "") {
+        price.classList.add("is-invalid");
         return false;
+    } else {
+        price.classList.add("is-valid");
     }
 
     return true;
 }
+export async function addStorage() {
+    document.getElementById("add-storage").addEventListener("submit", async function (event) {
+        event.preventDefault(); // Prevent the default form submission behavior
 
-export function addStorage(){
-    document.getElementById("mamad-btn").addEventListener("click",  async function () {
         if (validateForm()) {
             try {
                 const responseData = await sendData();
@@ -57,8 +70,37 @@ export function addStorage(){
                 console.error("Error sending data:", error);
             }
         } else {
-            alert("Form is empty or contains invalid values.");
+            // Reset validation styles
+            const form = document.getElementById("add-storage");
+            Array.from(form.elements).forEach((element) => {
+                element.classList.remove("is-invalid");
+                element.classList.remove("is-valid");
+            });
+
+            // Validate name field
+            const name = document.getElementById("product-name");
+            if (name.value.trim() === "") {
+                name.classList.add("is-invalid");
+            } else {
+                name.classList.add("is-valid");
+            }
+
+            // Validate limitation field
+            const limitation = document.getElementById("limitation");
+            if (isNaN(limitation.value) || limitation.value.trim() === "") {
+                limitation.classList.add("is-invalid");
+            } else {
+                limitation.classList.add("is-valid");
+            }
+
+            // Validate price field
+            const price = document.getElementById("price");
+            if (isNaN(price.value) || price.value.trim() === "") {
+                price.classList.add("is-invalid");
+            } else {
+                price.classList.add("is-valid");
+            }
         }
-        console.log("hi")
+        console.log("hi");
     });
 }
