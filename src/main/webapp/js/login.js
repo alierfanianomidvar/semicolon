@@ -1,43 +1,63 @@
 function sendData() {
-    const email = document.getElementById("email").value;
+    const router = new Router();
+    const username = document.getElementById("email").value;
     const password = document.getElementById("password").value;
     const keepLoggedIn = document.getElementById("keepLoggedIn").checked;
 
     // Validate email and password
-    if (!validateForm(email, password)) {
+    if (!validateForm(username, password)) {
         return false;
     }
 
     const loginData = {
-        email: email,
-        password: password,
-        keepLoggedIn: keepLoggedIn
+        username,
+        password,
     };
+    try {
+        const fetchedData = router.createFetch(AccountUrls.LOGIN,null,null,null, loginData);
+        if (fetchedData) {
+            $(document).ready(async () => {
+                const url = '../pages/index.html'; // Specify the URL of the new HTML file
 
-    fetch("http://localhost:8081/login", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(loginData)
-    })
-        .then(response => {
-            if (response.ok) {
-                // Login successful, handle accordingly
-                console.log("Login successful");
-                // Redirect to the dashboard or perform other actions
-            } else {
-                // Login failed, handle accordingly
-                console.error("Login failed");
-                showError("Login failed. Please try again.");
-            }
-        })
-        .catch(error => {
-            console.error("Login failed:", error);
-            showError("An error occurred during login. Please try again.");
-        });
+                try {
+                    // Fetch the new HTML file
+                    //TODO: we need to use the fetched data to store it into localstorage of our browser
+                    window.location.href = url
 
-    return false; // Prevent form submission
+                } catch (error) {
+                    console.error('Error loading new HTML:', error);
+                }
+            });
+        }
+    } catch (e) {
+        return false;
+    }
+
+
+    // fetch("http://localhost:", {
+    //     method: "POST",
+    //     headers: {
+    //         "Content-Type": "application/json"
+    //     },
+    //     body: JSON.stringify(loginData)
+    // })
+    //     .then(response => {
+    //         if (response.ok) {
+    //             // Login successful, handle accordingly
+    //             console.log("Login successful");
+    //             // Redirect to the dashboard or perform other actions
+    //         } else {
+    //             // Login failed, handle accordingly
+    //             console.error("Login failed");
+    //             showError("Login failed. Please try again.");
+    //         }
+    //     })
+    //     .catch(error => {
+    //         console.error("Login failed:", error);
+    //         showError("An error occurred during login. Please try again.");
+    //     });
+
+    // return false; // Prevent form submission
 }
 
 function validateForm(email, password) {
