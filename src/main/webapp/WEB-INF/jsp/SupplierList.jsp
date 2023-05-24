@@ -4,26 +4,32 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+        <%@include  file="../../css/supplierListJsp.css" %>
+    </style>
     <meta charset="UTF-8">
     <title>semicolon</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/supplierListJsp.css">
+    <%--<link rel="stylesheet" href="../../css/style.css">
+    --%>
+    <%--<link rel="stylesheet" href=".">--%>
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <link rel="stylesheet" href="../../css/style.css" type="">
+
+
 </head>
 <body>
-
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 sidebar-custom">
-            <%@include file="../../pages/sidebar.html" %>
-            <!-- display the message -->
+<div class="container-fluid px-0">
+    <div class="row no-gutters">
+        <div class="col-3 col-md-3 col-xl-2" id="sidebar-html">
+            <%@include  file="../../pages/sidebar.html" %>
             <c:import url="include/show-message.jsp"/>
         </div>
-        <div class="col-12 col-md-9">
+        <div class="col-12 col-md-9" style="margin-left: 2%">
             <div class="row" style="margin-top: 2%">
                 <div class="col-lg-12">
                     <h4 style="margin-bottom: 1%; font-weight: bold;">Supplier</h4>
