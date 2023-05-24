@@ -21,10 +21,6 @@ body {
     background-color: var(--gray-color);
 }
 
-.sidebar-custom{
-    background-color: var(--side-bar-color);
-}
-
 .rounded-xl{
     border-radius: 16px;
 }
