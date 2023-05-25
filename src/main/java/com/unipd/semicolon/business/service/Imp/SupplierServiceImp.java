@@ -5,7 +5,8 @@ import com.unipd.semicolon.business.exception.CreatePharmacyDataNotFound;
 import com.unipd.semicolon.business.exception.PermissionException;
 import com.unipd.semicolon.business.exception.PharmacyExistsException;
 import com.unipd.semicolon.business.service.*;
-import com.unipd.semicolon.core.dao.SupplierDao;
+import com.unipd.semicolon.core.dao.SupplierCreateDao;
+import com.unipd.semicolon.core.dao.SupplierListDao;
 import com.unipd.semicolon.core.entity.Drug;
 import com.unipd.semicolon.core.entity.Material;
 import com.unipd.semicolon.core.entity.Supplier;
@@ -20,7 +21,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class SupplierServiceImp extends AbstractDatabaseServlet implements SupplierService  {
+public class SupplierServiceImp extends AbstractDatabaseServlet implements SupplierService {
 
     @Autowired
     private SupplierRepository supplierRepository;
@@ -34,15 +35,9 @@ public class SupplierServiceImp extends AbstractDatabaseServlet implements Suppl
     @Autowired
     private SecurityService securityService;
 
-    /*private SupplierDao supplierDao;
-
-    public SupplierServiceImp() {
-        this.supplierDao = new SupplierDao();
-    }*/
-
     @Override
     public List<Supplier> getSupplierList() throws SQLException {
-        return new SupplierDao(getConnection()).access().getOutputParam();
+        return new SupplierListDao(getConnection(), true).access().getOutputParam();
     }
 
     @Override
@@ -54,21 +49,23 @@ public class SupplierServiceImp extends AbstractDatabaseServlet implements Suppl
             String token
     ) throws SQLException {
 
-        /*String roleFromToken = securityService.getRoleFromToken(token);
+
+        String roleFromToken = securityService.getRoleFromToken(token);
         if (roleFromToken.equals("superadmin")) {
             if (name.isBlank() || address.isBlank() || email.isBlank() || telephoneNumber.isBlank()) {
                 throw new CreatePharmacyDataNotFound();
             }
-            List<Supplier> suppliers = supplierDao.findByEmail(email);
+
+            List<Supplier> suppliers = new SupplierListDao(getConnection(), false).access().getOutputParam();
             if (suppliers.toArray().length > 0) {
                 throw new PharmacyExistsException();
             }
 
             Supplier supplier = new Supplier(name, address, email, telephoneNumber);
-            return supplierDao.create(supplier);
+            new SupplierCreateDao(getConnection(), supplier).access();
         } else {
             throw new PermissionException(token);
-        }*/
+        }
 
         return null;
     }
