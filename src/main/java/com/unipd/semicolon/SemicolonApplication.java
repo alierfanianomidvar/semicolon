@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan("com.unipd.semicolon")
 @EntityScan(basePackages = {"com.unipd.semicolon.core.entity"})
 @ServletComponentScan
-@EnableJpaRepositories(basePackages = "com.unipd.semicolon.core.repository")
+@EnableJpaRepositories(basePackages = {"com.unipd.semicolon.core.repository", "com.unipd.semicolon.core.dao"})
 public class SemicolonApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {

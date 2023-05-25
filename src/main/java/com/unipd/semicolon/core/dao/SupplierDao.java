@@ -2,48 +2,44 @@ package com.unipd.semicolon.core.dao;
 
 
 import com.unipd.semicolon.core.entity.Supplier;
+import com.unipd.semicolon.core.entity.User;
+import com.unipd.semicolon.core.repository.entity.Imp.CustomRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class SupplierDao {
+public final class SupplierDao extends AbstractDAO<List<Supplier>>{
     private static final String URL = "jdbc:postgresql://localhost:5432/webApp";
     private static final String USERNAME = "postgres";
     private static final String PASSWORD = "123456";
 
-    public List<Supplier> findAll() throws SQLException {
-        final String SELECT_ALL = "SELECT id, name, address, email, telephone_number FROM supplier";
+    public SupplierDao(Connection con) {
+        super(con);
+    }
 
-        List<Supplier> suppliers = new ArrayList<>();
-        ResultSet rs = null;
-        PreparedStatement stmt = null;
+    /*public List<Supplier> findAll(){
+        final String SELECT_ALL = "select g from Supplier g order by g.id desc ";
 
-        try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
-            stmt = conn.prepareStatement(SELECT_ALL);
-            rs = stmt.executeQuery();
-            while (rs.next()) {
-                Supplier supplier = new Supplier();
-                supplier.setName(rs.getString("name"));
-                supplier.setAddress(rs.getString("address"));
-                supplier.setEmail(rs.getString("email"));
-                supplier.setTelephoneNumber(rs.getString("telephone_number"));
-                suppliers.add(supplier);
-            }
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-
-            if (stmt != null) {
-                stmt.close();
-            }
-
-        }
+        List<Supplier> suppliers = listQueryWrapper(entityManager.createQuery(
+                SELECT_ALL,
+                Supplier.class));
 
         return suppliers;
     }
+
+    private <T> List<T> listQueryWrapper(TypedQuery<T> typedQuery) {
+        List<T> resultList = typedQuery.getResultList();
+        if (resultList.isEmpty()) {
+            return null;
+        }
+        return resultList;
+    }*/
 
     public Supplier create(final Supplier supplier) throws SQLException {
         final String CREATE = "INSERT INTO supplier (name, address, telephone_number, email) VALUES (?, ?, ?, ?)";
@@ -72,7 +68,7 @@ public class SupplierDao {
         return supplier;
     }
 
-    public List<Supplier> findByEmail(String email) throws SQLException {
+ /*   public List<Supplier> findByEmail(String email) throws SQLException {
         final String FIND_BY_EMAIL = "SELECT id, name, address, email, telephone_number FROM supplier WHERE email = ?";
         List<Supplier> suppliers = new ArrayList<>();
         PreparedStatement stmt = null;
@@ -101,5 +97,44 @@ public class SupplierDao {
         }
 
         return suppliers;
+    }*/
+
+    @Override
+    protected void doAccess() throws Exception {
+
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        final String SELECT_ALL = "SELECT id, name, address, email, telephone_number FROM supplier";
+
+
+        // the results of the search
+        final List<Supplier> supplierArrayList = new ArrayList<Supplier>();
+
+        try {
+            pstmt = con.prepareStatement(SELECT_ALL);
+
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Supplier supplier = new Supplier();
+                supplier.setName(rs.getString("name"));
+                supplier.setAddress(rs.getString("address"));
+                supplier.setEmail(rs.getString("email"));
+                supplier.setTelephoneNumber(rs.getString("telephone_number"));
+                supplierArrayList.add(supplier);
+            }
+
+            LOGGER.info("supplier(s) %d successfully listed.", 1);
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+
+            if (pstmt != null) {
+                pstmt.close();
+            }
+
+        }
+
+        this.outputParam = supplierArrayList;
     }
 }

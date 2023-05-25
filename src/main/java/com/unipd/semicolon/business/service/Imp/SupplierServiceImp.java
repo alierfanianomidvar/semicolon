@@ -1,7 +1,7 @@
 package com.unipd.semicolon.business.service.Imp;
 
+import com.unipd.semicolon.api.servlet.AbstractDatabaseServlet;
 import com.unipd.semicolon.business.exception.CreatePharmacyDataNotFound;
-import com.unipd.semicolon.business.exception.CustomException;
 import com.unipd.semicolon.business.exception.PermissionException;
 import com.unipd.semicolon.business.exception.PharmacyExistsException;
 import com.unipd.semicolon.business.service.*;
@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class SupplierServiceImp implements SupplierService {
+public class SupplierServiceImp extends AbstractDatabaseServlet implements SupplierService  {
 
     @Autowired
     private SupplierRepository supplierRepository;
@@ -34,15 +34,15 @@ public class SupplierServiceImp implements SupplierService {
     @Autowired
     private SecurityService securityService;
 
-    private SupplierDao supplierDao;
+    /*private SupplierDao supplierDao;
 
     public SupplierServiceImp() {
         this.supplierDao = new SupplierDao();
-    }
+    }*/
 
     @Override
     public List<Supplier> getSupplierList() throws SQLException {
-        return supplierDao.findAll();
+        return new SupplierDao(getConnection()).access().getOutputParam();
     }
 
     @Override
@@ -54,7 +54,7 @@ public class SupplierServiceImp implements SupplierService {
             String token
     ) throws SQLException {
 
-        String roleFromToken = securityService.getRoleFromToken(token);
+        /*String roleFromToken = securityService.getRoleFromToken(token);
         if (roleFromToken.equals("superadmin")) {
             if (name.isBlank() || address.isBlank() || email.isBlank() || telephoneNumber.isBlank()) {
                 throw new CreatePharmacyDataNotFound();
@@ -68,8 +68,9 @@ public class SupplierServiceImp implements SupplierService {
             return supplierDao.create(supplier);
         } else {
             throw new PermissionException(token);
-        }
+        }*/
 
+        return null;
     }
 
     @Override
