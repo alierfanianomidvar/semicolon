@@ -18,14 +18,11 @@ package com.unipd.semicolon.api.servlet;
 
 import com.unipd.semicolon.AppConfig;
 import jakarta.servlet.ServletConfig;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.StringFormatterMessageFactory;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -33,60 +30,30 @@ import java.sql.SQLException;
 public abstract class AbstractDatabaseServlet extends HttpServlet {
 
 
-		protected static final Logger LOGGER = LogManager.getLogger(AbstractDatabaseServlet.class,
-				StringFormatterMessageFactory.INSTANCE);
+    protected static final Logger LOGGER = LogManager.getLogger(AbstractDatabaseServlet.class,
+            StringFormatterMessageFactory.INSTANCE);
 
 
-		private DataSource ds;
+    private DataSource ds;
 
+    public void init(ServletConfig config) {
+        ds = new AppConfig().dataSource();
+        LOGGER.info("Connection pool to the database pool successfully acquired.");
+    }
 
-		/*public void init(ServletConfig config) throws ServletException {
+    public void destroy() {
+        ds = null;
+        LOGGER.info("Connection pool to the database pool successfully released.");
+    }
 
-			// the JNDI lookup context
-			InitialContext cxt;
+    protected final Connection getConnection() throws SQLException {
+        try {
+            ds = new AppConfig().dataSource();
+            return ds.getConnection();
+        } catch (final SQLException e) {
+            LOGGER.error("Unable to acquire the connection from the pool.", e);
+            throw e;
+        }
+    }
 
-			try {
-				cxt = new InitialContext();
-				ds = (DataSource) cxt.lookup("jdbc:postgresql://localhost:5432/webApp");
-
-				ds.getConnection("postgres", "123456");
-
-				LOGGER.info("Connection pool to the database pool successfully acquired.");
-			} catch (NamingException e) {
-				ds = null;
-
-				LOGGER.error("Unable to acquire the connection pool to the database.", e);
-
-				throw new ServletException("Unable to acquire the connection pool to the database", e);
-			} catch (SQLException e) {
-				throw new RuntimeException(e);
-			}
-		}*/
-
-		public void init(ServletConfig config) throws ServletException {
-			ds = new AppConfig().dataSource();
-			LOGGER.info("Connection pool to the database pool successfully acquired.");
-			/*try {
-				ds.getConnection("postgres", "123456");
-
-			} catch (SQLException e) {
-				throw new RuntimeException(e);
-			}*/
-		}
-
-		public void destroy() {
-			ds = null;
-			LOGGER.info("Connection pool to the database pool successfully released.");
-		}
-
-		protected final Connection getConnection() throws SQLException {
-			ds = new AppConfig().dataSource();
-			try {
-				return ds.getConnection();
-			} catch (final SQLException e) {
-				LOGGER.error("Unable to acquire the connection from the pool.", e);
-				throw e;
-			}
-		}
-
-	}
+}
