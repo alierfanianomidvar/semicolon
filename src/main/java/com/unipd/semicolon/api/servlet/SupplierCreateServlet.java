@@ -64,6 +64,20 @@ public class SupplierCreateServlet extends HttpServlet {
             req.setAttribute("supplier", e);
             req.setAttribute("message", m);
 
+            // forwards the control to the create-employee-result JSP
+            String message = "Supplier data saved successfully.";
+
+            // Set the message as a response attribute
+            res.setHeader("supplier-message", message);
+
+            // Generate a JavaScript script that displays the message in a popup dialog
+            String script = "<script>alert('" + message + "');</script>";
+
+            // Write the script to the response
+            res.setContentType("text/html");
+            PrintWriter out = res.getWriter();
+            out.println(script);
+
             //req.getRequestDispatcher("/WEB-INF/jsp/createSupplierResult").forward(req, res);
         } catch (Exception ex) {
 
