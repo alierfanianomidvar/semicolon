@@ -8,6 +8,7 @@ body {
     color: white;
     border-color: var(--primary-color);
     background-color: var(--primary-color);
+    color: whitesmoke;
 }
 
 .btn-custom:hover {
@@ -19,10 +20,6 @@ body {
 
 .btn-custom-secondary{
     background-color: var(--gray-color);
-}
-
-.sidebar-custom{
-    background-color: var(--side-bar-color);
 }
 
 .rounded-xl{
