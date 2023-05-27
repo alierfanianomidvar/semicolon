@@ -21,10 +21,26 @@ body {
     background-color: var(--gray-color);
 }
 
-.sidebar-custom{
-    background-color: var(--side-bar-color);
-}
-
 .rounded-xl{
     border-radius: 16px;
+}
+
+.cancel-btn {
+    background-color: var(--second-btn-color);
+    color: var(--dark-color);
+    border: none;
+    border-radius: 0.3rem;
+    width: 8rem;
+}
+
+.add-btn {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    border-radius: 0.3rem;
+    border: none;
+    width: 8rem;
+}
+
+.cancel-btn:hover{
+    background-color: var(--other-btn-hover);
 }
