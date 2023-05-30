@@ -5,17 +5,23 @@ import com.unipd.semicolon.business.exception.PharmacyExistsException;
 import com.unipd.semicolon.business.service.Imp.SupplierServiceImp;
 import com.unipd.semicolon.business.service.SupplierService;
 import com.unipd.semicolon.core.entity.Supplier;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 import org.apache.logging.log4j.core.util.IOUtils;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.apache.logging.log4j.message.StringFormattedMessage;
 
+import java.awt.datatransfer.MimeTypeParseException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
+import java.util.Collection;
 
 @WebServlet(urlPatterns = "/supplier", loadOnStartup = 1)
 public class SupplierCreateServlet extends HttpServlet {
@@ -27,59 +33,69 @@ public class SupplierCreateServlet extends HttpServlet {
         supplierService = new SupplierServiceImp();
     }
 
-    public void doPost(HttpServletRequest req, HttpServletResponse res)
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        // Forward the request to the JSP file
+        request.getRequestDispatcher("/WEB-INF/jsp/createSupplierResult.jsp")
+                .forward(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+
+
+        // model
+        Supplier e = null;
         Message m = null;
-        Supplier supplier = null;
-        // request parameter
-        String name = null;
-        String address = null;
-        String email = null;
-        String telephoneNumber = null;
-        //TODO: token is something that is passed through request header
-        // user need to access it propely. the token defiend below is just for removing the errors
-        // it is incorrect to use the token like this
-        String token = "";
 
+        e = parseRequest(req);
 
-        String jsonString = IOUtils.toString(req.getReader());
-        JSONObject jo = null;
-        try {
-            jo = new JSONObject(jsonString);
-            // model
-            // retrieves the request parameter
-            name = String.valueOf(jo.getString("name"));
-            address = String.valueOf(jo.getString("address"));
-            email = String.valueOf(jo.getString("email"));
-            telephoneNumber = String.valueOf(jo.getString("telephoneNumber"));
-            supplier = supplierService.create(name, address, email, telephoneNumber, token);
-        } catch (JSONException ex) {
-//            throw new CreatePharmacyDataNotFound();
-            m = new Message("Cannot create the employee data. The provided data not correct.",
-                    "E100", ex.getMessage());
-        } catch (PharmacyExistsException ex) {
-            m = new Message(String.format("Cannot create the Supplier: another supplier with the same email already exists.\n Email: %s", email),
-                    "E300", ex.getMessage());
+        /*try {
+            supplierService.create(e.getName(), e.getAddress(), e.getEmail(), e.getTelephoneNumber(), "");
         } catch (SQLException ex) {
-            if ("23505".equals(ex.getSQLState())) {
-                m = new Message(String.format("Cannot create the Supplier: another supplier with the same email already exists.\n Email: %s", email),
-                        "E300", ex.getMessage());
-            } else {
-                m = new Message("Cannot create the Supplier: unexpected error while accessing the database.", "E200",
-                        ex.getMessage());
-
-            }
-        }
-
+            throw new RuntimeException(ex);
+        }*/
+        m = new Message(String.format("Supplier %d successfully created.",
+                1));
         try {
+            // stores the employee and the message as a request attribute
+            req.setAttribute("supplier", e);
             req.setAttribute("message", m);
-            req.setAttribute("supplier", supplier);
-            req.getRequestDispatcher("/WEB-INF/jsp/createSupplierResult.jsp").forward(req, res);
+
+            // forwards the control to the create-employee-result JSP
+            String message = "Supplier data saved successfully.";
+
+            // Set the message as a response attribute
+            res.setHeader("supplier-message", message);
+
+            // Generate a JavaScript script that displays the message in a popup dialog
+            String script = "<script>alert('" + message + "');</script>";
+
+            // Write the script to the response
+            res.setContentType("text/html");
+            PrintWriter out = res.getWriter();
+            out.println(script);
+
+            //req.getRequestDispatcher("/WEB-INF/jsp/createSupplierResult").forward(req, res);
         } catch (Exception ex) {
+
             throw ex;
         }
 
     }
+
+    private Supplier parseRequest(HttpServletRequest req) {
+
+        // request parameters
+        String name = req.getParameter("supplierName");
+        String address = req.getParameter("supplierAddress");
+        String email = req.getParameter("supplierEmail");
+        String telephoneNumber = req.getParameter("supplierTelephoneNumber");
+
+        return new Supplier(name, address, email, telephoneNumber);
+    }
+
 
 }
