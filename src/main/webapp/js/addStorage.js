@@ -1,6 +1,6 @@
 import storageUrls from "./urls/storageUrls.js";
 
-export async function sendData() {
+export function sendData() {
     // Prepare data as an object
     const data = {
         productType: document.getElementById("product-type").value,
@@ -16,8 +16,6 @@ export async function sendData() {
         price: document.getElementById("price").value,
     };
 
-    validateForm();
-
     // Modify the URL to the appropriate endpoint on your backend
     const router = new Router();
     return router.createFetch(storageUrls.ADD);
@@ -27,6 +25,7 @@ export function validateForm() {
     // Reset validation styles
 
     // Validate name field
+    console.log("validate.")
     const name = document.getElementById("product-name");
     if (name.value.trim() === "") {
         name.classList.add("is-invalid");
@@ -37,6 +36,7 @@ export function validateForm() {
 
     // Validate limitation field
     const limitation = document.getElementById("limitation");
+    console.log(limitation);
     if (isNaN(limitation.value) || limitation.value.trim() === "") {
         limitation.classList.add("is-invalid");
         return false;
@@ -56,24 +56,28 @@ export function validateForm() {
     return true;
 }
 
-function addStorage() {
+export function addStorage() {
 
-        console.log("HERE");
-        if (validateForm()) {
-            try {
-                const responseData =  sendData();
-                console.log("Data sent to the backend:", responseData);
-                // Add any additional actions or logic here based on the response from the backend
-            } catch (error) {
-                console.error("Error sending data:", error);
-            }
-        } else {
-            // Reset validation st
-
-            // Validate name field
-
-            // Validate limitation field
-
-            // Validate price field
+    console.log("HERE");
+    if (validateForm()) {
+        try {
+            const responseData = sendData();
+            console.log("Data sent to the backend:", responseData);
+            // Add any additional actions or logic here based on the response from the backend
+        } catch (error) {
+            console.error("Error sending data:", error);
         }
+    } else {
+        console.log("hoooy")
+        // Reset validation st
+
+        // Validate name field
+
+        // Validate limitation field
+
+        // Validate price field
+    }
 }
+$(function() {
+    document.querySelector('#add-btn').addEventListener('click', addStorage);
+});
