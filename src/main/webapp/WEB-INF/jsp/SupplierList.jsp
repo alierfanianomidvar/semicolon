@@ -6,20 +6,15 @@
 <head>
     <style>
         <%@include  file="../../css/supplierListJsp.css" %>
+        <%@include  file="../../css/style.css" %>
     </style>
     <meta charset="UTF-8">
     <title>semicolon</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
-    <%--<link rel="stylesheet" href="../../css/style.css">
-    --%>
-    <%--<link rel="stylesheet" href=".">--%>
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <link rel="stylesheet" href="../../css/style.css" type="">
-
 
 </head>
 <body>
