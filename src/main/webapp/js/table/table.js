@@ -30,7 +30,7 @@ export function rWord(r) {
     return o
 }
 
-export function createTable(type) {
+export function makeTable(type) {
     // Generate a big table
     for (let n = 0; n < 1000; n++) {
         let row = $("<tr>");
