@@ -5,7 +5,6 @@ import storageUrls from "./urls/storageUrls.js";
 import orderUrls from "./urls/orderUrls.js";
 import supplierUrls from "./urls/supplierUrls.js";
 import userUrls from "./urls/userUrls.js";
-import {addStorage} from "./addStorage.js";
 $(function () {
 
     // TODO : we must call the api like this example ->
@@ -72,7 +71,7 @@ $(window).on('hashchange load', function () {
     document.title=window.location.hash;
     const route = window.location.hash.replace('#', '') || 'home';
     $("#main-content").load(`addStorage.html`, () => {
-        addStorage();
+
     });
 });
 
