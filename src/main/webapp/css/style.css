@@ -7,14 +7,14 @@ body {
 .btn-custom {
     color: white;
     border-color: var(--primary-color);
-    background-color: var(--primary-color);
+    background-color: var(--primary-color) !important;
     color: whitesmoke;
 }
 
 .btn-custom:hover {
     color: white;
     border-color: var(--primary-hover-color);
-    background-color: var(--primary-hover-color);
+    background-color: var(--primary-hover-color) !important;
     box-shadow: none;
 }
 
