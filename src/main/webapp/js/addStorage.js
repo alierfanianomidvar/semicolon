@@ -15,18 +15,16 @@ export async function sendData() {
         limitation: document.getElementById("limitation").value,
         price: document.getElementById("price").value,
     };
+
     validateForm();
+
     // Modify the URL to the appropriate endpoint on your backend
     const router = new Router();
     return router.createFetch(storageUrls.ADD);
 }
+
 export function validateForm() {
     // Reset validation styles
-    const form = document.getElementById("add-storage");
-    Array.from(form.elements).forEach((element) => {
-        element.classList.remove("is-invalid");
-        element.classList.remove("is-valid");
-    });
 
     // Validate name field
     const name = document.getElementById("product-name");
@@ -57,50 +55,25 @@ export function validateForm() {
 
     return true;
 }
-export async function addStorage() {
-    document.getElementById("add-storage").addEventListener("submit", async function (event) {
-        event.preventDefault(); // Prevent the default form submission behavior
 
+function addStorage() {
+
+        console.log("HERE");
         if (validateForm()) {
             try {
-                const responseData = await sendData();
+                const responseData =  sendData();
                 console.log("Data sent to the backend:", responseData);
                 // Add any additional actions or logic here based on the response from the backend
             } catch (error) {
                 console.error("Error sending data:", error);
             }
         } else {
-            // Reset validation styles
-            const form = document.getElementById("add-storage");
-            Array.from(form.elements).forEach((element) => {
-                element.classList.remove("is-invalid");
-                element.classList.remove("is-valid");
-            });
+            // Reset validation st
 
             // Validate name field
-            const name = document.getElementById("product-name");
-            if (name.value.trim() === "") {
-                name.classList.add("is-invalid");
-            } else {
-                name.classList.add("is-valid");
-            }
 
             // Validate limitation field
-            const limitation = document.getElementById("limitation");
-            if (isNaN(limitation.value) || limitation.value.trim() === "") {
-                limitation.classList.add("is-invalid");
-            } else {
-                limitation.classList.add("is-valid");
-            }
 
             // Validate price field
-            const price = document.getElementById("price");
-            if (isNaN(price.value) || price.value.trim() === "") {
-                price.classList.add("is-invalid");
-            } else {
-                price.classList.add("is-valid");
-            }
         }
-        console.log("hi");
-    });
 }
