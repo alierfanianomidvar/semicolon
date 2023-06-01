@@ -1,106 +1,57 @@
-<link rel="stylesheet" href="../css/style.css">
-<link rel="stylesheet" href="../css/storageList.css">
-
 <div class="container">
-  <div class="col-lg-2">
-    <select id="mySelect1">
-      <option value="">Threshold</option>
-    </select>
-    <br><br>
-    <button type="button" onclick="addThreshold()">List Threshold</button>
-    <script> function addThreshold() {
-      let option;
-      const thresholdNum = [];
-      const select = document.getElementById("mySelect1");
-      for (let i = 0; i < thresholdNum.length; i++) {
-        option = document.createElement("option");
-        option.text = thresholdNum[i];
-        option.value = thresholdNum[i];
-        select.add(option);
-      }
-      option = document.createElement("option");
-      option.text = "Supplier3";
-      option.value = "Supplier3";
-      select.add(option);
+  <h5 class="h5 mb-5 mt-4">Storage</h5>
+  <div class="row">
+    <div class="col-lg-2">
+      <div class="form-group">
+        <select class="form-control" id="Threshold">
+          <option value="">Threshold</option>
+          <option>10</option>
+          <option>20</option>
+          <option>30</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-lg-2">
+      <div class="form-group">
+        <select class="form-control" id="Type">
+          <option value="">Type</option>
+          <option>Drug</option>
+          <option>Material</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-lg-2">
+      <div class="form-group">
+        <select class="form-control" id="Amount">
+          <option value="">Amount</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-lg-2">
+      <div class="add-btn text-lg-right">
+        <button class="btn btn-custom">Add Product</button>
+      </div>
+    </div>
 
-    } </script>
-  </div>
-
-  <div class="col-lg-2">
-    <select id="mySelect2">
-      <option value="">Type</option>
-    </select>
-    <br><br>
-    <button type="button" onclick="addType()">List Type</button>
-    <script> function addType() {
-      let option;
-      const types = ["Drug", "Material"];
-      const select = document.getElementById("mySelect2");
-      for (let i = 0; i < types.length; i++) {
-        option = document.createElement("option");
-        option.text = types[i];
-        option.value = types[i];
-        select.add(option);
-      }
-      option = document.createElement("option");
-      option.text = "Bandage";
-      option.value = "Bandage";
-      select.add(option);
-
-    } </script>
-  </div>
-
-  <div class="col-lg-2">
-    <select id="mySelect3">
-      <option value="">Amount</option>
-    </select>
-    <br><br>
-    <button type="button" onclick="addAmount()">List Amount</button>
-    <script> function addAmount() {
-      let option;
-      const amount = ["Drug", "Material"];
-      const select = document.getElementById("mySelect3");
-      for (let i = 0; i < amount.length; i++) {
-        option = document.createElement("option");
-        option.text = amount[i];
-        option.value = amount[i];
-        select.add(option);
-      }
-      option = document.createElement("option");
-      option.text = "Bandage";
-      option.value = "Bandage";
-      select.add(option);
-
-    } </script>
-  </div>
-
-  <div class="col-lg-2">
-    <div class="add-btn text-lg-right">
-      <button class="btn btn-custom">Add Product</button>
+    <div class="col-lg-2">
+      <div class="add-btn text-lg-right">
+        <button class="btn btn-custom">Filter</button>
+      </div>
     </div>
   </div>
 
-  <div class="col-lg-2">
-    <div class="add-btn text-lg-right">
-      <button class="btn btn-custom">Filter</button>
-    </div>
+  <div class="card">
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Threshold</th>
+      </tr>
+    </table>
   </div>
-
-</div>
-
-<div class="container">
-  <table id="storage-table">
-    <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Price</th>
-      <th>Quantity</th>
-      <th>Threshold</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- Table rows will be dynamically added using JavaScript -->
-    </tbody>
-  </table>
 </div>
