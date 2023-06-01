@@ -62,13 +62,19 @@
                                 <div class="form-row mt-3">
                                     <div class="col">
                                         <label for="address">Address:</label>
-                                        <input id="address" name="supplierAddress" type="text" class="form-control"/>
+                                        <input id="address"
+                                               name="supplierAddress"
+                                               type="text"
+                                               class="form-control"
+                                               placeholder="Enter supplier address"/>
                                     </div>
                                 </div>
-                                <div class="form-row mt-3">
+                                <br>
+                                <br>
+                                <div class="form-row mt-3 text-right">
                                     <div class="col">
-                                        <button class="btn btn-custom test-ali" type="submit">Submit</button>
                                         <button class="btn btn-secondary" type="reset">Reset the form</button>
+                                        <button class="btn btn-custom test-ali" type="submit">Submit</button>
                                     </div>
                                 </div>
                             </form>
