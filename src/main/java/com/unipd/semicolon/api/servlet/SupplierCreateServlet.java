@@ -31,13 +31,6 @@ public class SupplierCreateServlet extends HttpServlet {
     @Autowired
     private SupplierService supplierService;
 
-    /*@Override
-    public void init() throws ServletException {
-        super.init();
-        supplierService = new SupplierServiceImp();
-    }*/
-
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -50,7 +43,6 @@ public class SupplierCreateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-
         // model
         Supplier e = null;
         Message m = null;
@@ -59,13 +51,10 @@ public class SupplierCreateServlet extends HttpServlet {
 
         try {
             supplierService.create(e.getName(), e.getAddress(), e.getEmail(), e.getTelephoneNumber(), "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiUm9sZSI6InVzZXIiLCJpYXQiOjE2ODI2MzczMDcsImV4cCI6MTcxODYzNzMwN30.OCsiF_pXCHjhZMTfkyTn7sNDnzVP5qUeDV8M3UavmVo");
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-        }
-        m = new Message(String.format("Supplier %d successfully created.",
-                1));
-        try {
-            // stores the employee and the message as a request attribute
+
+            m = new Message(String.format("Supplier %d successfully created.",
+                    1));
+
             req.setAttribute("supplier", e);
             req.setAttribute("message", m);
 
@@ -76,19 +65,43 @@ public class SupplierCreateServlet extends HttpServlet {
             res.setHeader("supplier-message", message);
 
             // Generate a JavaScript script that displays the message in a popup dialog
-            String script = "<script>alert('" + message + "');</script>";
+            String script = "<script>" +
+                    "alert('" + message + "');" +
+                    "setTimeout(function() {" +
+                    "  window.location.href = 'http://localhost:8081/suppliers';" +
+                    "}, 2000);" +
+                    "</script>";
 
             // Write the script to the response
             res.setContentType("text/html");
             PrintWriter out = res.getWriter();
             out.println(script);
+        } catch (PharmacyExistsException ex) {
+            String message = "Supplier exists";
 
-            //req.getRequestDispatcher("/WEB-INF/jsp/createSupplierResult").forward(req, res);
+            // Set the message as a response attribute
+            res.setHeader("supplier-message", message);
+
+            String script = "<script>" +
+                    "alert('" + message + "');" +
+                    "setTimeout(function() {" +
+                    "  window.location.href = 'http://localhost:8081/supplier';" +
+                    "}, 2000);" +
+                    "</script>";
+
+            // Write the script to the response
+            res.setContentType("text/html");
+            PrintWriter out = res.getWriter();
+            out.println(script);
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException exc) {
+                throw new RuntimeException(exc);
+            }
+           // req.getRequestDispatcher("/WEB-INF/jsp/createSupplierResult.jsp").forward(req, res);
         } catch (Exception ex) {
-
-            throw ex;
+            throw new RuntimeException(ex);
         }
-
     }
 
     private Supplier parseRequest(HttpServletRequest req) {
