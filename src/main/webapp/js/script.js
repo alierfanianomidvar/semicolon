@@ -1,4 +1,5 @@
 // Word genarator
+import storageUrls from "./urls/storageUrls.js";
 function rWord(r) {
     var t, n = "bcdfghjklmnpqrstvwxyz", a = "aeiou", e = function (r) {
         return Math.floor(Math.random() * r)
