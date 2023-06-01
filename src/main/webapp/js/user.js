@@ -9,7 +9,7 @@ $(() => {
 
     // Example usage: Create a table with dynamic column names and content
     const tableId = "dynamicTable"; // Dynamic table ID
-    const columnNames = ["Col A", "Col B", "Col C", "Col D", "Col E"]; // Dynamic column names
+    const columnNames = ["","Name", "Last Name", "Role", "Address", "Status"]; // Dynamic column names
     const numRows = 1000; // Total number of rows
 
     // Generate the table ID dynamically
