@@ -1,4 +1,10 @@
+import storageUrls from "./urls/storageUrls";
+
 $(document).ready(function() {
+    const ar = new Router();
+    const data = ar.createFetch(storageUrls.GET_ALL);
+    console.log(data);
+
     // Add Product button
     $('.add-btn button').click(function() {
         // Get the values from the input fields
