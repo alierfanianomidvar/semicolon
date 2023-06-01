@@ -1,6 +1,14 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
 .container {
     max-width: 1200px;
     display: flex;
+    flex-direction: column;
     margin: 10px;
     padding: 20px;
     background-color: #f5f5f5;
@@ -8,16 +16,35 @@
     border-radius: 4px;
 }
 
-/* Column layout */
-.col-lg-2 {
-    width: 25%;
-    float: left;
-    padding: 10px;
-    margin: 10px;
+.container h5 {
+    margin-bottom: 10px;
 }
 
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
 
-/* Select elements */
+.col-lg-2 {
+    width: calc(33.33% - 20px);
+    margin-bottom: 20px;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+}
+
+.search-box .form-control {
+    flex-grow: 1;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
 select {
     width: 100%;
     padding: 10px;
@@ -27,7 +54,6 @@ select {
     background-color: #fff;
 }
 
-/* Button */
 .btn {
     display: inline-block;
     padding: 10px 20px;
@@ -42,38 +68,42 @@ select {
     cursor: pointer;
 }
 
-/* Button hover effect */
 .btn:hover {
     background-color: #45a049;
 }
 
-/* Clearfix */
-.clearfix::after {
-    content: "";
-    display: table;
-    clear: both;
+.card {
+    border-radius: 10px;
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
 }
 
-table {
+.card table {
     width: 100%;
-    border-collapse: collapse;
 }
 
-table th, table td {
-    padding: 8px;
+.card th,
+.card td {
+    padding: 10px;
     text-align: left;
 }
 
-table th {
-    background-color: #1549b8;
-    color: white;
-    padding: 10px; /* Add padding for space */
+.d-flex {
+    display: flex;
+    align-items: center;
 }
 
-table tr:nth-child(even) {
-    background-color: #f2f2f2;
+input[type="number"].form-control {
+    width: 80px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
-table td {
-    border-bottom: 1px solid #ccc;
+@media (max-width: 768px) {
+    .col-md-3 {
+        width: 100%;
+    }
 }
