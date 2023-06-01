@@ -1,6 +1,6 @@
 // modal.js
 
-export const createModal = (title, content, type) => {
+export const createModal = (title, content, type, data) => {
     const modalEl = document.createElement('div');
     modalEl.classList.add('modal', 'fade');
     modalEl.setAttribute('id', 'errorModal');
@@ -52,6 +52,7 @@ export const createModal = (title, content, type) => {
             break;
         case 'z':
 
+            break;
         default:
             modalEl.innerHTML = `
     <div class="modal-dialog" role="document">
@@ -76,4 +77,27 @@ export const createModal = (title, content, type) => {
 
 
     return modalEl;
+};
+
+
+export const showModal = () => {
+    const modalEl = createModal("Error!", "This is Error!", "y");
+    document.body.appendChild(modalEl);
+
+    // Get the main content container
+    const mainContent = document.getElementById('main-container');
+
+    // Add the blur effect to the main content container
+    mainContent.classList.add('blur-effect');
+
+    // Add classes to body element to prevent scrolling and apply modal styles
+    document.body.classList.add('modal-open');
+    $(modalEl).modal('show');
+
+    // Remove modal and blur effect when modal is closed
+    $(modalEl).on('hidden.bs.modal', () => {
+        document.body.removeChild(modalEl);
+        mainContent.classList.remove('blur-effect');
+        document.body.classList.remove('modal-open');
+    });
 };
