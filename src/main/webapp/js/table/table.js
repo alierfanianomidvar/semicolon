@@ -63,14 +63,14 @@ export const rWord = (r) => {
 };
 
 
-function generateTableRows(numRows, tableBody, columnNames, type, cellContentGenerator) {
+function generateTableRows(numRows, tableBody, columnNames, type, cellContentGenerator, src) {
     for (let n = 0; n < numRows; n++) {
         const row = $("<tr>").appendTo(tableBody);
 
         columnNames.forEach((columnName, index) => {
             let cellContent = "";
             if (type === "user" && index === 0) {
-                cellContent = generateUserCellContent();
+                cellContent = generateUserCellContent(src);
             } else {
                 cellContent = cellContentGenerator();
             }
@@ -81,4 +81,5 @@ function generateTableRows(numRows, tableBody, columnNames, type, cellContentGen
             $("<td>", { html: "<a href='#'>Edit</a>", style: "padding:2px;" }).appendTo(row);
         }
     }
+    //based on the type we need to add a footer for the table
 }
