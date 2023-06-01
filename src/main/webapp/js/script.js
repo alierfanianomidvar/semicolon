@@ -31,24 +31,5 @@ $(window).on("popstate", function () {
 
 $(document).ready(function () {
     $("#sidebar-html").load("sidebar.html");
-    // Generate a big table
-    for (var n = 0; n < 1000; n++) {
-        var row = $("<tr>");
-        $("#sampleTableA").find("thead th").each(function () {
-            $("<td>", {
-                html: rWord(8),
-                style: "padding:2px;"
-            }).appendTo($(row));
-        });
-        row.appendTo($("#sampleTableA").find("tbody"));
-    }
-
-    // And make them fancy
-    var fancyTableA = $("#sampleTableA").fancyTable({
-        sortColumn: 0,
-        pagination: true,
-        perPage: 5,
-        globalSearch: true
-    });
 });
 
