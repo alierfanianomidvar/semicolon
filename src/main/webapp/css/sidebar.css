@@ -6,15 +6,20 @@
     border-right: 1px solid black;
     padding: 0.5rem;
     min-height: 100vh;
-}
+    height: 100vh;
 
+}
+.general-section{height:60%}
+
+.settings-section{    height: 14%;}
 .logo-container {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: start; /* Add this line */
-    margin-bottom: 0.6rem;
-    margin-top: 0.6rem;
+    justify-content: start;
+    margin-bottom: 3%;
+    margin-top: 3%;
+    height: 6%;
 }
 
 .logo-container h3 {
@@ -29,9 +34,10 @@
 .profile-container {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    /*margin-bottom: 10%;*/
     background-color: var(--primary-color);
     border-radius: 0.5rem;
+    height: 13%;
 }
 
 .profile-container h5 {
@@ -56,13 +62,15 @@
     list-style: none;
     margin: 0.2rem;
     padding: 0;
+    height: 95%;
 }
-
+.general-section ul li{height: 13%;}
+.settings-section ul li{min-height: 13%;height: 50%;}
 .general-section li a {
     color: black;
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 2%;
     border-radius: 0.5rem;
     padding: 0.2rem;
 }
@@ -88,13 +96,15 @@
     list-style: none;
     margin: 0.2rem;
     padding: 0;
+    height: 100%;
 }
-
+.settings-section li{min-height: 13%;}
 .settings-section li a {
     color: black;
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 2%;
+    height: 100%;
 }
 
 .settings-section li a:hover{
