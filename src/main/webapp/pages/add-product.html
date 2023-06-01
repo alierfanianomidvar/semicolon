@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    <script type="module" src="../js/addProduct.js"></script>
+
 </head>
 <body>
 <div class="container">
@@ -18,7 +20,7 @@
             <div class="row g-3">
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="supplier">Product Type:</label>
+                        <label for="product-type">Product Type:</label>
                         <select class="form-control" id="product-type">
                             <option value="DRUG">Drug</option>
                             <option value="MATERIAL">Material</option>
@@ -33,9 +35,10 @@
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="supplier">Supplier:</label>
-                        <select class="form-control" id="supplier">
-                            <option value="1">ID = 1</option>
+                        <label for="supplierId">Supplier:</label>
+                        <select class="form-control" id="supplierId">
+                            <option value="1">Option one</option>
+                            <option value="2">Option two</option>
                         </select>
                     </div>
                 </div>
@@ -45,7 +48,7 @@
                         <select class="form-control" id="gender">
                             <option value="MALE">Male</option>
                             <option value="FEMALE">Female</option>
-                            <option value="NON_BINARY">Female</option>
+                            <option value="NON_BINARY">Non-Binary</option>
                         </select>
                     </div>
                 </div>
@@ -126,7 +129,6 @@
         </div>
     </form>
 </div>
-<script type="module" src="../js/add-product.js"></script>
 
 </body>
 </html>
