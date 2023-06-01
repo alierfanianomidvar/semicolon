@@ -1,8 +1,8 @@
 import storageUrls from "./urls/storageUrls.js";
-import {createTable, rWord} from "./table/table.js";
+import { createTable, rWord } from "./table/table.js";
 
 $(document).ready(function() {
-
+    // Fetch storage data
     const ar = new Router();
     const data = ar.createFetch(storageUrls.GET_ALL);
     console.log(data);
@@ -55,51 +55,36 @@ $(document).ready(function() {
             }
         });
     });
+});
 
-    
-    $(() => {
-        const tableId = "storage_list"; // Dynamic table ID
-        const columnNames = ["", "Name", "Type", "Price", "Quantity", "Threshold"]; // Dynamic column names
-        //TODO: number of rows must be edited and we need to put the correct number of rows based on our user list fetch api
-        const numRows = 1000; // Total number of rows
+$(() => {
+    const tableId = "storage_list";
+    const columnNames = ["", "Name", "Type", "Price", "Quantity", "Threshold"];
+    const numRows = 1000;
 
-        // Generate the table ID dynamically
-        const table = $(`<table>`, {
-            id: tableId,
-            class: "table table-striped sampleTable",
-        });
-
-        // Append the table to the container
-        $(".border").append(table);
-
-        // for passing the cellContentGenerator we need to define a proper function that returns the user actual information
-        createTable(tableId, columnNames, numRows, () => {
-            return rWord(8); // Generate random cell content
-        });
-
-        // And make the table fancy
-        // const fancyTableA = $(`#${tableId}`).fancyTable({
-        //     sortColumn: 0,
-        //     pagination: true,
-        //     perPage: 5,
-        //     globalSearch: true,
-        // });
-
-        $('.search-box input[type="text"]').on('keyup', function() {
-            const searchText = $(this).val().toLowerCase();
-            $('table tbody tr').each(function() {
-                const name = $(this).find('.name').text().toLowerCase();
-                const type = $(this).find('.type').text().toLowerCase();
-                const price = $(this).find('.price').text().toLowerCase();
-                const quantity = $(this).find('.quantity').text().toLowerCase();
-                const threshold = $(this).find('.threshold').text().toLowerCase();
-
-                const match = name.includes(searchText) || type.includes(searchText) || price.includes(searchText) || quantity.includes(searchText) || threshold.includes(searchText);
-
-                $(this).toggle(match);
-            });
-        });
-
+    const table = $(`<table>`, {
+        id: tableId,
+        class: "table table-striped sampleTable",
     });
 
+    $(".border").append(table);
+
+    createTable(tableId, columnNames, numRows, () => {
+        return rWord(8);
+    });
+
+    $('.search-box input[type="text"]').on('keyup', function() {
+        const searchText = $(this).val().toLowerCase();
+        $('table tbody tr').each(function() {
+            const name = $(this).find('.name').text().toLowerCase();
+            const type = $(this).find('.type').text().toLowerCase();
+            const price = $(this).find('.price').text().toLowerCase();
+            const quantity = $(this).find('.quantity').text().toLowerCase();
+            const threshold = $(this).find('.threshold').text().toLowerCase();
+
+            const match = name.includes(searchText) || type.includes(searchText) || price.includes(searchText) || quantity.includes(searchText) || threshold.includes(searchText);
+
+            $(this).toggle(match);
+        });
+    });
 });
