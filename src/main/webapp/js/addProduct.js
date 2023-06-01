@@ -1,4 +1,5 @@
-import storageUrls from "./urls/storageUrls.js";
+import materialUrls from "./urls/materialUrls";
+import drugUrls from "./urls/drugUrls";
 
 export function sendData() {
     // Prepare data as an object
@@ -18,7 +19,17 @@ export function sendData() {
 
     // Modify the URL to the appropriate endpoint on your backend
     const router = new Router();
-    return router.createFetch(storageUrls.ADD);
+    console.log(data.productType);
+    if (data.productType === "DRUG") {
+        return router.createFetch(drugUrls.ADD,
+            null
+            , null
+            , null
+            , data);
+    } else if (data.productType === "MATERIAL") {
+        return router.createFetch(materialUrls.ADD,
+            null , null , null , data);
+    }
 }
 
 export function validateForm() {
@@ -56,28 +67,51 @@ export function validateForm() {
     return true;
 }
 
-export function addStorage() {
+export async function addProduct() {
+    event.preventDefault();
 
     console.log("HERE");
     if (validateForm()) {
         try {
-            const responseData = sendData();
+            const responseData = await sendData();
             console.log("Data sent to the backend:", responseData);
             // Add any additional actions or logic here based on the response from the backend
         } catch (error) {
             console.error("Error sending data:", error);
         }
     } else {
-        console.log("hoooy")
-        // Reset validation st
-
+        // Reset validation styles
+        const form = document.getElementById("add-product");
+        Array.from(form.elements).forEach((element) => {
+            element.classList.remove("is-invalid");
+            element.classList.remove("is-valid");
+        });
         // Validate name field
+        const name = document.getElementById("product-name");
+        if (name.value.trim() === "") {
+            name.classList.add("is-invalid");
+        } else {
+            name.classList.add("is-valid");
+        }
 
         // Validate limitation field
+        const limitation = document.getElementById("limitation");
+        if (isNaN(limitation.value) || limitation.value.trim() === "") {
+            limitation.classList.add("is-invalid");
+        } else {
+            limitation.classList.add("is-valid");
+        }
 
         // Validate price field
+        const price = document.getElementById("price");
+        if (isNaN(price.value) || price.value.trim() === "") {
+            price.classList.add("is-invalid");
+        } else {
+            price.classList.add("is-valid");
+        }
     }
 }
-$(function() {
-    document.querySelector('#add-btn').addEventListener('click', addStorage);
+
+$(function () {
+    document.querySelector('#add-btn').addEventListener('click', addProduct);
 });
