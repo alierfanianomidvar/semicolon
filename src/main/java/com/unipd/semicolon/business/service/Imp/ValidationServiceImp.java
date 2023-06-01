@@ -180,7 +180,7 @@ public class ValidationServiceImp implements ValidationService {
         List<Gender> allowedGenders = Arrays.asList(
                 Gender.FEMALE,
                 Gender.MALE,
-                Gender.NON_BINARY
+                Gender.UNISEX
         );
 
         if (gender == null || !allowedGenders.contains(gender)) {
