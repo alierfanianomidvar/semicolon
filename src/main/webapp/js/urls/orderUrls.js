@@ -22,7 +22,7 @@ class orderUrls extends BaseApiUrl {
         token: true
     };
 
-    static GET = {
+    static GET_ALL = {
         url: `${BaseApiUrl.BASE_URL}/${orderUrls.ORDER_BASE_URL}/get-all`,
         method: 'GET',
         token: false
