@@ -1,9 +1,11 @@
 import {createTable, rWord} from "./table/table.js";
+import {showModal} from "./modal.js";
 
 
 
 $(() => {
 
+    showModal()
     // Example usage: Create a table with dynamic column names and content
     const tableId = "user_list"; // Dynamic table ID
     const columnNames = ["","Name", "Last Name", "Role", "Address", "Status"]; // Dynamic column names
