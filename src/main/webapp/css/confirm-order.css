@@ -1,0 +1,23 @@
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f0f0f0;
+    padding: 20px;
+    width: 300px;
+    border: 1px solid #ccc;
+}
+
+.popup input[type="text"], .popup input[type="number"] {
+    display: block;
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 5px;
+}
+
+.popup button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    width: 100%;
+}
