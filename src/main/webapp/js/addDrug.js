@@ -1,4 +1,3 @@
-/*
 $(document).ready(function() {
 
     $('#decrease-quantity').click(function() {
@@ -15,6 +14,6 @@ $(document).ready(function() {
         $('#quantity').val(quantity);
     });
 });
-*/
+
 
 
