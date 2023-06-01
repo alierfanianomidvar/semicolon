@@ -5,8 +5,8 @@ import {createTable, rWord} from "./table/table.js";
 $(() => {
 
     // Example usage: Create a table with dynamic column names and content
-    const tableId = "orders_list"; // Dynamic table ID
-    const columnNames = ["","Name", "Last Name", "Role", "Address", "Status"]; // Dynamic column names
+    const tableId = "order_list"; // Dynamic table ID
+    const columnNames = ["","Receipt ID", "Price", "Payment Method", "Date"]; // Dynamic column names
     //TODO: number of rows must be edited and we need to put the correct number of rows based on our user list fetch api
     const numRows = 1000; // Total number of rows
 
