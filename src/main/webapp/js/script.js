@@ -5,7 +5,7 @@ import storageUrls from "./urls/storageUrls.js";
 import orderUrls from "./urls/orderUrls.js";
 import supplierUrls from "./urls/supplierUrls.js";
 import userUrls from "./urls/userUrls.js";
-import {createModal} from "./modal.js";
+import {createModal, showModal} from "./modal.js";
 // $(function () {
 //     $("#navbar-html").load("sidebar.html");
 //
@@ -16,17 +16,7 @@ import {createModal} from "./modal.js";
 //
 //
 // });
-const showModal = () => {
-    // const modalEl = createModal('Error Message', 'Error message goes here.');
-    const modalEl = createModal("Error!", "This is Error!", "y")
-    document.body.appendChild(modalEl);
 
-    $(modalEl).modal('show');
-
-    $(modalEl).on('hidden.bs.modal', () => {
-        document.body.removeChild(modalEl);
-    });
-}
 
 
 
