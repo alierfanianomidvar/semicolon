@@ -15,6 +15,11 @@
 
 }
 
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
 h4.order-title {
     font-weight: bold;
@@ -45,12 +50,11 @@ h4.order-title {
 }
 
 /* Button */
-button.custom-button {
+button.custom-button1 {
     top: 4rem;
     right: 2.5rem;
     width: 3.875rem;
     height: 3rem;
-    position: absolute;
     background-color: #42C3AA;
     color: white;
     border-radius: 0.30rem;
@@ -61,7 +65,7 @@ button.custom-button {
     font-weight: bold;
 }
 
-button.custom-button:hover {
+button.custom-button1:hover {
     background-color: #2D9B86;
 }
 
@@ -70,7 +74,6 @@ button.custom-button2 {
     right: 7rem;
     width: 8.75rem;
     height: 3rem;
-    position: absolute;
     background-color: #42C3AA;
     color: white;
     border-radius: 0.30rem;
