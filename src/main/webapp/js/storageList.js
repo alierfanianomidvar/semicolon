@@ -47,10 +47,8 @@ $(document).ready(function() {
             }
         });
     });
-});
 
 
-$(document).ready(function() {
     $('.search-box input[type="text"]').on('keyup', function() {
         const searchText = $(this).val().toLowerCase();
         $('table tbody tr').each(function() {
