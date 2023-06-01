@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import org.apache.logging.log4j.core.util.IOUtils;
 import org.apache.logging.log4j.message.StringFormattedMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.awt.datatransfer.MimeTypeParseException;
 import java.io.IOException;
@@ -27,11 +28,15 @@ import java.util.Collection;
 public class SupplierCreateServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
+    @Autowired
     private SupplierService supplierService;
 
-    public void init() {
+    /*@Override
+    public void init() throws ServletException {
+        super.init();
         supplierService = new SupplierServiceImp();
-    }
+    }*/
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -52,11 +57,11 @@ public class SupplierCreateServlet extends HttpServlet {
 
         e = parseRequest(req);
 
-        /*try {
-            supplierService.create(e.getName(), e.getAddress(), e.getEmail(), e.getTelephoneNumber(), "");
+        try {
+            supplierService.create(e.getName(), e.getAddress(), e.getEmail(), e.getTelephoneNumber(), "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiUm9sZSI6InVzZXIiLCJpYXQiOjE2ODI2MzczMDcsImV4cCI6MTcxODYzNzMwN30.OCsiF_pXCHjhZMTfkyTn7sNDnzVP5qUeDV8M3UavmVo");
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
-        }*/
+        }
         m = new Message(String.format("Supplier %d successfully created.",
                 1));
         try {
