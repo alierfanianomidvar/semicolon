@@ -1,6 +1,3 @@
-<link rel="stylesheet" href="../css/style.css">
-<link rel="stylesheet" href="../css/addDrug.css">
-
 <div class="container">
     <h5 class="h5 mb-5 mt-4">Add Order</h5>
     <div class="row">
@@ -12,34 +9,23 @@
             </div>
         </div>
         <div class="col-lg-3">
-            <select id="mySelect">
-                <option value="">Suppliers</option>
-            </select>
-            <br><br>
-            <button type="button" onclick="listSuppliers()">List Suppliers</button>
-            <script> function listSuppliers() {
-                let option;
-                const suppliers = ["Supplier1", "Supplier2"];
-                const select = document.getElementById("mySelect");
-                for (let i = 0; i < suppliers.length; i++) {
-                    option = document.createElement("option");
-                    option.text = suppliers[i];
-                    option.value = suppliers[i];
-                    select.add(option);
-                }
-                option = document.createElement("option");
-                option.text = "Supplier3";
-                option.value = "Supplier3";
-                select.add(option);
-
-            } </script>
+            <div class="form-group">
+                <select class="form-control" id="Supplier">
+                    <option value="">Suppliers</option>
+                    <option>Supplier A</option>
+                    <option>Supplier B</option>
+                    <option>Supplier C</option>
+                </select>
+            </div>
         </div>
         <div class="col-lg-3">
-            <select id="product" name="product">
-                <option value="">Products</option>
-                <option value="drug">Drug</option>
-                <option value="material">Material</option>
-            </select>
+            <div class="form-group">
+                <select id="product" name="product">
+                    <option value="">Products</option>
+                    <option value="drug">Drug</option>
+                    <option value="material">Material</option>
+                </select>
+            </div>
         </div>
         <div class="col-lg-3">
             <div class="add-btn text-lg-right">
@@ -48,36 +34,83 @@
         </div>
     </div>
 
-    <form class="card rounded-xl" id = "add-drug">
-        <div class="card-body p-4">
-            <div class="row g-3">
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="name">Name:</label>
-                        <input type="text" class="form-control" id="name">
+    <div class="card">
+        <table>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Is Active</th>
+                <th>Quantity</th>
+            </tr>
+            <tr>
+                <td><input type="checkbox"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <div class="d-flex">
+                        <button class="btn btn-outline-secondary decrease-quantity" type="button">-</button>
+                        <input type="number" class="form-control quantity" min="1" value="1">
+                        <button class="btn btn-outline-secondary increase-quantity" type="button">+</button>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="price">Price:</label>
-                        <input type="text" class="form-control" id="price">
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <div class="d-flex">
+                        <button class="btn btn-outline-secondary decrease-quantity" type="button">-</button>
+                        <input type="number" class="form-control quantity" min="1" value="1">
+                        <button class="btn btn-outline-secondary increase-quantity" type="button">+</button>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="isActive">Is Active:</label>
-                        <input type="text" class="form-control" id="isActive">
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <div class="d-flex">
+                        <button class="btn btn-outline-secondary decrease-quantity" type="button">-</button>
+                        <input type="number" class="form-control quantity" min="1" value="1">
+                        <button class="btn btn-outline-secondary increase-quantity" type="button">+</button>
                     </div>
-                </div>
-                <div class="d-flex">
-                    <div class="form-group">
-                        <label for="quantity">Quantity:</label>
-                        <button class="btn btn-outline-secondary" type="button" id="decrease-quantity">-</button>
-                        <input type="number" class="form-control" id="quantity" min="1" value="1">
-                        <button class="btn btn-outline-secondary" type="button" id="increase-quantity">+</button>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <div class="d-flex">
+                        <button class="btn btn-outline-secondary decrease-quantity" type="button">-</button>
+                        <input type="number" class="form-control quantity" min="1" value="1">
+                        <button class="btn btn-outline-secondary increase-quantity" type="button">+</button>
                     </div>
-                </div>
-            </div>
+                </td>
+            </tr>
+        </table>
     </div>
-</form>
+
+    <div class="row">
+        <div class="col-lg-3">
+            <p>Total Price: <span id="total-price">$0</span></p>
+        </div>
+        <div class="col-lg-3">
+            <div class="add-btn text-lg-right">
+                <button class="btn btn-custom">Cancel</button>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="add-btn text-lg-right">
+                <button class="btn btn-custom">Submit Order</button>
+            </div>
+        </div>
+    </div>
 </div>

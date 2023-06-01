@@ -1,4 +1,3 @@
-/* Global styles */
 body {
     font-family: Arial, sans-serif;
     background-color: #f2f2f2;
@@ -17,25 +16,29 @@ body {
     border-radius: 4px;
 }
 
-/* Heading */
 .container h5 {
     margin-bottom: 10px;
 }
 
-/* Column layout */
 .row {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 }
 
+.col-md-3,
 .col-lg-3 {
-    width: calc(25% - 20px);
+    width: calc(33.33% - 20px);
     margin-bottom: 20px;
 }
 
-/* Search box */
-.search-box input[type="text"] {
+.search-box {
+    display: flex;
+    align-items: center;
+}
+
+.search-box .form-control {
+    flex-grow: 1;
     width: 100%;
     padding: 10px;
     font-size: 16px;
@@ -43,7 +46,6 @@ body {
     border-radius: 4px;
 }
 
-/* Select elements */
 select {
     width: 100%;
     padding: 10px;
@@ -53,7 +55,6 @@ select {
     background-color: #fff;
 }
 
-/* Button */
 .btn {
     display: inline-block;
     padding: 10px 20px;
@@ -68,84 +69,50 @@ select {
     cursor: pointer;
 }
 
-/* Button hover effect */
 .btn:hover {
     background-color: #45a049;
-}
-
-/* Clearfix */
-.clearfix::after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-/* Table */
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-table th, table td {
-    padding: 8px;
-    text-align: left;
-}
-
-table th {
-    background-color: #1549b8;
-    color: white;
-    padding: 10px; /* Add padding for space */
-}
-
-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-table td {
-    border-bottom: 1px solid #ccc;
-}
-
-/* Table row */
-.table-row {
-    display: flex;
-    align-items: center;
 }
 
 .card {
     border-radius: 10px;
     background-color: #fff;
     padding: 20px;
+    margin-bottom: 20px; /* Add margin-bottom for space */
 }
 
-.card .form-group {
+
+.card table {
+    width: 100%;
+}
+
+.card th,
+.card td {
+    padding: 10px;
+    text-align: left;
+}
+
+.d-flex {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
 }
 
-.card .form-group label {
-    font-weight: bold;
-    margin-right: 10px;
-}
-
-.card .form-group input[type="text"],
-.card .form-group input[type="number"] {
-    width: 100%;
+/* Quantity input */
+input[type="number"].form-control {
+    width: 80px;
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
-.card .d-flex {
-    align-items: center;
-    margin-top: 10px;
+/* Total price */
+#total-price {
+    font-weight: bold;
 }
 
-.card .d-flex label {
-    margin-right: 10px;
-}
-
-.card .d-flex button {
-    margin-left: 5px;
+/* Additional styles for responsiveness */
+@media (max-width: 768px) {
+    .col-md-3 {
+        width: 100%;
+    }
 }
