@@ -1,6 +1,6 @@
 // Define a function for creating the table
 
-export const createTable = (tableId, columnNames, numRows, cellContentGenerator, type = "default") => {
+export const createTable = (tableId, columnNames, numRows, cellContentGenerator, type = "default", footerType, footerContent) => {
     // Generate the table headers
     const tableHeaders = $(`<thead>`).appendTo($(`#${tableId}`));
     const headerRow = $(`<tr>`).appendTo(tableHeaders);
@@ -27,6 +27,8 @@ export const createTable = (tableId, columnNames, numRows, cellContentGenerator,
         pagination: true,
         perPage: 5,
         globalSearch: true,
+        type: footerType ? footerType : null,
+        footerContent: footerContent
     });
 };
 
