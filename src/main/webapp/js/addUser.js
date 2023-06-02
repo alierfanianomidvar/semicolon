@@ -1,4 +1,5 @@
 import userUrls from "./urls/userUrls.js";
+import {showErrorMessage} from "./utils.js";
 
 const addUserForm = document.getElementById('add-user-form');
 
@@ -15,8 +16,7 @@ addUserForm.addEventListener('submit', async function(event) {
         id: body.role
     }
 
-    console.log(body.profilePicture.size)
-    if (body.profilePicture.size === !0) {
+    if (body.profilePicture.size !== 0) {
         body.profilePicture = await getByteProfilePicture();
     }
     else {
@@ -37,7 +37,7 @@ addUserForm.addEventListener('submit', async function(event) {
     if (response.ok) {
         window.location.hash = "#user";
     } else {
-        showError(data.msg);
+        showErrorMessage(data.msg);
         console.log('There was a problem with the fetch operation:', data.msg);
     }
 });
@@ -63,11 +63,4 @@ function getByteProfilePicture() {
         // Read the file as an ArrayBuffer
         reader.readAsArrayBuffer(file);
     });
-}
-function showError(message) {
-    const error = document.getElementById("error-message");
-    const alert = document.createElement("div");
-    alert.className = "alert alert-danger";
-    alert.textContent = message;
-    error.appendChild(alert);
 }
