@@ -2,12 +2,24 @@ import materialUrls from "./urls/materialUrls.js";
 import drugUrls from "./urls/drugUrls.js";
 
 const supplierListValue = document.getElementById("supplierId").value;
-const supplierListInt = parseInt(supplierListValue, 10); // 10 represents the radix/base (decimal in this case)
+const supplierListInt = parseInt(supplierListValue, 10);
 
-console.log(supplierListInt); // Output the converted integer value
+console.log(supplierListInt);
+
+const countryOfProductionSelect = document.getElementById("country-of-production");
+
+const countryCodes = [
+    "AF", "AX", "AL", "DZ", "AS", "AD", "AO", "AI", "AQ", "AG", "AR", "AM", "AW", "AU", "AT", "AZ", "BS", "BH", "BD", "BB", "BY", "BE", "BZ", "BJ", "BM", "BT", "BO", "BQ", "BA", "BW", "BV", "BR", "IO", "BN", "BG", "BF", "BI", "KH", "CM", "CA", "CV", "KY", "CF", "TD", "CL", "CN", "CX", "CC", "CO", "KM", "CG", "CD", "CK", "CR", "CI", "HR", "CU", "CW", "CY", "CZ", "DK", "DJ", "DM", "DO", "EC", "EG", "SV", "GQ", "ER", "EE", "ET", "FK", "FO", "FJ", "FI", "FR", "GF", "PF", "TF", "GA", "GM", "GE", "DE", "GH", "GI", "GR", "GL", "GD", "GP", "GU", "GT", "GG", "GN", "GW", "GY", "HT", "HM", "VA", "HN", "HK", "HU", "IS", "IN", "ID", "IR", "IQ", "IE", "IM", "IL", "IT", "JM", "JP", "JE", "JO", "KZ", "KE", "KI", "KP", "KR", "KW", "KG", "LA", "LV", "LB", "LS", "LR", "LY", "LI", "LT", "LU", "MO", "MK", "MG", "MW", "MY", "MV", "ML", "MT", "MH", "MQ", "MR", "MU", "YT", "MX", "FM", "MD", "MC", "MN", "ME", "MS", "MA", "MZ", "MM", "NA", "NR", "NP", "NL", "NC", "NZ", "NI", "NE", "NG", "NU", "NF", "MP", "NO", "OM", "PK", "PW", "PS", "PA", "PG", "PY", "PE", "PH", "PN", "PL", "PT", "PR", "QA", "RE", "RO", "RU", "RW", "BL", "SH", "KN", "LC", "MF", "PM", "VC", "WS", "SM", "ST", "SA", "SN", "RS", "SC", "SL", "SG", "SX", "SK", "SI", "SB", "SO", "ZA", "GS", "SS", "ES", "LK", "SD", "SR", "SJ", "SZ", "SE", "CH", "SY", "TW", "TJ", "TZ", "TH", "TL", "TG", "TK", "TO", "TT", "TN", "TR", "TM", "TC", "TV", "UG", "UA", "AE", "GB", "US", "UM", "UY", "UZ", "VU", "VE", "VN", "VG", "VI", "WF", "EH", "YE", "ZM", "ZW"
+];
+
+countryCodes.forEach(countryCode => {
+    const option = document.createElement("option");
+    option.value = countryCode;
+    option.textContent = countryCode;
+    countryOfProductionSelect.appendChild(option);
+});
 
 export function sendData() {
-    // Prepare data as an object
     const productType = document.getElementById("product-type").value;
     const name = document.getElementById("product-name").value;
     const supplier = supplierListInt;
@@ -22,22 +34,17 @@ export function sendData() {
     const description = document.getElementById("description").value;
     const image = null;
 
-
-    // Validate expiration date
     const expirationDateInput = document.getElementById("expiration-date");
-    const currentDate = new Date().toISOString(); // Get the current local date and time
+    const currentDate = new Date().toISOString();
 
     if (expirationDateInput.value < currentDate) {
         console.error("Expiration date should not be before the current date");
-        expirationDateInput.classList.add("is-invalid"); // Add the "is-invalid" class
+        expirationDateInput.classList.add("is-invalid");
         return null;
     } else {
-        expirationDateInput.classList.remove("is-invalid"); // Remove the "is-invalid" class
+        expirationDateInput.classList.remove("is-invalid");
     }
 
-
-
-// Validate price and limitation as numbers
     const priceInput = document.getElementById("price");
     const limitationInput = document.getElementById("limitation");
     if (isNaN(parseFloat(price)) || isNaN(parseFloat(limitation))) {
@@ -50,31 +57,25 @@ export function sendData() {
         limitationInput.classList.remove("is-invalid");
     }
 
-// Validate name should not start with a number or be only a number
-    // Validate name should not start with a number or be only a number and should not be null
-    // Validate name should not start with a number or be only a number and should not be null
     const nameInput = document.getElementById("product-name");
-    const productName = nameInput.value.trim(); // Trim whitespace from the input value
-    const nameError = nameInput.nextElementSibling; // Get the error feedback element
+    const productName = nameInput.value.trim();
+    const nameError = nameInput.nextElementSibling;
 
     if (!productName) {
         console.error("Name should not be empty");
-        nameError.textContent = "Name should not be empty"; // Set the error message
-        nameInput.classList.add("is-invalid"); // Add the "is-invalid" class
+        nameError.textContent = "Name should not be empty";
+        nameInput.classList.add("is-invalid");
         return null;
     } else if (/^\d/.test(productName) || /^\d+$/.test(productName)) {
         console.error("Name should not start with a number or be only a number");
-        nameError.textContent = "Name should not start with a number or be only a number"; // Set the error message
-        nameInput.classList.add("is-invalid"); // Add the "is-invalid" class
+        nameError.textContent = "Name should not start with a number or be only a number";
+        nameInput.classList.add("is-invalid");
         return null;
     } else {
-        nameError.textContent = ""; // Clear the error message
-        nameInput.classList.remove("is-invalid"); // Remove the "is-invalid" class
+        nameError.textContent = "";
+        nameInput.classList.remove("is-invalid");
     }
 
-
-
-    // Prepare the data object
     const data = {
         productType,
         name,
@@ -91,17 +92,15 @@ export function sendData() {
         image
     };
 
-    console.log(data)
-    // Modify the URL to the appropriate endpoint on your backend
+    console.log(data);
+
     const router = new Router();
     if (data.productType === "DRUG") {
-        const a = router.createFetch(drugUrls.ADD, null, null, null, data);
-        return a;
+        return router.createFetch(drugUrls.ADD, null, null, null, data);
     } else if (data.productType === "MATERIAL") {
         return router.createFetch(materialUrls.ADD, null, null, null, data);
     }
 
-    // Return a default value if the productType is neither DRUG nor MATERIAL
     return null;
 }
 
@@ -113,7 +112,6 @@ export const addProduct = async () => {
         const responseData = await sendData();
         console.log(responseData);
         console.log("Data sent to the backend:", responseData);
-        // Add any additional actions or logic here based on the response from the backend
     } catch (error) {
         let errorMessage = "An error occurred while sending data. Please try again later.";
         if (error.response && error.response.data && error.response.data.msg) {

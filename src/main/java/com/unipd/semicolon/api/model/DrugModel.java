@@ -25,7 +25,7 @@ public class DrugModel {
         private String description;
         private int limitation;
         private float price;
-        private Country countryOFProduction;
+        private Country countryOfProduction;
 
 
 
@@ -47,7 +47,7 @@ public class DrugModel {
                 String description,
                 int limitation,
                 float price,
-                Country countryOFProduction,
+                Country countryOfProduction,
                 List<Order> orders,
                 List<Receipt> receipts) {
 
@@ -64,7 +64,7 @@ public class DrugModel {
                 this.description = description;
                 this.limitation = limitation;
                 this.price = price;
-                this.countryOFProduction = countryOFProduction;
+                this.countryOfProduction = countryOfProduction;
         }
 
         public Long getId() {
@@ -169,12 +169,12 @@ public class DrugModel {
                 this.price = price;
         }
 
-        public Country getCountryOFProduction() {
-                return countryOFProduction;
+        public Country getCountryOfProduction() {
+                return countryOfProduction;
         }
 
-        public void setCountryOFProduction(Country countryOFProduction) {
-                this.countryOFProduction = countryOFProduction;
+        public void setCountryOfProduction(Country countryOfProduction) {
+                this.countryOfProduction = countryOfProduction;
         }
 
 
