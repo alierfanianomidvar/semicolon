@@ -1,3 +1,17 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <link href="../css/add-product.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    <script type="module" src="../js/addSupplier.js"></script>
+</head>
+<body>
 <div class="container">
     <h2 class="h2 mb-5 mt-4">Supplier</h2>
 
@@ -8,7 +22,7 @@
                 <div class="col-4">
                     <div class="form-group">
                         <label class="form-label">Supplier Name :</label>
-                        <input type="text" class="form-control" placeholder="Supplier Name"/>
+                        <input type="text" class="form-control" id="supplier-name" placeholder="Supplier Name"/>
                     </div>
                 </div>
 
@@ -16,7 +30,7 @@
                 <div class="col-4">
                     <div class="form-group">
                         <label class="form-label">Email :</label>
-                        <input type="text" class="form-control" placeholder="Email"/>
+                        <input type="text" class="form-control" id="email" placeholder="Email"/>
                     </div>
                 </div>
 
@@ -24,7 +38,7 @@
                 <div class="col-4">
                     <div class="form-group">
                         <label class="form-label">Phone Number :</label>
-                        <input type="text" class="form-control" placeholder="Phone Number"/>
+                        <input type="text" class="form-control" id="telephone-number" placeholder="Phone Number"/>
                     </div>
                 </div>
             </div>
@@ -34,24 +48,29 @@
                     <!-- Supplier Address -->
                     <div class="form-group mb-4">
                         <label class="form-label">Supplier Address :</label>
-                        <input type="text" class="form-control" placeholder="Supplier Address"/>
+                        <input type="text" class="form-control" id="supplier-address" placeholder="Supplier Address"/>
                     </div>
                 </div>
             </div>
         </div>
         <hr class="border border-1 opacity-100 m-0"/>
         <div class="card-body p-4">
-            <div class="row">
-                <div class="col-2">
-                    <button type="button" class="btn btn-lg btn-custom-secondary w-100">Cancel</button>
-                </div>
-                <!--<div class="col-2 offset-6">
-                    <button type="button" class="btn btn-lg btn-danger w-100">Disable</button>
-                </div>-->
-                <div class="col-2 offset-8">
-                    <button type="submit" class="btn btn-lg btn-custom w-100">Create</button>
-                </div>
+
+            <!--                <div class="col-2">-->
+            <!--                    <button type="button" class="btn btn-lg btn-custom-secondary w-100">Cancel</button>-->
+            <!--                </div>-->
+            <!--<div class="col-2 offset-6">
+                <button type="button" class="btn btn-lg btn-danger w-100">Disable</button>
+            </div>-->
+            <!--                <div class="col-2 offset-8">-->
+            <!--                    <button type="submit" class="btn btn-lg btn-custom w-100">Add</button>-->
+            <!--                </div>-->
+            <div class="d-flex flex-wrap">
+                <button class="cancel-btn p-2 my-1 col-md-2 col-12" id="cancel-btn" >Cancel</button>
+                <button type="submit" class="add-btn ml-auto p-2 my-1 col-md-2 col-12" id="add-btn">Add</button>
             </div>
         </div>
     </form>
 </div>
+</body>
+</html>

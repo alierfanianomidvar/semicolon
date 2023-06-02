@@ -121,6 +121,10 @@ export const addProduct = async () => {
     }
 };
 
+
+export const cancelButton = () => {
+    window.location.href = "supplier.html"; // Replace with the desired URL
+};
 $(function () {
     console.log("A");
     document.querySelector("#add-btn").addEventListener("click", addProduct);
