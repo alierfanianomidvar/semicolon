@@ -27,7 +27,7 @@ public class DrugResponse {
     private String description;
     private int limitation;
     private float price;
-    private Country countryOFProduction;
+    private Country countryOfProduction;
     private LocalDateTime lastModifiedDate;
     private List<Order> orders;
     private List<Receipt> receipts;
@@ -45,7 +45,7 @@ public class DrugResponse {
             String description,
             int limitation,
             float price,
-            Country countryOFProduction) {
+            Country countryOfProduction) {
         this.name = name;
         this.supplier = supplier;
         this.expirationDate = expirationDate;
@@ -58,7 +58,7 @@ public class DrugResponse {
         this.description = description;
         this.limitation = limitation;
         this.price = price;
-        this.countryOFProduction = countryOFProduction;
+        this.countryOfProduction = countryOfProduction;
         this.lastModifiedDate = lastModifiedDate;
         this.orders = orders;
         this.receipts = receipts;
@@ -166,11 +166,11 @@ public class DrugResponse {
     }
 
     public Country getCountryOFProduction() {
-        return countryOFProduction;
+        return countryOfProduction;
     }
 
     public void setCountryOFProduction(Country countryOFProduction) {
-        this.countryOFProduction = countryOFProduction;
+        this.countryOfProduction = countryOFProduction;
     }
 
     public LocalDateTime getLastModifiedDate() {

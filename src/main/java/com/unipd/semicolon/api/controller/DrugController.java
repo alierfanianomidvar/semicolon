@@ -36,7 +36,7 @@ public class DrugController {
                 model.getDescription(),
                 model.getLimitation(),
                 model.getPrice(),
-                model.getCountryOFProduction()));
+                model.getCountryOfProduction()));
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -63,7 +63,7 @@ public class DrugController {
                 model.getDescription(),
                 model.getLimitation(),
                 model.getPrice(),
-                model.getCountryOFProduction()));
+                model.getCountryOfProduction()));
 
     }
 
