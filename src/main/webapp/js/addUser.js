@@ -2,7 +2,7 @@ import userUrls from "./urls/userUrls.js";
 
 const addUserForm = document.getElementById('add-user-form');
 
-addUserForm.addEventListener('submit', function(event) {
+addUserForm.addEventListener('submit', async function(event) {
     event.preventDefault();
 
     const formData = new FormData(addUserForm);
@@ -16,8 +16,7 @@ addUserForm.addEventListener('submit', function(event) {
     }
 
 
-    console.log(body)
-    fetch(userUrls.ADD.url, {
+    const response = await fetch(userUrls.ADD.url, {
         method: userUrls.ADD.method,
         headers: {
             'Content-Type': 'application/json',
@@ -26,18 +25,19 @@ addUserForm.addEventListener('submit', function(event) {
         },
         body: JSON.stringify(body)
     })
-        .then(function(response) {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error('Network response was not ok.');
-            }
-        })
-        .then(function(data) {
-            console.log('User added:', data);
-            // Do something with the response data after the user has been added
-        })
-        .catch(function(error) {
-            console.log('There was a problem with the fetch operation:', error.message);
-        });
+    const data = await response.json();
+    if (response.ok) {
+        console.log('User added:', data);
+    } else {
+        showError(data.msg);
+        console.log('There was a problem with the fetch operation:', data.msg);
+    }
 });
+
+function showError(message) {
+    const error = document.getElementById("error-message");
+    const alert = document.createElement("div");
+    alert.className = "alert alert-danger";
+    alert.textContent = message;
+    error.appendChild(alert);
+}
