@@ -1,6 +1,6 @@
 // Define a function for creating the table
 
-export const createTable = (tableId, columnNames, numRows, cellContentGenerator, type = "default") => {
+export const createTable = (tableId, columnNames, numRows, data, type = "default") => {
     // Generate the table headers
     const tableHeaders = $(`<thead>`).appendTo($(`#${tableId}`));
     const headerRow = $(`<tr>`).appendTo(tableHeaders);
@@ -12,10 +12,10 @@ export const createTable = (tableId, columnNames, numRows, cellContentGenerator,
     const tableBody = $(`<tbody>`).appendTo($(`#${tableId}`));
     switch (type) {
         case "user":
-            generateTableRows(numRows, tableBody, columnNames, "user", cellContentGenerator);
+            generateTableRows(numRows, tableBody, columnNames, "user", data);
             break;
         default:
-            generateTableRows(numRows, tableBody, columnNames, "default", cellContentGenerator);
+            generateTableRows(numRows, tableBody, columnNames, "default", data);
             break;
     }
 
@@ -38,14 +38,10 @@ const generateUserCellContent = (src) => {
         style: "width: 40px; height: 40px; margin-right: 20px; border: 1px solid lightgreen; border-radius: 50%;", // Adjust the width, height, and margin as desired
     });
 
-    // You can modify this code to generate the desired cell content for the "User" type table
-    const name = rWord(8);
-
     const cell = $("<td>", {
-        style: "padding: 2px;",
+        style: " padding: 0.1rem; padding-left: 0.5rem",
     });
     cell.append(image);
-    // cell.append(name);
     return cell;
 };
 
@@ -63,25 +59,24 @@ export const rWord = (r) => {
 };
 
 
-function generateTableRows(numRows, tableBody, columnNames, type, cellContentGenerator, src) {
+function generateTableRows(numRows, tableBody, columnNames, type, data) {
     for (let n = 0; n < numRows; n++) {
         const row = $("<tr>").appendTo(tableBody);
 
         columnNames.forEach((columnName, index) => {
             let cellContent = "";
             if (type === "user" && index === 0) {
-                cellContent = generateUserCellContent(src);
+                cellContent = generateUserCellContent(data[n]["image"]);
             } else {
-                cellContent = cellContentGenerator();
+                cellContent = data[n][`${columnName}`];
             }
-            $("<td>", { html: cellContent, style: "padding:2px;" }).appendTo(row);
+            $("<td>", { html: cellContent, style:" padding: 0.1rem; padding-left: 0.75rem; vertical-align: middle;" }).appendTo(row);
         });
 
         if (type === "user") {
-            $("<td>", { html: "<a href='#'>Edit</a>", style: "padding:2px;" }).appendTo(row);
+            $("<td>", { html: "<a href='#'>Edit</a>", style: " padding: 0.1rem; vertical-align: middle;" }).appendTo(row);
         }
     }
-    //based on the type we need to add a footer for the table
 }
 
 // Function to create buttons and/or text elements
