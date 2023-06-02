@@ -19,6 +19,7 @@ export function sendData() {
     const countryOfProduction = document.getElementById("country-of-production").value;
     const limitation = document.getElementById("limitation").value;
     const price = document.getElementById("price").value;
+    const description = document.getElementById("description").value;
     const image = null;
 
 
@@ -85,10 +86,12 @@ export function sendData() {
         expirationDate,
         countryOfProduction,
         limitation,
+        description,
         price,
         image
     };
 
+    console.log(data)
     // Modify the URL to the appropriate endpoint on your backend
     const router = new Router();
     if (data.productType === "DRUG") {
