@@ -1,21 +1,24 @@
 import drugUrls from './urls/drugUrls.js';
-const endpoint = drugUrls.GET_ALL;
-const router = new Router();
+import {showErrorMessage} from "./utils.js";
 
 // Get all drugs data
 let data;
-/*router.createFetch(endpoint)
-    .then(response => {
-        data = response;
-        populateTable(data);
-    })
-    .catch(error => console.error(error));*/
 
-$.ajax(drugUrls.GET_ALL)
-    .done(res => {
-        data = res.data;
-        populateTable(data)
-    })
+const response = await fetch(drugUrls.GET_ALL.url, {
+    method: drugUrls.GET_ALL.method,
+    headers: {
+        'Content-Type': 'application/json'
+    }
+})
+const res = await response.json();
+if (response.ok) {
+    data = res.data;
+    populateTable(data);
+} else {
+    showErrorMessage(res.msg);
+    console.log('There was a problem with the fetch operation:', res.msg);
+}
+
 // Populate table with data
 function populateTable(data) {
     const tbody = document.querySelector('tbody');
