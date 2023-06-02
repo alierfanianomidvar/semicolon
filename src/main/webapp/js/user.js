@@ -1,4 +1,4 @@
-import {createTable, rWord} from "./table/table.js";
+import {createButtonsAndText, createTable, rWord} from "./table/table.js";
 
 
 
@@ -24,11 +24,12 @@ $(() => {
         return rWord(8); // Generate random cell content
     }, "user");
 
-    // And make the table fancy
-    // const fancyTableA = $(`#${tableId}`).fancyTable({
-    //     sortColumn: 0,
-    //     pagination: true,
-    //     perPage: 5,
-    //     globalSearch: true,
-    // });
+
+
+    // Call the createButtonsAndText function with the createButtons and createText parameters
+    const bottomContainer = createButtonsAndText(false, true, "salam", "s", "Cancel", "Submit");
+
+    // Append the main container to the page
+    $(".border").append(bottomContainer);
+
 });
