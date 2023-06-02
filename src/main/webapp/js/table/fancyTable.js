@@ -280,7 +280,36 @@
 			if(settings.pagination && !settings.paginationElement){
 				$(elm).find("tfoot").remove();
 				$(elm).append($("<tfoot><tr></tr></tfoot>"));
-				$(elm).find("tfoot tr").append($("<td class='pag'></td>",{ }).attr("colspan",elm.fancyTable.nColumns));
+				let pagTD = $("<td class='pag'></td>",{ }).attr("colspan",elm.fancyTable.nColumns -1);
+				$(elm).find("tfoot tr").append(pagTD);
+				if(settings.type) {
+					switch (settings.type) {
+						case "2":
+							$(elm).find("tfoot").append($("<tr>" +
+								"<td class='d-flex w-100'>" +
+								`<h6 class='mr-5' style='white-space: nowrap;'>${settings.footerContent.first}</h6>` +
+								`<h6 class='ml-5' style='white-space: nowrap;'>${settings.footerContent.second}</h6>` +
+								"</td>" +
+								"</tr>"));
+							break;
+						case '1':
+							$(elm).find("tfoot").append($("<tr>" +
+								"<td class='d-flex w-100'>" +
+								`<h6 class='mr-5' style='white-space: nowrap;'>${settings.footerContent}</h6>` +
+								"</td>" +
+								"</tr>"));
+							break;
+						default:
+							$(elm).find("tfoot").append($("<tr>" +
+								"<td class='d-flex w-100'>" +
+								"<button class='mr-5 btn btn-custom'>My Button1</button>" +
+								"</td>" +
+								"</tr>"));
+							break;
+					}
+
+				}
+
 			}
 			instance.tableUpdate(elm);
 			settings.onInit.call(this,elm);
