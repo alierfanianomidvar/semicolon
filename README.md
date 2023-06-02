@@ -331,6 +331,753 @@ The following endpoint allows the creation of a new drug in the pharmacy system.
 }
 ```
 
+#### CREATE MATERIAL
+
+The following endpoint allows the creation of a new material in the pharmacy system.
+
+* URL: `/material`
+* Method: `POST`
+* Data Parameters:
+
+```json
+{
+  "name": "Example Product",
+  "supplier": 2,
+  "countryOfProduction": "PR",
+  "expirationDate": "2022-12-31",
+  "gender": "FEMALE",
+  "price": 50.0,
+  "ageGroup": "ADULTS",
+  "description": "This is an example product description. It can be as long or as short as you like."
+}
+```
+
+* Success Response:
+
+```json
+{
+  "msg": "OK",
+  "data": {
+    "id": 6,
+    "name": "Example Product",
+    "countryOfProduction": "PR",
+    "expirationDate": "2022-12-31",
+    "image": null,
+    "gender": "FEMALE",
+    "price": 50.0,
+    "ageGroup": "ADULTS",
+    "lastModifiedDate": null,
+    "description": "This is an example product description. It can be as long or as short as you like."
+  }
+}
+```
+
+#### EDIT MATERIAL
+
+The following endpoint allows the modification of an existing material in the pharmacy system.
+
+* URL: `/material/{id}`
+* Method: `PUT`
+* Data Parameters:
+
+```json
+{
+  "name": "Example Product",
+  "supplier": 2,
+  "countryOfProduction": "PR",
+  "expirationDate": "2022-12-31",
+  "gender": "FEMALE",
+  "price": 50.0,
+  "ageGroup": "ADULTS",
+  "description": "This is an example product description. It can be as long or as short as you like."
+}
+
+```
+
+* Success Response:
+
+```json
+{
+  "msg": "OK",
+  "data": true
+}
+```
+
+* Error Response:
+
+```json
+{
+  "msg": "Material not found - 2334",
+  "data": "com.unipd.semicolon.business.exception .IllegalStateException"
+}
+```
+
+#### GET MATERIAL
+
+The following endpoint retrieves the details of a specific material based on its unique ID.
+
+* URL: `/material/{id}`
+* Method: `GET`
+* Success Response:
+
+```json
+{
+  "msg": "OK",
+  "data": {
+    "id": 6,
+    "name": "Example Product",
+    "countryOfProduction": "PR",
+    "expirationDate": "2022-12-31",
+    "image": null,
+    "gender": "FEMALE",
+    "price": 50.0,
+    "ageGroup": "ADULTS",
+    "lastModifiedDate": null,
+    "description": "This is an example product description. It can be as long or as short as you like."
+  }
+}
+```
+
+#### GET ALL MATERIAL
+
+The following endpoint retrieves a list of all materials stored in the pharmacy system.
+
+* URL: `/material`
+* Method: `GET`
+
+* Success Response:
+
+```json
+{
+  "msg": "OK",
+  "data": [
+    {
+      "id": null,
+      "name": "Example Product",
+      "supplier": {
+        "id": 2,
+        "name": "sup1",
+        "address": "here in padova",
+        "email": "su1@pd.it",
+        "telephoneNumber": "099999",
+        "drugs": [],
+        "materials": [
+          {
+            "id": 6,
+            "name": "Example Product",
+            "countryOfProduction": "PR",
+            "expirationDate": "2022-12-31",
+            "image": null,
+            "gender": "FEMALE",
+            "price": 50.0,
+            "ageGroup": "ADULTS",
+            "lastModifiedDate": null,
+            "description": "This is an example product description. It can be as long or as short as you like."
+          }
+        ]
+      },
+      "expirationDate": "2022-12-31",
+      "image": null,
+      "gender": "MALE",
+      "ageGroup": "ADULTS",
+      "price": 50.0,
+      "lastModifiedDate": null,
+      "description": "This is an example product description. It can be as long or as short as you like.",
+      "countryOfProduction": "PR",
+      "orders": null,
+      "receipts": null
+    }
+  ]
+}
+```
+
+#### CREATE RECEIPT
+
+The following endpoint allows the creation of a new receipt in the pharmacy system.
+
+* URL: `/receipt`
+* Method: `POST`
+* Data Parameters:
+
+```json
+{
+  "id": 0,
+  "list_drug_id": [
+    1,
+    2
+  ],
+  "list_material_id": null,
+  "image": [
+    1,
+    0,
+    0,
+    0,
+    1,
+    1
+  ],
+  "date": "2023-04-27T07:08:30.267Z",
+  "paymentMethod": "CASH"
+}
+```
+
+* Success Response:
+
+```json
+{
+  "msg": "OK",
+  "data": {
+    "id": 1,
+    "receiptDrugs": [
+      {
+        "id": 1,
+        "name": "new drug",
+        "expirationDate": "2023-04-23T10:44:38.843+00:00",
+        "image": null,
+        "shape": "shape",
+        "gender": "MALE",
+        "ageGroup": "ADULTS",
+        "needPrescription": true,
+        "description": "string",
+        "limitation": 10,
+        "price": 60,
+        "countryOFProduction": "AF",
+        "lastModifiedDate": null,
+        "sensitive": true
+      },
+      {
+        "id": 2,
+        "name": "new drug",
+        "expirationDate": "2023-04-23T10:44:38.843+00:00",
+        "image": null,
+        "shape": "shape",
+        "gender": "MALE",
+        "ageGroup": "ADULTS",
+        "needPrescription": true,
+        "description": "string",
+        "limitation": 10,
+        "price": 60,
+        "countryOFProduction": "AF",
+        "lastModifiedDate": null,
+        "sensitive": true
+      }
+    ],
+    "receiptMaterials": [],
+    "image": "AQAAAAEB",
+    "date": "2023-04-27T07:08:30.267+00:00",
+    "paymentMethod": "CASH"
+  }
+}
+```
+
+#### EDIT RECEIPT
+
+The following endpoint allows the modification of an existing receipt in the pharmacy system.
+
+* URL: `/receipt/{id}`
+* Method: `PUT`
+* Data Parameters:
+
+```json
+{
+  "id": 1,
+  "list_drug_id": [
+    1,
+    2,
+    3
+  ],
+  "list material id": null,
+  "material id": 0,
+  "image": null,
+  "date": "2023-04-27T07:42:56.226Z",
+  "paymentMethod": "PAYPAL"
+}
+
+```
+
+* Success Response:
+
+```json
+{
+  "msg": "OK",
+  "data": true
+}
+```
+
+#### GET RECEIPT
+
+The following endpoint retrieves the details of a specific receipt based on its unique ID.
+
+* URL: `/receipt/{id}`
+* Method: `GET`
+* Success Response:
+
+```json
+{
+  "msg": "OK",
+  "data": {
+    "id": 1,
+    "receiptDrugs": [
+      {
+        "id": 1,
+        "name": "new drug",
+        "expirationDate": "2023-04-23T10:44:38.843+00:00",
+        "image": null,
+        "shape": "shape",
+        "gender": "MALE",
+        "ageGroup": "ADULTS",
+        "needPrescription": true,
+        "description": "string",
+        "limitation": 10,
+        "price": 60,
+        "countryOfProduction": "AF",
+        "lastModifiedDate": null,
+        "sensitive": true
+      },
+      {
+        "id": 2,
+        "name": "new drug",
+        "expirationDate": "2023-04-23T10:44:38.843+00:00",
+        "image": null,
+        "shape": "shape",
+        "gender": "MALE",
+        "ageGroup": "ADULTS",
+        "needPrescription": true,
+        "description": "string",
+        "limitation": 10,
+        "price": 60,
+        "countryOFProduction": "AF",
+        "lastModifiedDate": null,
+        "sensitive": true
+      },
+      {
+        "id": 3,
+        "name": "new drug",
+        "expirationDate": "2023-04-23T10:44:38.843+00:00",
+        "image": null,
+        "shape": "shape",
+        "gender": "MALE",
+        "ageGroup": "ADULTS",
+        "needPrescription": true,
+        "description": "string",
+        "limitation": 10,
+        "price": 60,
+        "countryOFProduction": "AF",
+        "lastModifiedDate": null,
+        "sensitive": true
+      }
+    ],
+    "receiptMaterials": [
+    ],
+    "image": "AQAAAAEB",
+    "date": "2023-04-27T07:42:56.226+00:00",
+    "paymentMethod": "PAYPAL"
+  }
+}
+```
+
+#### PHARMACY ACTIVATION
+
+The following endpoint create a pharmacy in the system.
+
+* URL: `/pharmacy/{id}`
+* Method: `PATCH`
+
+* Data Parameters:
+
+```json
+{
+  "status": "ACTIVE"
+}
+```
+
+* Success Response:
+
+```json
+{
+  "msg": "OK",
+  "data": {
+    "id": 1,
+    "name": "pharmacy1",
+    "address": "padova",
+    "telephoneNumber": "09999999",
+    "time_table": [],
+    "logo": null,
+    "storage": [],
+    "staff": [
+      {
+        "id": 1,
+        "name": "jeremy",
+        "lastName": "jervis",
+        "gender": "MALE",
+        "birthDate": null,
+        "phoneNumber": "08888888",
+        "address": "unipd",
+        "role": null,
+        "email": "hi@uni.com",
+        "accountStatus": "ACTIVE",
+        "profilePicture": null
+      }
+    ],
+    "status": "ACTIVE",
+    "orders": []
+  }
+}
+```
+
+#### PHARMACY CREATION
+
+The following endpoint create a pharmacy in the system.
+
+* URL: `/pharmacy`
+* Method: `POST`
+
+* Data Parameters:
+
+```json
+{
+  "name": "Example Pharmacy1",
+  "address": "123 Main St",
+  "tellNumber": "3389929820",
+  "timeTable": [],
+  "logoPath": [],
+  "storage": [],
+  "staff": [],
+  "status": "ACTIVE"
+}
+```
+
+* Success Response:
+
+```json
+{
+  "msg": "OK",
+  "data": {
+    "id": 2,
+    "name": "Example Pharmacy1",
+    "address": "123 Main St",
+    "telephoneNumber": "3389929820",
+    "time_table": null,
+    "logo": "",
+    "storage": null,
+    "staff": null,
+    "status": "ACTIVE",
+    "orders": null
+  }
+}
+```
+
+* Error Response:
+
+```json
+{
+  "msg": "Telephone number should contain only digits",
+  "data": "com.unipd.semicolon.business.exception.IllegalArgumentException"
+}
+```
+
+#### PHARMACY EDIT
+
+The following endpoint modification a pharmacy in the system.
+
+* URL: `/pharmacy/{id}`
+* Method: `PUT`
+
+* Data Parameters:
+
+```json
+{
+  "name": "Hpp's Pharmacy2222",
+  "tell_number": "3389338922"
+}
+```
+
+* Success Response:
+
+```json
+{
+  "msg": "OK",
+  "data": true
+}
+```
+
+* Error Response:
+
+```json
+{
+  "msg": "Telephone number should contain only digits",
+  "data": "com.unipd.semicolon.business.exception.IllegalArgumentException"
+}
+```
+
+#### PHARMACY CREATION
+
+The following endpoint create a pharmacy in the system.
+
+* URL: `/pharmacy`
+* Method: `POST`
+
+* Data Parameters:
+
+```json
+{
+  "name": "Example Pharmacy1",
+  "address": "123 Main St",
+  "tellNumber": "3389929820",
+  "timeTable": [],
+  "logoPath": [],
+  "storage": [],
+  "staff": [],
+  "status": "ACTIVE"
+}
+```
+
+* Success Response:
+
+```json
+{
+  "msg": "OK",
+  "data": {
+    "id": 2,
+    "name": "Example Pharmacy1",
+    "address": "123 Main St",
+    "telephoneNumber": "3389929820",
+    "time_table": null,
+    "logo": "",
+    "storage": null,
+    "staff": null,
+    "status": "ACTIVE",
+    "orders": null
+  }
+}
+```
+
+* Error Response:
+
+```json
+{
+  "msg": "Telephone number should contain only digits",
+  "data": "com.unipd.semicolon.business.exception.IllegalArgumentException"
+}
+```
+
+#### PHARMACY DELETE
+
+The following endpoint delete a pharmacy in the system.
+
+* URL: `/pharmacy/{id}`
+* Method: `DELETE`
+
+* Success Response:
+
+```json
+{
+  "msg": "OK",
+  "data": true
+}
+```
+
+#### PHARMACY GET
+
+The following endpoint delete a pharmacy in the system.
+
+* URL: `/pharmacy/{id}`
+* Method: `GET`
+
+* Success Response:
+
+```json
+{
+  "msg": "OK",
+  "data": {
+    "id": 1,
+    "name": "Hpp's Pharmacy2222",
+    "address": "123 Main St",
+    "telephoneNumber": "3389338922",
+    "time_table": [],
+    "logo": "",
+    "storage": [],
+    "staff": [
+      {
+        "id": 4,
+        "name": "John",
+        "lastName": "Doe",
+        "gender": "MALE",
+        "birthDate": "1995-06-30T00:00:00",
+        "phoneNumber": "3358962012",
+        "address": "123 Main St.",
+        "role": {
+          "id": 2,
+          "role": "user"
+        },
+        "email": "john.doe@example.com",
+        "accountStatus": "ACTIVE",
+        "profilePicture": null
+      }
+    ],
+    "status": "ACTIVE",
+    "orders": []
+  }
+}
+```
+
+#### ACCOUNT LOGIN
+
+The following endpoint allows users to log in to their account in the pharmacy system.
+
+* URL: `/account`
+* Method: `GET`
+
+* Data parameters:
+
+```json
+{
+  "username": "STRING",
+  "password": "STRING"
+}
+```
+
+* Success Response:
+
+```json
+{
+  "msg": "OK",
+  "data": {
+    "username": "STRING",
+    "lastLoginDate": "2023-04-27T00:48:27",
+    "user": {
+      "id": "LONG",
+      "name": "STRING",
+      "lastName": "STRING",
+      "gender": "MALE",
+      "birthDate": "LOCALDATE",
+      "phoneNumber": "STRING",
+      "address": "STRING",
+      "role": {
+        "id": "LONG",
+        "role": "STRING"
+      },
+      "email": "STRING",
+      "accountStatus": "STRING",
+      "profilePicture": "byte[]"
+    },
+    "token": "STRING"
+  }
+}
+```
+
+#### ACCOUNT LOGOUT
+
+The following endpoint allows users to log out of their account in the pharmacy system.
+
+* URL: `/account/{token}`
+* Method: `POST`
+*
+* Success Response:
+
+```json
+{
+  "msg": "OK",
+  "data": true
+}
+```
+
+### Exception Handler
+
+#### 500 Internal Server Error :
+
+* Wrong method response Exception :
+
+```Json
+{
+  "status": "500 Internal Server Error",
+  "msg": "Request method 'POST' is not supported",
+  "data": "org.springframework.web.HttpRequestMethodNotSupportedException"
+}
+```
+
+* Other Exception :
+
+```Json
+{
+  "status": "500 Internal Server Error",
+  "msg": "Error message",
+  "data": "class name"
+}
+```
+
+#### 404 Not Found:
+
+* Username or password not exists Exception :
+
+```Json
+{
+  "status": "404 Not Foundr",
+  "msg": "user_name_or_password_not_exists",
+  "data": "Username: STRING Password : STRING"
+}
+```
+
+* Entity not found Exception :
+
+```Json
+{
+  "status": "404 Not Foundr",
+  "msg": "MESSAGE BASE THE FUNCTION CAN BE DIFFERENT",
+  "data": "com.unipd.semicolon.business.exception.EntityNotFoundException"
+}
+```
+
+#### 400 Bad Request :
+
+```Json
+{
+  "status": "400 bad request",
+  "msg": "MESSAGE BASE THE FUNCTION CAN BE DIFFERENT",
+  "data": "com.unipd.semicolon.business.exception.IllegalArgumentException"
+}
+```
+
+#### 424 Failed Dependency :
+
+```Json
+{
+  "status": "424 Failed Dependency",
+  "msg": "MESSAGE BASE THE FUNCTION CAN BE DIFFERENT",
+  "data": "com.unipd.semicolon.business.exception.IllegalStateException"
+}
+```
+
+#### 403 Forbidden:
+
+* Invalid Token Exception :
+
+```Json
+{
+  "status": "403 Forbidden",
+  "msg": "Invalid_Token_Exception",
+  "data": "TOKEN VALUE"
+}
+```
+
+* Permission denied:
+
+```Json
+{
+  "msg": "permission denied",
+  "data": "Token :eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiUm9sZSI6InVzZXIiLCJpYXQiOjE2ODI2MzczMDcsImV4cCI6MTcxODYzNzMwN30.OCsiF_pXCHjhZMTfkyTn7sNDnzVP5qUeDV8M3UavmVo"
+}
+```
+
+#### 424 Failed Dependency :
+
+```Json
+{
+  "status": "424 Failed Dependency",
+  "msg": "MESSAGE BASE THE FUNCTION CAN BE DIFFERENT",
+  "data": "com.unipd.semicolon.business.exception.IllegalStateException"
+}
+```
+
 ### Group Members Contribution
 
 Throughout the project lifecycle, the team conducted multiple meetings to ensure that the project was executed
