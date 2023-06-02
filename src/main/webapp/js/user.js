@@ -1,11 +1,18 @@
 import {createTable, rWord} from "./table/table.js";
 import {showModal} from "./modal.js";
 
-
+//This is just an example to be used in modal
+//TODO: Real data to be passed must be taken from the content in route.html using javascript selector or sth
+const tableData = [
+    { id: 1, name: 'John Doe', age: 25, city: 'New York' },
+    { id: 2, name: 'Jane Smith', age: 30, city: 'London' },
+    { id: 3, name: 'Bob Johnson', age: 40, city: 'Paris' },
+    { id: 4, name: 'Alice Williams', age: 35, city: 'Tokyo' }
+];
 
 $(() => {
 
-    showModal()
+    showModal("Receipt", null, 'Receipt_submit', tableData, "Total Price: 20$")
     // Example usage: Create a table with dynamic column names and content
     const tableId = "user_list"; // Dynamic table ID
     const columnNames = ["","Name", "Last Name", "Role", "Address", "Status"]; // Dynamic column names

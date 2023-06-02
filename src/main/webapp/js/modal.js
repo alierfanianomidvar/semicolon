@@ -1,6 +1,14 @@
 // modal.js
 
-export const createModal = (title, content, type, data) => {
+
+// Example data for the table
+
+
+// Function to generate the table rows dynamically
+
+
+export const createModal = (title, content, type, data, footerContent) => {
+
     const modalEl = document.createElement('div');
     modalEl.classList.add('modal', 'fade');
     modalEl.setAttribute('id', 'errorModal');
@@ -10,27 +18,7 @@ export const createModal = (title, content, type, data) => {
     modalEl.setAttribute('aria-hidden', 'true');
 
     switch (type) {
-        case "x":
-            modalEl.innerHTML = `
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="errorModalLabel">${title}</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          ${content}
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  `;
-            break;
-        case 'y':
+        case 'Error':
             modalEl.innerHTML = `
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -50,8 +38,59 @@ export const createModal = (title, content, type, data) => {
     </div>
   `;
             break;
-        case 'z':
-
+        case 'Receipt_submit':
+            const generateTableRows = (data) => {
+                return data.map(item => `
+    <tr>
+      <td><input type="checkbox" name="item" value="${item.id}" checked disabled></td>
+      <td>${item.name}</td>
+      <td>${item.age}</td>
+      <td>${item.city}</td>
+    </tr>
+  `).join('');
+            };
+            const tableRows = generateTableRows(data);
+            modalEl.innerHTML = `
+    <div class="modal-dialog" role="document" style="max-width: 60%">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="errorModalLabel">${title}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-8">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Product Name</th>
+                    <th>Age Group</th>
+                    <th>Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${tableRows}
+                </tbody>
+              </table>
+            </div>
+            <div class="col-4">
+              <img src="../images/Logo_padova.png" alt="Image" class="img-fluid">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer d-flex justify-content-between">
+          <h6 class="text-muted">${footerContent}</h6>
+          <div class="d-flex">
+            <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary btn-custom">Accept</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
             break;
         default:
             modalEl.innerHTML = `
@@ -80,8 +119,8 @@ export const createModal = (title, content, type, data) => {
 };
 
 
-export const showModal = () => {
-    const modalEl = createModal("Error!", "This is Error!", "y");
+export const showModal = (title, content, type, data, footerContent) => {
+    const modalEl = createModal(title, content, type, data, footerContent);
     document.body.appendChild(modalEl);
 
     // Get the main content container
