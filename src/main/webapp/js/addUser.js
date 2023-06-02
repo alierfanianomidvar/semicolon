@@ -15,19 +15,19 @@ addUserForm.addEventListener('submit', async function(event) {
         id: body.role
     }
 
+    const token = localStorage.getItem("token");
 
     const response = await fetch(userUrls.ADD.url, {
         method: userUrls.ADD.method,
         headers: {
             'Content-Type': 'application/json',
-            //TODO: read it from local storage when we merge with login branch!
-            'Authorization': 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiUm9sZSI6InN1cGVyQWRtaW4iLCJpYXQiOjE2ODI2MTQ4MzcsImV4cCI6MTcxODYxNDgzN30.Jm_t27ViO5F_4ENkPP89dZummxgut4l_97e-fST5Qh4'
+            'Authorization': token
         },
         body: JSON.stringify(body)
     })
     const data = await response.json();
     if (response.ok) {
-        console.log('User added:', data);
+        window.location.hash = "#user";
     } else {
         showError(data.msg);
         console.log('There was a problem with the fetch operation:', data.msg);
