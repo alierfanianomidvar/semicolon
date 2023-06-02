@@ -50,7 +50,7 @@ class Router {
             method: endpoint.method
         };
 
-        this.sendHttpRequest(urlObject.method, urlObject.url, data, token)
+        return this.sendHttpRequest(urlObject.method, urlObject.url, data, token)
             .then(responseData => {
                 console.log(responseData['data'])
                 return responseData['data'];
