@@ -1,6 +1,6 @@
 // Define a function for creating the table
 
-export const createTable = (tableId, columnNames, numRows, cellContentGenerator, type = "default", footerType, footerContent) => {
+export const createTable = (tableId, columnNames, numRows, cellContentGenerator, type = "default") => {
     // Generate the table headers
     const tableHeaders = $(`<thead>`).appendTo($(`#${tableId}`));
     const headerRow = $(`<tr>`).appendTo(tableHeaders);
@@ -27,8 +27,6 @@ export const createTable = (tableId, columnNames, numRows, cellContentGenerator,
         pagination: true,
         perPage: 5,
         globalSearch: true,
-        type: footerType ? footerType : null,
-        footerContent: footerContent
     });
 };
 
@@ -84,4 +82,96 @@ function generateTableRows(numRows, tableBody, columnNames, type, cellContentGen
         }
     }
     //based on the type we need to add a footer for the table
+}
+
+// Function to create buttons and/or text elements
+export const createButtonsAndText = (createButtons = false,
+                                     createText = false,
+                                     firstTxt = "",
+                                     secondTxt = "",
+                                     cancelBtn = "",
+                                     acceptBtn = "") => {
+    // Create a div to contain the buttons and/or text elements
+    const container = $("<div>", {
+        class: "bottom-container",
+        css: {
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginTop: "0.75rem", // Adjust the top margin as needed
+        },
+    });
+
+    if (createText) {
+        // Create the text elements container
+        const textContainer = $("<div>", {
+            class: "text-container",
+            css: {
+                display: "flex",
+                justifyContent: "space-between",
+                width: "40%",
+            },
+        });
+
+        // Create the text elements
+        const text1 = $("<span>", {
+            text: `${firstTxt}`,
+            css: {
+                fontWeight: "bold",
+                margin: "0.5rem", // Random margin between 1 and 10 pixels
+            },
+        });
+
+        const text2 = $("<span>", {
+            text: `${secondTxt}`,
+            css: {
+                fontWeight: "bold",
+                margin: "0.5rem", // Random margin between 1 and 10 pixels
+            },
+        });
+
+        // Append the text elements to the text container
+        textContainer.append(text1, text2);
+
+        // Append the text container to the main container
+        container.append(textContainer);
+    }
+
+    if (createButtons) {
+        // Create the buttons container
+        const buttonsContainer = $("<div>", {
+            class: "buttons-container",
+            css: {
+                display: "flex",
+                justifyContent: "flex-end",
+                width: createText ? "60%" : "100%",
+            },
+        });
+
+        // Create the buttons
+        const button1 = $("<button>", {
+            text: `${cancelBtn}`,
+            class: "btn btn-custom-secondary",
+            css: {
+                margin: "0.5rem", // Random margin between 1 and 10 pixels
+            },
+        });
+
+        const button2 = $("<button>", {
+            text: `${acceptBtn}`,
+            class: "btn btn-custom",
+            css: {
+                margin: "0.5rem", // Random margin between 1 and 10 pixels
+            },
+        });
+
+        // Append the buttons to the buttons container
+        buttonsContainer.append(button1, button2);
+
+        // Append the buttons container to the main container
+        container.append(buttonsContainer);
+    }
+
+    // Return the main container
+    return container;
 }
