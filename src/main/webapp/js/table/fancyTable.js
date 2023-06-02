@@ -281,7 +281,6 @@
 				$(elm).find("tfoot").remove();
 				$(elm).append($("<tfoot><tr></tr></tfoot>"));
 				$(elm).find("tfoot tr").append($("<td class='pag'></td>",{ }).attr("colspan",elm.fancyTable.nColumns));
-
 			}
 			instance.tableUpdate(elm);
 			settings.onInit.call(this,elm);
