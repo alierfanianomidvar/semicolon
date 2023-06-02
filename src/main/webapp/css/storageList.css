@@ -25,3 +25,7 @@ body {
 .rounded-xl{
     border-radius: 16px;
 }
+
+.table td:first-child {
+    width: 5px !important;
+}

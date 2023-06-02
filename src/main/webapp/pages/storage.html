@@ -1,52 +1,43 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <style>
-    .table td:first-child{width: 5px!important;;}
-  </style>
-</head>
-<body>
 <div class="container">
   <h5 class="h2 mb-5 mt-4">Storage</h5>
-  <div class="row">
-    <div class="col-lg-2">
-      <div class="form-group">
-        <select class="form-control" id="Threshold">
-          <option value="">Threshold</option>
-          <option>10</option>
-          <option>20</option>
-          <option>30</option>
-        </select>
+  <form id="filterForm">
+    <div class="form-row mb-4">
+      <div class="col">
+          <select id="filterThreshold" class="form-group">
+            <option value="" disabled selected>Threshold</option>
+            <option>10</option>
+            <option>20</option>
+            <option>30</option>
+          </select>
       </div>
-    </div>
-    <div class="col-lg-2">
-      <div class="form-group">
-        <select class="form-control" id="Type">
-          <option value="">Type</option>
+
+      <div class="col">
+        <select id="filterType" class="form-control">
+          <option value="" disabled selected>Type</option>
           <option>Drug</option>
           <option>Material</option>
         </select>
       </div>
-    </div>
-    <div class="col-lg-2">
-      <div class="form-group">
-        <select class="form-control" id="Amount">
-          <option value="">Amount</option>
+
+      <div class="col">
+        <select id="filterAmount" class="form-control">
+          <option value="" disabled selected>Amount</option>
           <option>1</option>
           <option>2</option>
           <option>3</option>
           <option>3</option>
         </select>
       </div>
-    </div>
-    <div class="col-lg-2">
+
+    <div class="col-auto">
       <div class="add-btn text-lg-right">
         <button class="btn btn-custom" id="add-button">Add Product</button>
       </div>
     </div>
-    <div class="col-lg-2">
+
+    <div class="col-auto">
       <div class="add-btn text-lg-right">
-        <button class="btn btn-custom" id="filter-button">Filter</button>
+        <button class="btn btn-custom" id="filter-button" type="submit">Filter</button>
       </div>
     </div>
   </div>
@@ -55,10 +46,10 @@
 
   </div>
 
+  </form>
 </div>
 
 <script type="module" src="../js/storage.js"></script>
-</body>
-</html>
+
 
 
