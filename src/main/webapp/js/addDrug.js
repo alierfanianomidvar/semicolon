@@ -15,5 +15,12 @@ $(document).ready(function() {
     });
 });
 
-
+function showPopup() {
+    var popup = window.open("confirm-order.html", "_blank", "width=400,height=400");
+    popup.addEventListener("DOMContentLoaded", function () {
+        popup.document.getElementById("submit-order-btn").addEventListener("click", function () {
+            alert("Order submitted");
+        });
+    });
+}
 
