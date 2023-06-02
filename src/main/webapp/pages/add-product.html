@@ -15,7 +15,7 @@
 <body>
 <div class="container">
     <h5 class="h5 mb-5 mt-4">Add Product</h5>
-    <form class="card rounded-xl" id="add-product">
+    <form class="card rounded-xl" id="product-form">
         <div class="card-body p-4">
             <div class="row g-3">
                 <div class="col-md-3">
@@ -30,7 +30,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="product-name">Product Name:</label>
-                        <input type="text" class="form-control" id="product-name">
+                        <input type="text" class="form-control" id="product-name" name="product-name">
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -124,18 +124,18 @@
                     </div>
                 </div>
                 <div class="col-md-3">
+                    <label for="image-upload">Image :</label>
                     <div class="custom-file">
-                        <label for="image-upload">Image</label>
                         <input type="file" class="custom-file-input" id="image-upload" accept="image/*">
-                        <label class="custom-file-label" for="image-upload">Choose image</label>
+                        <label class="custom-file-label" for="image-upload" id="image-label">Choose image</label>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label for="Description">Description</label>
-                        <input type="text" class="form-control" id="Description">
+                        <label for="description">Description :</label>
+                        <input type="text" class="form-control" id="description">
                     </div>
                 </div>
             </div>
