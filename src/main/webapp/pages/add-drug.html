@@ -1,5 +1,5 @@
 <div class="container">
-    <h5 class="h5 mb-5 mt-4">Add Order</h5>
+    <h5 class="h2 mb-5 mt-4">Add Order</h5>
     <div class="row">
         <div class="col-md-3">
             <div class="search-box">
@@ -38,7 +38,6 @@
 
     </div>
 
-
     <div class="row">
         <div class="col-lg-3">
             <p>Total Price: <span id="total-price">$0</span></p>
@@ -48,11 +47,23 @@
                 <button class="btn btn-custom">Cancel</button>
             </div>
         </div>
+        <!-- <div class="col-lg-3">
+          <div class="add-btn text-lg-right">
+            <button class="btn btn-custom">Submit Order</button>
+          </div>
+        </div> -->
+
         <div class="col-lg-3">
             <div class="add-btn text-lg-right">
-                <button class="btn btn-custom">Submit Order</button>
+                <button class="btn btn-custom" onclick="openOrderForm()">Submit Order</button>
             </div>
         </div>
+
+        <script>
+            function openOrderForm() {
+                window.open("confirm-order.html", "_blank", "width=600,height=400");
+            }
+        </script>
     </div>
 </div>
 <script type="module" src="../js/addDrug.js"></script>

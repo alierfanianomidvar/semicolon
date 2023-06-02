@@ -146,8 +146,8 @@
 				var sortArrow = $("<div>",{"class":"sortArrow"}).css({"margin":"0.1em","display":"inline-block","width":0,"height":0,"border-left":"0.4em solid transparent","border-right":"0.4em solid transparent"});
 				sortArrow.css(
 					(elm.fancyTable.sortOrder>0) ?
-					{"border-top":"0.4em solid #000"} :
-					{"border-bottom":"0.4em solid #000"}
+						{"border-top":"0.4em solid #000"} :
+						{"border-bottom":"0.4em solid #000"}
 				);
 				$(elm).find("thead th a").eq(elm.fancyTable.sortColumn).append(sortArrow);
 				var rows = $(elm).find("tbody tr").toArray().sort(
@@ -212,8 +212,8 @@
 				$(elm).find("thead th").each(function() {
 					elm.fancyTable.sortAs.push(
 						($(this).data('sortas')=='numeric') ? 'numeric' :
-						($(this).data('sortas')=='case-insensitive') ? 'case-insensitive' :
-						null
+							($(this).data('sortas')=='case-insensitive') ? 'case-insensitive' :
+								null
 					);
 					var content = $(this).html();
 					var a = $("<a>",{
