@@ -9,29 +9,37 @@ export function sendSupplierData() {
 
 
     // Validate name
+    const nameInput = document.getElementById("supplier-name");
     if (!name) {
         console.error("Name should not be empty");
-        alert("Name should not be empty");
+        nameInput.classList.add("is-invalid");
         return null;
+    } else {
+        nameInput.classList.remove("is-invalid");
     }
 
     // Validate email
+    const emailInput = document.getElementById("email");
     const emailRegex = /^\S+@\S+\.\S+$/;
     if (!emailRegex.test(email)) {
         console.error("Invalid email address");
-        alert("Invalid email address");
+        emailInput.classList.add("is-invalid");
         return null;
+    } else {
+        emailInput.classList.remove("is-invalid");
     }
 
+
     // Validate phone number
+    const phoneInput = document.getElementById("telephone-number");
     const phoneRegex = /^\d{10}$/;
     if (!phoneRegex.test(telephone_number)) {
         console.error("Invalid phone number");
-        alert("Invalid phone number");
+        phoneInput.classList.add("is-invalid");
         return null;
+    } else {
+        phoneInput.classList.remove("is-invalid");
     }
-
-
 
     const data = {
         name,
