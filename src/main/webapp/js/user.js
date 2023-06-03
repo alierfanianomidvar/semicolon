@@ -1,4 +1,5 @@
 import {showModal} from "../js/modal.js";
+import {createGenericTable} from "./table/table.js";
 export const onInitial = () => {
 
     const orderData = {
