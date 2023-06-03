@@ -1,29 +1,27 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <script src="../js/user.js" type="module"></script>
-    <style>
-        .table td:first-child{width: 5px!important;;}
-    </style>
-</head>
-<body>
+<style>
+    .table td:first-child{width: 5px!important;;}
+</style>
 <div class="container">
 
     <h2 class="h2 mb-5 mt-4">Users</h2>
     <div class="form-row mb-4">
         <div class="col-auto">
-            <button class="btn btn-custom">Add User</button>
+            <a href="#add-user" class="btn btn-custom"> Add User </a>
         </div>
     </div>
 
   <!-- Filters -->
 
 
-    <div class="border rounded-xl bg-white">
+    <div id='tbl' class="border rounded-xl bg-white" onload="alert('ttt')">
 
     </div>
 </div>
-</body>
-</html>
+<script src="../js/user.js" type="module"></script>
+<script type="module">
+    import {onInitial} from "../js/user.js";
+    onInitial()
 
-    <!--    <iframe src="shared/table.html"></iframe>-->
+
+
+</script>
