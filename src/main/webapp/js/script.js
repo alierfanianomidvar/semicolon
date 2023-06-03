@@ -54,28 +54,20 @@ $(window).on('hashchange load', function () {
 
     const fetch = router.createFetch(endPoint);
     fetch.then(data => {
-        const url = `${route}.html?`;
         localStorage.setItem('getData', JSON.stringify(data));
-        $("#main-content").load(url, function (response, status, xhr) {
-            if (status == "success") {
-                console.log("Content loaded successfully");
-            } else {
-                console.log("Error loading content: " + xhr.status + " " + xhr.statusText);
-            }
-        });
         // Do something with the data here
     }).catch(error => {
         console.log("Error fetching data:", error);
     });
-});
 
-// Handle page navigation
-$(window).on("popstate", function () {
-    // Update document title and load page content
-    // document.getElementById("hidden-content").innerHTML = document.title;
-    document.title = window.location.hash;
-    const route = window.location.hash.replace("#", "") || "home";
-    $("#main-content").load(`${route}.html`);
+    const url = `${route}.html?`;
+    $("#main-content").load(url, function (response, status, xhr) {
+        if (status == "success") {
+            console.log("Content loaded successfully");
+        } else {
+            console.log("Error loading content: " + xhr.status + " " + xhr.statusText);
+        }
+    });
 });
 
 

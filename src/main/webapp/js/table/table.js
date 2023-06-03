@@ -170,3 +170,56 @@ export const createButtonsAndText = (createButtons = false,
     // Return the main container
     return container;
 }
+
+
+export function createGenericTable(generictableId,genericcolumnNames){
+    ///showModal()
+    // Example usage: Create a table with dynamic column names and content
+    const userData = [{
+        Name: "Ali",
+        LastName: "Mahdavi",
+        Role: "Admin",
+        Address: "via romana",
+        Status: "Active",
+        image: "../images/users.svg"
+    },{
+        Name: "Abi",
+        LastName: "mor",
+        Role: "Staff",
+        Address: "via romana",
+        Status: "Active",
+        image: "../images/users.svg"
+    },{
+        Name: "Alex",
+        LastName: "pegi",
+        Role: "Admin",
+        Address: "via romana",
+        Status: "Active",
+        image: "../images/users.svg"
+    }]
+    let tableId = generictableId; // Dynamic table ID
+    let columnNames =genericcolumnNames;
+    //TODO: number of rows must be edited and we need to put the correct number of rows based on our user list fetch api
+    let numRows = userData.length; // Total number of rows
+
+    // Generate the table ID dynamically
+    let table = $(`<table>`, {
+        id: tableId,
+        class: "table table-striped sampleTable",
+    });
+
+    // Append the table to the container
+    $(".border").append(table);
+
+    // for passing the cellContentGenerator we need to define a proper function that returns the user actual information
+    createTable(tableId, columnNames, numRows, userData, "user");
+
+    // Call the createButtonsAndText function with the createButtons and createText parameters
+    const bottomContainer = createButtonsAndText(true, true, "salam", "s", "Cancel", "Submit");
+
+    // Append the main container to the page
+    $(".border").append(bottomContainer);
+
+}
+
+
