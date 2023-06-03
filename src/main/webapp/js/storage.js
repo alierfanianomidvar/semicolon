@@ -1,44 +1,69 @@
 import storageUrls from "./urls/storageUrls.js";
 import {createTable, rWord} from "./table/table.js";
 
+import {showModal} from "../js/modal.js";
+import {createGenericTable} from "./table/table.js";
+export const onInitial = () => {
+
+    const orderData = {
+        price: "$13000",
+        tax: "10%",
+        discount: "12%"
+    };
+    showModal('Order', "Are you sure to submit your order?", 'Order_submit', orderData, "Total Price: 20$")
+    localStorage.getItem("getData")
+    createGenericTable("storage_list", ["","Name", "Type", "Price", "Quantity", "Threshold"]);
+
+    // const tableData = [
+    //     { id: 1, name: 'John Doe', age: 25, city: 'New York' },
+    //     { id: 2, name: 'Jane Smith', age: 30, city: 'London' },
+    //     { id: 3, name: 'Bob Johnson', age: 40, city: 'Paris' },
+    //     { id: 4, name: 'Alice Williams', age: 35, city: 'Tokyo' }
+    // ];
+    // showModal("Receipt", null, 'Receipt_submit', tableData, "Total Price: 20$")
+    // const orderData = {
+    //     price: "$13000",
+    //     tax: "10%",
+    //     discount: "12%"
+    // };
+    // showModal('Order', "Are you sure to submit your order?", 'Order_submit', orderData, "Total Price: 20$")
+    // createGenericTable("user_list", ["","Name", "Last Name", "Role", "Address", "Status"]);
+};
+
+export const filtering = () => {
+    /* Fetch data from the backend
+    fetch('/api/data')
+        .then(response => response.json())
+        .then(data => {
+            // Process the fetched data
+            console.log(data);
+
+            // Filter the data
+            const selectedThreshold = document.getElementById('Threshold').value;
+            const selectedType = document.getElementById('Type').value;
+            const selectedAmount = document.getElementById('Amount').value;
+
+            const filteredData = data.filter(item => {
+                return (selectedThreshold === '' || item.threshold === selectedThreshold) &&
+                    (selectedType === '' || item.type === selectedType) &&
+                    (selectedAmount === '' || item.amount === selectedAmount);
+            });
+
+            console.log(filteredData);
+
+            // Further processing or rendering of the filtered data
+            // ...
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        }); */
+    localStorage.getItem("getData")
+};
+
+
 /*
-$(document).ready(function() {
 
-    const ar = new Router();
-    const data = ar.createFetch(storageUrls.GET_ALL);
-    console.log(data);
-
-    // Add Product button
-    $('#add-button').click(function() {
-        // Get the values from the input fields
-        console.log("")  // console.log("hello") for control
-        var name = $('#Name').val();
-        var type = $('#Type').val();
-        var price = $('#Price').val();
-        var quantity = $('#Quantity').val();
-        var threshold = $('#Threshold').val();
-
-        // Create a new row with the entered data
-        var newRow = '<tr>' +
-            '<td>' + name + '</td>' +
-            '<td>' + type + '</td>' +
-            '<td>' + price + '</td>' +
-            '<td>' + quantity + '</td>' +
-            '<td>' + threshold + '</td>' +
-            '</tr>';
-
-        // Append the new row to the table
-        $('#storage-data').append(newRow);
-
-        // Clear the input fields
-        $('#Name').val('');
-        $('#Type').val('');
-        $('#Price').val('');
-        $('#Quantity').val('');
-        $('#Threshold').val('');
-    });
-
-    // Filter button
+ // Filter button
     $('#filter-button').click(function() {
         // Get the selected filter values
         var selectedThreshold = $('#Threshold').val();
@@ -61,7 +86,9 @@ $(document).ready(function() {
         });
     });
 
-    $(() => {
+
+
+$(() => {
         const tableId = "storage_list"; // Dynamic table ID
         const columnNames = ["", "Name", "Type", "Price", "Quantity", "Threshold"]; // Dynamic column names
         //TODO: number of rows must be edited and we need to put the correct number of rows based on our user list fetch api
@@ -90,17 +117,18 @@ $(document).ready(function() {
         });
 
 
-        $('.search-box input[type="text"]').on('keyup', function() {
-            const searchText = $(this).val().toLowerCase();
-            $('table tbody tr').each(function() {
-                const rowText = $(this).text().toLowerCase();
-                $(this).toggle(rowText.indexOf(searchText) > -1);
-            });
+    $('.search-box input[type="text"]').on('keyup', function() {
+        const searchText = $(this).val().toLowerCase();
+        $('table tbody tr').each(function() {
+            const rowText = $(this).text().toLowerCase();
+            $(this).toggle(rowText.indexOf(searchText) > -1);
         });
     });
 });
-*/
+ */
+/*
 $(document).ready(function(){
+
     // Get all drugs data
     const ar = new Router();
     const data = ar.createFetch(storageUrls.GET_ALL);
@@ -147,35 +175,6 @@ $(document).ready(function(){
         });
     }
 
-    // Add Product button
-    $('#add-button').click(function() {
-        // Get the values from the input fields
-        console.log("hello")  // console.log("hello") for control
-        var name = $('#Name').val();
-        var type = $('#Type').val();
-        var price = $('#Price').val();
-        var quantity = $('#Quantity').val();
-        var threshold = $('#Threshold').val();
-
-        // Create a new row with the entered data
-        var newRow = '<tr>' +
-            '<td>' + name + '</td>' +
-            '<td>' + type + '</td>' +
-            '<td>' + price + '</td>' +
-            '<td>' + quantity + '</td>' +
-            '<td>' + threshold + '</td>' +
-            '</tr>';
-
-        // Append the new row to the table
-        $('#storage-data').append(newRow);
-
-        // Clear the input fields
-        $('#Name').val('');
-        $('#Type').val('');
-        $('#Price').val('');
-        $('#Quantity').val('');
-        $('#Threshold').val('');
-    });
 
     // Filter table
     const filterForm = document.getElementById('filterForm');
@@ -224,23 +223,24 @@ $(document).ready(function(){
             return rWord(8); // Generate random cell content
         });
 
-        /*And make the table fancy
+        //And make the table fancy
         const fancyTableA = $(`#${tableId}`).fancyTable({
             sortColumn: 0,
             pagination: true,
             perPage: 5,
             globalSearch: true,
         });
-        */
 
-        /*$('.search-box input[type="text"]').on('keyup', function() {
+
+        $('.search-box input[type="text"]').on('keyup', function() {
             const searchText = $(this).val().toLowerCase();
             $('table tbody tr').each(function() {
                 const rowText = $(this).text().toLowerCase();
                 $(this).toggle(rowText.indexOf(searchText) > -1);
             });
         });
-         */
+
     });
 });
+*/
 
