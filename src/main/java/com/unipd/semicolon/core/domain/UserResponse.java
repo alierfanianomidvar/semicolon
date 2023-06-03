@@ -17,6 +17,7 @@ public class UserResponse {
     private String address;
     private Role role;
     private String email;
+    private String accountStatus;
 
 
     public UserResponse() {
@@ -29,7 +30,8 @@ public class UserResponse {
             String phoneNumber,
             String address,
             Role role,
-            String email) {
+            String email,
+            String accountStatus) {
         this.name = name;
         this.lastName = lastName;
         this.gender = gender;
@@ -38,6 +40,7 @@ public class UserResponse {
         this.address = address;
         this.role = role;
         this.email = email;
+        this.accountStatus = accountStatus;
     }
 
     public String getName() {
@@ -110,5 +113,13 @@ public class UserResponse {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getAccountStatus() {
+        return accountStatus;
+    }
+
+    public void setAccountStatus(String accountStatus) {
+        this.accountStatus = accountStatus;
     }
 }
