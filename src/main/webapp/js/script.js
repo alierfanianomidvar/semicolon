@@ -60,6 +60,9 @@ $(window).on('hashchange load', function () {
         console.log("Error fetching data:", error);
     });
 
+    // Skip if no page is selected
+    if (!route || route === "") return;
+
     const url = `${route}.html?`;
     $("#main-content").load(url, function (response, status, xhr) {
         if (status == "success") {
