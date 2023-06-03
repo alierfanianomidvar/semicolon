@@ -1,5 +1,6 @@
 import orderUrls from "./urls/orderUrls.js";
 
+/*
 $(document).ready(function() {
     const fetchData = async () => {
         try {
@@ -17,12 +18,11 @@ $(document).ready(function() {
         }
     };
 
-    /*
+
     function showPopup() {
         var popup = document.getElementById("popup");
         popup.style.display = "block";
     }
-    */
 
     function hidePopup() {
         var popup = document.getElementById("popup");
@@ -41,4 +41,34 @@ $(document).ready(function() {
     }
 
     fetchData();
+
 });
+ */
+
+
+import {showModal} from "../js/modal.js";
+import {createGenericTable} from "./table/table.js";
+export const onInitial = () => {
+
+    const orderData = {
+        price: "$13000",
+        tax: "10%",
+        discount: "12%"
+    };
+    showModal('Order', "Are you sure to submit your order?", 'Order_submit', orderData, "Total Price: 20$")
+    localStorage.getItem("getData")
+    createGenericTable("storage_list", ["","Name", "Type", "Price", "Quantity", "Threshold"]);
+
+    const price = parseFloat(orderData.price.replace("$", ""));
+    const tax = parseFloat(orderData.tax.replace("%", ""));
+    const discount = parseFloat(orderData.discount.replace("%", ""));
+    const total = price + (price * tax / 100) - (price * discount / 100);
+
+    document.getElementById("total-price").innerText = total.toFixed(2);
+};
+
+export function hidePopup() {
+    const popup = document.getElementById("popup");
+    popup.style.display = "none";
+    window.location.href = "add-drug.html";
+}
