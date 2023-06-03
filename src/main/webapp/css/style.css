@@ -3,6 +3,35 @@ body {
     background-color: var(--background-color);
     font-family: 'Raleway', sans-serif;
 }
+.modal-bg-blur {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.modal-bg-blur > .blur-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: blur(5px);
+}
+
+.modal-open {
+    overflow: hidden;
+}
+.blur-effect {
+    filter: blur(5px);
+}
+.modal_content-box {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 10px;
+}
 
 .btn-custom {
     color: white;
@@ -44,3 +73,6 @@ body {
 .cancel-btn:hover{
     background-color: var(--other-btn-hover);
 }
+
+
+
