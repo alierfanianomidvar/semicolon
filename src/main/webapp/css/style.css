@@ -27,6 +27,11 @@ body {
 .blur-effect {
     filter: blur(5px);
 }
+.modal_content-box {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 10px;
+}
 
 .btn-custom {
     color: white;
@@ -48,3 +53,5 @@ body {
 .rounded-xl{
     border-radius: 16px;
 }
+
+
