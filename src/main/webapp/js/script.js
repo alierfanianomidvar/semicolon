@@ -14,7 +14,7 @@ $(window).on('hashchange load', function () {
     localStorage.removeItem('getData'); // removing all dats before finding the new Data.
 
     document.title = window.location.hash;
-    const route = window.location.hash.replace('#', '') || 'home';
+    const route = location.hash.replace("#", "").split("/")[0];
 
     let endPoint = null;
     const router = new Router();
