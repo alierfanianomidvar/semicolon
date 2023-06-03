@@ -9,13 +9,15 @@
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/login.css">
+    <script src="../js/login.js" type="module"></script>
+    <script src="../js/router.js" type=""></script>
 </head>
 <body>
 <div class="container">
     <div class="card">
         <h1 class="text-center">Welcome Back</h1>
         <p class="text-center">Please enter your login details:</p>
-        <form onsubmit="return sendData();">
+        <form>
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input class="form-control" id="email" name="email" placeholder="Email" required>
@@ -38,7 +40,7 @@
                 <label class="custom-control-label" for="keepLoggedIn">Keep me logged in</label>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+            <button type="submit" class="btn btn-primary btn-block" id="login-btn">Sign in</button>
         </form>
     </div>
     <div id="error-message" class="alert alert-danger mt-3" style="display: none;"></div>
@@ -50,8 +52,7 @@
 <div class="background-image2">
     <img src="../images/Shape 786.svg" alt="Background Image 2">
 </div>
-<script src="../js/login.js" type=""></script>
-<script src="../js/router.js" type=""></script>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 </html>
