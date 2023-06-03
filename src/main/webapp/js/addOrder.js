@@ -1,7 +1,16 @@
 import {createTable, rWord} from "./table/table.js";
+import {showModal} from "../js/modal.js";
+export const onInitial = () => {
 
 
 
+const orderData = {
+    price: "$13000",
+    tax: "10%",
+    discount: "12%"
+};
+showModal('Order', "Are you sure to submit your order?", 'Order_submit', orderData, "Total Price: 20$")
+};
 $(() => {
 
     // Example usage: Create a table with dynamic column names and content
@@ -57,6 +66,8 @@ function generateFooterTextAndButtons(firstText, secondText, cancelButtonText, a
     const acceptButton = $("<button>", {
         text: acceptButtonText,
         class: "btn btn-custom",
+        data_toggle: "modal",
+        data_target: "showModal",
         css: {
             margin: "0.5rem", // Random margin between 1 and 10 pixels
         },
