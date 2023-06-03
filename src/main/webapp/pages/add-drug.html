@@ -98,7 +98,7 @@
 
         <div class="col-lg-3">
             <div class="add-btn text-lg-right">
-                <button class="btn btn-custom" onclick="resetTotal()">Cancel</button>
+                <button class="btn btn-custom" onclick="resetTotal()" id="cancel-btn">Cancel</button>
             </div>
         </div>
 
@@ -108,10 +108,35 @@
             </div>
         </div>
 
-        <script>
+        <script type="module">
             function openOrderForm() {
                 window.open("confirm-order.html", "_blank", "width=600,height=400");
             }
+
+            import {onInitial, calculateTotal, resetTotal, showPopup} from "../js/addDrug.js";
+            onInitial()
+            calculateTotal()
+            resetTotal()
+            showPopup()
+
+            $(document).ready(function() {
+                localStorage.getItem("getData")
+
+                $('#decrease-quantity').click(function () {
+                    let quantity = parseInt($('#quantity').val());
+                    if (quantity > 1) {
+                        quantity--;
+                        $('#quantity').val(quantity);
+                    }
+                });
+
+                $('#increase-quantity').click(function () {
+                    let quantity = parseInt($('#quantity').val());
+                    quantity++;
+                    $('#quantity').val(quantity);
+                });
+            });
+
         </script>
     </div>
 </div>
