@@ -89,10 +89,12 @@ export function sendData() {
     };
 
     if (productType === "DRUG") {
-        const sensitive = document.getElementById("sensitivity").value;
+        const isSensitive = document.getElementById("sensitivity").value;
         const limitation = document.getElementById("limitation").value;
-        data.sensitivity = sensitive;
+        const needPrescription = document.getElementById("need-prescription").value;
+        data.isSensitive = isSensitive;
         data.limitation = limitation;
+        data.needPrescription = needPrescription;
     }
 
     console.log(data);
