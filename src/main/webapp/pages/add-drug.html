@@ -4,24 +4,26 @@
         <div class="col-md-3">
             <div class="search-box">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search Product" id="search-input">
+                    <input type="search" class="form-control" placeholder="Search Product" >
                 </div>
             </div>
         </div>
         <div class="col-lg-3">
             <div class="form-group">
-                <select class="form-control" id="Supplier">
-                    <option value="">Suppliers</option>
-                    <option>Supplier A</option>
-                    <option>Supplier B</option>
-                    <option>Supplier C</option>
+                <select id="filterSupplier" class="form-control">
+                    <option value="" disabled selected>Supplier</option>
+                    <option value="Supplier1">Supplier1</option>
+                    <option value="Supplier2">Supplier2</option>
+                    <option value="Supplier3">Supplier3</option>
+                    <option value="Supplier4">Supplier4</option>
+                    <option value="Supplier5">Supplier5</option>
                 </select>
             </div>
         </div>
         <div class="col-lg-3">
             <div class="form-group">
-                <select id="product" name="product">
-                    <option value="">Products</option>
+                <select id="filterProduct" class="form-control">
+                    <option value="" disabled selected>Product</option>
                     <option value="drug">Drug</option>
                     <option value="material">Material</option>
                 </select>
@@ -35,27 +37,74 @@
     </div>
 
     <div class="border rounded-xl bg-white">
-
+        <table class="order-table">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Is Active</th>
+                <th>Quantity</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <input type="checkbox" class="order-checkbox" data-price="10" onchange="calculateTotal()">
+                </td>
+                <td>Order 1</td>
+                <td>$10.00</td>
+                <td>Active</td>
+                <td>
+                    <button class="btn btn-outline-secondary decrease-quantity" type="button">-</button>
+                    <input type="number" class="form-control quantity" min="1" value="1">
+                    <button class="btn btn-outline-secondary increase-quantity" type="button">+</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" class="order-checkbox" data-price="15" onchange="calculateTotal()">
+                </td>
+                <td>Order 2</td>
+                <td>$15.00</td>
+                <td>Active</td>
+                <td>
+                    <button class="btn btn-outline-secondary decrease-quantity" type="button">-</button>
+                    <input type="number" class="form-control quantity" min="1" value="1">
+                    <button class="btn btn-outline-secondary increase-quantity" type="button">+</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" class="order-checkbox" data-price="20" onchange="calculateTotal()">
+                </td>
+                <td>Order 3</td>
+                <td>$20.00</td>
+                <td>Not Active</td>
+                <td>
+                    <button class="btn btn-outline-secondary decrease-quantity" type="button">-</button>
+                    <input type="number" class="form-control quantity" min="1" value="1">
+                    <button class="btn btn-outline-secondary increase-quantity" type="button">+</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 
     <div class="row">
         <div class="col-lg-3">
-            <p>Total Price: <span id="total-price">$0</span></p>
+            <div id="total-price">Total Price: $0.00</div>
         </div>
-        <div class="col-lg-3">
-            <div class="add-btn text-lg-right">
-                <button class="btn btn-custom">Cancel</button>
-            </div>
-        </div>
-        <!-- <div class="col-lg-3">
-          <div class="add-btn text-lg-right">
-            <button class="btn btn-custom">Submit Order</button>
-          </div>
-        </div> -->
 
         <div class="col-lg-3">
             <div class="add-btn text-lg-right">
-                <button class="btn btn-custom" onclick="openOrderForm()">Submit Order</button>
+                <button class="btn btn-custom" onclick="resetTotal()">Cancel</button>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="add-btn text-lg-right">
+                <button class="btn btn-custom" onclick="openOrderForm()" id="submit-order-btn">Submit Order</button>
             </div>
         </div>
 
@@ -67,4 +116,3 @@
     </div>
 </div>
 <script type="module" src="../js/addDrug.js"></script>
-
