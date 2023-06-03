@@ -85,15 +85,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="sensitivity">Sensitivity:</label>
-                        <select class="form-control" id="sensitivity">
-                            <option value="True">Sensitive</option>
-                            <option value="False">Not Sensitive</option>
-                        </select>
-                    </div>
-                </div>
+
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="expiration-date">Expiration Date:</label>
@@ -101,8 +93,6 @@
                         <div class="invalid-feedback">Expiration date should not be before the current date</div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="country-of-production">Country of Production:</label>
@@ -111,6 +101,8 @@
                         </select>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="price">Price:</label>
@@ -129,10 +121,19 @@
                         <input type="text" class="form-control" id="description">
                     </div>
                 </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="sensitivity">Sensitivity:</label>
+                        <select class="form-control" id="sensitivity">
+                            <option value="True">Sensitive</option>
+                            <option value="False">Not Sensitive</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="d-flex flex-wrap">
-                <button class="cancel-btn p-2 my-1 col-md-2 col-12">Cancel</button>
-                <button type="submit" class="add-btn ml-auto p-2 my-1 col-md-2 col-12">Add</button>
+                <button class="cancel-btn p-2 my-1 col-md-2 col-12" id="cancel-btn">Cancel</button>
+                <button type="submit" class="add-btn ml-auto p-2 my-1 col-md-2 col-12" id="add-btn">Add</button>
             </div>
         </div>
     </form>

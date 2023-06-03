@@ -26,7 +26,6 @@ export function sendData() {
     const gender = document.getElementById("gender").value;
     const shape = document.getElementById("shape").value;
     const ageGroup = document.getElementById("age-group").value;
-    const sensitivity = document.getElementById("sensitivity").value;
     const expirationDate = document.getElementById("expiration-date").value;
     const countryOfProduction = document.getElementById("country-of-production").value;
     const limitation = document.getElementById("limitation").value;
@@ -83,7 +82,6 @@ export function sendData() {
         gender,
         shape,
         ageGroup,
-        sensitivity,
         expirationDate,
         countryOfProduction,
         limitation,
@@ -91,6 +89,11 @@ export function sendData() {
         price,
         image
     };
+
+    if (productType === "DRUG") {
+        const sensitivity = document.getElementById("sensitivity").value;
+        data.sensitivity = sensitivity;
+    }
 
     console.log(data);
 
@@ -128,4 +131,16 @@ export const cancelButton = () => {
 $(function () {
     console.log("A");
     document.querySelector("#add-btn").addEventListener("click", addProduct);
+    document.querySelector("#cancel-btn").addEventListener("click",cancelButton);
+});
+
+$(document).ready(function() {
+    $('#product-type').change(function() {
+        const selectedOption = $(this).val();
+        if (selectedOption === 'MATERIAL') {
+            $('#sensitivity').parent().parent().hide();
+        } else {
+            $('#sensitivity').parent().parent().show();
+        }
+    });
 });
