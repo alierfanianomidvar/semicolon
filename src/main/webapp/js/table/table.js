@@ -1,6 +1,6 @@
 // Define a function for creating the table
 
-export const createTable = (tableId, columnNames, numRows, cellContentGenerator, type = "default") => {
+export const createTable = (tableId, columnNames, numRows, data, type = "default") => {
     // Generate the table headers
     const tableHeaders = $(`<thead>`).appendTo($(`#${tableId}`));
     const headerRow = $(`<tr>`).appendTo(tableHeaders);
@@ -12,10 +12,10 @@ export const createTable = (tableId, columnNames, numRows, cellContentGenerator,
     const tableBody = $(`<tbody>`).appendTo($(`#${tableId}`));
     switch (type) {
         case "user":
-            generateTableRows(numRows, tableBody, columnNames, "user", cellContentGenerator);
+            generateTableRows(numRows, tableBody, columnNames, "user", data);
             break;
         default:
-            generateTableRows(numRows, tableBody, columnNames, "default", cellContentGenerator);
+            generateTableRows(numRows, tableBody, columnNames, "default", data);
             break;
     }
 
@@ -38,14 +38,10 @@ const generateUserCellContent = (src) => {
         style: "width: 40px; height: 40px; margin-right: 20px; border: 1px solid lightgreen; border-radius: 50%;", // Adjust the width, height, and margin as desired
     });
 
-    // You can modify this code to generate the desired cell content for the "User" type table
-    const name = rWord(8);
-
     const cell = $("<td>", {
-        style: "padding: 2px;",
+        style: " padding: 0.1rem; padding-left: 0.5rem",
     });
     cell.append(image);
-    // cell.append(name);
     return cell;
 };
 
@@ -63,23 +59,167 @@ export const rWord = (r) => {
 };
 
 
-function generateTableRows(numRows, tableBody, columnNames, type, cellContentGenerator, src) {
+function generateTableRows(numRows, tableBody, columnNames, type, data) {
     for (let n = 0; n < numRows; n++) {
         const row = $("<tr>").appendTo(tableBody);
 
         columnNames.forEach((columnName, index) => {
             let cellContent = "";
             if (type === "user" && index === 0) {
-                cellContent = generateUserCellContent(src);
+                cellContent = generateUserCellContent(data[n]["image"]);
             } else {
-                cellContent = cellContentGenerator();
+                cellContent = data[n][`${columnName}`];
             }
-            $("<td>", { html: cellContent, style: "padding:2px;" }).appendTo(row);
+            $("<td>", { html: cellContent, style:" padding: 0.1rem; padding-left: 0.75rem; vertical-align: middle;" }).appendTo(row);
         });
 
         if (type === "user") {
-            $("<td>", { html: "<a href='#'>Edit</a>", style: "padding:2px;" }).appendTo(row);
+            $("<td>", { html: "<a href='#'>Edit</a>", style: " padding: 0.1rem; vertical-align: middle;" }).appendTo(row);
         }
     }
-    //based on the type we need to add a footer for the table
 }
+
+// Function to create buttons and/or text elements
+export const createButtonsAndText = (createButtons = false,
+                                     createText = false,
+                                     firstTxt = "",
+                                     secondTxt = "",
+                                     cancelBtn = "",
+                                     acceptBtn = "") => {
+    // Create a div to contain the buttons and/or text elements
+    const container = $("<div>", {
+        class: "bottom-container",
+        css: {
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginTop: "0.75rem", // Adjust the top margin as needed
+        },
+    });
+
+    if (createText) {
+        // Create the text elements container
+        const textContainer = $("<div>", {
+            class: "text-container",
+            css: {
+                display: "flex",
+                justifyContent: "space-between",
+                width: "40%",
+            },
+        });
+
+        // Create the text elements
+        const text1 = $("<span>", {
+            text: `${firstTxt}`,
+            css: {
+                fontWeight: "bold",
+                margin: "0.5rem", // Random margin between 1 and 10 pixels
+            },
+        });
+
+        const text2 = $("<span>", {
+            text: `${secondTxt}`,
+            css: {
+                fontWeight: "bold",
+                margin: "0.5rem", // Random margin between 1 and 10 pixels
+            },
+        });
+
+        // Append the text elements to the text container
+        textContainer.append(text1, text2);
+
+        // Append the text container to the main container
+        container.append(textContainer);
+    }
+
+    if (createButtons) {
+        // Create the buttons container
+        const buttonsContainer = $("<div>", {
+            class: "buttons-container",
+            css: {
+                display: "flex",
+                justifyContent: "flex-end",
+                width: createText ? "60%" : "100%",
+            },
+        });
+
+        // Create the buttons
+        const button1 = $("<button>", {
+            text: `${cancelBtn}`,
+            class: "btn btn-custom-secondary",
+            css: {
+                margin: "0.5rem", // Random margin between 1 and 10 pixels
+            },
+        });
+
+        const button2 = $("<button>", {
+            text: `${acceptBtn}`,
+            class: "btn btn-custom",
+            css: {
+                margin: "0.5rem", // Random margin between 1 and 10 pixels
+            },
+        });
+
+        // Append the buttons to the buttons container
+        buttonsContainer.append(button1, button2);
+
+        // Append the buttons container to the main container
+        container.append(buttonsContainer);
+    }
+
+    // Return the main container
+    return container;
+}
+
+
+export function createGenericTable(generictableId,genericcolumnNames){
+    ///showModal()
+    // Example usage: Create a table with dynamic column names and content
+    const userData = [{
+        Name: "Ali",
+        LastName: "Mahdavi",
+        Role: "Admin",
+        Address: "via romana",
+        Status: "Active",
+        image: "../images/users.svg"
+    },{
+        Name: "Abi",
+        LastName: "mor",
+        Role: "Staff",
+        Address: "via romana",
+        Status: "Active",
+        image: "../images/users.svg"
+    },{
+        Name: "Alex",
+        LastName: "pegi",
+        Role: "Admin",
+        Address: "via romana",
+        Status: "Active",
+        image: "../images/users.svg"
+    }]
+    let tableId = generictableId; // Dynamic table ID
+    let columnNames =genericcolumnNames;
+    //TODO: number of rows must be edited and we need to put the correct number of rows based on our user list fetch api
+    let numRows = userData.length; // Total number of rows
+
+    // Generate the table ID dynamically
+    let table = $(`<table>`, {
+        id: tableId,
+        class: "table table-striped sampleTable",
+    });
+
+    // Append the table to the container
+    $(".border").append(table);
+
+    // for passing the cellContentGenerator we need to define a proper function that returns the user actual information
+    createTable(tableId, columnNames, numRows, userData, "user");
+
+    // Call the createButtonsAndText function with the createButtons and createText parameters
+    const bottomContainer = createButtonsAndText(true, true, "salam", "s", "Cancel", "Submit");
+
+    // Append the main container to the page
+    $(".border").append(bottomContainer);
+
+}
+
+
