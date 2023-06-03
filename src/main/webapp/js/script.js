@@ -27,25 +27,14 @@ $(window).on('hashchange load', function () {
 
     $("#main-content").load(`${route}.html`);
 
-    if(route=="user"){
-
-
-
-    }
-
-});
-
-// Handle page navigation
-$(window).on("popstate", function () {
-    // Update document title and load page content
-    // document.getElementById("hidden-content").innerHTML = document.title;
-    document.title = window.location.hash;
-    const route = window.location.hash.replace("#", "") || "home";
-
-    $("#main-content").load(`${route}.html`);
-
+    // if(route=="user"){
+    //
+    //
+    //
+    // }
 
 });
+
 
 
 $(document).ready(function () {
