@@ -57,12 +57,27 @@ export const filtering = () => {
         .catch(error => {
             console.error('Error fetching data:', error);
         }); */
-    localStorage.getItem("getData")
+    //localStorage.getItem("getData")
+
+    const storedData = JSON.parse(localStorage.getItem("getData")); // Retrieve stored data from localStorage
+    console.log(storedData);
+
+    // Filter the data
+    const selectedThreshold = document.getElementById('Threshold').value;
+    const selectedType = document.getElementById('Type').value;
+    const selectedAmount = document.getElementById('Amount').value;
+
+    const filteredData = storedData.filter(item => {
+        return (selectedThreshold === '' || item.threshold === selectedThreshold) &&
+            (selectedType === '' || item.type === selectedType) &&
+            (selectedAmount === '' || item.amount === selectedAmount);
+    });
+
+    console.log(filteredData);
 };
 
 
 /*
-
  // Filter button
     $('#filter-button').click(function() {
         // Get the selected filter values
@@ -85,8 +100,6 @@ export const filtering = () => {
             }
         });
     });
-
-
 
 $(() => {
         const tableId = "storage_list"; // Dynamic table ID
@@ -128,8 +141,7 @@ $(() => {
  */
 /*
 $(document).ready(function(){
-
-    // Get all drugs data
+    // Get all data
     const ar = new Router();
     const data = ar.createFetch(storageUrls.GET_ALL);
     console.log(data);
@@ -174,7 +186,6 @@ $(document).ready(function(){
             tbody.appendChild(tr);
         });
     }
-
 
     // Filter table
     const filterForm = document.getElementById('filterForm');
