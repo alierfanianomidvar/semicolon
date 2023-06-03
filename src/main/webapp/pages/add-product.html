@@ -49,7 +49,7 @@
                         <select class="form-control" id="gender">
                             <option value="MALE">Male</option>
                             <option value="FEMALE">Female</option>
-                            <option value="NON_BINARY">Unisex</option>
+                            <option value="UNISEX">Unisex</option>
                         </select>
                     </div>
                 </div>
@@ -57,17 +57,8 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="shape">Shape:</label>
-                        <select class="form-control" id="shape">
-                            <option value="tablet">Tablet</option>
-                            <option value="capsule">Capsule</option>
-                            <option value="pill">Pill</option>
-                            <option value="liquid">Liquid</option>
-                            <option value="powder">Powder</option>
-                            <option value="gel">Gel</option>
-                            <option value="patch">Patch</option>
-                            <option value="injection">Injection</option>
-                        </select>
+                        <label for="price">Price:</label>
+                        <input type="number" class="form-control" id="price">
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -105,12 +96,6 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="price">Price:</label>
-                        <input type="number" class="form-control" id="price">
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
                         <label for="limitation">Limitation:</label>
                         <input type="number" class="form-control" id="limitation">
                     </div>
@@ -127,6 +112,21 @@
                         <select class="form-control" id="sensitivity">
                             <option value="True">Sensitive</option>
                             <option value="False">Not Sensitive</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="shape">Shape:</label>
+                        <select class="form-control" id="shape">
+                            <option value="tablet">Tablet</option>
+                            <option value="capsule">Capsule</option>
+                            <option value="pill">Pill</option>
+                            <option value="liquid">Liquid</option>
+                            <option value="powder">Powder</option>
+                            <option value="gel">Gel</option>
+                            <option value="patch">Patch</option>
+                            <option value="injection">Injection</option>
                         </select>
                     </div>
                 </div>

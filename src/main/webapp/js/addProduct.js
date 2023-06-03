@@ -24,7 +24,6 @@ export function sendData() {
     const name = document.getElementById("product-name").value;
     const supplier = supplierListInt;
     const gender = document.getElementById("gender").value;
-    const shape = document.getElementById("shape").value;
     const ageGroup = document.getElementById("age-group").value;
     const expirationDate = document.getElementById("expiration-date").value;
     const countryOfProduction = document.getElementById("country-of-production").value;
@@ -43,17 +42,19 @@ export function sendData() {
         expirationDateInput.classList.remove("is-invalid");
     }
 
-    // const priceInput = document.getElementById("price");
-    // const limitationInput = document.getElementById("limitation");
-    // if (isNaN(parseFloat(price)) || isNaN(parseFloat(limitation))) {
-    //     console.error("Price and limitation should be numeric values");
-    //     priceInput.classList.add("is-invalid");
-    //     limitationInput.classList.add("is-invalid");
-    //     return null;
-    // } else {
-    //     priceInput.classList.remove("is-invalid");
-    //     limitationInput.classList.remove("is-invalid");
-    // }
+    const priceInput = document.getElementById("price");
+    const limitationInput = document.getElementById("limitation");
+    const limitation = parseFloat(limitationInput.value);
+
+    if (isNaN(price) || isNaN(limitation)) {
+        console.error("Price and limitation should be numeric values");
+        priceInput.classList.add("is-invalid");
+        limitationInput.classList.add("is-invalid");
+        return null;
+    } else {
+        priceInput.classList.remove("is-invalid");
+        limitationInput.classList.remove("is-invalid");
+    }
 
     const nameInput = document.getElementById("product-name");
     const productName = nameInput.value.trim();
@@ -79,7 +80,6 @@ export function sendData() {
         name,
         supplier,
         gender,
-        shape,
         ageGroup,
         expirationDate,
         countryOfProduction,
@@ -92,6 +92,8 @@ export function sendData() {
         const isSensitive = document.getElementById("sensitivity").value;
         const limitation = document.getElementById("limitation").value;
         const needPrescription = document.getElementById("need-prescription").value;
+        const shape = document.getElementById("shape").value;
+        data.shape = shape;
         data.isSensitive = isSensitive;
         data.limitation = limitation;
         data.needPrescription = needPrescription;
@@ -101,22 +103,18 @@ export function sendData() {
 
     const router = new Router();
     if (data.productType === "DRUG") {
-        return router.createFetch(drugUrls.ADD, null, null, null, data);
+        return router.createFetch(drugUrls.ADD, null , null , null , data);
     } else if (data.productType === "MATERIAL") {
-        return router.createFetch(materialUrls.ADD, null, null, null, data);
+        return router.createFetch(materialUrls.ADD , null , null , null ,data);
     }
-
     return null;
 }
 
-export const addProduct = async () => {
+export const addProduct = async (event) => {
     event.preventDefault();
 
-    console.log("HERE");
     try {
         const responseData = await sendData();
-        console.log(responseData);
-        console.log("Data sent to the backend:", responseData);
     } catch (error) {
         let errorMessage = "An error occurred while sending data. Please try again later.";
         if (error.response && error.response.data && error.response.data.msg) {
@@ -142,9 +140,13 @@ $(document).ready(function() {
         if (selectedOption === 'MATERIAL') {
             $('#sensitivity').parent().parent().hide();
             $('#limitation').parent().parent().hide();
+            $('#need-prescription').parent().parent().hide();
+            $('#shape').parent().parent().hide();
         } else {
             $('#sensitivity').parent().parent().show();
             $('#limitation').parent().parent().show();
+            $('#need-prescription').parent().parent().show();
+            $('#shape').parent().parent().show();
         }
     });
 });
