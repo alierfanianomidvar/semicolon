@@ -1,6 +1,6 @@
 // Define a function for creating the table
 
-export const createTable = (tableId, columnNames, numRows, cellContentGenerator, type = "default") => {
+const createTable = (tableId, columnNames, numRows, cellContentGenerator, type = "default") => {
     // Generate the table headers
     const tableHeaders = $(`<thead>`).appendTo($(`#${tableId}`));
     const headerRow = $(`<tr>`).appendTo(tableHeaders);
@@ -50,7 +50,7 @@ const generateUserCellContent = (src) => {
 };
 
 
-export const rWord = (r) => {
+const rWord = (r) => {
     let t, n = "bcdfghjklmnpqrstvwxyz", a = "aeiou", e = function (r) {
         return Math.floor(Math.random() * r)
     }, o = "";
@@ -83,3 +83,37 @@ function generateTableRows(numRows, tableBody, columnNames, type, cellContentGen
     }
     //based on the type we need to add a footer for the table
 }
+
+
+function createGenericTable(generictableId,genericcolumnNames){
+    ///showModal()
+    // Example usage: Create a table with dynamic column names and content
+    let tableId = generictableId; // Dynamic table ID
+    let columnNames =genericcolumnNames;
+    //TODO: number of rows must be edited and we need to put the correct number of rows based on our user list fetch api
+    let numRows = 1000; // Total number of rows
+
+    // Generate the table ID dynamically
+    let table = $(`<table>`, {
+        id: tableId,
+        class: "table table-striped sampleTable",
+    });
+
+    // Append the table to the container
+    $(".border").append(table);
+
+    // for passing the cellContentGenerator we need to define a proper function that returns the user actual information
+    createTable(tableId, columnNames, numRows, () => {
+        return rWord(8); // Generate random cell content
+    }, "user");
+
+    // And make the table fancy
+    // const fancyTableA = $(`#${tableId}`).fancyTable({
+    //     sortColumn: 0,
+    //     pagination: true,
+    //     perPage: 5,
+    //     globalSearch: true,
+    // });
+}
+
+
