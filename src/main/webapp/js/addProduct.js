@@ -28,7 +28,6 @@ export function sendData() {
     const ageGroup = document.getElementById("age-group").value;
     const expirationDate = document.getElementById("expiration-date").value;
     const countryOfProduction = document.getElementById("country-of-production").value;
-    const limitation = document.getElementById("limitation").value;
     const price = document.getElementById("price").value;
     const description = document.getElementById("description").value;
     const image = null;
@@ -44,17 +43,17 @@ export function sendData() {
         expirationDateInput.classList.remove("is-invalid");
     }
 
-    const priceInput = document.getElementById("price");
-    const limitationInput = document.getElementById("limitation");
-    if (isNaN(parseFloat(price)) || isNaN(parseFloat(limitation))) {
-        console.error("Price and limitation should be numeric values");
-        priceInput.classList.add("is-invalid");
-        limitationInput.classList.add("is-invalid");
-        return null;
-    } else {
-        priceInput.classList.remove("is-invalid");
-        limitationInput.classList.remove("is-invalid");
-    }
+    // const priceInput = document.getElementById("price");
+    // const limitationInput = document.getElementById("limitation");
+    // if (isNaN(parseFloat(price)) || isNaN(parseFloat(limitation))) {
+    //     console.error("Price and limitation should be numeric values");
+    //     priceInput.classList.add("is-invalid");
+    //     limitationInput.classList.add("is-invalid");
+    //     return null;
+    // } else {
+    //     priceInput.classList.remove("is-invalid");
+    //     limitationInput.classList.remove("is-invalid");
+    // }
 
     const nameInput = document.getElementById("product-name");
     const productName = nameInput.value.trim();
@@ -84,15 +83,16 @@ export function sendData() {
         ageGroup,
         expirationDate,
         countryOfProduction,
-        limitation,
         description,
         price,
         image
     };
 
     if (productType === "DRUG") {
-        const sensitivity = document.getElementById("sensitivity").value;
-        data.sensitivity = sensitivity;
+        const sensitive = document.getElementById("sensitivity").value;
+        const limitation = document.getElementById("limitation").value;
+        data.sensitivity = sensitive;
+        data.limitation = limitation;
     }
 
     console.log(data);
@@ -139,8 +139,11 @@ $(document).ready(function() {
         const selectedOption = $(this).val();
         if (selectedOption === 'MATERIAL') {
             $('#sensitivity').parent().parent().hide();
+            $('#limitation').parent().parent().hide();
         } else {
             $('#sensitivity').parent().parent().show();
+            $('#limitation').parent().parent().show();
         }
     });
 });
+
