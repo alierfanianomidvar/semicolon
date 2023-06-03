@@ -27,11 +27,6 @@ $(window).on('hashchange load', function () {
 
     $("#main-content").load(`${route}.html`);
 
-    // if(route=="user"){
-    //
-    //
-    //
-    // }
 
 });
 
