@@ -177,25 +177,22 @@ export function createGenericTable(generictableId,genericcolumnNames){
     // Example usage: Create a table with dynamic column names and content
     const userData = [{
         Name: "Ali",
-        LastName: "Mahdavi",
-        Role: "Admin",
-        Address: "via romana",
-        Status: "Active",
-        image: "../images/users.svg"
+        Type: "Mahdavi",
+        Quantity: "Admin",
+        Price: "via romana",
+        Threshold: "Active"
     },{
-        Name: "Abi",
-        LastName: "mor",
-        Role: "Staff",
-        Address: "via romana",
-        Status: "Active",
-        image: "../images/users.svg"
+        Name: "Ali",
+        Type: "Mahdavi",
+        Quantity: "Admin",
+        Price: "via romana",
+        Threshold: "Active"
     },{
-        Name: "Alex",
-        LastName: "pegi",
-        Role: "Admin",
-        Address: "via romana",
-        Status: "Active",
-        image: "../images/users.svg"
+        Name: "Ali",
+        Type: "Mahdavi",
+        Quantity: "Admin",
+        Price: "via romana",
+        Threshold: "Active"
     }]
     let tableId = generictableId; // Dynamic table ID
     let columnNames =genericcolumnNames;
@@ -212,7 +209,7 @@ export function createGenericTable(generictableId,genericcolumnNames){
     $(".border").append(table);
 
     // for passing the cellContentGenerator we need to define a proper function that returns the user actual information
-    createTable(tableId, columnNames, numRows, userData, "user");
+    createTable(tableId, columnNames, numRows, userData);
 
     // Call the createButtonsAndText function with the createButtons and createText parameters
     const bottomContainer = createButtonsAndText(true, true, "salam", "s", "Cancel", "Submit");

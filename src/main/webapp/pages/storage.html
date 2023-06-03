@@ -50,6 +50,44 @@
 </div>
 
 <script type="module" src="../js/storage.js"></script>
+<script type="module">
+  import {onInitial, filtering} from "../js/storage.js";
+  onInitial()
+
+  filtering()
+
+  //add button
+  $(document).ready(function(){
+    $('#add-button').click(function() {
+      // Get the values from the input fields
+      console.log("hello")
+      var name = $('#Name').val();
+      var type = $('#Type').val();
+      var price = $('#Price').val();
+      var quantity = $('#Quantity').val();
+      var threshold = $('#Threshold').val();
+
+      // Create a new row with the entered data
+      var newRow = '<tr>' +
+              '<td>' + name + '</td>' +
+              '<td>' + type + '</td>' +
+              '<td>' + price + '</td>' +
+              '<td>' + quantity + '</td>' +
+              '<td>' + threshold + '</td>' +
+              '</tr>';
+
+      // Append the new row to the table
+      $('#storage-data').append(newRow);
+
+      // Clear the input fields
+      $('#Name').val('');
+      $('#Type').val('');
+      $('#Price').val('');
+      $('#Quantity').val('');
+      $('#Threshold').val('');
+    });
+  });
+</script>
 
 
 

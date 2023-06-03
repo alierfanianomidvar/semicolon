@@ -8,7 +8,7 @@ export const onInitial = () => {
         discount: "12%"
     };
     showModal('Order', "Are you sure to submit your order?", 'Order_submit', orderData, "Total Price: 20$")
-    createGenericTable("user_list", ["","Name", "Last Name", "Role", "Address", "Status"]);
+    createGenericTable("user_list", ["","Name", "LastName", "Role", "Address", "Status"]);
 
     // const tableData = [
     //     { id: 1, name: 'John Doe', age: 25, city: 'New York' },
