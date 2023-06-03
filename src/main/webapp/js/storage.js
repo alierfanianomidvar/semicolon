@@ -59,21 +59,30 @@ export const filtering = () => {
         }); */
     //localStorage.getItem("getData")
 
-    const storedData = JSON.parse(localStorage.getItem("getData")); // Retrieve stored data from localStorage
-    console.log(storedData);
+    //$('#filter-button').click(function(){});
 
-    // Filter the data
-    const selectedThreshold = document.getElementById('Threshold').value;
-    const selectedType = document.getElementById('Type').value;
-    const selectedAmount = document.getElementById('Amount').value;
+    const filterButton = document.getElementById('filter-button');
+    filterButton.addEventListener('click', () => {
+        const storedData = JSON.parse(localStorage.getItem("getData")); // Retrieve stored data from localStorage
+        console.log(storedData);
 
-    const filteredData = storedData.filter(item => {
-        return (selectedThreshold === '' || item.threshold === selectedThreshold) &&
-            (selectedType === '' || item.type === selectedType) &&
-            (selectedAmount === '' || item.amount === selectedAmount);
+        // Filter the data
+        const selectedName = document.getElementById('Name').value;
+        const selectedType = document.getElementById('Type').value;
+        const selectedPrice = document.getElementById('Price').value;
+        const selectedQuantity = document.getElementById('Quantity').value;
+        const selectedThreshold = document.getElementById('Threshold').value;
+
+        const filteredData = storedData.filter(item => {
+            return (selectedName === '' || item.threshold === selectedName) &&
+                (selectedType === '' || item.type === selectedType) &&
+                (selectedPrice === '' || item.type === selectedPrice) &&
+                (selectedQuantity === '' || item.amount === selectedQuantity) &&
+                (selectedThreshold === '' || item.threshold === selectedThreshold);
+        });
+
+        console.log(filteredData);
     });
-
-    console.log(filteredData);
 };
 
 
@@ -139,6 +148,7 @@ $(() => {
     });
 });
  */
+
 /*
 $(document).ready(function(){
     // Get all data
