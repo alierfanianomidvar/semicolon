@@ -92,6 +92,38 @@ export const createModal = (title, content, type, data, footerContent) => {
     </div>
   `;
             break;
+        case 'Order_submit':
+            const price = data.price;//"$12000";
+            const tax = data.tax;//"10%";
+            const discount = data.discount;//"12%";
+            const total = calculateTotalPrice(price, tax, discount); // Calculate the total price
+
+            modalEl.innerHTML = `
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+        <p><strong>${content}</strong></p>
+            <div class="modal_content-box">
+                <p>Price: ${price}</p>
+                <p>Tax: ${tax}</p>
+                <p>Discount: ${discount}</p>
+                <hr>
+                <p>Total price: ${total}</p>
+            </div>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary">Submit Order</button>
+        </div>
+      </div>
+    </div>
+  `;
+            break;
         default:
             modalEl.innerHTML = `
     <div class="modal-dialog" role="document">
@@ -139,4 +171,14 @@ export const showModal = (title, content, type, data, footerContent) => {
         mainContent.classList.remove('blur-effect');
         document.body.classList.remove('modal-open');
     });
+};
+
+// Function to calculate the total price based on price, tax, and discount
+const calculateTotalPrice = (price, tax, discount) => {
+    const numericPrice = parseFloat(price.replace('$', ''));
+    const numericTax = parseFloat(tax.replace('%', ''));
+    const numericDiscount = parseFloat(discount.replace('%', ''));
+
+    const total = numericPrice * (1 + numericTax / 100) * (1 - numericDiscount / 100);
+    return `$${total.toFixed(2)}`;
 };
