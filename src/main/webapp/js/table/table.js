@@ -74,7 +74,7 @@ function generateTableRows(numRows, tableBody, columnNames, type, data) {
         });
 
         if (type === "user") {
-            $("<td>", { html: "<a href='#'>Edit</a>", style: " padding: 0.1rem; vertical-align: middle;" }).appendTo(row);
+            $("<td>", { html: `<a href='#edit-user/${data[n]["Id"]}'>Edit</a>`, style: " padding: 0.1rem; vertical-align: middle;" }).appendTo(row);
         }
     }
 }
@@ -176,6 +176,7 @@ export function createGenericTable(generictableId,genericcolumnNames){
     ///showModal()
     // Example usage: Create a table with dynamic column names and content
     const userData = [{
+        Id: 1,
         Name: "Ali",
         LastName: "Mahdavi",
         Role: "Admin",
@@ -183,6 +184,7 @@ export function createGenericTable(generictableId,genericcolumnNames){
         Status: "Active",
         image: "../images/users.svg"
     },{
+        Id: 2,
         Name: "Abi",
         LastName: "mor",
         Role: "Staff",
@@ -190,6 +192,7 @@ export function createGenericTable(generictableId,genericcolumnNames){
         Status: "Active",
         image: "../images/users.svg"
     },{
+        Id: 3,
         Name: "Alex",
         LastName: "pegi",
         Role: "Admin",
