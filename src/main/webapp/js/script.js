@@ -19,13 +19,20 @@ import {createModal, showModal} from "./modal.js";
 
 
 
-
 //routing
 $(window).on('hashchange load', function () {
     // document.getElementById("hidden-content").innerHTML = document.title;
     document.title = window.location.hash;
     const route = window.location.hash.replace('#', '') || 'home';
-    $("#main-content").load(`${route}.html`,);
+
+    $("#main-content").load(`${route}.html`);
+
+    if(route=="user"){
+
+
+
+    }
+
 });
 
 // Handle page navigation
@@ -34,7 +41,10 @@ $(window).on("popstate", function () {
     // document.getElementById("hidden-content").innerHTML = document.title;
     document.title = window.location.hash;
     const route = window.location.hash.replace("#", "") || "home";
+
     $("#main-content").load(`${route}.html`);
+
+
 });
 
 
