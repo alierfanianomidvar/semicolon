@@ -51,10 +51,12 @@
 
 <script type="module" src="../js/storage.js"></script>
 <script type="module">
-  import {onInitial, filtering} from "../js/storage.js";
+  import {onInitial, filtering, createOption} from "../js/storage.js";
   onInitial()
 
   filtering()
+
+  createOption()
 
   //add button
   $(document).ready(function(){

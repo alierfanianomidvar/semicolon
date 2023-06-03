@@ -265,3 +265,76 @@ $(document).ready(function(){
 });
 */
 
+export const createOption = () =>  {
+    // Get all data
+    const ar = new Router();
+    ar.createFetch(storageUrls.GET_ALL)
+        .then(data => {
+            console.log(data);
+
+            //localStorage.getItem("getData")
+
+            // Fetch data for Threshold dropdown
+            fetch('/api/thresholds')
+                .then(response => response.json())
+                .then(data => {
+                    // Populate Threshold dropdown with options
+                    const thresholdDropdown = $('#Threshold');
+                    thresholdDropdown.empty(); // Clear existing options
+
+                    // Add default option
+                    thresholdDropdown.append($('<option>').val('').text('Threshold'));
+
+                    // Add options from the fetched data
+                    data.forEach(option => {
+                        thresholdDropdown.append($('<option>').val(option.value).text(option.label));
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching Threshold data:', error);
+                });
+
+            // Fetch data for Type dropdown
+            fetch('/api/types')
+                .then(response => response.json())
+                .then(data => {
+                    // Populate Type dropdown with options
+                    const typeDropdown = $('#Type');
+                    typeDropdown.empty(); // Clear existing options
+
+                    // Add default option
+                    typeDropdown.append($('<option>').val('').text('Type'));
+
+                    // Add options from the fetched data
+                    data.forEach(option => {
+                        typeDropdown.append($('<option>').val(option.value).text(option.label));
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching Type data:', error);
+                });
+
+            // Fetch data for Amount dropdown
+            fetch('/api/amounts')
+                .then(response => response.json())
+                .then(data => {
+                    // Populate Amount dropdown with options
+                    const amountDropdown = $('#Amount');
+                    amountDropdown.empty(); // Clear existing options
+
+                    // Add default option
+                    amountDropdown.append($('<option>').val('').text('Amount'));
+
+                    // Add options from the fetched data
+                    data.forEach(option => {
+                        amountDropdown.append($('<option>').val(option.value).text(option.label));
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching Amount data:', error);
+                });
+        })
+        .catch(error => {
+            console.error('Error fetching storage data:', error);
+        });
+}
