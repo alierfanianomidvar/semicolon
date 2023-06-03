@@ -1,9 +1,12 @@
+import accountUrls from "./urls/accountUrls.js";
+
 function sendData() {
-    const router = new Router();
+
     const username = document.getElementById("email").value;
     const password = document.getElementById("password").value;
     const keepLoggedIn = document.getElementById("keepLoggedIn").checked;
 
+    console.log("ali");
     // Validate email and password
     if (!validateForm(username, password)) {
         return false;
@@ -14,21 +17,31 @@ function sendData() {
         password,
     };
     try {
-        const fetchedData = router.createFetch(AccountUrls.LOGIN,null,null,null, loginData);
-        if (fetchedData) {
-            $(document).ready(async () => {
-                const url = '../pages/index.html'; // Specify the URL of the new HTML file
+        console.log("login", loginData);
+        console.log("url", accountUrls.LOGIN);
+        const router = new Router();
+        console.log("router", router);
+        router.createFetch(accountUrls.LOGIN,null,null,null, loginData).then(data =>{
+            console.log("Rrrr")
+            if (data) {
+                $(document).ready(async () => {
+                    const url = '../pages/index.html'; // Specify the URL of the new HTML file
 
-                try {
-                    // Fetch the new HTML file
-                    //TODO: we need to use the fetched data to store it into localstorage of our browser
-                    window.location.href = url
+                    try {
+                        // Fetch the new HTML file
+                        //TODO: we need to use the fetched data to store it into localstorage of our browser
+                        window.location.href = url
 
-                } catch (error) {
-                    console.error('Error loading new HTML:', error);
-                }
+                    } catch (error) {
+                        console.error('Error loading new HTML:', error);
+                    }
+                });
+            }
+        })
+            .catch(ex =>{
+                console.log(ex)
             });
-        }
+
     } catch (e) {
         return false;
     }
@@ -107,3 +120,6 @@ function togglePasswordVisibility() {
         passwordIcon.classList.add("bi-eye");
     }
 }
+$(function () {
+    document.querySelector("#login-btn").addEventListener("click",sendData);
+});
