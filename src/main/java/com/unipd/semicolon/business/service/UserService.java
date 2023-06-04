@@ -26,7 +26,7 @@ public interface UserService {
             Role role,
             String email,
             String accountStatus,
-            byte[] profilePicture,
+            String profilePicture,
             String token
     );
 
@@ -42,7 +42,7 @@ public interface UserService {
                  Role role,
                  String email,
                  String accountStatus,
-                 byte[] profilePicture,
+                 String profilePicture,
                  String token
     );
 

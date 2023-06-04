@@ -1,4 +1,4 @@
-export function getByteProfilePicture() {
+export function getBase64ProfilePicture() {
     return new Promise((resolve) => {
         const fileInput = document.querySelector('input[type="file"]');
         const file = fileInput.files[0];
@@ -8,16 +8,15 @@ export function getByteProfilePicture() {
 
         // Set up a function to be called when the file is read
         reader.onload = function (event) {
-            // Get the loaded file data as a byte array
-            const byteArray = new Uint8Array(event.target.result);
+            // Get the loaded file data as a base64 encoded string
+            const base64String = event.target.result;
 
-            // Send the byte array to the backend
-            resolve(Array.from(byteArray));
-
+            // Send the base64 string to the backend
+            resolve(base64String);
         };
 
-        // Read the file as an ArrayBuffer
-        reader.readAsArrayBuffer(file);
+        // Read the file as a data URL (base64 encoded string)
+        reader.readAsDataURL(file);
     });
 }
 
