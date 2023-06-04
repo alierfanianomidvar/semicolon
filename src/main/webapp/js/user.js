@@ -8,6 +8,7 @@ export const onInitial = () => {
         discount: "12%"
     };
     const userData = [{
+        Id: 1,
         Name: "Ali",
         LastName: "Mahdavi",
         Role: "Admin",
@@ -15,6 +16,7 @@ export const onInitial = () => {
         Status: "Active",
         image: "../images/users.svg"
     },{
+        Id: 2,
         Name: "Abi",
         LastName: "mor",
         Role: "Staff",
@@ -22,6 +24,7 @@ export const onInitial = () => {
         Status: "Active",
         image: "../images/users.svg"
     },{
+        Id: 3,
         Name: "Alex",
         LastName: "pegi",
         Role: "Admin",

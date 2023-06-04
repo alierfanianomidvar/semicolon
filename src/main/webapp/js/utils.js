@@ -5,3 +5,7 @@ export function showErrorMessage(message) {
     alert.textContent = message;
     error.appendChild(alert);
 }
+
+export function getRouteParam (index = 1) {
+    return window.location.hash.split("/")[index]
+}
