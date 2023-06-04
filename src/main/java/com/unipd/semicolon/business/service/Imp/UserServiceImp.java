@@ -227,7 +227,8 @@ public class UserServiceImp implements UserService {
                     user.getAddress(),
                     user.getRole(),
                     user.getEmail(),
-                    user.getAccountStatus()
+                    user.getAccountStatus(),
+                    user.getProfilePicture()
             );
         }
         throw new EntityNotFoundException("User not found with id:" + id);
