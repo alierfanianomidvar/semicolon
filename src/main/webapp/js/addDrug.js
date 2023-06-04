@@ -3,6 +3,7 @@ import {showModal} from "../js/modal.js";
 import {createGenericTable} from "./table/table.js";
 import supplierUrls from "./urls/supplierUrls";
 import drugUrls from "./urls/drugUrls";
+import materialUrls from "./urls/materialUrls";
 export const onInitial = () => {
 
     const orderData = {
@@ -24,13 +25,48 @@ export const showPopup = () => {
         });
 }
 
-export const createOption = async () => {
+export const sendOptionData = async () => {
     const data = JSON.parse(localStorage.getItem("getData"))
     console.log(data)
 
     const router = new Router()
+    let materialData, drugData;
 
-    //for supplier option
+    const material  = Promise.resolve(router.createFetch(materialUrls.GET_ALL));
+    materialData = await material;
+
+    console.log("m", materialData);
+    const drug  = Promise.resolve(router.createFetch(drugUrls.GET_ALL));
+
+    drugData = await drug;
+    return {
+        material: materialData,
+        drug: drugData
+    };
+}
+
+export async function optionData () {
+    let drug = [];
+    let material = [];
+    const data = await sendOptionData();
+    const drugMaterial = [...data.drug, ...data.material]
+    console.log("dm: ", drugMaterial)
+    console.log("this is sendPharmacy: ", data)
+
+    const selectElement = document.getElementById('product-list');
+
+    drugMaterial.forEach(material => {
+        const option = document.createElement('option');
+        option.text = material.name;
+        selectElement.add(option);
+    });
+}
+
+export const supplierOption = async () =>{
+    const data = JSON.parse(localStorage.getItem("getData"))
+    console.log(data)
+
+    const router = new Router()
     let supplierData;
     const supplier = Promise.resolve(router.createFetch(supplierUrls.GET_ALL))
 
@@ -46,24 +82,6 @@ export const createOption = async () => {
         const option = document.createElement('option');
         option.text = name;
         selectElementSupplier.add(option);
-    });
-
-    //for product option
-    let productData;
-    const product = Promise.resolve(router.createFetch(drugUrls.GET_ALL))
-
-    productData = await product
-    console.log(supplierData);
-
-    const selectedProduct = supplierData.map(obj => obj.name)
-    console.log(selectedProduct);
-
-    const selectElementProduct = document.getElementById('filterProduct');
-
-    selectedProduct.forEach(name => {
-        const option = document.createElement('option');
-        option.text = name;
-        selectElementProduct.add(option);
     });
 }
 
