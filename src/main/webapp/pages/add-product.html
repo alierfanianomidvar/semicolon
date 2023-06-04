@@ -152,12 +152,7 @@
 <script type="module" src="../js/addProduct.js"></script>
 <script type="module">
 
-    import {addProduct,cancelButton,sendData} from "../js/addProduct.js"
-
-    const supplierListValue = document.getElementById("supplierId").value;
-    const supplierListInt = parseInt(supplierListValue, 10);
-
-    console.log(supplierListInt);
+    import {addProduct,cancelButton} from "../js/addProduct.js"
 
     const countryOfProductionSelect = document.getElementById("country-of-production");
 
@@ -171,6 +166,7 @@
         option.textContent = countryCode;
         countryOfProductionSelect.appendChild(option);
     });
+
 
     document.querySelector("#add-btn").addEventListener("click", addProduct);
     document.querySelector("#cancel-btn").addEventListener("click",cancelButton);

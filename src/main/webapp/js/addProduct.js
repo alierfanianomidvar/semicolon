@@ -1,8 +1,65 @@
 import materialUrls from "./urls/materialUrls.js";
 import drugUrls from "./urls/drugUrls.js";
 
+function validatePrice() {
+    const priceInput = document.getElementById("price");
 
-export function sendData() {
+    // Skip validation if the price field doesn't exist
+    if (!priceInput) {
+        return true;
+    }
+
+    const price = priceInput.value.trim();
+
+    // Perform the validation for the price field
+    if (price === "") {
+        priceInput.classList.add("is-invalid");
+        return false;
+    } else {
+        priceInput.classList.remove("is-invalid");
+        return true;
+    }
+}
+
+function validateLimitation() {
+    const limitationInput = document.getElementById("limitation");
+
+    // Skip validation if the limitation field doesn't exist
+    if (!limitationInput) {
+        return true;
+    }
+
+    const limitation = limitationInput.value.trim();
+
+    // Perform the validation for the limitation field
+    if (limitation === "") {
+        limitationInput.classList.add("is-invalid");
+        return false;
+    } else {
+        limitationInput.classList.remove("is-invalid");
+        return true;
+    }
+}
+
+function validateExpirationDate() {
+    const expirationDateInput = document.getElementById("expiration-date");
+    const currentDate = new Date().toISOString().split("T")[0];
+    const expirationDate = expirationDateInput.value;
+
+    if (expirationDate < currentDate) {
+        console.error("Expiration date should not be before the current date");
+        expirationDateInput.classList.add("is-invalid");
+        return false;
+    } else {
+        expirationDateInput.classList.remove("is-invalid");
+        return true;
+    }
+}
+
+export async function sendData() {
+    const supplierListValue = document.getElementById("supplierId").value;
+    const supplierListInt = parseInt(supplierListValue, 10);
+
     const productType = document.getElementById("product-type").value;
     const name = document.getElementById("product-name").value;
     const supplier = supplierListInt;
@@ -14,48 +71,13 @@ export function sendData() {
     const description = document.getElementById("description").value;
     const image = null;
 
-    const expirationDateInput = document.getElementById("expiration-date");
-    const currentDate = new Date().toISOString();
+    const isPriceValid = validatePrice();
+    const isLimitationValid = validateLimitation();
+    const isExpirationDateValid = validateExpirationDate();
 
-    if (expirationDateInput.value < currentDate) {
-        console.error("Expiration date should not be before the current date");
-        expirationDateInput.classList.add("is-invalid");
+    if (!isPriceValid || !isLimitationValid || !isExpirationDateValid) {
+        console.error("Invalid input");
         return null;
-    } else {
-        expirationDateInput.classList.remove("is-invalid");
-    }
-
-    const priceInput = document.getElementById("price");
-    const limitationInput = document.getElementById("limitation");
-    const limitation = parseFloat(limitationInput.value);
-
-    if (isNaN(price) || isNaN(limitation)) {
-        console.error("Price and limitation should be numeric values");
-        priceInput.classList.add("is-invalid");
-        limitationInput.classList.add("is-invalid");
-        return null;
-    } else {
-        priceInput.classList.remove("is-invalid");
-        limitationInput.classList.remove("is-invalid");
-    }
-
-    const nameInput = document.getElementById("product-name");
-    const productName = nameInput.value.trim();
-    const nameError = nameInput.nextElementSibling;
-
-    if (!productName) {
-        console.error("Name should not be empty");
-        nameError.textContent = "Name should not be empty";
-        nameInput.classList.add("is-invalid");
-        return null;
-    } else if (/^\d/.test(productName) || /^\d+$/.test(productName)) {
-        console.error("Name should not start with a number or be only a number");
-        nameError.textContent = "Name should not start with a number or be only a number";
-        nameInput.classList.add("is-invalid");
-        return null;
-    } else {
-        nameError.textContent = "";
-        nameInput.classList.remove("is-invalid");
     }
 
     const data = {
@@ -68,7 +90,7 @@ export function sendData() {
         countryOfProduction,
         description,
         price,
-        image
+        image,
     };
 
     if (productType === "DRUG") {
@@ -82,20 +104,17 @@ export function sendData() {
         data.needPrescription = needPrescription;
     }
 
-    console.log(data);
-
     const router = new Router();
     if (data.productType === "DRUG") {
-        return router.createFetch(drugUrls.ADD, null , null , null , data);
+        return router.createFetch(drugUrls.ADD, null, null, null, data);
     } else if (data.productType === "MATERIAL") {
-        return router.createFetch(materialUrls.ADD , null , null , null ,data);
+        return router.createFetch(materialUrls.ADD, null, null, null, data);
     }
     return null;
 }
 
 export const addProduct = async (event) => {
     event.preventDefault();
-
     try {
         const responseData = await sendData();
     } catch (error) {
@@ -107,10 +126,6 @@ export const addProduct = async (event) => {
     }
 };
 
-
 export const cancelButton = () => {
     window.location.href = "supplier.html"; // Replace with the desired URL
 };
-
-
-
