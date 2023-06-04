@@ -7,21 +7,50 @@ export const onInitial = () => {
         tax: "10%",
         discount: "12%"
     };
-    showModal('Order', "Are you sure to submit your order?", 'Order_submit', orderData, "Total Price: 20$")
-    createGenericTable("user_list", ["","Name", "Last Name", "Role", "Address", "Status"]);
+    const userData = [{
+        Name: "Ali",
+        LastName: "Mahdavi",
+        Role: "Admin",
+        Address: "via romana",
+        Status: "Active",
+        image: "../images/users.svg"
+    },{
+        Name: "Abi",
+        LastName: "mor",
+        Role: "Staff",
+        Address: "via romana",
+        Status: "Active",
+        image: "../images/users.svg"
+    },{
+        Name: "Alex",
+        LastName: "pegi",
+        Role: "Admin",
+        Address: "via romana",
+        Status: "Active",
+        image: "../images/users.svg"
+    }]
 
-    // const tableData = [
-    //     { id: 1, name: 'John Doe', age: 25, city: 'New York' },
-    //     { id: 2, name: 'Jane Smith', age: 30, city: 'London' },
-    //     { id: 3, name: 'Bob Johnson', age: 40, city: 'Paris' },
-    //     { id: 4, name: 'Alice Williams', age: 35, city: 'Tokyo' }
-    // ];
-    // showModal("Receipt", null, 'Receipt_submit', tableData, "Total Price: 20$")
-    // const orderData = {
-    //     price: "$13000",
-    //     tax: "10%",
-    //     discount: "12%"
-    // };
-    // showModal('Order', "Are you sure to submit your order?", 'Order_submit', orderData, "Total Price: 20$")
-    // createGenericTable("user_list", ["","Name", "Last Name", "Role", "Address", "Status"]);
+    const footerContent = {
+        button: {
+            active: true,
+            cancel: "Cancel",
+            onCancel: () => {},
+            submit: "Submit",
+            onSubmit: () => {}
+        },
+        text: {
+            active: true,
+            left: "Total: 5$",
+            center: "WhatEver!"
+        }
+    }
+
+    showModal('Order', "Are you sure to submit your order?", 'Order_submit', orderData, "Total Price: 20$")
+    createGenericTable(
+        "user_list",
+        ["","Name", "Last Name", "Role", "Address", "Status"],
+        userData,
+        footerContent
+        );
+    
 };
