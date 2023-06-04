@@ -1,5 +1,5 @@
 import userUrls from "./urls/userUrls.js";
-import {showErrorMessage, getRouteParam} from "./utils.js";
+import {getByteProfilePicture, getRouteParam} from "./utils.js";
 
 const router = new Router();
 
@@ -10,7 +10,7 @@ export const onInitial =async () => {
         const fetchedData = await router.createFetch(userUrls.GET_BY_ID(userId));
         fillFormData(fetchedData);
     } catch (error) {
-        console.log(error);
+        console.log("Error: ", error);
     }
 }
 
@@ -52,30 +52,6 @@ statusBtn.addEventListener('click', async function(event) {
     accountStatus.value = newStatus;
     event.target.textContent = newStatus === "ACTIVE" ? "Disable" : "Enable";
 });
-
-
-function getByteProfilePicture() {
-    return new Promise((resolve) => {
-        const fileInput = document.querySelector('input[type="file"]');
-        const file = fileInput.files[0];
-
-        // Create a new FileReader object
-        const reader = new FileReader();
-
-        // Set up a function to be called when the file is read
-        reader.onload = function (event) {
-            // Get the loaded file data as a byte array
-            const byteArray = new Uint8Array(event.target.result);
-
-            // Send the byte array to the backend
-            resolve(Array.from(byteArray));
-
-        };
-
-        // Read the file as an ArrayBuffer
-        reader.readAsArrayBuffer(file);
-    });
-}
 
 function fillFormData (data) {
     const addUserForm = document.getElementById('edit-user-form');
