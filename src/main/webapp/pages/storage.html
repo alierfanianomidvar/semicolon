@@ -1,85 +1,33 @@
 <div class="container">
-  <h5 class="h2 mb-5 mt-4">Storage</h5>
-  <form id="filterForm">
-    <div class="form-row mb-4">
-      <div class="col">
-        <select id="filterThreshold" class="form-control">
-          <option value="" disabled selected>Threshold</option>
-
-        </select>
-      </div>
-
-      <div class="col">
-        <select id="filterType" class="form-control">
-          <option value="" disabled selected>Type</option>
-
-        </select>
-      </div>
-
-      <div class="col">
-        <select id="filterAmount" class="form-control">
-          <option value="" disabled selected>Amount</option>
-
-        </select>
-      </div>
-
-    <div class="col-auto">
-      <div class="add-btn text-lg-right">
-        <button class="btn btn-custom" id="add-button">Add Product</button>
-      </div>
+    <h5 class="h2 mb-5 mt-4">Storage</h5>
+    <div class="form-row mb-4 ml-auto">
+        <a href="#add-product" class="btn btn-custom"> Add Product </a>
     </div>
+    <form id="filterForm">
+        <div class="form-row justify-content-between">
 
-    <div class="col-auto">
-      <div class="add-btn text-lg-right">
-        <button class="btn btn-custom" id="filter-button" type="submit">Filter</button>
-      </div>
-    </div>
-  </div>
+            <div class="col-md-3 mb-3">
+                <select id="filterType" class="form-control">
+                    <option value="" disabled selected>Type</option>
+                    <option value="drug">Drug</option>
+                    <option value="material">Material</option>
+                </select>
+            </div>
+            <div class="col-md-2 mb-3">
+                <button class="btn btn-custom w-100" id="filter-button" type="submit">Filter</button>
+            </div>
+        </div>
 
-  <div class="border rounded-xl bg-white">
+        <div id='tbl' class="border rounded-xl bg-white">
+            <!-- Dynamically generate table using drug data -->
+        </div>
 
-  </div>
-
-  </form>
+    </form>
 </div>
 
 <script type="module" src="../js/storage.js"></script>
 <script type="module">
-  import {onInitial, filtering, createOption, listTable} from "../js/storage.js";
-  onInitial()
-  filtering()
-  createOption()
-  listTable()
+    import {onInitial} from "../js/storage.js";
 
-  //add button
-  $(document).ready(function(){
-    $('#add-button').click(function() {
-      // Get the values from the input fields
-      console.log("hello")
-      var name = $('#Name').val();
-      var type = $('#Type').val();
-      var price = $('#Price').val();
-      var quantity = $('#Quantity').val();
-      var threshold = $('#Threshold').val();
-
-      // Create a new row with the entered data
-      var newRow = '<tr>' +
-              '<td>' + name + '</td>' +
-              '<td>' + type + '</td>' +
-              '<td>' + price + '</td>' +
-              '<td>' + quantity + '</td>' +
-              '<td>' + threshold + '</td>' +
-              '</tr>';
-
-      // Append the new row to the table
-      $('#storage-data').append(newRow);
-
-      // Clear the input fields
-      $('#Name').val('');
-      $('#Type').val('');
-      $('#Price').val('');
-      $('#Quantity').val('');
-      $('#Threshold').val('');
-    });
-  });
+    onInitial();
 </script>
