@@ -1,7 +1,7 @@
 import userUrls from "./urls/userUrls.js";
 import {
     generateRoleOptions,
-    getByteProfilePicture,
+    getBase64ProfilePicture,
     getTokenFromLocalStorage,
     extractRole
 } from "./utils.js";
@@ -29,6 +29,7 @@ addUserForm.addEventListener('submit', async function (event) {
 
     const token = getTokenFromLocalStorage();
 
+    console.log(body);
     const router = new Router();
     try {
         await router.createFetch(userUrls.ADD, null, null, token, body);
@@ -49,24 +50,19 @@ export const onInitial = async () => {
 }
 
 
-function getBase64ProfilePicture() {
-    return new Promise((resolve) => {
-        const fileInput = document.querySelector('input[type="file"]');
-        const file = fileInput.files[0];
+document.getElementById("profilePicture").addEventListener("change", userAddHandleFileSelect);
 
-        // Create a new FileReader object
+function userAddHandleFileSelect(event) {
+    const fileInput = event.target;
+    const avatarPreview = document.getElementById("add-avatar-preview");
+
+    if (fileInput.files && fileInput.files[0]) {
         const reader = new FileReader();
 
-        // Set up a function to be called when the file is read
-        reader.onload = function (event) {
-            // Get the loaded file data as a base64 encoded string
-            const base64String = event.target.result;
-
-            // Send the base64 string to the backend
-            resolve(base64String);
+        reader.onload = function (e) {
+            avatarPreview.setAttribute("src", e.target.result);
         };
 
-        // Read the file as a data URL (base64 encoded string)
-        reader.readAsDataURL(file);
-    });
+        reader.readAsDataURL(fileInput.files[0]);
+    }
 }
