@@ -47,10 +47,6 @@ $(window).on('hashchange load', function () {
         case "user":
             endPoint = userUrls.GET_BY_ID;
             break;
-        case "profile":
-            //TODO: url must change ( we dont have urls for report)
-            endPoint = userUrls.GET_BY_ID;
-            break;
         default:
             endPoint = storageUrls.GET_ALL;
             break;
