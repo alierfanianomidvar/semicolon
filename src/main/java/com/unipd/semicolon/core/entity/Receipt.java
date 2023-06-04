@@ -20,8 +20,8 @@ public class Receipt {
     @ManyToMany
     private List<Material> receiptMaterials;
 
-    @Column(name = "image")
-    private byte[] image;
+    @Column(name = "string_image", columnDefinition = "TEXT")
+    private String image;
 
     @Column(name = "date")
     private Date date;
@@ -35,7 +35,7 @@ public class Receipt {
     public Receipt(
             List<Drug> receiptDrugs,
             List<Material> receiptMaterials,
-            byte[] image,
+            String image,
             Date date,
             PaymentMethod paymentMethod) {
         this.receiptDrugs = receiptDrugs;
@@ -68,11 +68,11 @@ public class Receipt {
         this.receiptMaterials = receiptMaterials;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
