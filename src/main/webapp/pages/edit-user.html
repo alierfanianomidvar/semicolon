@@ -1,29 +1,16 @@
 <div class="container">
   <h2 class="h2 mb-5 mt-4">User</h2>
   <div id="error-message"></div>
-  <form id="add-user-form" class="card rounded-xl">
+  <form id="edit-user-form" class="card rounded-xl">
     <div class="card-body p-4">
       <div class="row align-items-end mb-4">
         <!-- Avatar -->
         <div class="col-1">
           <label class="w-100 mb-3 mt-3 bg-secondary">
             <img src="../images/users.svg" alt="User Avatar" class="img-fluid rounded w-100" />
+            <!-- TODO: add thumbnail! -->
             <input id="profilePicture" name="profilePicture" type="file" class="d-none" accept="image/*">
           </label>
-        </div>
-        <!--username-->
-        <div class="col-3">
-          <div class="form-group">
-            <label class="form-label">Username :</label>
-            <input name="username" type="text" class="form-control" placeholder="Username" required />
-          </div>
-        </div>
-        <!--pass-->
-        <div class="col-4">
-          <div class="form-group">
-            <label class="form-label">Password :</label>
-            <input name="password" type="password" class="form-control" placeholder="Password" required />
-          </div>
         </div>
       </div>
       <div class="row mb-4">
@@ -71,6 +58,7 @@
               <option value="4">Guest</option>
               <option value="3">Staff</option>
               <option value="2">Admin</option>
+<!--              TODO add a js to check the privilege-->
             </select>
           </div>
         </div>
@@ -95,6 +83,7 @@
         <input name="address" type="text" class="form-control" placeholder="Address" />
       </div>
     </div>
+    <input type="hidden" name="accountStatus">
     <hr class="border border-1 opacity-100 m-0" />
     <div class="card-body p-4">
       <div class="row">
@@ -102,11 +91,19 @@
           <a href="#user" class="btn btn-custom-secondary w-100">Cancel</a>
         </div>
 
-        <div class="col-2 offset-8">
-          <button type="submit" class="btn btn-custom w-100">Add</button>
+        <div class="col-2 offset-6">
+          <button id="status-btn" type="button" class="btn btn-custom w-100">Enable</button>
+        </div>
+
+        <div class="col-2">
+          <button type="submit" class="btn btn-custom w-100">Edit</button>
         </div>
       </div>
     </div>
   </form>
 </div>
-<script src="../js/addUser.js" type="module"></script>
+<script src="../js/editUser.js" type="module"></script>
+<script type="module">
+    import {onInitial} from "../js/editUser.js";
+    onInitial();
+</script>
