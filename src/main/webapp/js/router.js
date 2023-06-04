@@ -1,4 +1,6 @@
-class Router {
+import {showModal} from "./modal.js";
+
+export class Router {
     sendHttpRequest(method, url, data, token) {
         const requestOptions = {
             method: method,
@@ -17,11 +19,16 @@ class Router {
                 if (res.ok) {
                     return res.json();
                 } else {
-                    throw new Error('Request failed');
+                    Promise.resolve(res.json()).then(r => {
+                        throw new Error(r.msg)
+                    })
+
+
                 }
             }).catch(error => {
-                console.error('Error fetching data:', error);
+                console.error('Error fetching data1:', error);
                 // throw an error or return a default value
+                showModal("Error", error, "Error", null, null)
                 throw error;
             });
     }
