@@ -63,7 +63,7 @@ $(window).on('hashchange load', function () {
     // Skip if no page is selected
     if (!route || route === "") return;
 
-    const url = `${route}.html?`;
+    const url = `addOrder.html?`;
     $("#main-content").load(url, function (response, status, xhr) {
         if (status == "success") {
             console.log("Content loaded successfully");
