@@ -16,40 +16,13 @@ public class ReceiptModel {
 
     private List<Long> list_material_id;
     private Long material_id;
-    private byte[] image;
+    private String image;
     private Date date;
     private PaymentMethod paymentMethod;
 
     public ReceiptModel() {
     }
 
-    public ReceiptModel(
-            Long drugs_id,
-            Long material_id,
-            byte[] image,
-            Date date,
-            PaymentMethod paymentMethod) {
-        this.drugs_id = drugs_id;
-        this.material_id = material_id;
-        this.image = image;
-        this.date = date;
-        this.paymentMethod = paymentMethod;
-    }
-
-    public ReceiptModel(Long id,
-                        List<Long> list_drug_id,
-                        List<Long> list_material_id,
-                        byte[] image,
-                        Date date,
-                        PaymentMethod paymentMethod)
-    {
-        this.id = id;
-        this.list_drug_id = list_drug_id;
-        this.list_material_id = list_material_id;
-        this.image = image;
-        this.date = date;
-        this.paymentMethod = paymentMethod;
-    }
 
     public Long getId() {
         return id;
@@ -91,12 +64,8 @@ public class ReceiptModel {
         this.material_id = material_id;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
     }
 
     public Date getDate() {
