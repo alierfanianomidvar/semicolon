@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
-    <script type="module" src="../js/addProduct.js"></script>
 
 </head>
 <body>
@@ -151,8 +150,10 @@
 </div>
 <script type="module" src="../js/addProduct.js"></script>
 <script type="module">
+    import {addProduct,cancelButton,unInitial} from "../js/addProduct.js"
+    console.log("HTML")
 
-    import {addProduct,cancelButton} from "../js/addProduct.js"
+    unInitial()
 
     const countryOfProductionSelect = document.getElementById("country-of-production");
 
@@ -166,6 +167,7 @@
         option.textContent = countryCode;
         countryOfProductionSelect.appendChild(option);
     });
+
 
 
     document.querySelector("#add-btn").addEventListener("click", addProduct);
