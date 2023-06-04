@@ -1,6 +1,26 @@
 import materialUrls from "./urls/materialUrls.js";
 import drugUrls from "./urls/drugUrls.js";
 
+function validateName() {
+    const nameInput = document.getElementById("product-name");
+
+    // Skip validation if the name field doesn't exist
+    if (!nameInput) {
+        return true;
+    }
+
+    const name = nameInput.value.trim();
+
+    // Perform the validation for the name field
+    if (name === "") {
+        nameInput.classList.add("is-invalid");
+        return false;
+    } else {
+        nameInput.classList.remove("is-invalid");
+        return true;
+    }
+}
+
 function validatePrice() {
     const priceInput = document.getElementById("price");
 
@@ -75,10 +95,13 @@ export async function sendData() {
     const isLimitationValid = validateLimitation();
     const isExpirationDateValid = validateExpirationDate();
 
-    if (!isPriceValid || !isLimitationValid || !isExpirationDateValid) {
+    const isNameValid = validateName();
+
+    if (!isNameValid || !isPriceValid || !isLimitationValid || !isExpirationDateValid) {
         console.error("Invalid input");
         return null;
     }
+
 
     const data = {
         productType,
