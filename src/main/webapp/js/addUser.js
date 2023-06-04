@@ -31,7 +31,7 @@ addUserForm.addEventListener('submit', async function (event) {
 
     const router = new Router();
     try {
-        await router.createFetch(userUrls.ADD,null,null, token, body);
+        await router.createFetch(userUrls.ADD, null, null, token, body);
         window.location.hash = "#user";
     } catch (error) {
         console.log("Error: ", error);
@@ -46,4 +46,27 @@ export const onInitial = async () => {
 
     // Generate the role dropdown options based on the user's role
     generateRoleOptions(role, addUserForm);
+}
+
+
+function getBase64ProfilePicture() {
+    return new Promise((resolve) => {
+        const fileInput = document.querySelector('input[type="file"]');
+        const file = fileInput.files[0];
+
+        // Create a new FileReader object
+        const reader = new FileReader();
+
+        // Set up a function to be called when the file is read
+        reader.onload = function (event) {
+            // Get the loaded file data as a base64 encoded string
+            const base64String = event.target.result;
+
+            // Send the base64 string to the backend
+            resolve(base64String);
+        };
+
+        // Read the file as a data URL (base64 encoded string)
+        reader.readAsDataURL(file);
+    });
 }
