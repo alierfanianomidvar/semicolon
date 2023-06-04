@@ -42,6 +42,7 @@ public final class SupplierListDao extends AbstractDAO<List<Supplier>> {
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 Supplier supplier = new Supplier();
+                supplier.setId(rs.getLong("id"));
                 supplier.setName(rs.getString("name"));
                 supplier.setAddress(rs.getString("address"));
                 supplier.setEmail(rs.getString("email"));

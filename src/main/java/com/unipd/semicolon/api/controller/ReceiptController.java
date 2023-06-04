@@ -49,10 +49,9 @@ public class ReceiptController {
                         receiptModel.getPaymentMethod()));
 
     }
-//
-//    @GetMapping("/getRecieptList/{id}")
-//    public ResponseEntity<List<Receipt>> getAll(@PathVariable("id") Long id) {
-//        List<Receipt> receipts = receiptService.get;
-//        return ResponseHelper.response(receipts);
-//    }
+
+    @GetMapping("/get-pharmacy")
+    public ResponseEntity getAll() {
+        return ResponseHelper.response(receiptService.getList());
+    }
 }
