@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Pharmacy</title>
-    <link rel="stylesheet" href="../css/add-pharmacy.css">
+    <title>Add Order</title>
+    <link rel="stylesheet" href="../css/addOrder.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
-    <script type="module" src="../js/addPharmacy.js"></script>
+    <script type="module" src="../js/addOrder.js"></script>
 
 </head>
 <body>
 <div class="container">
-    <h5 class="h2 mb-5 mt-4">Add Order</h5>
+    <h5 class="h5 mb-5 mt-4">Add Order</h5>
     <div class="row">
         <div class="col-md-3">
             <div class="search-box">
@@ -103,7 +103,7 @@
 
     <div class="row">
         <div class="col-lg-3">
-            <div id="total-price">Total Price: $0.00</div>
+            <div id="total-price">Total Price: $</div>
         </div>
 
         <div class="col-lg-3">
@@ -121,12 +121,15 @@
         <script type="module">
             function openOrderForm() {
                 window.open("confirm-order.html", "_blank", "width=600,height=400");
+                //<iframe src="confirm-order.html" width="100%" height="500px"></iframe>
             }
 
-            import {onInitial, supplierOption, optionData} from "../js/addDrug.js";
+            import {onInitial, supplierOption, optionData, calculateTotal, resetTotal} from "../js/addOrder.js";
             onInitial()
             supplierOption()
             optionData()
+            calculateTotal()
+            resetTotal()
 
             $(document).ready(function() {
                 localStorage.getItem("getData")
@@ -151,6 +154,6 @@
 </div>
 
 </head>
-<script type="module" src="../js/addDrug.js"></script>
+<script type="module" src="../js/addOrder.js"></script>
 </body>
 </html>
