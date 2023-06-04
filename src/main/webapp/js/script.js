@@ -71,6 +71,8 @@ $(window).on('hashchange load', function () {
             console.log("Error loading content: " + xhr.status + " " + xhr.statusText);
         }
     });
+
+    
 });
 
 
