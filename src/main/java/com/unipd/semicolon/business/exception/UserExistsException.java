@@ -5,6 +5,6 @@ import org.springframework.http.HttpStatus;
 public class UserExistsException extends CustomException {
 
   public UserExistsException() {
-    super("user_do_not_exist", HttpStatus.NOT_FOUND);
+    super("user_exists", HttpStatus.NOT_FOUND);
   }
 }

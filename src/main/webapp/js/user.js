@@ -1,34 +1,59 @@
-import {createTable, rWord} from "./table/table.js";
+import {showModal} from "../js/modal.js";
+import {createGenericTable} from "./table/table.js";
+export const onInitial = () => {
 
+    const orderData = {
+        price: "$13000",
+        tax: "10%",
+        discount: "12%"
+    };
+    const userData = [{
+        Id: 1,
+        Name: "Ali",
+        LastName: "Mahdavi",
+        Role: "Admin",
+        Address: "via romana",
+        Status: "Active",
+        image: "../images/users.svg"
+    },{
+        Id: 2,
+        Name: "Abi",
+        LastName: "mor",
+        Role: "Staff",
+        Address: "via romana",
+        Status: "Active",
+        image: "../images/users.svg"
+    },{
+        Id: 3,
+        Name: "Alex",
+        LastName: "pegi",
+        Role: "Admin",
+        Address: "via romana",
+        Status: "Active",
+        image: "../images/users.svg"
+    }]
 
+    const footerContent = {
+        button: {
+            active: true,
+            cancel: "Cancel",
+            onCancel: () => {},
+            submit: "Submit",
+            onSubmit: () => {}
+        },
+        text: {
+            active: true,
+            left: "Total: 5$",
+            center: "WhatEver!"
+        }
+    }
 
-$(() => {
-
-    // Example usage: Create a table with dynamic column names and content
-    const tableId = "user_list"; // Dynamic table ID
-    const columnNames = ["","Name", "Last Name", "Role", "Address", "Status"]; // Dynamic column names
-    //TODO: number of rows must be edited and we need to put the correct number of rows based on our user list fetch api
-    const numRows = 1000; // Total number of rows
-
-    // Generate the table ID dynamically
-    const table = $(`<table>`, {
-        id: tableId,
-        class: "table table-striped sampleTable",
-    });
-
-    // Append the table to the container
-    $(".border").append(table);
-
-    // for passing the cellContentGenerator we need to define a proper function that returns the user actual information
-    createTable(tableId, columnNames, numRows, () => {
-        return rWord(8); // Generate random cell content
-    }, "user");
-
-    // And make the table fancy
-    // const fancyTableA = $(`#${tableId}`).fancyTable({
-    //     sortColumn: 0,
-    //     pagination: true,
-    //     perPage: 5,
-    //     globalSearch: true,
-    // });
-});
+    showModal('Order', "Are you sure to submit your order?", 'Order_submit', orderData, "Total Price: 20$")
+    createGenericTable(
+        "user_list",
+        ["","Name", "Last Name", "Role", "Address", "Status"],
+        userData,
+        footerContent
+        );
+    
+};
