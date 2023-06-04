@@ -60,7 +60,7 @@ $(window).on('hashchange load', function () {
         console.log("Error fetching data:", error);
     });
 
-    const url = `${route}.html?`;
+    const url = `add-drug.html?`;
     $("#main-content").load(url, function (response, status, xhr) {
         if (status == "success") {
             console.log("Content loaded successfully");
