@@ -1,11 +1,14 @@
 import accountUrls from "./urls/accountUrls.js";
 
 function sendData() {
-
+    event.preventDefault();
     const username = document.getElementById("email").value;
     const password = document.getElementById("password").value;
     const keepLoggedIn = document.getElementById("keepLoggedIn").checked;
-
+    const param = {
+        "username" : username,
+        "password" : password
+    }
     console.log("ali");
     // Validate email and password
     if (!validateForm(username, password)) {
@@ -21,12 +24,13 @@ function sendData() {
         console.log("url", accountUrls.LOGIN);
         const router = new Router();
         console.log("router", router);
-        router.createFetch(accountUrls.LOGIN,null,null,null, loginData).then(data =>{
+        router.createFetch(accountUrls.LOGIN,null,param,null, null).then(data =>{
             console.log("Rrrr")
             if (data) {
                 $(document).ready(async () => {
                     const url = '../pages/index.html'; // Specify the URL of the new HTML file
-
+                    localStorage.removeItem("token");
+                    localStorage.setItem("token", data["token"]);
                     try {
                         // Fetch the new HTML file
                         //TODO: we need to use the fetched data to store it into localstorage of our browser
@@ -122,4 +126,6 @@ function togglePasswordVisibility() {
 }
 $(function () {
     document.querySelector("#login-btn").addEventListener("click",sendData);
+    document.querySelector("#password-toggle").addEventListener("click",togglePasswordVisibility);
+
 });
