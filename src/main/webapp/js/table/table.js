@@ -22,7 +22,7 @@ export const createTable = (tableId, columnNames, numRows, data, type = "default
 
 
     // And make them fancy
-    let fancyTableA = $(`#${tableId}`).fancyTable({
+    $(`#${tableId}`).fancyTable({
         sortColumn: 1,
         pagination: true,
         perPage: 5,
@@ -177,7 +177,7 @@ export const createButtonsAndText = (createButtons = false,
 }
 
 
-export function createGenericTable(genericTableId,genericColumnNames, tableData, footerContent){
+export function createGenericTable(genericTableId,genericColumnNames, tableData, footerContent, type){
     // Example usage: Create a table with dynamic column names and content
 
     let tableId = genericTableId; // Dynamic table ID
@@ -194,7 +194,7 @@ export function createGenericTable(genericTableId,genericColumnNames, tableData,
     $(".border").append(table);
 
     // for passing the cellContentGenerator we need to define a proper function that returns the user actual information
-    createTable(tableId, columnNames, numRows, tableData, "user");
+    createTable(tableId, columnNames, numRows, tableData, type);
 
     if(footerContent) {
         //FooterContent is object like this:
