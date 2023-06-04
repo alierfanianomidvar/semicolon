@@ -1,4 +1,3 @@
-import orderUrls from "./urls/orderUrls";
 import {showModal} from "../js/modal.js";
 import {createGenericTable} from "./table/table.js";
 import supplierUrls from "./urls/supplierUrls.js";
@@ -13,7 +12,7 @@ export const onInitial = () => {
     };
     //showModal('Order', "Are you sure to submit your order?", 'Order_submit', orderData, "Total Price: 20$")
     localStorage.getItem("getData")
-    createGenericTable("storage_list", ["","Name", "Price","IsActive","Quantity"]);
+    createGenericTable("order_list", ["","Name", "Price","IsActive","Quantity"]);
 };
 
 export const supplierOption = async () =>{
