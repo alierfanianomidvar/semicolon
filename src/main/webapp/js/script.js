@@ -47,6 +47,10 @@ $(window).on('hashchange load', function () {
         case "user":
             endPoint = userUrls.GET_BY_ID;
             break;
+        case "profile":
+            //TODO: url must change ( we dont have urls for report)
+            endPoint = userUrls.GET_BY_ID;
+            break;
         default:
             endPoint = storageUrls.GET_ALL;
             break;
@@ -68,6 +72,25 @@ $(window).on('hashchange load', function () {
             console.log("Error loading content: " + xhr.status + " " + xhr.statusText);
         }
     });
+
+
+    const userData = {
+        name: "John",
+        lastName: "Doe",
+        birthDate: {
+            day: "01",
+            month: "01",
+            year: "1990"
+        },
+        phoneNumber: "1234567890",
+        email: "john.doe@example.com",
+        address: "123 Main Street"
+    };
+
+    localStorage.setItem('userData', JSON.stringify(userData));
+
+    // Log the default userData
+    console.log("Default userData:", userData);
 });
 
 
