@@ -23,7 +23,8 @@ public class UserMapper {
                 user.getPhoneNumber(),
                 user.getAddress(),
                 user.getRole(),
-                user.getEmail()
+                user.getEmail(),
+                user.getAccountStatus()
         );
     }
 }
