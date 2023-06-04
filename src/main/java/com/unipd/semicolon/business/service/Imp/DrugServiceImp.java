@@ -180,6 +180,7 @@ public class DrugServiceImp implements DrugService {
             throw new EntityNotFoundException("Drug Not Found with id" + id);
         {
             return new DrugResponse(
+                    drug.getId(),
                     drug.getName(),
                     drug.getSupplier(),
                     drug.getExpirationDate(),
