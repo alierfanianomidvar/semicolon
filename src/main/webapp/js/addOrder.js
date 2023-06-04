@@ -4,6 +4,7 @@ import {createGenericTable} from "./table/table.js";
 import supplierUrls from "./urls/supplierUrls.js";
 import drugUrls from "./urls/drugUrls.js";
 import materialUrls from "./urls/materialUrls.js";
+
 export const onInitial = () => {
 
     const orderData = {
@@ -15,6 +16,7 @@ export const onInitial = () => {
     localStorage.getItem("getData")
     createGenericTable("order_list", ["","Name", "Price","IsActive","Quantity"]);
 };
+
 
 $(() => {
 
@@ -121,12 +123,13 @@ export const supplierOption = async () =>{
     supplierData = await supplier
     console.log(supplierData);
 
+    //supplier option
     const selectedSupplier = supplierData.map(obj => obj.name)
     console.log(selectedSupplier);
 
     const selectElementSupplier = document.getElementById('filterSupplier');
 
-    selectedSupplier.forEach(name => {
+    selectedSupplier.forEach(name =>{
         const option = document.createElement('option');
         option.text = name;
         selectElementSupplier.add(option);
@@ -182,20 +185,30 @@ export const calculateTotal = () => {
     }
     document.getElementById("total-price").textContent = "Total Price: $" + total.toFixed(2);
 }
+*/
 
 export const resetTotal = () => {
-    var cancelBtn = document.getElementById("cancel-btn");
-
-    cancelBtn.addEventListener("click", function () {
-        document.getElementById("total-price").textContent = "Total Price: $0";
+    $(document).ready(() => {
+        const cancelButton = $('#cancel-btn');
+        if (cancelButton) {
+            cancelButton.on('click', () => {
+                const totalPrice = $('#total-price');
+                if (totalPrice) {
+                    totalPrice.text('Total Price: $0');
+                }
+            });
+        }
     });
-}
+};
+
 
 export const linking = () => {
-    const submitButton = document.getElementById('submit-order-btn');
-    submitButton.addEventListener('click', function() {
-        window.location.href = 'confirm-order.html';
+    $(document).ready(() => {
+        const submitButton = $('#submit-order-btn');
+        if (submitButton) {
+            submitButton.on('click', () => {
+                window.location.href = 'confirm-order.html';
+            });
+        }
     });
-    //window.open("confirm-addOrder.html", "_blank", "width=600,height=400");
-}
-*/
+};
