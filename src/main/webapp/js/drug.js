@@ -31,7 +31,7 @@ function populateTable(data) {
     console.log(tableData)
     createGenericTable(
         "drug-list",
-        ["", "Name", "Age Group", "Sensivity", "Price", "Limitation"],
+        ["Name", "Age Group", "Sensivity", "Price", "Limitation"],
         tableData,
     );
 }
