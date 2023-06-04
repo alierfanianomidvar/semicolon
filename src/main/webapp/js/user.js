@@ -53,7 +53,8 @@ export const onInitial = () => {
         "user_list",
         ["","Name", "Last Name", "Role", "Address", "Status"],
         userData,
-        footerContent
+        footerContent,
+        'user'
         );
     
 };
