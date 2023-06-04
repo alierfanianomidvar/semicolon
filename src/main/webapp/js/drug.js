@@ -1,6 +1,4 @@
 import drugUrls from './urls/drugUrls.js';
-// import {showErrorMessage} from "./utils.js";
-// import {showModal} from "./modal";
 import {createGenericTable} from "./table/table.js";
 
 // Get all drugs data
@@ -10,11 +8,6 @@ const router = new Router();
 export const onInitial =async () => {
     try{
         data = await router.createFetch(drugUrls.GET_ALL);
-        //ToDo maybe use modal to show there is no drug?
-        // if (!data.length){
-        //     showModal('Order', "Are you sure to submit your order?", 'Order_submit', orderData, "Total Price: 20$")
-        // }
-        // showModal('Order', "Are you sure to submit your order?", 'Order_submit', orderData, "Total Price: 20$")
         populateTable(data);
     }catch (e) {
         console.log("Error: ", e);
