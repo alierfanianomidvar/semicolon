@@ -4,9 +4,15 @@ export const createTable = (tableId, columnNames, numRows, data, type = "default
     // Generate the table headers
     const tableHeaders = $(`<thead>`).appendTo($(`#${tableId}`));
     const headerRow = $(`<tr>`).appendTo(tableHeaders);
+
     columnNames.forEach((columnName) => {
-        $(`<th>`, { text: columnName }).appendTo(headerRow);
+        $(`<td>`, { text: columnName }).appendTo(headerRow);
     });
+
+    // Edit column header
+    if (type === "user") {
+        $("<td>").appendTo(headerRow);
+    }
 
     // Generate the table rows
     const tableBody = $(`<tbody>`).appendTo($(`#${tableId}`));
@@ -22,7 +28,7 @@ export const createTable = (tableId, columnNames, numRows, data, type = "default
 
 
     // And make them fancy
-    let fancyTableA = $(`#${tableId}`).fancyTable({
+    $(`#${tableId}`).fancyTable({
         sortColumn: 1,
         pagination: true,
         perPage: 5,
@@ -74,7 +80,7 @@ function generateTableRows(numRows, tableBody, columnNames, type, data) {
         });
 
         if (type === "user") {
-            $("<td>", { html: "<a href='#'>Edit</a>", style: " padding: 0.1rem; vertical-align: middle;" }).appendTo(row);
+            $("<td>", { html: `<a href='#edit-user/${data[n]["Id"]}'>Edit</a>`, style: " padding: 0.1rem; vertical-align: middle;" }).appendTo(row);
         }
     }
 }
@@ -85,7 +91,10 @@ export const createButtonsAndText = (createButtons = false,
                                      firstTxt = "",
                                      secondTxt = "",
                                      cancelBtn = "",
-                                     acceptBtn = "") => {
+                                     acceptBtn = "",
+                                     onCancel = () => {},
+                                     onAccept = () => {}
+                                     ) => {
     // Create a div to contain the buttons and/or text elements
     const container = $("<div>", {
         class: "bottom-container",
@@ -150,6 +159,7 @@ export const createButtonsAndText = (createButtons = false,
             css: {
                 margin: "0.5rem", // Random margin between 1 and 10 pixels
             },
+            click: onCancel
         });
 
         const button2 = $("<button>", {
@@ -158,6 +168,7 @@ export const createButtonsAndText = (createButtons = false,
             css: {
                 margin: "0.5rem", // Random margin between 1 and 10 pixels
             },
+            click: onAccept
         });
 
         // Append the buttons to the buttons container
@@ -172,32 +183,12 @@ export const createButtonsAndText = (createButtons = false,
 }
 
 
-export function createGenericTable(generictableId,genericcolumnNames){
-    ///showModal()
+export function createGenericTable(genericTableId,genericColumnNames, tableData, footerContent, type){
     // Example usage: Create a table with dynamic column names and content
-    const userData = [{
-        Name: "Ali",
-        Type: "Mahdavi",
-        Amount: "Admin",
-        Price: "via romana",
-        Threshold: "Active"
-    },{
-        Name: "Ali",
-        Type: "Mahdavi",
-        Amount: "Admin",
-        Price: "via romana",
-        Threshold: "Active"
-    },{
-        Name: "Ali",
-        Type: "Mahdavi",
-        Amount: "Admin",
-        Price: "via romana",
-        Threshold: "Active"
-    }]
-    let tableId = generictableId; // Dynamic table ID
-    let columnNames =genericcolumnNames;
-    //TODO: number of rows must be edited and we need to put the correct number of rows based on our user list fetch api
-    let numRows = userData.length; // Total number of rows
+
+    let tableId = genericTableId; // Dynamic table ID
+    let columnNames =genericColumnNames;
+    let numRows = tableData.length; // Total number of rows
 
     // Generate the table ID dynamically
     let table = $(`<table>`, {
@@ -209,14 +200,25 @@ export function createGenericTable(generictableId,genericcolumnNames){
     $(".border").append(table);
 
     // for passing the cellContentGenerator we need to define a proper function that returns the user actual information
-    createTable(tableId, columnNames, numRows, userData);
+    createTable(tableId, columnNames, numRows, tableData, type);
 
-    // Call the createButtonsAndText function with the createButtons and createText parameters
-    const bottomContainer = createButtonsAndText(true, true, "", "", "Cancel", "Submit");
+    if(footerContent) {
+        //FooterContent is object like this:
+        // Call the createButtonsAndText function with the createButtons and createText parameters
+        const bottomContainer = createButtonsAndText(
+            footerContent.button.active,
+            footerContent.text.active,
+            footerContent.text.left,
+            footerContent.text.center,
+            footerContent.button.cancel,
+            footerContent.button.submit,
+            footerContent.button.onCancel,
+            footerContent.button.onSubmit
+        );
 
-    // Append the main container to the page
-    $(".border").append(bottomContainer);
-
+        // Append the main container to the page
+        $(".border").append(bottomContainer);
+    }
 }
 
 
