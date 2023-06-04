@@ -67,7 +67,7 @@ public class SupplierController {
     }
 
     @GetMapping(value = "/get-all")
-    public ResponseEntity remove() throws SQLException {
+    public ResponseEntity getAll() throws SQLException {
         return ResponseHelper
                 .response(supplierService.getSupplierList());
     }
