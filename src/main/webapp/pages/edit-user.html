@@ -1,29 +1,16 @@
 <div class="container">
   <h2 class="h2 mb-5 mt-4">User</h2>
   <div id="error-message"></div>
-  <form id="add-user-form" class="card rounded-xl">
+  <form id="edit-user-form" class="card rounded-xl">
     <div class="card-body p-4">
       <div class="row align-items-end">
         <!-- Avatar -->
         <div class="col-4 col-md-1 offset-4 offset-md-0">
           <label class="w-100 mb-3 mt-3 bg-secondary rounded">
             <img src="../images/users.svg" alt="User Avatar" class="w-100" />
+            <!-- TODO: add thumbnail! -->
             <input id="profilePicture" name="profilePicture" type="file" class="d-none" accept="image/*">
           </label>
-        </div>
-        <!--username-->
-        <div class="col-md-3">
-          <div class="form-group">
-            <label class="form-label">Username :</label>
-            <input name="username" type="text" class="form-control" placeholder="Username" required />
-          </div>
-        </div>
-        <!--pass-->
-        <div class="col-md-4">
-          <div class="form-group">
-            <label class="form-label">Password :</label>
-            <input name="password" type="password" class="form-control" placeholder="Password" required />
-          </div>
         </div>
       </div>
       <div class="row">
@@ -93,22 +80,28 @@
         <input name="address" type="text" class="form-control" placeholder="Address" />
       </div>
     </div>
+    <input type="hidden" name="accountStatus">
     <hr class="border border-1 opacity-100 m-0" />
     <div class="card-body p-4">
       <div class="row">
-        <div class="col-md-2 offset-md-8 mb-3 mb-md-0">
-          <button type="submit" class="btn btn-custom w-100">Add</button>
+        <div class="col-md-2 mb-3 mb-md-0 order-md-last">
+          <button type="submit" class="btn btn-custom w-100">Edit</button>
+        </div>
+
+        <div class="col-md-2 offset-md-6 mb-3 mb-md-0">
+          <button id="status-btn" type="button" class="btn btn-custom w-100">Enable</button>
         </div>
 
         <div class="col-md-2 order-md-first">
           <a href="#user" class="btn btn-custom-secondary w-100">Cancel</a>
         </div>
+
       </div>
     </div>
   </form>
 </div>
-<script src="../js/addUser.js" type="module"></script>
+<script src="../js/editUser.js" type="module"></script>
 <script type="module">
-  import {onInitial} from "../js/addUser.js";
-  onInitial();
+    import {onInitial} from "../js/editUser.js";
+    onInitial();
 </script>
