@@ -34,7 +34,7 @@
 					);
 				} else {
 					if(settings.localeCompare){
-						return((a.localeCompare(b)<0)?-fancyTableObject.sortOrder:(a.localeCompare(b)>0)?fancyTableObject.sortOrder:0); 
+						return((a.localeCompare(b)<0)?-fancyTableObject.sortOrder:(a.localeCompare(b)>0)?fancyTableObject.sortOrder:0);
 					} else {
 						return((a<b)?-fancyTableObject.sortOrder:(a>b)?fancyTableObject.sortOrder:0);
 					}
@@ -134,7 +134,7 @@
 				var iElm = 0;
 				$(elm).find("thead th").each(function(){
 					$(this).attr("aria-sort",
-						(iElm == elm.fancyTable.sortColumn) ? 
+						(iElm == elm.fancyTable.sortColumn) ?
 							( (elm.fancyTable.sortOrder == 1) ? "ascending" : (elm.fancyTable.sortOrder == -1) ? "descending" : "other" )
 							: null // "none" // Remove the attribute instead of setting to "none" to avoid spamming screen readers.
 					);
