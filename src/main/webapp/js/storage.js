@@ -83,10 +83,10 @@ export const filtering = () => {
         const selectedType = document.getElementById('filterType').value;
         const selectedThreshold = document.getElementById('filterThreshold').value;
 
-        const filteredData = storedData.filter(item => {
-            return (selectedAmount === '' || item.amount === selectedAmount) &&
-                (selectedType === '' || item.type === selectedType) &&
-                (selectedThreshold === '' || item.threshold === selectedThreshold);
+        const filteredData = storedData.filter(obj => {
+            return (selectedAmount === '' || obj.amount === selectedAmount) &&
+                (selectedType === '' || obj.type === selectedType) &&
+                (selectedThreshold === '' || obj.threshold === selectedThreshold);
         });
 
         console.log(filteredData);
@@ -151,7 +151,7 @@ export const listTable = async () => {
             thresholdTd.textContent = storage.threshold;
             tr.appendChild(thresholdTd);
 
-            tableBody.appendChild(tr);
+            //tableBody.appendChild(tr);
         });
     }
 }
