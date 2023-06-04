@@ -1,5 +1,8 @@
 import materialUrls from "./urls/materialUrls.js";
 import drugUrls from "./urls/drugUrls.js";
+import supplierUrls from "./urls/supplierUrls.js";
+import storageUrls from "./urls/storageUrls.js";
+import userUrls from "./urls/userUrls.js";
 
 function validateName() {
     const nameInput = document.getElementById("product-name");
@@ -76,6 +79,27 @@ function validateExpirationDate() {
     }
 }
 
+export async function fetchAndPopulateSuppliers() {
+    console.log("HERE")
+    const router = new Router();
+    const suppliers = await router.createFetch(storageUrls.GET_ALL);
+    console.log(suppliers)
+    const selectElement = document.getElementById("supplierId");
+
+    // Clear existing options
+    selectElement.innerHTML = "";
+
+    // Create and append option elements
+    suppliers.forEach((supplier) => {
+        const optionElement = document.createElement("option");
+        optionElement.value = supplier.id;
+        optionElement.textContent = supplier.name;
+        selectElement.appendChild(optionElement);
+    });
+}
+export const unInitial =  () => {
+    return fetchAndPopulateSuppliers();
+}
 export async function sendData() {
     const supplierListValue = document.getElementById("supplierId").value;
     const supplierListInt = parseInt(supplierListValue, 10);
