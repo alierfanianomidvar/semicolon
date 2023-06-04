@@ -86,8 +86,8 @@ export const createButtonsAndText = (createButtons = false,
                                      secondTxt = "",
                                      cancelBtn = "",
                                      acceptBtn = "",
-                                     onCancel: () => {},
-                                     onAccept: () => {}
+                                     onCancel = () => {},
+                                     onAccept = () => {}
                                      ) => {
     // Create a div to contain the buttons and/or text elements
     const container = $("<div>", {
