@@ -24,7 +24,8 @@ public class UserMapper {
                 user.getAddress(),
                 user.getRole(),
                 user.getEmail(),
-                user.getAccountStatus()
+                user.getAccountStatus(),
+                user.getProfilePicture()
         );
     }
 }
