@@ -4,7 +4,6 @@ function sendData() {
     event.preventDefault();
     const username = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-    const keepLoggedIn = document.getElementById("keepLoggedIn").checked;
     const param = {
         "username" : username,
         "password" : password

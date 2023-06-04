@@ -101,22 +101,6 @@ label {
     color: white;
 }
 
-/* Checkbox */
-.card .custom-control-input[type="checkbox"] {
-    width: 0.75rem;
-    height: 0.75rem;
-    vertical-align: middle;
-}
-
-/* label of checkbox*/
-.card .custom-checkbox .custom-control-label {
-    font-size: 0.75rem !important;
-    line-height: 1.5rem !important;
-    vertical-align: middle !important;
-    color: gray !important;
-    user-select: none !important;
-}
-
 /* Green style for checked state of custom control checkbox */
 .card .custom-control-input[type="checkbox"]:checked + .custom-control-label::before {
     background-color: #42C3AA !important;
@@ -134,14 +118,13 @@ label {
 
 /* Button */
 .card button[type="submit"] {
-    width: 20rem;
     background-color: #42C3AA;
     color: white;
     border: none;
     border-radius: 0.30rem;
     cursor: pointer;
     font-size: 1rem;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     font-weight: bold;
 }
 
