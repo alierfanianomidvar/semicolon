@@ -5,11 +5,11 @@ import {createGenericTable} from "./table/table.js";
 let data;
 const router = new Router();
 
-export const onInitial =async () => {
-    try{
+export const onInitial = async () => {
+    try {
         data = await router.createFetch(drugUrls.GET_ALL);
         populateTable(data);
-    }catch (e) {
+    } catch (e) {
         console.log("Error: ", e);
     }
 

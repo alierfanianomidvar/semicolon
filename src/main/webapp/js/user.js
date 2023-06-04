@@ -56,5 +56,5 @@ export const onInitial = () => {
         footerContent,
         'user'
         );
-    
+
 };
