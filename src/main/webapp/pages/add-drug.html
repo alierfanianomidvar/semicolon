@@ -123,11 +123,10 @@
                 window.open("confirm-order.html", "_blank", "width=600,height=400");
             }
 
-            import {onInitial, calculateTotal, resetTotal, showPopup} from "../js/addDrug.js";
+            import {onInitial, supplierOption, optionData} from "../js/addDrug.js";
             onInitial()
-            calculateTotal()
-            resetTotal()
-            showPopup()
+            supplierOption()
+            optionData()
 
             $(document).ready(function() {
                 localStorage.getItem("getData")
