@@ -12,7 +12,7 @@ export const onInitial = () => {
     };
     showModal('Order', "Are you sure to submit your order?", 'Order_submit', orderData, "Total Price: 20$")
     localStorage.getItem("getData")
-    createGenericTable("storage_list", ["","Name", "Type", "Price", "Quantity", "Threshold"]);
+    createGenericTable("storage_list", ["","Name", "Type", "Price", "Amount", "Threshold"]);
 
     // const tableData = [
     //     { id: 1, name: 'John Doe', age: 25, city: 'New York' },
@@ -30,37 +30,58 @@ export const onInitial = () => {
     // createGenericTable("user_list", ["","Name", "Last Name", "Role", "Address", "Status"]);
 };
 
+export const listTable = async () => {
+    const data = JSON.parse(localStorage.getItem("getData"))
+    console.log(data)
+
+    const router = new Router()
+    let storageData;
+    const storage = Promise.resolve(router.createFetch(storageUrls.GET_ALL))
+
+    storageData = await storage
+    console.log(storageData);
+
+    const tableBody = document.getElementById('tableBody');
+    tableBody.innerHTML = ''; // Clear existing table body
+
+    if (storageData.length === 0) {
+        const tr = document.createElement('tr');
+        const td = document.createElement('td');
+        td.textContent = 'No Products Found!';
+        td.className = 'text-center';
+        td.colSpan = 5;
+        tr.appendChild(td);
+        tableBody.appendChild(tr);
+    } else {
+        storageData.forEach((storage) => {
+            const tr = document.createElement('tr');
+
+            const nameTd = document.createElement('td');
+            nameTd.textContent = storage.name;
+            tr.appendChild(nameTd);
+
+            const typeTd = document.createElement('td');
+            typeTd.textContent = storage.type;
+            tr.appendChild(typeTd);
+
+            const priceTd = document.createElement('td');
+            priceTd.textContent = `$${storage.price}`;
+            tr.appendChild(priceTd);
+
+            const quantityTd = document.createElement('td');
+            quantityTd.textContent = storage.amount;
+            tr.appendChild(quantityTd);
+
+            const thresholdTd = document.createElement('td');
+            thresholdTd.textContent = storage.threshold;
+            tr.appendChild(thresholdTd);
+
+            tableBody.appendChild(tr);
+        });
+    }
+}
+
 export const filtering = () => {
-    /* Fetch data from the backend
-    fetch('/api/data')
-        .then(response => response.json())
-        .then(data => {
-            // Process the fetched data
-            console.log(data);
-
-            // Filter the data
-            const selectedThreshold = document.getElementById('Threshold').value;
-            const selectedType = document.getElementById('Type').value;
-            const selectedAmount = document.getElementById('Amount').value;
-
-            const filteredData = data.filter(item => {
-                return (selectedThreshold === '' || item.threshold === selectedThreshold) &&
-                    (selectedType === '' || item.type === selectedType) &&
-                    (selectedAmount === '' || item.amount === selectedAmount);
-            });
-
-            console.log(filteredData);
-
-            // Further processing or rendering of the filtered data
-            // ...
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-        }); */
-    //localStorage.getItem("getData")
-
-    //$('#filter-button').click(function(){});
-
     const filterButton = document.getElementById('filter-button');
     filterButton.addEventListener('click', () => {
         const storedData = JSON.parse(localStorage.getItem("getData")); // Retrieve stored data from localStorage
@@ -85,277 +106,50 @@ export const filtering = () => {
     });
 };
 
+export const createOption = async () => {
+    const data = JSON.parse(localStorage.getItem("getData"))
+    console.log(data)
 
-/*
- // Filter button
-    $('#filter-button').click(function() {
-        // Get the selected filter values
-        var selectedThreshold = $('#Threshold').val();
-        var selectedType = $('#Type').val();
-        var selectedAmount = $('#Amount').val();
+    const router = new Router()
+    let storageData;
+    const storage = Promise.resolve(router.createFetch(storageUrls.GET_ALL))
 
-        // Show/hide rows based on the filter values
-        $('#storage-data tbody tr').each(function() {
-            var rowThreshold = $(this).find('td:nth-child(6)').text();
-            var rowType = $(this).find('td:nth-child(3)').text();
-            var rowAmount = $(this).find('td:nth-child(4)').text();
+    storageData = await storage
+    console.log(storageData);
 
-            if ((selectedThreshold === '' || rowThreshold === selectedThreshold) &&
-                (selectedType === '' || rowType === selectedType) &&
-                (selectedAmount === '' || rowAmount === selectedAmount)) {
-                $(this).show();
-            } else {
-                $(this).hide();
-            }
-        });
+    //for amount option
+    const selectedAmount = storageData.map(obj => obj.amount)
+    console.log(selectedAmount);
+
+    const selectElementAmount = document.getElementById('filterAmount');
+
+    selectedAmount.forEach(amount => {
+        const option = document.createElement('option');
+        option.text = amount;
+        selectElementAmount.add(option);
     });
 
-$(() => {
-        const tableId = "storage_list"; // Dynamic table ID
-        const columnNames = ["", "Name", "Type", "Price", "Quantity", "Threshold"]; // Dynamic column names
-        //TODO: number of rows must be edited and we need to put the correct number of rows based on our user list fetch api
-        const numRows = 1000; // Total number of rows
+    // for type option
+    const selectedType = storageData.map(obj => obj.type)
+    console.log(selectedType);
 
-        // Generate the table ID dynamically
-        const table = $(`<table>`, {
-            id: tableId,
-            class: "table table-striped sampleTable",
-        });
+    const selectElementType = document.getElementById('filterType');
 
-        // Append the table to the container
-        $(".border").append(table);
-
-        // for passing the cellContentGenerator we need to define a proper function that returns the user actual information
-        createTable(tableId, columnNames, numRows, () => {
-            return rWord(8); // Generate random cell content
-        });
-
-         And make the table fancy
-         const fancyTableA = $(`#${tableId}`).fancyTable({
-             sortColumn: 0,
-             pagination: true,
-             perPage: 5,
-             globalSearch: true,
-        });
-
-
-    $('.search-box input[type="text"]').on('keyup', function() {
-        const searchText = $(this).val().toLowerCase();
-        $('table tbody tr').each(function() {
-            const rowText = $(this).text().toLowerCase();
-            $(this).toggle(rowText.indexOf(searchText) > -1);
-        });
-    });
-});
- */
-
-/*
-$(document).ready(function(){
-    // Get all data
-    const ar = new Router();
-    const data = ar.createFetch(storageUrls.GET_ALL);
-    console.log(data);
-
-    // Populate table with data
-    function populateTable(data) {
-        const tbody = document.querySelector('tbody');
-        tbody.innerHTML = '';
-
-        if (!data.length){
-            const tr = document.createElement('tr');
-            const td = document.createElement('td');
-            td.textContent = "No Products Found!";
-            td.className = "text-center";
-            td.colSpan = 5;
-            tr.appendChild(td);
-            tbody.appendChild(tr);
-        }
-        data.forEach((storage) => {
-            const tr = document.createElement('tr');
-
-            const nameTd = document.createElement('td');
-            nameTd.textContent = storage.name;
-            tr.appendChild(nameTd);
-
-            const typeTd = document.createElement('td');
-            typeTd.textContent = storage.type;
-            tr.appendChild(typeTd);
-
-            const priceTd = document.createElement('td');
-            priceTd.textContent = `$${storage.price}`;   //drug.sensitive ? 'Sensitive' : 'Not Sensitive';
-            tr.appendChild(priceTd);
-
-            const quantityTd = document.createElement('td');
-            quantityTd.textContent = storage.quantity;
-            tr.appendChild(quantityTd);
-
-            const thresholdTd = document.createElement('td');
-            thresholdTd.textContent = storage.threshold;
-            tr.appendChild(thresholdTd);
-
-            tbody.appendChild(tr);
-        });
-    }
-
-    // Filter table
-    const filterForm = document.getElementById('filterForm');
-    filterForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const thresholdFilter = document.getElementById('filterThreshold').value;
-        const typeFilter = document.getElementById('filterType').value;
-        const amountFilter = document.getElementById('filterAmount').value;
-
-        let filteredData = data.filter((storage) => {
-            let pass = true;
-
-            if (thresholdFilter !== '' && !storage.name !== (thresholdFilter)) {
-                pass = false;
-            }
-            if (typeFilter !== '' && storage.type !== (typeFilter)) {
-                pass = false;
-            }
-            if (amountFilter !== '' && storage.amount !== (amountFilter)) {
-                pass = false;
-            }
-
-            return pass;
-        });
-
-        populateTable(filteredData);
+    selectedType.forEach(type => {
+        const option = document.createElement('option');
+        option.text = type;
+        selectElementType.add(option);
     });
 
-    $(() => {
-        const tableId = "storage_list"; // Dynamic table ID
-        const columnNames = ["", "Name", "Type", "Price", "Quantity", "Threshold"]; // Dynamic column names
-        //TODO: number of rows must be edited and we need to put the correct number of rows based on our user list fetch api
-        const numRows = 1000; // Total number of rows
+    //for threshold option
+    const selectedThreshold = storageData.map(obj => obj.threshold)
+    console.log(selectedThreshold);
 
-        // Generate the table ID dynamically
-        const table = $(`<table>`, {
-            id: tableId,
-            class: "table table-striped sampleTable",
-        });
+    const selectElementThreshold = document.getElementById('filterThreshold');
 
-        // Append the table to the container
-        $(".border").append(table);
-
-        // for passing the cellContentGenerator we need to define a proper function that returns the user actual information
-        createTable(tableId, columnNames, numRows, () => {
-            return rWord(8); // Generate random cell content
-        });
-
-        //And make the table fancy
-        const fancyTableA = $(`#${tableId}`).fancyTable({
-            sortColumn: 0,
-            pagination: true,
-            perPage: 5,
-            globalSearch: true,
-        });
-
-
-        $('.search-box input[type="text"]').on('keyup', function() {
-            const searchText = $(this).val().toLowerCase();
-            $('table tbody tr').each(function() {
-                const rowText = $(this).text().toLowerCase();
-                $(this).toggle(rowText.indexOf(searchText) > -1);
-            });
-        });
-
+    selectedThreshold.forEach(threshold => {
+        const option = document.createElement('option');
+        option.text = threshold;
+        selectElementThreshold.add(option);
     });
-});
-*/
-
-export const createOption = () => {
-    // Fetch data for Threshold dropdown
-    fetch('/api/thresholds')
-        .then(response => response.json())
-        .then(data => {
-            // Populate Threshold dropdown with options
-            const thresholdDropdown = $('#Threshold');
-            thresholdDropdown.empty(); // Clear existing options
-
-            // Add default option
-            thresholdDropdown.append($('<option>').val('').text('Threshold'));
-
-            // Add options from the fetched data
-            data.forEach(option => {
-                thresholdDropdown.append($('<option>').val(option.value).text(option.label));
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching Threshold data:', error);
-        });
-
-    // Fetch data for Type dropdown
-    fetch('/api/types')
-        .then(response => response.json())
-        .then(data => {
-            // Populate Type dropdown with options
-            const typeDropdown = $('#Type');
-            typeDropdown.empty(); // Clear existing options
-
-            // Add default option
-            typeDropdown.append($('<option>').val('').text('Type'));
-
-            // Add options from the fetched data
-            data.forEach(option => {
-                typeDropdown.append($('<option>').val(option.value).text(option.label));
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching Type data:', error);
-        });
-
-    // Fetch data for Amount dropdown
-    fetch('/api/amounts')
-        .then(response => response.json())
-        .then(data => {
-            // Populate Amount dropdown with options
-            const amountDropdown = $('#Amount');
-            amountDropdown.empty(); // Clear existing options
-
-            // Add default option
-            amountDropdown.append($('<option>').val('').text('Amount'));
-
-            // Add options from the fetched data
-            data.forEach(option => {
-                amountDropdown.append($('<option>').val(option.value).text(option.label));
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching Amount data:', error);
-        });
 }
-
-// Function to handle filter button click
-/*
-const handleFilterButtonClick = () => {
-    // Retrieve selected values from dropdowns
-    const thresholdValue = $('#Threshold').val();
-    const typeValue = $('#Type').val();
-    const amountValue = $('#Amount').val();
-
-    // Perform filtering logic based on selected values
-    const filteredData = filtering(thresholdValue, typeValue, amountValue);
-
-    // Clear existing table content
-    $('#TableBody').empty();
-
-    // Print filtered data in the table
-    filteredData.forEach(item => {
-        $('#TableBody').append($('<tr>').append($('<td>').text(item.type), $('<td>').text(item.threshold), $('<td>').text(item.amount)));
-    });
-
-    // Example: Log selected values
-    console.log('Threshold:', thresholdValue);
-    console.log('Type:', typeValue);
-    console.log('Amount:', amountValue);
-}
-
-// Call createOption function to populate dropdowns
-createOption();
-
-// Attach event listener to filter button
-$('#FilterButton').on('click', handleFilterButtonClick);
-
- */

@@ -178,19 +178,19 @@ export function createGenericTable(generictableId,genericcolumnNames){
     const userData = [{
         Name: "Ali",
         Type: "Mahdavi",
-        Quantity: "Admin",
+        Amount: "Admin",
         Price: "via romana",
         Threshold: "Active"
     },{
         Name: "Ali",
         Type: "Mahdavi",
-        Quantity: "Admin",
+        Amount: "Admin",
         Price: "via romana",
         Threshold: "Active"
     },{
         Name: "Ali",
         Type: "Mahdavi",
-        Quantity: "Admin",
+        Amount: "Admin",
         Price: "via romana",
         Threshold: "Active"
     }]

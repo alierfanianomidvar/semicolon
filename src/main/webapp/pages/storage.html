@@ -3,29 +3,23 @@
   <form id="filterForm">
     <div class="form-row mb-4">
       <div class="col">
-          <select id="filterThreshold" class="form-group">
-            <option value="" disabled selected>Threshold</option>
-            <option>10</option>
-            <option>20</option>
-            <option>30</option>
-          </select>
+        <select id="filterThreshold" class="form-control">
+          <option value="" disabled selected>Threshold</option>
+
+        </select>
       </div>
 
       <div class="col">
         <select id="filterType" class="form-control">
           <option value="" disabled selected>Type</option>
-          <option>Drug</option>
-          <option>Material</option>
+
         </select>
       </div>
 
       <div class="col">
         <select id="filterAmount" class="form-control">
           <option value="" disabled selected>Amount</option>
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>3</option>
+
         </select>
       </div>
 
@@ -51,12 +45,11 @@
 
 <script type="module" src="../js/storage.js"></script>
 <script type="module">
-  import {onInitial, filtering, createOption} from "../js/storage.js";
+  import {onInitial, filtering, createOption, listTable} from "../js/storage.js";
   onInitial()
-
   filtering()
-
   createOption()
+  listTable()
 
   //add button
   $(document).ready(function(){
