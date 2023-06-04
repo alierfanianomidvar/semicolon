@@ -10,10 +10,12 @@ class userUrls extends BaseApiUrl {
         token: true
     };
 
-    static EDIT = {
-        url: `${BaseApiUrl.BASE_URL}/${userUrls.USER_BASE_URL}/`, //NOTE: ADD THIS TO URL /{id}
-        method: 'PUT',
-        token: true
+    static EDIT(id) {
+        return {
+            url: `${BaseApiUrl.BASE_URL}/${userUrls.USER_BASE_URL}/${id}`,
+            method: 'PUT',
+            token: true
+        }
     };
 
     static GET_ALL = {
@@ -23,10 +25,12 @@ class userUrls extends BaseApiUrl {
     };
 
 
-    static GET_BY_ID = {
-        url: `${BaseApiUrl.BASE_URL}/${userUrls.USER_BASE_URL}/`, //NOTE: ADD THIS TO URL /{id}
-        method: 'GET',
-        token: false
+    static GET_BY_ID(id) {
+        return {
+            url: `${BaseApiUrl.BASE_URL}/${userUrls.USER_BASE_URL}/${id}`,
+            method: 'GET',
+            token: false
+        }
     };
 
 
@@ -36,11 +40,13 @@ class userUrls extends BaseApiUrl {
         token: true
     };
 
-    static CHANGE_STATUS = {
-        url: `${BaseApiUrl.BASE_URL}/${userUrls.USER_BASE_URL}/change-status/`, //NOTE: ADD THIS TO URL /{id}/{newStatus}
-        method: 'PATCH',
-        token: true
-    };
+    static CHANGE_STATUS(id, status) {
+        return {
+            url: `${BaseApiUrl.BASE_URL}/${userUrls.USER_BASE_URL}/change-status/${id}/${status}`,
+            method: 'PATCH',
+            token: true
+        }
+};
 
 
 }

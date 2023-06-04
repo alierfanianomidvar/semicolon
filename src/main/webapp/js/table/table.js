@@ -74,7 +74,7 @@ function generateTableRows(numRows, tableBody, columnNames, type, data) {
         });
 
         if (type === "user") {
-            $("<td>", { html: "<a href='#'>Edit</a>", style: " padding: 0.1rem; vertical-align: middle;" }).appendTo(row);
+            $("<td>", { html: `<a href='#edit-user/${data[n]["Id"]}'>Edit</a>`, style: " padding: 0.1rem; vertical-align: middle;" }).appendTo(row);
         }
     }
 }
@@ -86,8 +86,8 @@ export const createButtonsAndText = (createButtons = false,
                                      secondTxt = "",
                                      cancelBtn = "",
                                      acceptBtn = "",
-                                     onCancel: () => {},
-                                     onAccept: () => {}
+                                     onCancel = () => {},
+                                     onAccept = () => {}
                                      ) => {
     // Create a div to contain the buttons and/or text elements
     const container = $("<div>", {

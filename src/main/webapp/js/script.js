@@ -14,7 +14,7 @@ $(window).on('hashchange load', function () {
     localStorage.removeItem('getData'); // removing all dats before finding the new Data.
 
     document.title = window.location.hash;
-    const route = window.location.hash.replace('#', '') || 'home';
+    const route = location.hash.replace("#", "").split("/")[0];
 
     let endPoint = null;
     const router = new Router();
@@ -59,6 +59,9 @@ $(window).on('hashchange load', function () {
     }).catch(error => {
         console.log("Error fetching data:", error);
     });
+
+    // Skip if no page is selected
+    if (!route || route === "") return;
 
     const url = `${route}.html?`;
     $("#main-content").load(url, function (response, status, xhr) {
