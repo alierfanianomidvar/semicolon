@@ -82,7 +82,6 @@ export const calculateTotal = () => {
             total += price;
         }
     }
-
     document.getElementById("total-price").textContent = "Total Price: $" + total.toFixed(2);
 }
 
@@ -92,4 +91,12 @@ export const resetTotal = () => {
     cancelBtn.addEventListener("click", function () {
         document.getElementById("total-price").textContent = "Total Price: $0";
     });
+}
+
+export const linking = () => {
+    const submitButton = document.getElementById('submit-order-btn');
+    submitButton.addEventListener('click', function() {
+        window.location.href = 'confirm-order.html';
+    });
+    //window.open("confirm-addOrder.html", "_blank", "width=600,height=400");
 }
