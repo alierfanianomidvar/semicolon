@@ -1,5 +1,10 @@
 import userUrls from "./urls/userUrls.js";
-import {getByteProfilePicture} from "./utils.js";
+import {
+    generateRoleOptions,
+    getByteProfilePicture,
+    getTokenFromLocalStorage,
+    extractRole
+} from "./utils.js";
 
 const addUserForm = document.getElementById('add-user-form');
 
@@ -23,7 +28,7 @@ addUserForm.addEventListener('submit', async function(event) {
         body.profilePicture = null;
     }
 
-    const token = localStorage.getItem("token");
+    const token = getTokenFromLocalStorage();
 
     const router = new Router();
     try {
@@ -33,3 +38,13 @@ addUserForm.addEventListener('submit', async function(event) {
         console.log("Error: ", error);
     }
 });
+
+export const onInitial = async () => {
+    const addUserForm = document.getElementById('add-user-form');
+    // Extract the role from the JWT token payload
+    const token = getTokenFromLocalStorage();
+    const role = extractRole(token);
+
+    // Generate the role dropdown options based on the user's role
+    generateRoleOptions(role, addUserForm);
+}

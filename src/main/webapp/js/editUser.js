@@ -1,11 +1,24 @@
 import userUrls from "./urls/userUrls.js";
-import {getByteProfilePicture, getRouteParam} from "./utils.js";
+import {
+    getTokenFromLocalStorage,
+    generateRoleOptions,
+    getByteProfilePicture,
+    getRouteParam,
+    extractRole
+} from "./utils.js";
 
 const router = new Router();
 
-export const onInitial =async () => {
+export const onInitial = async () => {
     const userId = getRouteParam();
-    
+    const editUserForm = document.getElementById('edit-user-form');
+    // Extract the role from the JWT token payload
+    const token = getTokenFromLocalStorage();
+    const role = extractRole(token);
+
+    // Generate the role dropdown options based on the user's role
+    generateRoleOptions(role, editUserForm);
+
     try {
         const fetchedData = await router.createFetch(userUrls.GET_BY_ID(userId));
         fillFormData(fetchedData);
@@ -14,11 +27,11 @@ export const onInitial =async () => {
     }
 }
 
-const addUserForm = document.getElementById('edit-user-form');
-addUserForm.addEventListener('submit', async function(event) {
+const editUserForm = document.getElementById('edit-user-form');
+editUserForm.addEventListener('submit', async function(event) {
     event.preventDefault();
     const userId = getRouteParam();
-    const formData = new FormData(addUserForm);
+    const formData = new FormData(editUserForm);
     const body = Object.fromEntries(formData);
 
     body.birthDate = new Date(body.birthDate).toISOString();
@@ -34,7 +47,7 @@ addUserForm.addEventListener('submit', async function(event) {
         body.profilePicture = null;
     }
 
-    const token = localStorage.getItem("token");
+    const token = getTokenFromLocalStorage();
 
     const updatedData = await router.createFetch(userUrls.EDIT(userId),null, null, token, body);
     
@@ -44,7 +57,7 @@ const statusBtn = document.getElementById('status-btn');
 statusBtn.addEventListener('click', async function(event) {
     event.preventDefault();
     const userId = getRouteParam();
-    const token = localStorage.getItem("token");
+    const token = getTokenFromLocalStorage();
     const accountStatus = document.querySelector("[name='accountStatus']");
     const newStatus = accountStatus.value == "ACTIVE" ? "DEACTIVE" : "ACTIVE";
 
@@ -54,18 +67,18 @@ statusBtn.addEventListener('click', async function(event) {
 });
 
 function fillFormData (data) {
-    const addUserForm = document.getElementById('edit-user-form');
+    const editUserForm = document.getElementById('edit-user-form');
     const statusBtn = document.getElementById('status-btn');
 
-    addUserForm.querySelector('input[name="name"]').value = data.name;
-    addUserForm.querySelector('input[name="lastName"]').value = data.lastName;
-    addUserForm.querySelector('input[name="birthDate"]').value = data.birthDate.split("T")[0];
-    addUserForm.querySelector('select[name="gender"]').value = data.gender;
-    addUserForm.querySelector('select[name="role"]').value = data.role.id;
-    addUserForm.querySelector('input[name="phoneNumber"]').value = data.phoneNumber;
-    addUserForm.querySelector('input[name="email"]').value = data.email;
-    addUserForm.querySelector('input[name="address"]').value = data.address;
-    addUserForm.querySelector('input[name="accountStatus"]').value = data.accountStatus;
+    editUserForm.querySelector('input[name="name"]').value = data.name;
+    editUserForm.querySelector('input[name="lastName"]').value = data.lastName;
+    editUserForm.querySelector('input[name="birthDate"]').value = data.birthDate.split("T")[0];
+    editUserForm.querySelector('select[name="gender"]').value = data.gender;
+    editUserForm.querySelector('select[name="role"]').value = data.role.id;
+    editUserForm.querySelector('input[name="phoneNumber"]').value = data.phoneNumber;
+    editUserForm.querySelector('input[name="email"]').value = data.email;
+    editUserForm.querySelector('input[name="address"]').value = data.address;
+    editUserForm.querySelector('input[name="accountStatus"]').value = data.accountStatus;
 
     statusBtn.textContent = data.accountStatus === "ACTIVE" ? "Disable" : "Enable";
 }

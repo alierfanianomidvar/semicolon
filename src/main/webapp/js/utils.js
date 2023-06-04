@@ -21,6 +21,46 @@ export function getByteProfilePicture() {
     });
 }
 
+export function getTokenFromLocalStorage() {
+    return localStorage.getItem("token");
+}
+
 export function getRouteParam (index = 1) {
     return window.location.hash.split("/")[index]
+}
+
+// Helper function to parse the JWT token payload
+export function parseJwt(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+
+    return JSON.parse(jsonPayload);
+}
+
+// Function to dynamically generate the dropdown options based on the user's role
+export function generateRoleOptions(role, userForm) {
+    const roleSelect = userForm.querySelector('select[name="role"]');
+    const options = [
+        { value: "3", label: "Staff" }
+    ];
+
+    if (role.toLowerCase() === "superadmin") {
+        options.unshift({ value: "2", label: "Admin" });
+    }
+
+    // Add options to the dropdown
+    options.forEach(option => {
+        const optionElement = document.createElement('option');
+        optionElement.value = option.value;
+        optionElement.textContent = option.label;
+        roleSelect.appendChild(optionElement);
+    });
+}
+
+
+export function extractRole(token) {
+    const payload = parseJwt(token);
+    const role = payload.Role;
+    return role;
 }
