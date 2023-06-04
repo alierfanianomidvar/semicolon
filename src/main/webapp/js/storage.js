@@ -1,6 +1,4 @@
 import storageUrls from "./urls/storageUrls.js";
-import {createTable, rWord} from "./table/table.js";
-
 import {showModal} from "../js/modal.js";
 import {createGenericTable} from "./table/table.js";
 export const onInitial = () => {
@@ -10,7 +8,7 @@ export const onInitial = () => {
         tax: "10%",
         discount: "12%"
     };
-    showModal('Order', "Are you sure to submit your order?", 'Order_submit', orderData, "Total Price: 20$")
+    //showModal('Order', "Are you sure to submit your order?", 'Order_submit', orderData, "Total Price: 20$")
     localStorage.getItem("getData")
     createGenericTable("storage_list", ["","Name", "Type", "Price", "Amount", "Threshold"]);
 
@@ -30,86 +28,7 @@ export const onInitial = () => {
     // createGenericTable("user_list", ["","Name", "Last Name", "Role", "Address", "Status"]);
 };
 
-export const listTable = async () => {
-    const data = JSON.parse(localStorage.getItem("getData"))
-    console.log(data)
-
-    const router = new Router()
-    let storageData;
-    const storage = Promise.resolve(router.createFetch(storageUrls.GET_ALL))
-
-    storageData = await storage
-    console.log(storageData);
-
-    const tableBody = document.getElementById('tableBody');
-    tableBody.innerHTML = ''; // Clear existing table body
-
-    if (storageData.length === 0) {
-        const tr = document.createElement('tr');
-        const td = document.createElement('td');
-        td.textContent = 'No Products Found!';
-        td.className = 'text-center';
-        td.colSpan = 5;
-        tr.appendChild(td);
-        tableBody.appendChild(tr);
-    } else {
-        storageData.forEach((storage) => {
-            const tr = document.createElement('tr');
-
-            const nameTd = document.createElement('td');
-            nameTd.textContent = storage.name;
-            tr.appendChild(nameTd);
-
-            const typeTd = document.createElement('td');
-            typeTd.textContent = storage.type;
-            tr.appendChild(typeTd);
-
-            const priceTd = document.createElement('td');
-            priceTd.textContent = `$${storage.price}`;
-            tr.appendChild(priceTd);
-
-            const quantityTd = document.createElement('td');
-            quantityTd.textContent = storage.amount;
-            tr.appendChild(quantityTd);
-
-            const thresholdTd = document.createElement('td');
-            thresholdTd.textContent = storage.threshold;
-            tr.appendChild(thresholdTd);
-
-            tableBody.appendChild(tr);
-        });
-    }
-}
-
-export const filtering = () => {
-    const filterButton = document.getElementById('filter-button');
-    filterButton.addEventListener('click', () => {
-        const storedData = JSON.parse(localStorage.getItem("getData")); // Retrieve stored data from localStorage
-        console.log(storedData);
-
-        // Filter the data
-        const selectedName = document.getElementById('Name').value;
-        const selectedType = document.getElementById('Type').value;
-        const selectedPrice = document.getElementById('Price').value;
-        const selectedQuantity = document.getElementById('Quantity').value;
-        const selectedThreshold = document.getElementById('Threshold').value;
-
-        const filteredData = storedData.filter(item => {
-            return (selectedName === '' || item.threshold === selectedName) &&
-                (selectedType === '' || item.type === selectedType) &&
-                (selectedPrice === '' || item.type === selectedPrice) &&
-                (selectedQuantity === '' || item.amount === selectedQuantity) &&
-                (selectedThreshold === '' || item.threshold === selectedThreshold);
-        });
-
-        console.log(filteredData);
-    });
-};
-
 export const createOption = async () => {
-    const data = JSON.parse(localStorage.getItem("getData"))
-    console.log(data)
-
     const router = new Router()
     let storageData;
     const storage = Promise.resolve(router.createFetch(storageUrls.GET_ALL))
@@ -152,4 +71,87 @@ export const createOption = async () => {
         option.text = threshold;
         selectElementThreshold.add(option);
     });
+}
+export const filtering = () => {
+    const filterButton = document.getElementById('filter-button');
+    filterButton.addEventListener('click', () => {
+        const storedData = JSON.parse(localStorage.getItem('getData')); // Retrieve stored data from localStorage
+        console.log(storedData);
+
+        // Filter the data
+        const selectedAmount = document.getElementById('filterAmount').value;
+        const selectedType = document.getElementById('filterType').value;
+        const selectedThreshold = document.getElementById('filterThreshold').value;
+
+        const filteredData = storedData.filter(item => {
+            return (selectedAmount === '' || item.amount === selectedAmount) &&
+                (selectedType === '' || item.type === selectedType) &&
+                (selectedThreshold === '' || item.threshold === selectedThreshold);
+        });
+
+        console.log(filteredData);
+
+        // Display the filtered data in the table
+        const tableBody = document.getElementById('tableBody');
+        tableBody.innerHTML = '';
+
+        if (filteredData.length === 0) {
+            const tr = document.createElement('tr');
+            const td = document.createElement('td');
+            td.textContent = 'No Products Found!';
+            td.className = 'text-center';
+            td.colSpan = 5;
+            tr.appendChild(td);
+            tableBody.appendChild(tr);
+        } else {
+            listTable(filteredData);
+        }
+    });
+};
+
+export const listTable = async () => {
+    const router = new Router()
+    let storageData;
+    const storage = Promise.resolve(router.createFetch(storageUrls.GET_ALL))
+
+    storageData = await storage
+    console.log(storageData);
+
+    const tableBody = document.getElementById('tableBody');
+
+    if (storageData.length === 0) {
+        const tr = document.createElement('tr');
+        const td = document.createElement('td');
+        td.textContent = 'No Products Found!';
+        td.className = 'text-center';
+        td.colSpan = 5;
+        tr.appendChild(td);
+        tableBody.appendChild(tr);
+    } else {
+        storageData.forEach((storage) => {
+            const tr = document.createElement('tr');
+
+            const nameTd = document.createElement('td');
+            nameTd.textContent = storage.name;
+            tr.appendChild(nameTd);
+
+            const typeTd = document.createElement('td');
+            typeTd.textContent = storage.type;
+            tr.appendChild(typeTd);
+
+            const priceTd = document.createElement('td');
+            priceTd.textContent = `$${storage.price}`;
+            tr.appendChild(priceTd);
+
+            const amountTd = document.createElement('td');
+            amountTd.textContent = storage.amount;
+            tr.appendChild(amountTd);
+
+            const thresholdTd = document.createElement('td');
+            thresholdTd.textContent = storage.threshold;
+            tr.appendChild(thresholdTd);
+
+            tableBody.appendChild(tr);
+        });
+    }
 }
