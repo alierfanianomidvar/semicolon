@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Report</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/css/bootstrap.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
+    <link rel="stylesheet" href="../css/order_report.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .table td:first-child{width: 5px!important;;}
+    </style>
+</head>
+<body>
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card">
+        <h4 class="order-report-title">Report</h4>
+
+        <div class="form-inline">
+            <div class="dropdown-container0 dropdown">
+                <select class="form-control" id="selection">
+                    <option value="RECEIPT">RECEIPT</option>
+                    <option value="ORDER">ORDER</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="border rounded-xl bg-white">
+
+        </div>
+    </div>
+</div>
+<script src="../js/order_report.js" type="module"></script>
+<script src="../js/table/fancyTable.js" type="module"></script>
+
+<script type="module">
+    import { onInitial } from "../js/order_report.js"
+    onInitial()
+    $("#selection").change(function() {
+        const selectedOption = $(this).val();
+        console.log("this is selected: ", selectedOption)
+        if (selectedOption === "RECEIPT") {
+            $("#main-content").load("receipt_report.html")
+        }
+    });
+</script>
+</body>
+</html>
