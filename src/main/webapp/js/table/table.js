@@ -74,7 +74,7 @@ function generateTableRows(numRows, tableBody, columnNames, type, data) {
         });
 
         if (type === "user") {
-            $("<td>", { html: "<a href='#'>Edit</a>", style: " padding: 0.1rem; vertical-align: middle;" }).appendTo(row);
+            $("<td>", { html: `<a href='#edit-user/${data[n]["Id"]}'>Edit</a>`, style: " padding: 0.1rem; vertical-align: middle;" }).appendTo(row);
         }
     }
 }
@@ -85,7 +85,10 @@ export const createButtonsAndText = (createButtons = false,
                                      firstTxt = "",
                                      secondTxt = "",
                                      cancelBtn = "",
-                                     acceptBtn = "") => {
+                                     acceptBtn = "",
+                                     onCancel = () => {},
+                                     onAccept = () => {}
+                                     ) => {
     // Create a div to contain the buttons and/or text elements
     const container = $("<div>", {
         class: "bottom-container",
@@ -150,6 +153,7 @@ export const createButtonsAndText = (createButtons = false,
             css: {
                 margin: "0.5rem", // Random margin between 1 and 10 pixels
             },
+            click: onCancel
         });
 
         const button2 = $("<button>", {
@@ -158,6 +162,7 @@ export const createButtonsAndText = (createButtons = false,
             css: {
                 margin: "0.5rem", // Random margin between 1 and 10 pixels
             },
+            click: onAccept
         });
 
         // Append the buttons to the buttons container
@@ -172,35 +177,12 @@ export const createButtonsAndText = (createButtons = false,
 }
 
 
-export function createGenericTable(generictableId,genericcolumnNames){
-    ///showModal()
+export function createGenericTable(genericTableId,genericColumnNames, tableData, footerContent){
     // Example usage: Create a table with dynamic column names and content
-    const userData = [{
-        Name: "Ali",
-        LastName: "Mahdavi",
-        Role: "Admin",
-        Address: "via romana",
-        Status: "Active",
-        image: "../images/users.svg"
-    },{
-        Name: "Abi",
-        LastName: "mor",
-        Role: "Staff",
-        Address: "via romana",
-        Status: "Active",
-        image: "../images/users.svg"
-    },{
-        Name: "Alex",
-        LastName: "pegi",
-        Role: "Admin",
-        Address: "via romana",
-        Status: "Active",
-        image: "../images/users.svg"
-    }]
-    let tableId = generictableId; // Dynamic table ID
-    let columnNames =genericcolumnNames;
-    //TODO: number of rows must be edited and we need to put the correct number of rows based on our user list fetch api
-    let numRows = userData.length; // Total number of rows
+
+    let tableId = genericTableId; // Dynamic table ID
+    let columnNames =genericColumnNames;
+    let numRows = tableData.length; // Total number of rows
 
     // Generate the table ID dynamically
     let table = $(`<table>`, {
@@ -212,14 +194,25 @@ export function createGenericTable(generictableId,genericcolumnNames){
     $(".border").append(table);
 
     // for passing the cellContentGenerator we need to define a proper function that returns the user actual information
-    createTable(tableId, columnNames, numRows, userData, "user");
+    createTable(tableId, columnNames, numRows, tableData, "user");
 
-    // Call the createButtonsAndText function with the createButtons and createText parameters
-    const bottomContainer = createButtonsAndText(true, true, "salam", "s", "Cancel", "Submit");
+    if(footerContent) {
+        //FooterContent is object like this:
+        // Call the createButtonsAndText function with the createButtons and createText parameters
+        const bottomContainer = createButtonsAndText(
+            footerContent.button.active,
+            footerContent.text.active,
+            footerContent.text.left,
+            footerContent.text.center,
+            footerContent.button.cancel,
+            footerContent.button.submit,
+            footerContent.button.onCancel,
+            footerContent.button.onSubmit
+        );
 
-    // Append the main container to the page
-    $(".border").append(bottomContainer);
-
+        // Append the main container to the page
+        $(".border").append(bottomContainer);
+    }
 }
 
 
