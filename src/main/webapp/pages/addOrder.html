@@ -15,33 +15,31 @@
 <body>
 <div class="container">
     <h5 class="h5 mb-5 mt-4">Add Order</h5>
-    <div class="row">
-        <div class="col-md-3">
+    <form id="filterForm">
+    <div class="form-row mb-4">
+        <div class="col-lg-3">
             <div class="search-box">
                 <div class="input-group">
                     <input type="search" class="form-control" placeholder="Search Product" >
                 </div>
             </div>
         </div>
-        <div class="col-lg-3">
-            <div class="form-group">
-                <select id="filterSupplier" class="form-control">
-                    <option value="" disabled selected>Supplier</option>
 
-                </select>
-            </div>
+        <div class="col-lg-3">
+            <select id="filterSupplier" class="form-control">
+                <option value="" disabled selected>Supplier</option>
+
+            </select>
         </div>
         <div class="col-lg-3">
-            <div class="form-group">
-                <select id="filterProduct" class="form-control">
-                    <option value="" disabled selected>Product</option>
+            <select id="filterProduct" class="form-control">
+                <option value="" disabled selected>Product</option>
 
-                </select>
-            </div>
+            </select>
         </div>
         <div class="col-lg-3">
-            <div class="add-btn text-lg-right">
-                <button class="btn btn-custom">Filter</button>
+            <div class="filter-btn text-lg-right">
+                <button class="btn btn-custom" id="filter-button">Filter</button>
             </div>
         </div>
     </div>
@@ -86,13 +84,12 @@
         </div>
     </div>
     -->
-
+    </form>
 </div>
 
 <script type="module">
-    import {linking, resetTotal} from "../js/addOrder.js";
-    linking()
-    resetTotal()
+    import {} from "../js/addOrder.js";
+
 
     /*
         $(document).ready(function() {

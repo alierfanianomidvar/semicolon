@@ -1,10 +1,12 @@
+import supplierUrls from "./urls/supplierUrls.js";
+
 import {showModal} from "../js/modal.js";
 import {createTable, rWord} from "./table/table.js";
 import {createGenericTable} from "./table/table.js";
-import supplierUrls from "./urls/supplierUrls.js";
 import drugUrls from "./urls/drugUrls.js";
 import materialUrls from "./urls/materialUrls.js";
 
+/*
 export const onInitial = () => {
 
     const orderData = {
@@ -12,11 +14,47 @@ export const onInitial = () => {
         tax: "10%",
         discount: "12%"
     };
-    //showModal('Order', "Are you sure to submit your order?", 'Order_submit', orderData, "Total Price: 20$")
+
+    showModal('Order', "Are you sure to submit your order?", 'Order_submit', orderData, "Total Price: 20$")
     localStorage.getItem("getData")
     createGenericTable("order_list", ["","Name", "Price","IsActive","Quantity"]);
 };
+*/
 
+
+
+// Define the createTable function
+function createTable(tableId, columnNames, numRows, cellContentGenerator) {
+    const table = $(`#${tableId}`);
+
+    // Create the table header
+    const thead = $("<thead>");
+    const headerRow = $("<tr>");
+
+    columnNames.forEach((columnName) => {
+        const th = $("<th>", { text: columnName });
+        headerRow.append(th);
+    });
+
+    thead.append(headerRow);
+    table.append(thead);
+
+    // Create the table body with rows and cells
+    const tbody = $("<tbody>");
+
+    for (let i = 0; i < numRows; i++) {
+        const row = $("<tr>");
+
+        columnNames.forEach(() => {
+            const cell = $("<td>", {
+                text: cellContentGenerator(),
+            });
+            row.append(cell);
+        });
+        tbody.append(row);
+    }
+    table.append(tbody);
+}
 
 $(() => {
 
@@ -116,6 +154,32 @@ generateFooterTextAndButtons("Total Price : $12000", "Second Text", "Cancel", "S
 
 /*
 export const supplierOption = async () =>{
+    const data = JSON.parse(localStorage.getItem("getData"))
+    console.log(data)
+
+    const router = new Router()
+    let supplierData;
+    const supplier = Promise.resolve(router.createFetch(supplierUrls.GET_ALL))
+
+    supplierData = await supplier
+    console.log(supplierData);
+
+    //supplier option
+    const selectedSupplier = supplierData.map(obj => obj.name)
+    console.log(selectedSupplier);
+
+    const selectElementSupplier = document.getElementById('filterSupplier');
+
+    selectedSupplier.forEach(name =>{
+        const option = document.createElement('option');
+        option.text = name;
+        selectElementSupplier.add(option);
+    });
+}
+ */
+
+/*
+export const supplierOption = async () =>{
     const router = new Router()
     let supplierData;
     const supplier = Promise.resolve(router.createFetch(supplierUrls.GET_ALL))
@@ -187,6 +251,7 @@ export const calculateTotal = () => {
 }
 */
 
+/*
 export const resetTotal = () => {
     $(document).ready(() => {
         const cancelButton = $('#cancel-btn');
@@ -212,3 +277,4 @@ export const linking = () => {
         }
     });
 };
+*/
