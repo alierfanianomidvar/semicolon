@@ -66,4 +66,10 @@ public class SupplierController {
                 .response(supplierService.remove(id, token));
     }
 
+    @GetMapping(value = "/get-all")
+    public ResponseEntity remove() throws SQLException {
+        return ResponseHelper
+                .response(supplierService.getSupplierList());
+    }
+
 }

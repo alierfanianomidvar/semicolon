@@ -6,6 +6,7 @@ import com.unipd.semicolon.core.entity.Material;
 public class MaterialMapper {
     public static MaterialResponse materialResponse(Material material) {
         return new MaterialResponse(
+                material.getId(),
                 material.getName(),
                 material.getSupplier(),
                 material.getCountryOfProduction(),
