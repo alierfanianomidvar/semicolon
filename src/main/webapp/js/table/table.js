@@ -212,7 +212,7 @@ export function createGenericTable(generictableId,genericcolumnNames){
     createTable(tableId, columnNames, numRows, userData);
 
     // Call the createButtonsAndText function with the createButtons and createText parameters
-    const bottomContainer = createButtonsAndText(true, true, "salam", "s", "Cancel", "Submit");
+    const bottomContainer = createButtonsAndText(true, true, "", "", "Cancel", "Submit");
 
     // Append the main container to the page
     $(".border").append(bottomContainer);
