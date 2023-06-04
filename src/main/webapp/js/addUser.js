@@ -3,7 +3,7 @@ import {showErrorMessage} from "./utils.js";
 
 const addUserForm = document.getElementById('add-user-form');
 
-addUserForm.addEventListener('submit', async function(event) {
+addUserForm.addEventListener('submit', async function (event) {
     event.preventDefault();
 
     const formData = new FormData(addUserForm);
@@ -17,9 +17,8 @@ addUserForm.addEventListener('submit', async function(event) {
     }
 
     if (body.profilePicture.size !== 0) {
-        body.profilePicture = await getByteProfilePicture();
-    }
-    else {
+        body.profilePicture = await getBase64ProfilePicture();
+    } else {
         body.profilePicture = null;
     }
 
@@ -33,6 +32,7 @@ addUserForm.addEventListener('submit', async function(event) {
         },
         body: JSON.stringify(body)
     })
+
     const data = await response.json();
     if (response.ok) {
         window.location.hash = "#user";
@@ -42,7 +42,7 @@ addUserForm.addEventListener('submit', async function(event) {
     }
 });
 
-function getByteProfilePicture() {
+function getBase64ProfilePicture() {
     return new Promise((resolve) => {
         const fileInput = document.querySelector('input[type="file"]');
         const file = fileInput.files[0];
@@ -52,15 +52,14 @@ function getByteProfilePicture() {
 
         // Set up a function to be called when the file is read
         reader.onload = function (event) {
-            // Get the loaded file data as a byte array
-            const byteArray = new Uint8Array(event.target.result);
+            // Get the loaded file data as a base64 encoded string
+            const base64String = event.target.result;
 
-            // Send the byte array to the backend
-            resolve(Array.from(byteArray));
-
+            // Send the base64 string to the backend
+            resolve(base64String);
         };
 
-        // Read the file as an ArrayBuffer
-        reader.readAsArrayBuffer(file);
+        // Read the file as a data URL (base64 encoded string)
+        reader.readAsDataURL(file);
     });
 }
