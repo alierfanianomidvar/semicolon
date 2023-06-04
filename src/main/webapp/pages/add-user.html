@@ -68,9 +68,7 @@
             <label class="form-label">Role :</label>
             <select name="role" class="form-control" required>
               <option value="" selected disabled>Role</option>
-              <option value="4">Guest</option>
-              <option value="3">Staff</option>
-              <option value="2">Admin</option>
+              <!-- Options will be dynamically generated here -->
             </select>
           </div>
         </div>
@@ -110,3 +108,7 @@
   </form>
 </div>
 <script src="../js/addUser.js" type="module"></script>
+<script type="module">
+  import {onInitial} from "../js/addUser.js";
+  onInitial();
+</script>
