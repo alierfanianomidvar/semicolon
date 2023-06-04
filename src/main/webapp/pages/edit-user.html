@@ -5,13 +5,10 @@
     <div class="card-body p-4">
       <div class="row align-items-end">
         <!-- Avatar -->
-        <div class="col-4 col-md-1 offset-4 offset-md-0">
-          <label class="w-100 mb-3 mt-3 bg-secondary rounded">
-            <img src="../images/users.svg" alt="User Avatar" class="w-100" />
-            <!-- TODO: add thumbnail! -->
-            <input id="profilePicture" name="profilePicture" type="file" class="d-none" accept="image/*">
-          </label>
-        </div>
+        <label class="w-100 mb-3 mt-3 bg-secondary rounded" style="max-width: 10%">
+          <img id="avatar-preview" src="../images/users.svg" alt="User Avatar" class="w-100" />
+          <input id="editProfilePicture" name="profilePicture" type="file" class="d-none" accept="image/*">
+        </label>
       </div>
       <div class="row">
         <!-- Name -->
@@ -21,6 +18,7 @@
             <input name="name" type="text" class="form-control" placeholder="Name" required />
           </div>
         </div>
+
         <!-- Last Name -->
         <div class="col-md-4">
           <div class="form-group">
