@@ -42,8 +42,8 @@ public class User {
     @Column(name = "account_status")
     private String accountStatus;
 
-    @Column(name = "profile_picture")
-    private byte[] profilePicture;
+    @Column(name = "string_profile_picture", columnDefinition = "TEXT")
+    private String profilePicture;
 
     @JsonBackReference
     @ManyToOne
@@ -63,7 +63,7 @@ public class User {
             Role role,
             String email,
             String accountStatus,
-            byte[] profilePicture,
+            String profilePicture,
             Pharmacy pharmacy) {
         this.id = id;
         this.name = name;
@@ -89,7 +89,7 @@ public class User {
             Role role,
             String email,
             String accountStatus,
-            byte[] profilePicture,
+            String profilePicture,
             Pharmacy pharmacy) {
         this.name = name;
         this.lastName = lastName;
@@ -184,11 +184,11 @@ public class User {
         this.accountStatus = accountStatus;
     }
 
-    public byte[] getProfilePicture() {
+    public String getProfilePicture() {
         return profilePicture;
     }
 
-    public void setProfilePicture(byte[] profilePicture) {
+    public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
     }
 
