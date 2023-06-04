@@ -73,24 +73,7 @@ $(window).on('hashchange load', function () {
         }
     });
 
-
-    const userData = {
-        name: "John",
-        lastName: "Doe",
-        birthDate: {
-            day: "01",
-            month: "01",
-            year: "1990"
-        },
-        phoneNumber: "1234567890",
-        email: "john.doe@example.com",
-        address: "123 Main Street"
-    };
-
-    localStorage.setItem('userData', JSON.stringify(userData));
-
-    // Log the default userData
-    console.log("Default userData:", userData);
+    
 });
 
 
