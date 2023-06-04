@@ -47,7 +47,7 @@
                 <div class="col-2">
                     <div class="form-group">
                         <label class="form-label">Gender :</label>
-                        <select class="form-control">
+                        <select class="form-control" name="Gender">
                             <option value="" selected disabled>Gender</option>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
@@ -57,9 +57,9 @@
                 </div>
                 <!-- Role -->
                 <div class="col-2">
-                    <div class="form-group">
+                    <div class="form-group" >
                         <label class="form-label">Role :</label>
-                        <select class="form-control">
+                        <select class="form-control" name="Role">
                             <option value="" selected disabled>Role</option>
                             <option value="guest">Guest</option>
                             <option value="administrator">Administrator</option>
@@ -106,6 +106,8 @@
         // Fill the text fields with the values from localStorage
         document.querySelector('input[placeholder="Name"]').value = userData.name;
         document.querySelector('input[placeholder="Last Name"]').value = userData.lastName;
+        document.querySelector('select[name="Gender"]').value = userData.gender ?? "";
+        document.querySelector('select[name="Role"]').value = userData.role.role ?? "";
         document.querySelector('input[placeholder="DD"]').value = userData.birthDate.day;
         document.querySelector('input[placeholder="MM"]').value = userData.birthDate.month;
         document.querySelector('input[placeholder="YY"]').value = userData.birthDate.year;
