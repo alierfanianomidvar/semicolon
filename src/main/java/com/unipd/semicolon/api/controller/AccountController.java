@@ -6,6 +6,7 @@ import com.unipd.semicolon.business.exception.CustomException;
 import com.unipd.semicolon.business.exception.InvalidTokenException;
 import com.unipd.semicolon.business.exception.UserExistsException;
 import com.unipd.semicolon.business.service.AccountService;
+import com.unipd.semicolon.core.entity.enums.Country;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +22,13 @@ public class AccountController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     @Operation(summary = "login", description = "will send all info of user and new token bane id and role.")
-    public ResponseEntity login(@RequestBody LoginRequest model)
+    public ResponseEntity login(
+            @RequestParam(required = true) String username,
+            @RequestParam(required = true) String password)
             throws CustomException {
         return ResponseHelper.response(accountService.Login(
-                model.getUsername(),
-                model.getPassword()));
+                username,
+                password));
 
     }
 
