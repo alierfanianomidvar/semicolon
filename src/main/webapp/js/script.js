@@ -5,6 +5,8 @@ import materialUrls from "./urls/materialUrls.js";
 import orderUrls from "./urls/orderUrls.js";
 import supplierUrls from "./urls/supplierUrls.js";
 import userUrls from "./urls/userUrls.js";
+import {Router} from "./router.js";
+
 
 
 //routing
@@ -72,7 +74,7 @@ $(window).on('hashchange load', function () {
         }
     });
 
-    
+
 });
 
 
