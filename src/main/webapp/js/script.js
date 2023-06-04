@@ -47,7 +47,7 @@ $(window).on('hashchange load', function () {
             endPoint = receiptUrls.GET_BY_ID;
             break;
         case "user":
-            endPoint = userUrls.GET_BY_ID;
+            endPoint = userUrls.GET_ALL;
             break;
         default:
             endPoint = storageUrls.GET_ALL;
