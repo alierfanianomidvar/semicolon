@@ -32,61 +32,7 @@ public class UserModel {
 
     private String accountStatus;
 
-    private byte[] profilePicture;
-
-    public UserModel(Long userId,
-                     String username,
-                     String password,
-                     String name,
-                     String lastName,
-                     LocalDateTime birthDate,
-                     Role role,
-                     Gender gender,
-                     String phoneNumber,
-                     String address,
-                     String email,
-                     String accountStatus,
-                     byte[] profilePicture) {
-        this.userId = userId;
-        this.username = username;
-        this.password = password;
-        this.name = name;
-        this.lastName = lastName;
-        this.birthDate = birthDate;
-        this.role = role;
-        this.gender = gender;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-        this.email = email;
-        this.accountStatus = accountStatus;
-        this.profilePicture = profilePicture;
-    }
-
-    public UserModel(String username,
-                     String password,
-                     String name,
-                     String lastName,
-                     LocalDateTime birthDate,
-                     Role role,
-                     Gender gender,
-                     String phoneNumber,
-                     String address,
-                     String email,
-                     String accountStatus,
-                     byte[] profilePicture) {
-        this.username = username;
-        this.password = password;
-        this.name = name;
-        this.lastName = lastName;
-        this.birthDate = birthDate;
-        this.role = role;
-        this.gender = gender;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-        this.email = email;
-        this.accountStatus = accountStatus;
-        this.profilePicture = profilePicture;
-    }
+    private String profilePicture;
 
     public Long getUserId() {
         return userId;
@@ -168,12 +114,8 @@ public class UserModel {
         this.accountStatus = accountStatus;
     }
 
-    public byte[] getProfilePicture() {
+    public String getProfilePicture() {
         return profilePicture;
-    }
-
-    public void setProfilePicture(byte[] profilePicture) {
-        this.profilePicture = profilePicture;
     }
 
     public UserModel() {
