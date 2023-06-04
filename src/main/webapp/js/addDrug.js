@@ -1,6 +1,8 @@
 import orderUrls from "./urls/orderUrls";
 import {showModal} from "../js/modal.js";
 import {createGenericTable} from "./table/table.js";
+import supplierUrls from "./urls/supplierUrls";
+import drugUrls from "./urls/drugUrls";
 export const onInitial = () => {
 
     const orderData = {
@@ -20,6 +22,49 @@ export const showPopup = () => {
                 alert("Order submitted");
             });
         });
+}
+
+export const createOption = async () => {
+    const data = JSON.parse(localStorage.getItem("getData"))
+    console.log(data)
+
+    const router = new Router()
+
+    //for supplier option
+    let supplierData;
+    const supplier = Promise.resolve(router.createFetch(supplierUrls.GET_ALL))
+
+    supplierData = await supplier
+    console.log(supplierData);
+
+    const selectedSupplier = supplierData.map(obj => obj.name)
+    console.log(selectedSupplier);
+
+    const selectElementSupplier = document.getElementById('filterSupplier');
+
+    selectedSupplier.forEach(name => {
+        const option = document.createElement('option');
+        option.text = name;
+        selectElementSupplier.add(option);
+    });
+
+    //for product option
+    let productData;
+    const product = Promise.resolve(router.createFetch(drugUrls.GET_ALL))
+
+    productData = await product
+    console.log(supplierData);
+
+    const selectedProduct = supplierData.map(obj => obj.name)
+    console.log(selectedProduct);
+
+    const selectElementProduct = document.getElementById('filterProduct');
+
+    selectedProduct.forEach(name => {
+        const option = document.createElement('option');
+        option.text = name;
+        selectElementProduct.add(option);
+    });
 }
 
 export const calculateTotal = () => {
