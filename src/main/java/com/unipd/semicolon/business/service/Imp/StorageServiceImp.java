@@ -56,9 +56,6 @@ public class StorageServiceImp implements StorageService {
                 throw new IllegalArgumentException("Invalid input parameter");
             } else if (drugId == null && materialId == null) {
                 throw new IllegalArgumentException("Either drug or material must be specified");
-            } else if (drugId != null && materialId != null) {
-                throw new IllegalArgumentException(
-                        "Both drug and material cannot be specified at the same time. Please specify only one.");
             } else {
                 // Declare variables to store the found entities
                 Pharmacy pharmacyRepositoryById = null;
