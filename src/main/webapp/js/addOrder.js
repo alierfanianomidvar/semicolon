@@ -1,7 +1,6 @@
 import supplierUrls from "./urls/supplierUrls.js";
-import {showModal} from "../js/modal.js";
 import {createGenericTable} from "./table/table.js";
-import orderUrls from "./urls/orderUrls";
+import orderUrls from "./urls/orderUrls.js";
 
 let data;
 const router = new Router();
@@ -20,11 +19,11 @@ export const onInitial = async () => {
 function populateTable(data) {
 
     const tableData = data.map(obj => {
-        const isDrug = obj.drug !== null;
+        const isOrder = obj.order !== null;
         const newObj = {
-            Name: isDrug ? obj.drug.name : obj.material.name,
-            Price: isDrug ? obj.drug.price : obj.material.price,
-            IsActive: isDrug ? "Active" : "Not Active",
+            Name: obj.name, //isOrder ? obj.drug.name : obj.material.name,
+            Price: obj.price, //isOrder ? obj.drug.price : obj.material.price,
+            IsActive: isOrder ? "Active" : "Not Active",
             Amount: obj.amount
         };
         return newObj;
