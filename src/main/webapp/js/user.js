@@ -35,7 +35,7 @@ export const onInitial = () => {
 
     const footerContent = {
         button: {
-            active: true,
+            active: false,
             cancel: "Cancel",
             onCancel: () => {},
             submit: "Submit",
