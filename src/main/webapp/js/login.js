@@ -136,7 +136,7 @@ $(function () {
             console.error('Error loading new HTML:', error);
         }
     } else {
-        console.log("ali", getTokenFromLocalStorage());
+        console.log("need to login.")
     }
     document.querySelector("#login-btn").addEventListener("click", sendData);
     document.querySelector("#password-toggle").addEventListener("click", togglePasswordVisibility);
