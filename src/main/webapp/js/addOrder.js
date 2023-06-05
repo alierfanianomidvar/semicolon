@@ -52,19 +52,7 @@ function populateTable(data) {
             }
         });
 
-// Event listener for submitting the order
-        submitButton.addEventListener('click', () => {
-            // Prepare the data to pass to the showModal function
-            const data = {
-                price: "1200", // Placeholder value, update it with the actual price
-                tax: "10", // Placeholder value, update it with the actual tax
-                discount: "12", // Placeholder value, update it with the actual discount
-                totalPrice: "" // Placeholder value, update it with the actual total price
-            };
 
-            // Call the showModal function with the selected products and the data
-            showModal("Submit", "", "Order_submit", data, selectedProducts);
-        });
 
         // document.addEventListener(()=>{
 
