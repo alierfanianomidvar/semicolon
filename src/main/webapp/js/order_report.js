@@ -12,27 +12,33 @@ export const onInitial = () => {
     // }]
 
     let orderData = []
-    JSON.parse(localStorage.getItem("getData")).map((item, index) => {
-        const newObject = {
-            id: item.id,
-            price: item.price,
-            status:item.status,
-            date: item.date.split("T")[0]
-        }
-        return orderData.push(newObject)
-    })
+    if(localStorage.getItem("getData")) {
+        JSON.parse(localStorage.getItem("getData")).map((item, index) => {
+            const newObject = {
+                id: item.id,
+                price: item.price,
+                status:item.status,
+                date: item.orderDate
+            }
+            return orderData.push(newObject)
+        })
+    }
+
     console.log("Hamide analyzer",orderData);
     const footerContent = {
         text: {
-            active: true,
+            active: false,
             left: "Total: 5$",
             center: ""
+        },
+        button: {
+            active: false
         }
     }
 
     createGenericTable(
         "order_list",
-        ["","ID", "Price", "Status", "Date"],
+        ["id", "price", "status", "date"],
         orderData,
         footerContent,
         'default'
