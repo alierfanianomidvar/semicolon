@@ -3,42 +3,40 @@
   <div id="error-message"></div>
   <form id="edit-user-form" class="card rounded-xl">
     <div class="card-body p-4">
-      <div class="row align-items-end mb-4">
+      <div class="row align-items-end">
         <!-- Avatar -->
-        <div class="col-1">
-          <label class="w-100 mb-3 mt-3 bg-secondary">
-            <img src="../images/users.svg" alt="User Avatar" class="img-fluid rounded w-100" />
-            <!-- TODO: add thumbnail! -->
-            <input id="profilePicture" name="profilePicture" type="file" class="d-none" accept="image/*">
-          </label>
-        </div>
+        <label class="w-100 mb-3 mt-3 bg-secondary rounded" style="max-width: 10%">
+          <img id="avatar-preview" src="../images/users.svg" alt="User Avatar" class="w-100" />
+          <input id="editProfilePicture" name="profilePicture" type="file" class="d-none" accept="image/*">
+        </label>
       </div>
-      <div class="row mb-4">
+      <div class="row">
         <!-- Name -->
-        <div class="col-4">
+        <div class="col-md-4">
           <div class="form-group">
             <label class="form-label">Name :</label>
             <input name="name" type="text" class="form-control" placeholder="Name" required />
           </div>
         </div>
+
         <!-- Last Name -->
-        <div class="col">
+        <div class="col-md-4">
           <div class="form-group">
             <label class="form-label">Last Name :</label>
             <input name="lastName" type="text" class="form-control" placeholder="Last Name" required />
           </div>
         </div>
         <!-- Birth Date -->
-        <div class="col">
+        <div class="col-md-4">
           <div class="form-group">
             <label class="form-label">Birth Date :</label>
             <input name="birthDate" type="date" class="form-control" required />
           </div>
         </div>
       </div>
-      <div class="row mb-4">
+      <div class="row">
         <!-- Gender -->
-        <div class="col-2">
+        <div class="col-md-2">
           <div class="form-group">
             <label class="form-label">Gender :</label>
             <select name="gender" class="form-control" required>
@@ -50,27 +48,24 @@
           </div>
         </div>
         <!-- Role -->
-        <div class="col-2">
+        <div class="col-md-2">
           <div class="form-group">
             <label class="form-label">Role :</label>
             <select name="role" class="form-control" required>
               <option value="" selected disabled>Role</option>
-              <option value="4">Guest</option>
-              <option value="3">Staff</option>
-              <option value="2">Admin</option>
-<!--              TODO add a js to check the privilege-->
+              <!-- Options will be dynamically generated here -->
             </select>
           </div>
         </div>
         <!-- Phone Number -->
-        <div class="col">
+        <div class="col-md-4">
           <div class="form-group">
             <label class="form-label">Phone Number :</label>
             <input name="phoneNumber" type="text" class="form-control" placeholder="Phone Number" required/>
           </div>
         </div>
         <!-- Email -->
-        <div class="col">
+        <div class="col-md-4">
           <div class="form-group">
             <label class="form-label">Email :</label>
             <input name="email" type="email" class="form-control" placeholder="Email" />
@@ -78,7 +73,7 @@
         </div>
       </div>
       <!-- Address -->
-      <div class="form-group mb-4">
+      <div class="form-group">
         <label class="form-label">Address :</label>
         <input name="address" type="text" class="form-control" placeholder="Address" />
       </div>
@@ -87,17 +82,18 @@
     <hr class="border border-1 opacity-100 m-0" />
     <div class="card-body p-4">
       <div class="row">
-        <div class="col-2">
-          <a href="#user" class="btn btn-custom-secondary w-100">Cancel</a>
+        <div class="col-md-2 mb-3 mb-md-0 order-md-last">
+          <button type="submit" class="btn btn-custom w-100">Edit</button>
         </div>
 
-        <div class="col-2 offset-6">
+        <div class="col-md-2 offset-md-6 mb-3 mb-md-0">
           <button id="status-btn" type="button" class="btn btn-custom w-100">Enable</button>
         </div>
 
-        <div class="col-2">
-          <button type="submit" class="btn btn-custom w-100">Edit</button>
+        <div class="col-md-2 order-md-first">
+          <a href="#user" class="btn btn-custom-secondary w-100">Cancel</a>
         </div>
+
       </div>
     </div>
   </form>
