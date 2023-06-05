@@ -28,7 +28,7 @@ export const createTable = (tableId, columnNames, numRows, data, type = "default
 
 
     // And make them fancy
-    $(`#${tableId}`).fancyTable({
+    let fancyTableA = $(`#${tableId}`).fancyTable({
         sortColumn: 1,
         pagination: true,
         perPage: 5,

@@ -40,9 +40,10 @@ export const onInitial = () => {
             onCancel: () => {},
             submit: "Submit",
             onSubmit: () => {}
-        },
+        }
+        ,
         text: {
-            active: true,
+            active: false,
             left: "Total: 5$",
             center: "WhatEver!"
         }
