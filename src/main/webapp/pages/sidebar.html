@@ -11,8 +11,8 @@
                 sidebar.style.display = "none";
             }
         }
-        document.getElementById("user-name").value = JSON.parse(localStorage.getItem("userData")).name
-        document.getElementById("role").value = JSON.parse(localStorage.getItem("userData")).role.role
+        document.getElementById("user-name").textContent = JSON.parse(localStorage.getItem("userData")).name
+        document.getElementById("role").textContent = JSON.parse(localStorage.getItem("userData")).role.role
     </script>
 </head>
 <body>
