@@ -4,7 +4,7 @@ export const createTable = (tableId, columnNames, numRows, data, type = "default
     // Generate the table headers
     const tableHeaders = $(`<thead>`).appendTo($(`#${tableId}`));
     const headerRow = $(`<tr>`).appendTo(tableHeaders);
-    
+
     columnNames.forEach((columnName) => {
         $(`<td>`, { text: columnName }).appendTo(headerRow);
     });

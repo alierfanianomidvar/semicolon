@@ -7,9 +7,6 @@ import com.unipd.semicolon.core.entity.enums.Country;
 import com.unipd.semicolon.core.entity.enums.Gender;
 import jakarta.persistence.*;
 
-import javax.xml.crypto.Data;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -58,7 +55,7 @@ public class Drug {
     // Why not @Enumerated(EnumType.STRING)??
     @Enumerated(EnumType.STRING)
     @Column(name = "country_of_production")
-    private Country countryOFProduction;
+    private Country countryOfProduction;
     @Column(name = "last_modified_date")
     private Date lastModifiedDate;
 
@@ -86,7 +83,7 @@ public class Drug {
             String description,
             int limitation,
             float price,
-            Country countryOFProduction) {
+            Country countryOfProduction) {
         this.name = name;
         this.supplier = supplier;
         this.expirationDate = expirationDate;
@@ -99,7 +96,7 @@ public class Drug {
         this.description = description;
         this.limitation = limitation;
         this.price = price;
-        this.countryOFProduction = countryOFProduction;
+        this.countryOfProduction = countryOfProduction;
     }
 
     public Drug(
@@ -130,7 +127,7 @@ public class Drug {
         this.description = description;
         this.limitation = limitation;
         this.price = price;
-        this.countryOFProduction = countryOFProduction;
+        this.countryOfProduction = countryOfProduction;
         this.lastModifiedDate = lastModifiedDate;
         this.receipts = receipts;
     }
@@ -235,12 +232,12 @@ public class Drug {
         this.price = price;
     }
 
-    public Country getCountryOFProduction() {
-        return countryOFProduction;
+    public Country getCountryOfProduction() {
+        return countryOfProduction;
     }
 
-    public void setCountryOFProduction(Country countryOFProduction) {
-        this.countryOFProduction = countryOFProduction;
+    public void setCountryOfProduction(Country countryOfProduction) {
+        this.countryOfProduction = countryOfProduction;
     }
 
     public Date getLastModifiedDate() {

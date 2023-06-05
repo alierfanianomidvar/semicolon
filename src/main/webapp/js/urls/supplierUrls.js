@@ -29,7 +29,7 @@ class supplierUrls extends BaseApiUrl {
     };
 
     static GET_ALL = {
-        url: `${BaseApiUrl.BASE_URL}/suppliers`,
+        url: `${BaseApiUrl.BASE_URL}/supplier/get-all`,
         method: 'GET',
         token: false
     };
