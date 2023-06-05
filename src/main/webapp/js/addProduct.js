@@ -164,6 +164,7 @@ export const addProduct = async (event) => {
     event.preventDefault();
     try {
         const responseData = await sendData();
+        window.history.back();
     } catch (error) {
         let errorMessage = "An error occurred while sending data. Please try again later.";
         if (error.response && error.response.data && error.response.data.msg) {
@@ -174,5 +175,6 @@ export const addProduct = async (event) => {
 };
 
 export const cancelButton = () => {
-    window.location.href = "supplier.html"; // Replace with the desired URL
+    // window.location.href = "supplier.html"; // Replace with the desired URL
+    window.history.back();
 };
