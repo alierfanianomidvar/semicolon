@@ -1,0 +1,263 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Pharmacy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    <script type="module" src="../js/addReceipt.js"></script>
+    <script src="../js/table/table.js" type="module"></script>
+
+</head>
+<body>
+<div class="container">
+    <h5 class="h5 mb-5 mt-4">Add Receipt</h5>
+    <form class="card rounded-xl" id="product-form">
+        <div class="card-body p-4">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="expiration-date">Expiration Date:</label>
+                        <input type="date" class="form-control" id="expiration-date">
+                        <div class="invalid-feedback">Expiration date should not be before the current date</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group h-100">
+                        <label for="Payement_Method">Payement Method:</label>
+                        <select class="form-control h-40" id="payement_method" >
+                            <option value="test">cash</option>
+                            <option value="test">PayPal</option>
+                            <option value="test">Credit</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <hr>
+<!--            <h5 class="h5 mb-5 mt-4">Add to storage</h5>-->
+            <div class="row align-items-stretch">
+                <div class="col-md-6">
+                    <div class="form-group h-100">
+                        <label for="Drug-list">Choose Drug:</label>
+                        <select class="form-control h-50" id="Drug-list" >
+                            <option value="test">Lipitor</option>
+                            <option value="test">Viagra</option>
+                            <option value="test">Advil</option>
+                            <option value="test">Xanax</option>
+                            <option value="test">Tylenol</option>
+                            <option value="test">Prozac</option>
+                            <option value="test">Ambien</option>
+                            <option value="test">Zoloft</option>
+                            <option value="test">Celebrex</option>
+                            <option value="test">Adderall</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group h-100">
+                        <label for="d_amount">Amount:</label>
+                        <input type="number" class="form-control h-50" id="d_amount">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group h-100">
+                        <label for="d_threshold">Threshold:</label>
+                        <input type="number" class="form-control h-50" id="d_threshold">
+                    </div>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+<!--                    <button type="submit" class="add-btn ml-auto p-2 my-2 col-12 btn btn-primary" id="d_add-to-storage" style="width: 100px;" onclick="addToReceipt('Drug-list','d_amount','d_threshold')">Add</button>-->
+                    <input type="button" class="add-btn ml-auto p-2 my-2 col-12 btn btn-primary" id="add-to-storage"  value="Add" />
+                </div>
+            </div>
+            <div class="row align-items-stretch">
+                <div class="col-md-6">
+                    <div class="form-group h-100">
+                        <label for="Material-list">Choose Material:</label>
+                        <select class="form-control h-50" id="Material-list" >
+                            <option value="test">Band-aids</option>
+                            <option value="test">Gauze pads</option>
+                            <option value="test">Alcohol swabs</option>
+                            <option value="test">Cotton swabs</option>
+                            <option value="test">Antiseptic ointment</option>
+                            <option value="test">Hydrogen peroxide</option>
+                            <option value="test">Thermometers</option>
+                            <option value="test">Cold and flu medication</option>
+                            <option value="test">Allergy medication</option>
+                            <option value="test">Vitamins and supplements</option>
+
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group h-100">
+                        <label for="amount">Amount:</label>
+                        <input type="number" class="form-control h-50" id="amount">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group h-100">
+                        <label for="threshold">Threshold:</label>
+                        <input type="number" class="form-control h-50" id="threshold">
+                    </div>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <input type="button" class="add-btn ml-auto p-2 my-2 col-12 btn btn-primary" id="m_add-to-storage"  value="Add" />
+
+                </div>
+            </div>
+            <div class="card-body p-4">
+                <div class="row align-items-stretch">
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary w-100">Add</button>
+                    </div>
+
+                    <div class="col-md-2 order-md-first">
+                        <a href="#receipt" class="btn btn-secondary w-100">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div id='tbl' class="border rounded-xl bg-white" onload="alert('ttt')">
+
+    </div>
+
+</div>
+<script type="module">
+    import {oninitial} from "../js/addReceipt.js";
+    oninitial()
+
+
+    document.getElementById("m_add-to-storage").addEventListener("click", function() {
+
+
+        let d_selectValue = $( "#Material-list option:selected" ).text();
+        console.log("name: ", d_selectValue)
+
+        // alert(selectValue)
+        let d_amountValue = document.getElementById("amount").value;
+        console.log("amount: ", d_amountValue)
+
+        // alert(amountValue)
+        let d_thresholdValue = document.getElementById("threshold").value;
+        console.log("threshold: ", d_thresholdValue)
+
+
+
+        // alert(thresholdValue)
+
+        console.log("MATERIAL")
+        receiptData.push({
+            Name: d_selectValue,
+            amount: d_amountValue,
+            threshold: d_thresholdValue
+        })
+        const table = document.getElementById("receipt_list")
+        table.remove()
+        console.log("MATERIAL")
+// Re-render the table with the new data
+        createGenericTable(
+            "receipt_list",
+            ["Name", "threshold", "amount"],
+            receiptData,
+            footerContent,
+            "default"
+        );
+    });
+//==============================================================================////
+    document.getElementById("add-to-storage").addEventListener("click", function() {
+
+
+        let selectValue = $( "#Drug-list option:selected" ).text();
+        console.log("name: ", selectValue)
+        // alert(selectValue)
+        let amountValue = document.getElementById("d_amount").value;
+        console.log("amount: ", amountValue)
+        // alert(amountValue)
+        let thresholdValue = document.getElementById("d_threshold").value;
+        console.log("threshold: ", thresholdValue)
+
+
+        // alert(thresholdValue)
+
+        console.log("2222")
+        receiptData.push({
+            Name: selectValue,
+            amount: amountValue,
+            threshold: thresholdValue
+        })
+        const table = document.getElementById("receipt_list")
+        table.remove()
+        console.log("3333333333")
+// Re-render the table with the new data
+        createGenericTable(
+            "receipt_list",
+            ["Name", "threshold", "amount"],
+            receiptData,
+            footerContent,
+            "default"
+        );
+    });
+
+    import {createGenericTable} from "../js/table/table.js";
+    let receiptData = [
+        // {
+        //     Name: "test drug",
+        //     threshold: "10",
+        //     amount: "1"
+        // }
+    ]
+    const footerContent = {
+        button: {
+            active: true,
+            cancel: "Cancel",
+            onCancel: () => {},
+            submit: "Submit",
+            onSubmit: () => {}
+        }
+    }
+
+    createGenericTable(
+        "receipt_list",
+        ["Name", "threshold", "amount"],
+        receiptData,
+        footerContent,
+        "default"
+    );
+    //===========================================================================///
+    function addToReceipt1() {
+        // alert($( "#Drug-list option:selected" ).text())
+        console.log("11111")
+        event.preventDefault()
+        const selectValue = document.getElementById(selectId).value;
+        const amountValue = document.getElementById(amountId).value;
+        const thresholdValue = document.getElementById(thresholdId).value;
+        console.log("2222")
+        receiptData.push({
+            Name: selectValue,
+            amount: amountValue,
+            threshold: thresholdValue
+        })
+        const table = document.getElementById("receipt_list")
+        table.remove()
+        console.log("3333333333")
+// Re-render the table with the new data
+        createGenericTable(
+            "receipt_list",
+            ["Name", "threshold", "amount"],
+            receiptData,
+            footerContent,
+            "default"
+        );
+    }
+
+
+
+</script>
+
+</body>
+</html>
