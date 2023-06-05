@@ -1,5 +1,5 @@
 import supplierUrls from "./urls/supplierUrls.js";
-import {createGenericTable} from "./table/table.js";
+import {createButtonsAndText, createGenericTable, createTable} from "./table/table.js";
 import orderUrls from "./urls/orderUrls.js";
 import drugUrls from "./urls/drugUrls.js";
 import materialUrls from "./urls/materialUrls.js";
@@ -36,28 +36,30 @@ function populateTable(data) {
         ["Name", "Price", "IsActive", "Quantity"],
         tableData,
     );
+
+    const bottomContainer = createButtonsAndText("", "", "Total Price: $", "","Cancel","Submit Order", "", "")
+
+    const filterForm = document.getElementById('filterForm');
+    filterForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        // Filter the data
+        const selectedType = document.getElementById('filterType').value;
+
+        const filteredData = data.filter(obj => {
+
+            return selectedType === '' || obj[selectedType] !== null;
+        });
+
+
+        const elem = document.getElementById('order-list');
+        elem.remove();
+        populateTable(filteredData);
+
+    });
 }
 
-const filterForm = document.getElementById('filterForm');
-filterForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    // Filter the data
-    const selectedType = document.getElementById('filterType').value;
-
-    const filteredData = data.filter(obj => {
-
-        return selectedType === '' || obj[selectedType] !== null;
-    });
-
-
-    const elem = document.getElementById('order-list');
-    elem.remove();
-    populateTable(filteredData);
-
-});
-
-export const supplierOption = async () =>{
+export const supplierOption = async () => {
     const router = new Router()
     let supplierData;
     const supplier = Promise.resolve(router.createFetch(supplierUrls.GET_ALL))
@@ -71,7 +73,7 @@ export const supplierOption = async () =>{
 
     const selectElementSupplier = document.getElementById('filterSupplier');
 
-    selectedSupplier.forEach(name =>{
+    selectedSupplier.forEach(name => {
         const option = document.createElement('option');
         option.text = name;
         selectElementSupplier.add(option);
