@@ -25,8 +25,8 @@ public class ReceiptController {
                         receipt.getList_drug_id(),
                         receipt.getList_material_id(),
                         receipt.getImage(),
-                        receipt.getDate(),
-                        receipt.getPaymentMethod()));
+                        receipt.getPaymentMethod(),
+                        receipt.getTotalAmount()));
     }
 
 
@@ -45,7 +45,6 @@ public class ReceiptController {
                         receiptModel.getList_drug_id(),
                         receiptModel.getList_material_id(),
                         receiptModel.getImage(),
-                        receiptModel.getDate(),
                         receiptModel.getPaymentMethod()));
 
     }

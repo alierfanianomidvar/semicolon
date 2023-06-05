@@ -1,5 +1,6 @@
 package com.unipd.semicolon.business.service.Imp;
 
+import com.unipd.semicolon.business.service.LocalTimeService;
 import com.unipd.semicolon.business.service.ReceiptService;
 import com.unipd.semicolon.business.service.ValidationService;
 import com.unipd.semicolon.core.entity.Drug;
@@ -10,12 +11,11 @@ import com.unipd.semicolon.core.repository.entity.DrugRepository;
 import com.unipd.semicolon.core.repository.entity.MaterialRepository;
 import com.unipd.semicolon.core.repository.entity.ReceiptRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -33,24 +33,26 @@ public class ReceiptServiceImp implements ReceiptService {
     @Autowired
     private ValidationService validationService;
 
+    @Autowired
+    private LocalTimeService localTimeService;
+
     @Override
     public Receipt save(List<Long> drugId,
-            List<Long> materialId,
-            String image,
-            Date date,
-            PaymentMethod paymentMethod) {
+                        List<Long> materialId,
+                        String image,
+                        PaymentMethod paymentMethod,
+                        Long totalAmount) {
         try {
-            validationService.validateDate(date, true);
             validationService.validatePaymentMethod(paymentMethod);
 
-            if(drugId != null) {
+            if (drugId != null) {
                 for (Long id : drugId) {
                     if (drugRepository.findById(id) == null) {
                         throw new EntityNotFoundException("Drug with ID " + id + " not found.");
                     }
                 }
             }
-            if(materialId!= null) {
+            if (materialId != null) {
                 for (Long id : materialId) {
                     if (materialRepository.findById(id) == null) {
                         throw new EntityNotFoundException("Material with ID " + id + " not found.");
@@ -60,12 +62,12 @@ public class ReceiptServiceImp implements ReceiptService {
 
             List<Drug> drugList = new ArrayList<>();
             List<Material> materialList = new ArrayList<>();
-            if(drugId!= null) {
+            if (drugId != null) {
                 for (Long id : drugId) {
                     drugList.add(drugRepository.findById(id).get());
                 }
             }
-            if(materialId!= null) {
+            if (materialId != null) {
                 for (Long id : materialId) {
                     materialList.add(materialRepository.findById(id).get());
                 }
@@ -79,9 +81,9 @@ public class ReceiptServiceImp implements ReceiptService {
             receipt.setReceiptDrugs(drugList);
             receipt.setReceiptMaterials(materialList);
             receipt.setImage(image);
-            receipt.setDate(date);
+            receipt.setDate(localTimeService.getLocalDate());
             receipt.setPaymentMethod(paymentMethod);
-
+            receipt.setTotalAmount(totalAmount);
             return receiptRepository.save(receipt);
 
         } catch (IllegalArgumentException e) {
@@ -95,13 +97,11 @@ public class ReceiptServiceImp implements ReceiptService {
 
     @Override
     public Boolean edit(Long id,
-            List<Long> drugId,
-            List<Long> materialId,
-            String image,
-            Date date,
-            PaymentMethod paymentMethod) {
+                        List<Long> drugId,
+                        List<Long> materialId,
+                        String image,
+                        PaymentMethod paymentMethod) {
         try {
-            validationService.validateDate(date, true);
             if (paymentMethod != null) {
                 validationService.validatePaymentMethod(paymentMethod);
             }
@@ -147,7 +147,7 @@ public class ReceiptServiceImp implements ReceiptService {
                 if (image != null) {
                     receipt.setImage(image);
                 }
-                receipt.setDate(date);
+                receipt.setDate(localTimeService.getLocalDate());
                 if (paymentMethod != null) {
                     receipt.setPaymentMethod(paymentMethod);
                 }
