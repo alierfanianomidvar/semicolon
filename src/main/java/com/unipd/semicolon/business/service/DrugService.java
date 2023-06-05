@@ -60,12 +60,12 @@ public interface DrugService {
             String shape,
             Gender gender) throws SQLException;
 
-    List<Drug> findDrugsByNameAndSupplierAndExpirationDateAndShapeAndAgeGroupAndCountryOFProduction(
+    List<Drug> findDrugsByNameAndSupplierAndExpirationDateAndShapeAndAgeGroupAndCountryOfProduction(
             String name,
             Supplier supplier,
             Date expirationDate,
             String shape,
             AgeGroup ageGroup,
-            Country countryOFProduction
+            Country countryOfProduction
     );
 }

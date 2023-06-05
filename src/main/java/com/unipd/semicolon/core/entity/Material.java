@@ -27,6 +27,7 @@ public class Material {
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "country_of_production")
     private Country countryOfProduction;
 

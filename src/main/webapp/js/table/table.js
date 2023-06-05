@@ -4,7 +4,7 @@ export const createTable = (tableId, columnNames, numRows, data, type = "default
     // Generate the table headers
     const tableHeaders = $(`<thead>`).appendTo($(`#${tableId}`));
     const headerRow = $(`<tr>`).appendTo(tableHeaders);
-    
+
     columnNames.forEach((columnName) => {
         $(`<td>`, { text: columnName }).appendTo(headerRow);
     });
@@ -28,7 +28,7 @@ export const createTable = (tableId, columnNames, numRows, data, type = "default
 
 
     // And make them fancy
-    $(`#${tableId}`).fancyTable({
+    let fancyTableA = $(`#${tableId}`).fancyTable({
         sortColumn: 1,
         pagination: true,
         perPage: 5,
