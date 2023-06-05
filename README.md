@@ -1128,8 +1128,8 @@ Her role encompassed various responsibilities, including creating the Entity Rel
 defining the attributes and methods of the Pharmacy entity, and developing the Receipt API. She was also responsible for
 creating the project document and fixing API issues, as well as adding validation checks to ensure system accuracy.
 Additionally, she contributed to the implementation of some methods in the User module.
-user list, table component, some part of modal component, profile page, receipt page and list and some part of error
-handling in the front side.
+Hamideh contributed to the front-end development by creating HTML, CSS, and JavaScript for a user list page, table
+component, parts of a modal component, profile page and receipt list and page and participating in error handling.
 
 #### `Ferdos Hajizadeh Chavari`
 
@@ -1160,7 +1160,7 @@ She contributed to the development of the front-end for the material page.
 #### `Ali Tahvildari`
 
 He had a diverse set of responsibilities, which included designing and implementing the order entity and
-fixing any related issues. He also collaborated with others to implement Swagger and design and imple- ment the
+fixing any related issues. He also collaborated with others to implement Swagger and design and imple-ment the
 wireframe for the system layout and contributed to the implementation of the material and user API methods, as well as
 some methods in the User module.
 For front side he developed, Order entity and implemented the Material module of the back-end system using Spring Boot,
