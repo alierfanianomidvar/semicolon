@@ -1,57 +1,31 @@
-// Get all drugs data
-import {createGenericTable} from "./table/table.js";
+import materialUrls from "./urls/materialUrls.js";
 import drugUrls from "./urls/drugUrls.js";
 
-let data,drug,material;
-const router = new Router();
+export function oninitial() {
+    const productList = document.getElementById('product-list');
 
-export const onInitial = async () => {
-    try {
-        drug = await router.createFetch(drugUrls.GET_ALL);
-        material = await router.createFetch(drugUrls.GET_ALL);
+    const router = new Router();
 
-        data = [
-            ...drug.map(item => ({ name: item.name, id : item.id ,type : "drug"})),
-            ...material.map(item => ({ name: item.name, id : item.id , type : "material"}))
-        ];
-        console.log("drug and material",data)
-        // populateTable(data);
+    router.createFetch(drugUrls.GET_ALL).then(data => {
+            console.log("drug", data);
+            data.forEach(drug => {
+                const option = document.createElement('option');
+                option.value = `${drug.id}|drug`;
+                option.text = drug.name;
+                productList.appendChild(option);
+            });
+        }
+    ).catch(error => console.error(error));
 
-
-        const selectElement = document.getElementById("product-list");
-
-        data.forEach(item => {
-            const option = document.createElement("option");
-            option.text = item.name;
-            selectElement.add(option);
-        });
-
-    } catch (e) {
-        console.log("Error: ", e);
-    }
-
+    router.createFetch(materialUrls.GET_ALL).then(data => {
+            console.log("material", data);
+            data.forEach(material => {
+                console.log("each", material)
+                const option = document.createElement('option');
+                option.value = `${material.id}|material`;
+                option.text = material.name;
+                productList.appendChild(option);
+            });
+        }
+    ).catch(error => console.error(error));
 }
-
-
-
-// Populate table with data
-// function populateTable() {
-//
-//     const tableData = data.map(obj => {
-//         const newObj = {
-//             Name: obj.name,
-//             Amount: obj.amount,
-//             Threshold: obj.threshold,
-//             Discount: obj.discount,
-//         };
-//         return newObj;
-//     });
-//     console.log(tableData)
-//     createGenericTable(
-//         "storage-list",
-//         ["Name", "Amount", "Threshold", "Discount"],
-//         tableData,
-//         null,
-//         "default"
-//     );
-// }

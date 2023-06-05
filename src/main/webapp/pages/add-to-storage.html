@@ -10,12 +10,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
-
+    <script type="module" src="../js/addToStorage.js"></script>
 </head>
 
 <body>
 <div class="container">
-    <h2 class="h2 mb-5 mt-4">Drugs</h2>
+    <h2 class="h2 mb-5 mt-4">Add Product</h2>
     <!-- Filters -->
     <form id="filterForm">
         <div class="form-row mb-4">
@@ -55,16 +55,25 @@
         <!-- Dynamically generate table using drug data -->
     </div>
     <div class="d-flex flex-wrap">
-        <button class="btn-custom-secondary outline-0 border-0 rounded p-2 my-1 col-md-2 col-12" id="cancel-btn">Cancel</button>
-        <button type="submit" class="btn btn-custom ml-auto p-2 my-1 col-md-2 col-12" id="add-btn">Add</button>
+        <button class="btn-custom-secondary outline-0 border-0 rounded p-2 my-1 col-md-2 col-12" id="cancel-btn">
+            Cancel
+        </button>
+        <button type="submit" class="btn btn-custom ml-auto p-2 my-1 col-md-2 col-12" id="add-storage-btn">Add</button>
     </div>
 </div>
-<script src="../js/addToStorage.js" type="module"></script>
 <script type="module">
-    import {onInitial} from "../js/addToStorage.js";
+    import storageUrls from "../js/urls/storageUrls.js";
     import {createGenericTable} from "../js/table/table.js";
+    import {oninitial} from "../js/addToStorage.js";
 
-    onInitial();
+    oninitial();
+
+    const drug = [];
+    const material = [];
+    let amount;
+    let threshold;
+    let discount;
+
 
     function redirectToPage() {
         const url = `index.html?`;
@@ -80,21 +89,65 @@
         });
     }
 
+    document.getElementById("add-storage-btn").addEventListener("click", function () {
+
+        const body = {
+            pharmacyId: 1,
+
+            materialId: material,
+            drugId: drug,
+            amount: amount,
+            threshold: threshold,
+            discount: discount
+        }
+
+        const token = localStorage.getItem("token");
+
+        console.log(body);
+        const router = new Router();
+        router.createFetch(storageUrls.ADD,
+            null,
+            null,
+            token,
+            body).then(
+            data => {
+                console.log("yes", data);
+            }
+        ).catch(er => {
+            console.log(er)
+        });
+
+    });
+
 
     document.getElementById("add-product-storage").addEventListener("click", function () {
-        event.preventDefault()
+        console.log("A")
 
         let selectValue = $("#product-list option:selected").text();
         console.log("name: ", selectValue)
         // alert(selectValue)
         let amountValue = document.getElementById("amount").value;
         console.log("amount: ", amountValue)
+        amount = amountValue;
         // alert(amountValue)
         let thresholdValue = document.getElementById("threshold").value;
         console.log("threshold: ", thresholdValue)
-        let discountValue = document.getElementById("discount").value;
-        console.log("discount: ", thresholdValue)
+        threshold = thresholdValue;
 
+        let discountValue = document.getElementById("discount").value;
+        console.log("discount: ", thresholdValue);
+        discount = discountValue;
+
+        const selectElement = document.getElementById('product-list');
+        const selectedValue = selectElement.value;
+        const [productId, pType] = selectedValue.split('|');
+        console.log("select value: ", selectedValue);
+
+        if (pType == "drug") {
+            drug.push(productId);
+        } else if (pType == "material") {
+            material.push(productId);
+        }
         // alert(thresholdValue)
 
         const receiptData = [];
@@ -109,14 +162,14 @@
 
         const elem = document.getElementById('storage-list');
         const newRow = document.querySelector('tr')
-        if(newRow) {
-            
+        if (newRow) {
+
         }
 
         // Re-render the table with the new data
         createGenericTable(
             "storage-list",
-            ["Name", "threshold", "amount","discount"],
+            ["Name", "threshold", "amount", "discount"],
             receiptData,
             null,
             "default"
