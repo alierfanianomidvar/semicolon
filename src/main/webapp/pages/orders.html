@@ -11,27 +11,27 @@
 <div class="container">
 
   <h2 class="h2 mt-2">Order</h2>
-  <div class="form-row mb-4">
-    <div class="form-inline">
+  <div class="form-row mb-3">
+    <div class="col-md-5 mb-3">
       <div class="dropdown-container0 dropdown">
-        <select class="form-control" id="seller">
-          <option value="">All</option>
-          <option value="SUPPLIER">SUPPLIER</option>
-        </select>
-      </div>
-
-      <div class="dropdown-container1 dropdown">
-        <select class="form-control" id="product">
-          <option value="" disabled selected>PRODUCT</option>
-          <option value="">All</option>
-          <option value="MATERIAL">MATERIAL</option>
-          <option value="DRUG">DRUG</option>
+        <select class="form-control" id="filterSupplier">
+          <option value="" disabled selected>SUPPLIER</option>
         </select>
       </div>
     </div>
-    <div class="buttons">
+    <div class="col-md-5 mb-3">
+      <div class="dropdown-container1 dropdown">
+        <select class="form-control" id="filterType">
+          <option value="" disabled selected>PRODUCT</option>
+          <option value="">All</option>
+          <option value="MATERIAL">Material</option>
+          <option value="DRUG">Drug</option>
+        </select>
+      </div>
+    </div>
+    <div class="buttons form-row mb-3">
 
-      <button class="custom-button2" onclick="location.href='#addOrder'">Add Order</button>
+      <button class="custom-button2 " onclick="location.href='#addOrder'">Add Order</button>
     </div>
   </div>
 
@@ -42,6 +42,10 @@
 
   </div>
 </div>
+<script type="module">
+  import {onInitial} from "../js/orders.js"
+  onInitial()
+</script>
 </body>
 </html>
 
