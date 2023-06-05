@@ -49,7 +49,15 @@ $(window).on('hashchange load', function () {
         case "user":
             endPoint = userUrls.GET_ALL;
             break;
+        case "order_report":
+            console.log("A")
+            endPoint = orderUrls.GET_ALL;
+            break;
+        case "receipt_report":
+            console.log("B")
+            endPoint = receiptUrls.GET_ALL;
         default:
+            console.log("Here!")
             endPoint = storageUrls.GET_ALL;
             break;
     }
