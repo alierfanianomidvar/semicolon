@@ -36,7 +36,7 @@ public class ReceiptServiceImp implements ReceiptService {
     @Override
     public Receipt save(List<Long> drugId,
             List<Long> materialId,
-            byte[] image,
+            String image,
             Date date,
             PaymentMethod paymentMethod) {
         try {
@@ -57,8 +57,6 @@ public class ReceiptServiceImp implements ReceiptService {
                     }
                 }
             }
-            int maxSize = 10 * 1024 * 1024; // maximum size of 10 MB
-            validationService.validateImage(image, maxSize);
 
             List<Drug> drugList = new ArrayList<>();
             List<Material> materialList = new ArrayList<>();
@@ -99,7 +97,7 @@ public class ReceiptServiceImp implements ReceiptService {
     public Boolean edit(Long id,
             List<Long> drugId,
             List<Long> materialId,
-            byte[] image,
+            String image,
             Date date,
             PaymentMethod paymentMethod) {
         try {

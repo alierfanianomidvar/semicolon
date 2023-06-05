@@ -13,6 +13,7 @@ public class OrderMapper {
         if ( orders != null) {
             for (Order order : orders) {
                 orderList.add(new OrderResponse(
+                        order.getId(),
                         order.getOrderDate(),
                         order.getStatus(),
                         order.getPrice(),
