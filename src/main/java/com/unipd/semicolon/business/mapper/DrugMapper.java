@@ -6,6 +6,7 @@ import com.unipd.semicolon.core.domain.DrugResponse;
 public class DrugMapper {
     public static DrugResponse drugResponse(Drug drug){
         return new DrugResponse(
+                drug.getId(),
                 drug.getName(),
                 drug.getSupplier(),
                 drug.getExpirationDate(),
@@ -18,7 +19,7 @@ public class DrugMapper {
                 drug.getDescription(),
                 drug.getLimitation(),
                 drug.getPrice(),
-                drug.getCountryOFProduction()
+                drug.getCountryOfProduction()
         );
     }
 }

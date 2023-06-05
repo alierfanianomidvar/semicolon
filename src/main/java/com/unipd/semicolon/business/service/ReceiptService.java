@@ -9,14 +9,14 @@ public interface ReceiptService {
 
     Receipt save(List<Long> drugId,
                  List<Long> materialId,
-                 byte[] image,
+                 String image,
                  Date date,
                  PaymentMethod paymentMethod);
 
     Boolean edit(Long id,
                  List<Long> drugId,
                  List<Long> materialId,
-                 byte[] image,
+                 String image,
                  Date date,
                  PaymentMethod paymentMethod);
 

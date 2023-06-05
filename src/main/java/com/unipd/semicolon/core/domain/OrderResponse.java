@@ -17,6 +17,7 @@ public class OrderResponse {
     private boolean isActive;
 
     public OrderResponse(
+            Long id,
             LocalDate orderDate,
             OrderStatus status,
             float price,

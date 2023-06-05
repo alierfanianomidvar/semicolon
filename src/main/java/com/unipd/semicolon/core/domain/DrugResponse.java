@@ -33,6 +33,7 @@ public class DrugResponse {
     private List<Receipt> receipts;
 
     public DrugResponse(
+            Long id,
             String name,
             Supplier supplier,
             Date expirationDate,
@@ -46,6 +47,7 @@ public class DrugResponse {
             int limitation,
             float price,
             Country countryOFProduction) {
+        this.id = id;
         this.name = name;
         this.supplier = supplier;
         this.expirationDate = expirationDate;

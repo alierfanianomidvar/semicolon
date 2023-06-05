@@ -5,6 +5,7 @@ import materialUrls from "./urls/materialUrls.js";
 import orderUrls from "./urls/orderUrls.js";
 import supplierUrls from "./urls/supplierUrls.js";
 import userUrls from "./urls/userUrls.js";
+import { getPageTitle } from "./utils.js"
 
 
 //routing
@@ -13,8 +14,9 @@ $(window).on('hashchange load', function () {
 
     localStorage.removeItem('getData'); // removing all dats before finding the new Data.
 
-    document.title = window.location.hash;
     const route = location.hash.replace("#", "").split("/")[0];
+    document.title = getPageTitle();
+
 
     let endPoint = null;
     const router = new Router();
@@ -45,23 +47,30 @@ $(window).on('hashchange load', function () {
             endPoint = receiptUrls.GET_BY_ID;
             break;
         case "user":
-            endPoint = userUrls.GET_BY_ID;
+            endPoint = userUrls.GET_ALL;
             break;
+        case "order_report":
+            console.log("A")
+            endPoint = orderUrls.GET_ALL;
+            break;
+        case "receipt_report":
+            console.log("B")
+            endPoint = receiptUrls.GET_ALL;
         default:
-            // endPoint = storageUrls.GET_ALL;
+            endPoint = storageUrls.GET_ALL;
             break;
     }
 
-    // const fetch = router.createFetch(endPoint);
-    // fetch.then(data => {
-    //     localStorage.setItem('getData', JSON.stringify(data));
-    //     // Do something with the data here
-    // }).catch(error => {
-    //     console.log("Error fetching data:", error);
-    // });
+    const fetch = router.createFetch(endPoint);
+    fetch.then(data => {
+        localStorage.setItem('getData', JSON.stringify(data));
+        // Do something with the data here
+    }).catch(error => {
+        console.log("Error fetching data:", error);
+    });
 
     // Skip if no page is selected
-    // if (!route || route === "") return;
+    if (!route || route === "") return;
 
     const url = `${route}.html?`;
     $("#main-content").load(url, function (response, status, xhr) {

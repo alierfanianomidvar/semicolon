@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 public class UserResponse {
+
+    private Long id;
     private String name;
     private String lastName;
     private Gender gender;
@@ -19,10 +21,14 @@ public class UserResponse {
     private String email;
     private String accountStatus;
 
+    private String profileImage;
+
 
     public UserResponse() {
     }
+
     public UserResponse(
+            Long id,
             String name,
             String lastName,
             Gender gender,
@@ -31,7 +37,9 @@ public class UserResponse {
             String address,
             Role role,
             String email,
-            String accountStatus) {
+            String accountStatus,
+            String profileImage) {
+        this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.gender = gender;
@@ -41,6 +49,15 @@ public class UserResponse {
         this.role = role;
         this.email = email;
         this.accountStatus = accountStatus;
+        this.profileImage = profileImage;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -91,13 +108,6 @@ public class UserResponse {
         this.email = email;
     }
 
-    public String getlastName() {
-        return lastName;
-    }
-
-    public void setlastName(String lastName) {
-        this.lastName = lastName;
-    }
 
     public LocalDateTime getBirthday() {
         return birthDate;
@@ -121,5 +131,21 @@ public class UserResponse {
 
     public void setAccountStatus(String accountStatus) {
         this.accountStatus = accountStatus;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
     }
 }
