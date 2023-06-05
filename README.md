@@ -1119,9 +1119,9 @@ defining the attributes and methods of the Pharmacy entity, and developing the R
 creating the project document and fixing API issues, as well as adding validation checks to ensure system accuracy.
 Additionally, she contributed to the implementation of some methods in the User module.
 
-#### `Ferdos Hajizadeh`
+#### `Ferdos Hajizadeh Chavari`
 
-Chavari Her role encompassed various tasks, such as implementing and designing the material entity and
+Her role encompassed various tasks, such as implementing and designing the material entity and
 repository, developing the drug API, and implementing the payment method. Additionally, she was responsible for editing
 the project document to ensure system accuracy.
 
@@ -1144,3 +1144,8 @@ He had a diverse set of responsibilities, which included designing and implement
 fixing any related issues. He also collaborated with others to implement Swagger and design and imple- ment the
 wireframe for the system layout and contributed to the implementation of the material and user API methods, as well as
 some methods in the User module.
+
+### `Mohammad Torabi`
+As part of his responsibilities, he created the Receipt entity and implemented the Storage module of the back-end system
+using Spring Boot. To achieve this, he had to design and implement the API, repository, and service layers for the Storage entity. 
+In addition, he contributed to the implementation of some methods in the User and Receipt modules and edited the project documentation.
