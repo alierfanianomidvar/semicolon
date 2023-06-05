@@ -13,6 +13,7 @@
         }
         document.getElementById("user-name").textContent = JSON.parse(localStorage.getItem("userData")).name
         document.getElementById("role").textContent = JSON.parse(localStorage.getItem("userData")).role.role
+        document.getElementById("profile-pic").src = JSON.parse(localStorage.getItem("userData")).profilePicture ?? "../images/users.svg"
     </script>
 </head>
 <body>
@@ -26,8 +27,7 @@
             <h3>Semicolon</h3>
         </div>
         <div class="profile-container">
-            <img src="../images/users.svg" alt="Profile Picture">
-
+            <img id="profile-pic" alt="Profile Picture">
             <div id="user-info" class="user-info">
                 <h5 id="user-name">John Doe</h5>
                 <p id="role">Web Developer</p>
