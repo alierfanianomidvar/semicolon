@@ -1,13 +1,15 @@
-import drugUrls from './urls/drugUrls.js';
+import materialUrls from './urls/materialUrls.js';
 import {createGenericTable} from "./table/table.js";
 
-// Get all drugs data
+// Get all materials data
 let data;
 const router = new Router();
 
+
 export const onInitial = async () => {
     try {
-        data = await router.createFetch(drugUrls.GET_ALL);
+        data = await router.createFetch(materialUrls.GET_ALL);
+        console.log(data)
         populateTable(data);
     } catch (e) {
         console.log("Error: ", e);
@@ -17,21 +19,21 @@ export const onInitial = async () => {
 
 // Populate table with data
 function populateTable(data) {
-
     const tableData = data.map(obj => {
         const newObj = {
             Name: obj.name,
             "Age Group": obj.ageGroup,
-            Sensivity: obj.sensitive ? "Sensitive" : "Not Sensitive",
+            Supplier: obj.supplier.name,
+            Gender: obj.gender,
             Price: obj.price,
-            Limitation: obj.limitation
+            "Country of Production": obj.countryOfProduction
         };
         return newObj;
     });
-    console.log(tableData)
+
     createGenericTable(
-        "drug-list",
-        ["Name", "Age Group", "Sensivity", "Price", "Limitation"],
+        "material-list",
+        ["Name", "Age Group", "Supplier", "Gender", "Price", "Country of Production"],
         tableData,
     );
 }
@@ -40,23 +42,22 @@ function populateTable(data) {
 const filterForm = document.getElementById('filterForm');
 filterForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    const sensitivityFilter = document.getElementById('filterSensitivity').value;
     const ageFilter = document.getElementById('filterAge').value;
+    const genderFilter = document.getElementById('filterGender').value;
 
-    let filteredData = data.filter((drug) => {
+    let filteredData = data.filter((material) => {
         let pass = true;
 
-        if (ageFilter !== '' && drug.ageGroup !== ageFilter) {
+        if (ageFilter !== '' && material.ageGroup !== ageFilter) {
             pass = false;
         }
-        if (sensitivityFilter !== '' && drug.sensitive !== (sensitivityFilter == 'true')) {
+        if (genderFilter !== '' && material.gender !== genderFilter) {
             pass = false;
         }
 
         return pass;
     });
-
-    const elem = document.getElementById('drug-list');
+    const elem = document.getElementById('material-list');
     elem.remove();
     populateTable(filteredData);
 });
