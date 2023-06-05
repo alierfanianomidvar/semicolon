@@ -57,7 +57,6 @@ $(window).on('hashchange load', function () {
             console.log("B")
             endPoint = receiptUrls.GET_ALL;
         default:
-            console.log("Here!")
             endPoint = storageUrls.GET_ALL;
             break;
     }
@@ -81,8 +80,6 @@ $(window).on('hashchange load', function () {
             console.log("Error loading content: " + xhr.status + " " + xhr.statusText);
         }
     });
-
-    
 });
 
 
