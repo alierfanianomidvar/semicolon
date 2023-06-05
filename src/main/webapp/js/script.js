@@ -48,20 +48,20 @@ $(window).on('hashchange load', function () {
             endPoint = userUrls.GET_ALL;
             break;
         default:
-            endPoint = storageUrls.GET_ALL;
+            // endPoint = storageUrls.GET_ALL;
             break;
     }
 
-    const fetch = router.createFetch(endPoint);
-    fetch.then(data => {
-        localStorage.setItem('getData', JSON.stringify(data));
-        // Do something with the data here
-    }).catch(error => {
-        console.log("Error fetching data:", error);
-    });
+    // const fetch = router.createFetch(endPoint);
+    // fetch.then(data => {
+    //     localStorage.setItem('getData', JSON.stringify(data));
+    //     // Do something with the data here
+    // }).catch(error => {
+    //     console.log("Error fetching data:", error);
+    // });
 
     // Skip if no page is selected
-    if (!route || route === "") return;
+    // if (!route || route === "") return;
 
     const url = `addOrder.html?`;
     //const url = `${route}.html?`;
