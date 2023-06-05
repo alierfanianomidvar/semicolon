@@ -13,10 +13,14 @@ public final class SupplierListDao extends AbstractDAO<List<Supplier>> {
 
     private Boolean flag;
 
-    public SupplierListDao(Connection con, Boolean flag) {
+    private String email;
 
+    public SupplierListDao(Connection con,
+                           Boolean flag,
+                           String email) {
         super(con);
         this.flag = flag;
+        this.email = email;
     }
 
 
@@ -37,6 +41,7 @@ public final class SupplierListDao extends AbstractDAO<List<Supplier>> {
                 pstmt = con.prepareStatement(SELECT_ALL);
             } else {
                 pstmt = con.prepareStatement(FIND_BY_EMAIL);
+                pstmt.setString(1, email);
             }
 
             rs = pstmt.executeQuery();

@@ -23,7 +23,6 @@ public class SupplierCreateDao extends AbstractDAO<List<Supplier>> {
 
     }
 
-
     @Override
     protected void doAccess() throws Exception {
 
@@ -39,8 +38,8 @@ public class SupplierCreateDao extends AbstractDAO<List<Supplier>> {
             pstmt.setString(3, supplier.getTelephoneNumber());
             pstmt.setString(4, supplier.getEmail());
 
-            pstmt.execute();
-            LOGGER.info("Supplier %d successfully stored.", supplier.getName());
+            pstmt.executeUpdate();
+            LOGGER.info("Supplier %d successfully stored.", supplier.getName().toString());
         } finally {
             if (pstmt != null) {
                 pstmt.close();
