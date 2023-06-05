@@ -94,7 +94,7 @@ export const createButtonsAndText = (createButtons = false,
                                      acceptBtn = "",
                                      onCancel = () => {},
                                      onAccept = () => {}
-                                     ) => {
+) => {
     // Create a div to contain the buttons and/or text elements
     const container = $("<div>", {
         class: "bottom-container",
@@ -220,5 +220,3 @@ export function createGenericTable(genericTableId,genericColumnNames, tableData,
         $(".border").append(bottomContainer);
     }
 }
-
-

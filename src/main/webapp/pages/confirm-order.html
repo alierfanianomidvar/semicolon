@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Order Form</title>
+  <link rel="stylesheet" href="../css/confirm-order.css">
+  <script src="../js/confirm-order.js"></script>
+</head>
+<body>
+<div>
+  <div class="container">
+    <p>Are you sure to submit your order?</p>
+
+    <div class="card">
+      <p>Price: <span id="price"></span></p>
+      <p>Tax (%): <span id="tax"></span></p>
+      <p>Discount (%): <span id="discount"></span></p>
+    </div>
+
+    <hr class="line">
+    <p> <b>Total price:</b> <span id="total-price"></span></p>
+
+    <div class="button-container">
+      <button onclick="hidePopup()">Cancel</button>
+      <button id="submit-order-btn" onclick="alert('Order submitted')">Submit Order</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>

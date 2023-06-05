@@ -1,0 +1,60 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Order</title>
+    <link rel="stylesheet" href="../css/addOrder.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <h5 class="h5 mb-5 mt-4">Add Order</h5>
+    <form id="filterForm">
+    <div class="form-row justify-content-between">
+        <div class="col-md-5 mb-3">
+            <div class="dropdown-container0 dropdown">
+                <select class="form-control" id="filterSupplier">
+                    <option value="" disabled selected>SUPPLIER</option>
+                    <option value="">All</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-5 mb-3">
+            <div class="dropdown-container1 dropdown">
+                <select class="form-control" id="filterType">
+                    <option value="" disabled selected>PRODUCT</option>
+                    <option value="">All</option>
+                    <option value="material">Material</option>
+                    <option value="drug">Drug</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-2 mb-3">
+            <button class="btn btn-custom w-100" id="filter-button" type="submit">Filter</button>
+        </div>
+    </div>
+
+    <div id='tbl' class="border rounded-xl bg-white">
+        <!-- Dynamically generate table using drug data -->
+
+    </div>
+
+    </form>
+</div>
+
+<script type="module" src="../js/addOrder.js"></script>
+<script type="module" src="../js/table/fancyTable.js"></script>
+<script type="module">
+    import {onInitial, supplierOption} from "../js/addOrder.js";
+    onInitial()
+    supplierOption()
+
+</script>
+</body>
+</html>
