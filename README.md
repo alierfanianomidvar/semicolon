@@ -1093,10 +1093,15 @@ member’s responsibilities is provided.
 #### `Reihaneh Baghishani`
 
 She created Sequence Diagrams and built entities like Drug for the project. She imple-mented
-servlets, JSPs, and RESTful APIs using Spring Boot framework, designed DAO and service layers, and created filters to
+servlets, JSPs, and RESTFul APIs using Spring Boot framework, designed DAO and service layers, and created filters to
 enhance the functionality of Drugs and Materials modules. Additionally, she contributed to exception handling,
 documented APIs, modified the designs to conform to RESTful API standards, and helped implement certain methods for the
 Drug and Material entities.
+She created an "add-user" HTML page with JavaScript code for form submission and data storage, developed a "list-drug"
+HTML page that fetches drug data via AJAX and populates the table dynamically, implemented an "edit-user" HTML page for
+updating user information on the server, implemented a "list-material" HTML page that fetches material data via AJAX and
+renders it dynamically, improved list-storage functionality by optimizing data retrieval and manipulation operations,
+and integrated a routing system for smooth navigation between pages.
 
 #### `Ali Erfanian Omidvar`
 
@@ -1105,12 +1110,17 @@ response helper for APIs. Additionally, he was responsible for fixing any issues
 entities and creating a security service for the system. He also contributed to refactoring the order entity, service,
 and repository and created a log service to ensure system accuracy. Finally, he reviewed the merge request on git and
 refactored the URLs.
+He defined the system structure for front and created a router system he also develops the jsp side of front, and fix
+some
+problem in front-end side like sending image to backend, sending data to other pages, Fix image size for add / edit
+user and backend-side also he helps other team-members.
 
 #### `Irem Goksu Celik`
 
 In her role, she was responsible for implementing the supplier and login entity and repository.
 Additionally, she developed the order CRUD API and prepared the class diagram. She also contributed to the
 implementation of storage reports for the system.
+She contributed to the development of the front-end for the storage list page and add order page.
 
 #### `Hamideh Haeri`
 
@@ -1118,12 +1128,16 @@ Her role encompassed various responsibilities, including creating the Entity Rel
 defining the attributes and methods of the Pharmacy entity, and developing the Receipt API. She was also responsible for
 creating the project document and fixing API issues, as well as adding validation checks to ensure system accuracy.
 Additionally, she contributed to the implementation of some methods in the User module.
+user list, table component, some part of modal component, profile page, receipt page and list and some part of error
+handling in the front side.
 
 #### `Ferdos Hajizadeh Chavari`
 
 Her role encompassed various tasks, such as implementing and designing the material entity and
 repository, developing the drug API, and implementing the payment method. Additionally, she was responsible for editing
 the project document to ensure system accuracy.
+Her duty in the front part was to prepare order pages , consist of html,js and css file and receipt reports. Also, She
+contributed in preparing slides
 
 #### `Hossein Hosseinpour`
 
@@ -1131,12 +1145,17 @@ As part of his role, he was responsible for defining the attributes and methods 
 entity and developing the Pharmacy API. He also created the sequence diagram for the Pharmacy save API and was
 responsible for fixing any related API issues and adding validation checks to the system. Additionally, he contributed
 to the implementation of some methods in the User module.
+He made significant contributions to the front-end development, including error handling, sidebar design, table
+component, and list item components. He played a key role in enhancing the front-end functionality of the order and
+receipt reports. He also provided valuable assistance to other team members in front-end development tasks.
+Additionally, he demonstrated his expertise by reviewing Git pull requests related to the front-end code
 
 #### `Gulce Sirvanci`
 
 She had multiple responsibilities, including implementing the user entity and repository, supplier
 repository, and supplier CRUD API. Furthermore, she was responsible for the implementation of storage reports for the
 amount of each drug and material, as well as the threshold parameters.
+She contributed to the development of the front-end for the material page.
 
 #### `Ali Tahvildari`
 
@@ -1144,8 +1163,17 @@ He had a diverse set of responsibilities, which included designing and implement
 fixing any related issues. He also collaborated with others to implement Swagger and design and imple- ment the
 wireframe for the system layout and contributed to the implementation of the material and user API methods, as well as
 some methods in the User module.
+For front side he developed, Order entity and implemented the Material module of the back-end system using Spring Boot,
+designing and implementing
+API, repository, and service layers. He also contributed to the implementation of methods in the Drug, Material, and
+Storage modules for front-end.
 
-### `Mohammad Torabi`
+#### `Mohammad Torabi`
+
 As part of his responsibilities, he created the Receipt entity and implemented the Storage module of the back-end system
-using Spring Boot. To achieve this, he had to design and implement the API, repository, and service layers for the Storage entity. 
-In addition, he contributed to the implementation of some methods in the User and Receipt modules and edited the project documentation.
+using Spring Boot. To achieve this, he had to design and implement the API, repository, and service layers for the
+Storage entity.
+In addition, he contributed to the implementation of some methods in the User and Receipt modules and edited the project
+documentation.
+He created the HTML, CSS, and JavaScript code for the login page, designed the HTML and CSS for the order report page,
+and assisted in implementing JavaScript for the order report. Additionally, he prepared the presentation slides.
