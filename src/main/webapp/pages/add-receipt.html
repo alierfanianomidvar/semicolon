@@ -1,18 +1,4 @@
-<!DOCTYPE>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Pharmacy</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
-    <script type="module" src="../js/addReceipt.js"></script>
-    <script src="../js/table/table.js" type="module"></script>
 
-</head>
-<body>
 <div class="container">
     <h5 class="h5 mb-5 mt-4">Add Receipt</h5>
     <form class="card rounded-xl" id="product-form">
@@ -29,8 +15,8 @@
             <div class="row g-3">
                 <div class="col-md-4">
                     <div class="form-group h-100">
-                        <label for="Payment_Method">Payment Method:</label>
-                        <select class="form-control h-40" id="Payment_method">
+                        <label for="payment_method">Payment Method:</label>
+                        <select class="form-control h-40" id="payment_method">
                             <option value="CASH">cash</option>
                             <option value="DEBIT_CARD">Debit card</option>
                             <option value="CREDIT_CARD">Credit card</option>
@@ -52,7 +38,7 @@
                 <div class="col-md-2">
                     <div class="form-group h-100">
                         <label for="d_amount">Amount:</label>
-                        <input type="number" class="form-control h-50" id="d_amount">
+                        <input type="number" class="form-control h-50" id="d_amount" min="0">
                     </div>
                 </div>
                 <div class="col-md-2 d-flex align-items-end">
@@ -72,7 +58,7 @@
                 <div class="col-md-2">
                     <div class="form-group h-100">
                         <label for="amount">Amount:</label>
-                        <input type="number" class="form-control h-50" id="amount">
+                        <input type="number" class="form-control h-50" id="amount" min="0">
                     </div>
                 </div>
                 <div class="col-md-2 d-flex align-items-end">
@@ -108,17 +94,22 @@
     const material = [];
     let totalAmount = 0;
 
-    const pay = document.getElementById('payment_method');
-    const payment_method = pay.value;
+    // Form submittion
+    document.getElementById("product-form").addEventListener("submit", function (event) {
+        event.preventDefault();
 
-    document.getElementById("final-add").addEventListener("click", function () {
+        const payment_method = document.getElementById('payment_method').value;
+        const avatar = document.getElementById("rPicture").value;
+
         console.log("drug list:", drug);
         console.log("material List : ", material);
         console.log("total amount : ", totalAmount);
         console.log("payment_method : ", payment_method);
+
+
     });
 
-    document.getElementById("rPicture").addEventListener("click", function (){
+    document.getElementById("rPicture").addEventListener("change", function (){
         console.log("ali");
         const fileInput = event.target;
         const avatarPreview = document.getElementById("add-r-preview");
@@ -240,6 +231,3 @@
 
 
 </script>
-
-</body>
-</html>
