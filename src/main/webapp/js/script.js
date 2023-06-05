@@ -5,6 +5,7 @@ import materialUrls from "./urls/materialUrls.js";
 import orderUrls from "./urls/orderUrls.js";
 import supplierUrls from "./urls/supplierUrls.js";
 import userUrls from "./urls/userUrls.js";
+import { getPageTitle } from "./utils.js"
 
 
 //routing
@@ -13,8 +14,9 @@ $(window).on('hashchange load', function () {
 
     localStorage.removeItem('getData'); // removing all dats before finding the new Data.
 
-    document.title = window.location.hash;
     const route = location.hash.replace("#", "").split("/")[0];
+    document.title = getPageTitle();
+
 
     let endPoint = null;
     const router = new Router();
