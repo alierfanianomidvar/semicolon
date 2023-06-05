@@ -10,7 +10,7 @@ export const onInitial = () => {
     const userData = [{
         Id: 1,
         Name: "Ali",
-        LastName: "Mahdavi",
+        "Last Name": "Mahdavi",
         Role: "Admin",
         Address: "via romana",
         Status: "Active",
@@ -18,7 +18,7 @@ export const onInitial = () => {
     },{
         Id: 2,
         Name: "Abi",
-        LastName: "mor",
+        "Last Name": "mor",
         Role: "Staff",
         Address: "via romana",
         Status: "Active",
@@ -26,7 +26,7 @@ export const onInitial = () => {
     },{
         Id: 3,
         Name: "Alex",
-        LastName: "pegi",
+        "Last Name": "pegi",
         Role: "Admin",
         Address: "via romana",
         Status: "Active",
@@ -40,9 +40,10 @@ export const onInitial = () => {
             onCancel: () => {},
             submit: "Submit",
             onSubmit: () => {}
-        },
+        }
+        ,
         text: {
-            active: true,
+            active: false,
             left: "Total: 5$",
             center: "WhatEver!"
         }
@@ -53,7 +54,8 @@ export const onInitial = () => {
         "user_list",
         ["","Name", "Last Name", "Role", "Address", "Status"],
         userData,
-        footerContent
+        footerContent,
+        'user'
         );
-    
+
 };
