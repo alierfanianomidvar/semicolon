@@ -1,6 +1,8 @@
 import supplierUrls from "./urls/supplierUrls.js";
 import {createGenericTable} from "./table/table.js";
 import orderUrls from "./urls/orderUrls.js";
+import drugUrls from "./urls/drugUrls.js";
+import materialUrls from "./urls/materialUrls.js";
 
 let data;
 const router = new Router();
@@ -24,14 +26,14 @@ function populateTable(data) {
             Name: obj.name, //isOrder ? obj.drug.name : obj.material.name,
             Price: obj.price, //isOrder ? obj.drug.price : obj.material.price,
             IsActive: isOrder ? "Active" : "Not Active",
-            Amount: obj.amount
+            Quantity: obj.quantity
         };
         return newObj;
     });
     console.log(tableData)
     createGenericTable(
         "order-list",
-        ["Name", "Price", "IsActive", "Amount"],
+        ["Name", "Price", "IsActive", "Quantity"],
         tableData,
     );
 }
