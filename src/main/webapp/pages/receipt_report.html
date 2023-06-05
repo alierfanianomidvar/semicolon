@@ -1,7 +1,7 @@
+<link rel="stylesheet" href="../css/receipt_report.css">
 <style>
   .table td:first-child{width: 5px!important;;}
 </style>
-<link rel="stylesheet" href="../css/receipt_report.css">
 <div class="container">
 
   <h2 class="h2 mb-5 mt-4">Report</h2>
@@ -26,6 +26,7 @@
 <script src="../js/receipt_report.js" type="module"></script>
 <script type="module">
   import { onInitial } from "../js/receipt_report.js"
+  import "../js/table/fancyTable.js"
   onInitial()
   $("#selectionA").change(function() {
     const selectedOption = $(this).val();

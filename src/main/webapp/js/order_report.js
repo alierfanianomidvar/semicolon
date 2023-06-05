@@ -3,7 +3,7 @@ import orderUrls from "./urls/orderUrls.js";
 
 // const router = new Router();
 export const onInitial = () => {
-
+    console.log("AA")
     // let orderData;
     // try{
     //     orderData = await router.createFetch(orderUrls.GET_ALL);
@@ -54,7 +54,7 @@ export const onInitial = () => {
     // showModal('Order', "Are you sure to submit your order?", 'Order_submit', orderData, "Total Price: 20$")
     createGenericTable(
         "order_report",
-        ["","id", "price", "status", "date"],
+        ["id", "price", "status", "date"],
         orderData,
         null,
         "default"

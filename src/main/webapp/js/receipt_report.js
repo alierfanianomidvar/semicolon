@@ -1,7 +1,6 @@
 import {createGenericTable} from "./table/table.js";
-
 export const onInitial = () => {
-    console.log("here");
+    console.log("BB");
     const orderData = [{
         id:1,
         price: "$13000",
@@ -36,9 +35,11 @@ export const onInitial = () => {
 
     // showModal('Order', "Are you sure to submit your order?", 'Order_submit', orderData, "Total Price: 20$")
     createGenericTable(
-        "order_report",
-        ["","id", "price", "status", "date"],
+        "receipt_report",
+        ["orderId", "price", "Payment Method", "date"],
         orderData,
+        null,
+        "default"
     );
 
 };
