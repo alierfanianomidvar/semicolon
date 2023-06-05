@@ -5,81 +5,115 @@ import com.unipd.semicolon.business.exception.PharmacyExistsException;
 import com.unipd.semicolon.business.service.Imp.SupplierServiceImp;
 import com.unipd.semicolon.business.service.SupplierService;
 import com.unipd.semicolon.core.entity.Supplier;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 import org.apache.logging.log4j.core.util.IOUtils;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.apache.logging.log4j.message.StringFormattedMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.awt.datatransfer.MimeTypeParseException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
+import java.util.Collection;
 
 @WebServlet(urlPatterns = "/supplier", loadOnStartup = 1)
 public class SupplierCreateServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
+    @Autowired
     private SupplierService supplierService;
 
-    public void init() {
-        supplierService = new SupplierServiceImp();
-    }
-
-    public void doPost(HttpServletRequest req, HttpServletResponse res)
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        Message m = null;
-        Supplier supplier = null;
-        // request parameter
-        String name = null;
-        String address = null;
-        String email = null;
-        String telephoneNumber = null;
-        //TODO: token is something that is passed through request header
-        // user need to access it propely. the token defiend below is just for removing the errors
-        // it is incorrect to use the token like this
-        String token = "";
-
-
-        String jsonString = IOUtils.toString(req.getReader());
-        JSONObject jo = null;
-        try {
-            jo = new JSONObject(jsonString);
-            // model
-            // retrieves the request parameter
-            name = String.valueOf(jo.getString("name"));
-            address = String.valueOf(jo.getString("address"));
-            email = String.valueOf(jo.getString("email"));
-            telephoneNumber = String.valueOf(jo.getString("telephoneNumber"));
-            supplier = supplierService.create(name, address, email, telephoneNumber, token);
-        } catch (JSONException ex) {
-//            throw new CreatePharmacyDataNotFound();
-            m = new Message("Cannot create the employee data. The provided data not correct.",
-                    "E100", ex.getMessage());
-        } catch (PharmacyExistsException ex) {
-            m = new Message(String.format("Cannot create the Supplier: another supplier with the same email already exists.\n Email: %s", email),
-                    "E300", ex.getMessage());
-        } catch (SQLException ex) {
-            if ("23505".equals(ex.getSQLState())) {
-                m = new Message(String.format("Cannot create the Supplier: another supplier with the same email already exists.\n Email: %s", email),
-                        "E300", ex.getMessage());
-            } else {
-                m = new Message("Cannot create the Supplier: unexpected error while accessing the database.", "E200",
-                        ex.getMessage());
-
-            }
-        }
-
-        try {
-            req.setAttribute("message", m);
-            req.setAttribute("supplier", supplier);
-            req.getRequestDispatcher("/WEB-INF/jsp/createSupplierResult.jsp").forward(req, res);
-        } catch (Exception ex) {
-            throw ex;
-        }
-
+        // Forward the request to the JSP file
+        request.getRequestDispatcher("/WEB-INF/jsp/createSupplierResult.jsp")
+                .forward(request, response);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+
+        // model
+        Supplier e = null;
+        Message m = null;
+
+        e = parseRequest(req);
+
+        try {
+            supplierService.create(e.getName(), e.getAddress(), e.getEmail(), e.getTelephoneNumber(), "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiUm9sZSI6InVzZXIiLCJpYXQiOjE2ODI2MzczMDcsImV4cCI6MTcxODYzNzMwN30.OCsiF_pXCHjhZMTfkyTn7sNDnzVP5qUeDV8M3UavmVo");
+
+            m = new Message(String.format("Supplier %d successfully created.",
+                    1));
+
+            req.setAttribute("supplier", e);
+            req.setAttribute("message", m);
+
+            // forwards the control to the create-employee-result JSP
+            String message = "Supplier data saved successfully.";
+
+            // Set the message as a response attribute
+            res.setHeader("supplier-message", message);
+
+            // Generate a JavaScript script that displays the message in a popup dialog
+            String script = "<script>" +
+                    "alert('" + message + "');" +
+                    "setTimeout(function() {" +
+                    "  window.location.href = 'http://localhost:8081/suppliers';" +
+                    "}, 2000);" +
+                    "</script>";
+
+            // Write the script to the response
+            res.setContentType("text/html");
+            PrintWriter out = res.getWriter();
+            out.println(script);
+        } catch (PharmacyExistsException ex) {
+            String message = "Supplier exists";
+
+            // Set the message as a response attribute
+            res.setHeader("supplier-message", message);
+
+            String script = "<script>" +
+                    "alert('" + message + "');" +
+                    "setTimeout(function() {" +
+                    "  window.location.href = 'http://localhost:8081/supplier';" +
+                    "}, 2000);" +
+                    "</script>";
+
+            // Write the script to the response
+            res.setContentType("text/html");
+            PrintWriter out = res.getWriter();
+            out.println(script);
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException exc) {
+                throw new RuntimeException(exc);
+            }
+           // req.getRequestDispatcher("/WEB-INF/jsp/createSupplierResult.jsp").forward(req, res);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    private Supplier parseRequest(HttpServletRequest req) {
+
+        // request parameters
+        String name = req.getParameter("supplierName");
+        String address = req.getParameter("supplierAddress");
+        String email = req.getParameter("supplierEmail");
+        String telephoneNumber = req.getParameter("supplierTelephoneNumber");
+
+        return new Supplier(name, address, email, telephoneNumber);
+    }
+
 
 }

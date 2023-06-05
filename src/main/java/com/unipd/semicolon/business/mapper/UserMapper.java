@@ -16,6 +16,7 @@ public class UserMapper {
 
     public static UserResponse userResponse(User user) {
         return new UserResponse(
+                user.getId(),
                 user.getName(),
                 user.getLastName(),
                 user.getGender(),
@@ -23,7 +24,9 @@ public class UserMapper {
                 user.getPhoneNumber(),
                 user.getAddress(),
                 user.getRole(),
-                user.getEmail()
+                user.getEmail(),
+                user.getAccountStatus(),
+                user.getProfilePicture()
         );
     }
 }

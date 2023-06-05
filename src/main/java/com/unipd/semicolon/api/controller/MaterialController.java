@@ -43,7 +43,8 @@ public class MaterialController {
     }
 
     @RequestMapping(value = "/material/{id}", method = RequestMethod.PUT)
-    public ResponseEntity edit(@PathVariable("id") Long id, @RequestBody MaterialModel model) throws SQLException {
+    public ResponseEntity edit(@PathVariable("id") Long id,
+                               @RequestBody MaterialModel model) throws SQLException {
 
         return ResponseHelper
                 .response(materialService.edit(

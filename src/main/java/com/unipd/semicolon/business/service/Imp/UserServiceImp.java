@@ -60,7 +60,7 @@ public class UserServiceImp implements UserService {
                       Role role,
                       String email,
                       String accountStatus,
-                      byte[] profilePicture,
+                      String profilePicture,
                       String token
     ) {
         String roleFromToken = securityService.getRoleFromToken(token);
@@ -71,7 +71,7 @@ public class UserServiceImp implements UserService {
 
                 if (validationService.validateEmail(email)
                         && validationService.validateTelephoneNumber(phoneNumber) &&
-                        validationService.validateBirthDate(birthDate) && validationService.validateImage(profilePicture, 2048) &&
+                        validationService.validateBirthDate(birthDate) &&
                         validationService.validateGender(gender)
 
                 ) {
@@ -115,7 +115,7 @@ public class UserServiceImp implements UserService {
                         Role role,
                         String email,
                         String accountStatus,
-                        byte[] profilePicture,
+                        String profilePicture,
                         String token
     ) {
         String roleFromToken = securityService.getRoleFromToken(token);
@@ -218,16 +218,7 @@ public class UserServiceImp implements UserService {
     public UserResponse getById(Long id) {
         User user = userRepository.findUserById(id);
         if (user != null) {
-            return new UserResponse(
-                    user.getName(),
-                    user.getLastName(),
-                    user.getGender(),
-                    user.getBirthDate(),
-                    user.getPhoneNumber(),
-                    user.getAddress(),
-                    user.getRole(),
-                    user.getEmail()
-            );
+            return UserMapper.userResponse(user);
         }
         throw new EntityNotFoundException("User not found with id:" + id);
     }

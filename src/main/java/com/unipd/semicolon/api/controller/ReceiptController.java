@@ -25,8 +25,8 @@ public class ReceiptController {
                         receipt.getList_drug_id(),
                         receipt.getList_material_id(),
                         receipt.getImage(),
-                        receipt.getDate(),
-                        receipt.getPaymentMethod()));
+                        receipt.getPaymentMethod(),
+                        receipt.getTotalAmount()));
     }
 
 
@@ -45,14 +45,12 @@ public class ReceiptController {
                         receiptModel.getList_drug_id(),
                         receiptModel.getList_material_id(),
                         receiptModel.getImage(),
-                        receiptModel.getDate(),
                         receiptModel.getPaymentMethod()));
 
     }
-//
-//    @GetMapping("/getRecieptList/{id}")
-//    public ResponseEntity<List<Receipt>> getAll(@PathVariable("id") Long id) {
-//        List<Receipt> receipts = receiptService.get;
-//        return ResponseHelper.response(receipts);
-//    }
+
+    @GetMapping("/get-pharmacy")
+    public ResponseEntity getAll() {
+        return ResponseHelper.response(receiptService.getList());
+    }
 }
