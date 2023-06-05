@@ -40,12 +40,13 @@ export const onInitial = () => {
             onCancel: () => {},
             submit: "Submit",
             onSubmit: () => {}
-        },
-        text: {
-            active: true,
-            left: "Total: 5$",
-            center: "WhatEver!"
         }
+        // ,
+        // text: {
+        //     //active: true,
+        //     // left: "Total: 5$",
+        //     // center: "WhatEver!"
+        // }
     }
 
     showModal('Order', "Are you sure to submit your order?", 'Order_submit', orderData, "Total Price: 20$")
