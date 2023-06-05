@@ -6,10 +6,11 @@ export const onInitial = () => {
         JSON.parse(localStorage.getItem("getData")).map((item, index) => {
             const newObject = {
                 Name: item.name,
-                lastName: item.lastName,
+                LastName: item.lastName,
                 Role:item.role.role,
                 Status: item.accountStatus,
-                Address: item.address
+                Address: item.address,
+                image: item.profileImage
             }
             return userData.push(newObject)
         })
