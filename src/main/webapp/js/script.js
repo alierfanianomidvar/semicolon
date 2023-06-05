@@ -5,6 +5,7 @@ import materialUrls from "./urls/materialUrls.js";
 import orderUrls from "./urls/orderUrls.js";
 import supplierUrls from "./urls/supplierUrls.js";
 import userUrls from "./urls/userUrls.js";
+import { getPageTitle } from "./utils.js"
 import '../js/table/fancyTable.js'
 
 
@@ -14,8 +15,9 @@ $(window).on('hashchange load', function () {
 
     localStorage.removeItem('getData'); // removing all dats before finding the new Data.
 
-    document.title = window.location.hash;
     const route = location.hash.replace("#", "").split("/")[0];
+    document.title = getPageTitle();
+
 
     let endPoint = null;
     const router = new Router();
@@ -48,40 +50,38 @@ $(window).on('hashchange load', function () {
         case "user":
             endPoint = userUrls.GET_ALL;
             break;
+        case "order_report":
+            console.log("A")
+            endPoint = orderUrls.GET_ALL;
+            break;
+        case "receipt_report":
+            console.log("B")
+            endPoint = receiptUrls.GET_ALL;
         default:
             // endPoint = storageUrls.GET_ALL;
             break;
     }
 
-    if(endPoint !== null)  {
-        const fetch = router.createFetch(endPoint);
-        fetch.then(data => {
-            localStorage.setItem('getData', JSON.stringify(data));
-            // Do something with the data here
-        }).catch(error => {
-            console.log("Error fetching data:", error);
-        });
+    const fetch = router.createFetch(endPoint);
+    fetch.then(data => {
+        localStorage.setItem('getData', JSON.stringify(data));
+        // Do something with the data here
+    }).catch(error => {
+        console.log("Error fetching data:", error);
+    });
 
-        // Skip if no page is selected
+    // Skip if no page is selected
+    if (!route || route === "") return;
 
-    }
-    console.log("route: ", route)
-    if (!route || route === "") {
-
-    } else {
-        const url = `${route}.html?`;
-        $("#main-content").load(url, function (response, status, xhr) {
-            if (status == "success") {
-                console.log("Content loaded successfully");
-            } else {
-                console.log("Error loading content: " + xhr.status + " " + xhr.statusText);
-            }
-        });
-    }
-
-
+    const url = `${route}.html?`;
+    $("#main-content").load(url, function (response, status, xhr) {
+        if (status == "success") {
+            console.log("Content loaded successfully");
+        } else {
+            console.log("Error loading content: " + xhr.status + " " + xhr.statusText);
+        }
+    });
 });
-
 
 
 $(document).ready(function () {
