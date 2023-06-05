@@ -47,21 +47,29 @@ $(window).on('hashchange load', function () {
         case "user":
             endPoint = userUrls.GET_ALL;
             break;
+        case "order_report":
+            console.log("A")
+            endPoint = orderUrls.GET_ALL;
+            break;
+        case "receipt_report":
+            console.log("B")
+            endPoint = receiptUrls.GET_ALL;
         default:
+            console.log("Here!")
             endPoint = storageUrls.GET_ALL;
             break;
     }
 
-    const fetch = router.createFetch(endPoint);
-    fetch.then(data => {
-        localStorage.setItem('getData', JSON.stringify(data));
-        // Do something with the data here
-    }).catch(error => {
-        console.log("Error fetching data:", error);
-    });
+    // const fetch = router.createFetch(endPoint);
+    // fetch.then(data => {
+    //     localStorage.setItem('getData', JSON.stringify(data));
+    //     // Do something with the data here
+    // }).catch(error => {
+    //     console.log("Error fetching data:", error);
+    // });
 
-    // Skip if no page is selected
-    if (!route || route === "") return;
+    // // Skip if no page is selected
+    // if (!route || route === "") return;
 
     const url = `${route}.html?`;
     $("#main-content").load(url, function (response, status, xhr) {

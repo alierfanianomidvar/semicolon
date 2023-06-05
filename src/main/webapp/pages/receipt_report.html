@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <link rel="stylesheet" href="../css/Receipt_report.css">
-  <style>
-    .table td:first-child{width: 5px!important;;}
-  </style>
-</head>
-<body>
+<link rel="stylesheet" href="../css/receipt_report.css">
+<style>
+  .table td:first-child{width: 5px!important;;}
+</style>
 <div class="container">
 
   <h2 class="h2 mb-5 mt-4">Report</h2>
@@ -28,10 +23,10 @@
 
   </div>
 </div>
-<script src="../js/Receipt_report.js" type="module"></script>
+<script src="../js/receipt_report.js" type="module"></script>
 <script type="module">
-  // import { onInitial } from "../js/Receipt_report.js"
-  // onInitial()
+  import { onInitial } from "../js/receipt_report.js"
+  onInitial()
   $("#selection").change(function() {
     const selectedOption = $(this).val();
     console.log("this is selected: ", selectedOption)
@@ -40,7 +35,4 @@
     }
   });
 </script>
-</body>
-</html>
-
-<!--    <iframe src="shared/table.html"></iframe>-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
