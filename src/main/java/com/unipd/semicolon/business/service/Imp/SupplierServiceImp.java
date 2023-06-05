@@ -33,11 +33,11 @@ public class SupplierServiceImp extends AbstractDatabaseServlet implements Suppl
     private MaterialService materialService;
 
     @Autowired
-    private SecurityService securityService;
+    private SecurityService securityService = new SecurityServiceImp();
 
     @Override
     public List<Supplier> getSupplierList() throws SQLException {
-        return new SupplierListDao(getConnection(), true).access().getOutputParam();
+        return new SupplierListDao(getConnection(), true, null).access().getOutputParam();
     }
 
     @Override
@@ -56,7 +56,7 @@ public class SupplierServiceImp extends AbstractDatabaseServlet implements Suppl
                 throw new CreatePharmacyDataNotFound();
             }
 
-            List<Supplier> suppliers = new SupplierListDao(getConnection(), false).access().getOutputParam();
+            List<Supplier> suppliers = new SupplierListDao(getConnection(), false, email).access().getOutputParam();
             if (suppliers.toArray().length > 0) {
                 throw new PharmacyExistsException();
             }
