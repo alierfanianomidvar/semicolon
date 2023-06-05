@@ -19,7 +19,7 @@ public class DrugMapper {
                 drug.getDescription(),
                 drug.getLimitation(),
                 drug.getPrice(),
-                drug.getCountryOFProduction()
+                drug.getCountryOfProduction()
         );
     }
 }

@@ -29,15 +29,15 @@ public interface DrugRepository extends JpaRepository<Drug, Long>, JpaSpecificat
 //            Date expirationDate,
 //            String shape,
 //            AgeGroup ageGroup,
-//            Country countryOFProduction
+//            Country countryOfProduction
 //    );
 
-    List<Drug> findDrugsByNameAndSupplierAndExpirationDateAndShapeAndAgeGroupAndCountryOFProduction(
+    List<Drug> findDrugsByNameAndSupplierAndExpirationDateAndShapeAndAgeGroupAndCountryOfProduction(
             String name,
             Supplier supplier,
             Date expirationDate,
             String shape,
             AgeGroup ageGroup,
-            Country countryOFProduction
+            Country countryOfProduction
     );
 }
