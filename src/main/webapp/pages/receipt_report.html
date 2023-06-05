@@ -5,19 +5,6 @@
 <div class="container">
 
   <h2 class="h2 mb-5 mt-4">Report</h2>
-  <div class="form-row mb-2">
-
-    <div class="form-inline">
-      <div class="dropdown-container dropdown">
-        <select class="form-control" id="selectionA">
-          <option value="RECEIPT">RECEIPT</option>
-          <option value="ORDER">ORDER</option>
-        </select>
-      </div>
-    </div>
-  </div>
-
-  <!-- Filters -->
 
   <div class="border rounded-xl bg-white">
 
@@ -28,12 +15,5 @@
   import { onInitial } from "../js/receipt_report.js"
   import "../js/table/fancyTable.js"
   onInitial()
-  $("#selectionA").change(function() {
-    const selectedOption = $(this).val();
-    console.log("this is selectedA: ", selectedOption)
-    if (selectedOption === "ORDER") {
-      $("#main-content").load("order_report.html")
-    }
-  });
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
