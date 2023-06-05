@@ -1,38 +1,31 @@
-// Get all drugs data
-import {createGenericTable} from "./table/table";
-import drugUrls from "./urls/drugUrls";
+import materialUrls from "./urls/materialUrls.js";
+import drugUrls from "./urls/drugUrls.js";
 
-let data;
-const router = new Router();
+export function oninitial() {
+    const productList = document.getElementById('product-list');
 
-export const onInitial = async () => {
-    try {
-        data = await router.createFetch(drugUrls.GET_ALL);
-    console.log("MAMADjvkug",data)
-        populateTable(data);
-    } catch (e) {
-        console.log("Error: ", e);
-    }
+    const router = new Router();
 
-}
+    router.createFetch(drugUrls.GET_ALL).then(data => {
+            console.log("drug", data);
+            data.forEach(drug => {
+                const option = document.createElement('option');
+                option.value = `${drug.id}|drug`;
+                option.text = drug.name;
+                productList.appendChild(option);
+            });
+        }
+    ).catch(error => console.error(error));
 
-// Populate table with data
-function populateTable(data) {
-
-    const tableData = data.map(obj => {
-        const newObj = {
-            Name: obj.name,
-            "Age Group": obj.ageGroup,
-            Sensivity: obj.sensitive ? "Sensitive" : "Not Sensitive",
-            Price: obj.price,
-            Limitation: obj.limitation
-        };
-        return newObj;
-    });
-    console.log(tableData)
-    createGenericTable(
-        "drug-list",
-        ["Name", "Age Group", "Sensivity", "Price", "Limitation"],
-        tableData,
-    );
+    router.createFetch(materialUrls.GET_ALL).then(data => {
+            console.log("material", data);
+            data.forEach(material => {
+                console.log("each", material)
+                const option = document.createElement('option');
+                option.value = `${material.id}|material`;
+                option.text = material.name;
+                productList.appendChild(option);
+            });
+        }
+    ).catch(error => console.error(error));
 }
