@@ -1,37 +1,100 @@
-import {createTable, rWord} from "./table/table.js";
+
+import supplierUrls from "./urls/supplierUrls.js";
+import {createButtonsAndText, createGenericTable, createTable} from "./table/table.js";
+import orderUrls from "./urls/orderUrls.js";
+import drugUrls from "./urls/drugUrls.js";
+import materialUrls from "./urls/materialUrls.js";
+import '../js/table/fancyTable.js'
 
 
+let data;
+const router = new Router();
+console.log(Promise.resolve(router.createFetch(orderUrls.GET_ALL)),"HEREEEE")
+// console.log(Promise.resolve(router.createFetch(supplierUrls.GET_ALL)),"SUPPLIER")
 
-$(() => {
+export const onInitial = async () => {
+    try {
+        data = await router.createFetch(orderUrls.GET_ALL);
+        console.log("data: ",data)
+        populateTable(data);
+    } catch (e) {
+        console.log("Error: ", e);
+    }
+}
 
-    // Example usage: Create a table with dynamic column names and content
-    const tableId = "order_list"; // Dynamic table ID
-    const columnNames = ["Order ID", "Price", "Status", "Supplier" , "Date"]; // Dynamic column names
-    //TODO: number of rows must be edited and we need to put the correct number of rows based on our user list fetch api
-    const numRows = 500; // Total number of rows
 
-    // Generate the table ID dynamically
-    const table = $(`<table>`, {
-        id: tableId,
-        class: "table table-striped sampleTable",
+// Populate table with data
+function populateTable(data) {
+
+    const tableData = data.map(obj => {
+        // const isOrder = obj.order !== null
+        const newObj = {
+            id: obj.id ? obj.id : "1", //isOrder ? obj.drug.name : obj.material.name,
+            status: obj.status,
+            price: obj.price, //isOrder ? obj.drug.price : obj.material.price,
+            date: obj.orderDate,
+        };
+        return newObj;
     });
+    console.log("this is table dat: ", tableData)
+    const footerContent = {
+        button: {
+          active: false
+        },
+        text: {
+            active: true,
+            left: "Total Ordered Price : $12000",
+            center: "Quantity : 1200"
+        }
+    }
+    createGenericTable(
+        "order-list",
+        ["id", "price", "status" , "date"],
+        tableData,
+        footerContent
+    );
 
-    // Append the table to the container
-    $(".border").append(table);
+    const filterForm = document.getElementById('filterForm');
+    filterForm.addEventListener('submit', (event) => {
+        event.preventDefault();
 
-    // for passing the cellContentGenerator we need to define a proper function that returns the user actual information
-    createTable(tableId, columnNames, numRows, () => {
-        return rWord(8); // Generate random cell content
+        // Filter the data
+        const selectedSupplier = document.getElementById('filterSupplier').value;
+        const selectedType = document.getElementById('filterType').value;
+
+        const filteredData = data.filter(obj => {
+
+            return (selectedType === '' || obj[selectedType] !== null) && (selectedSupplier === '' || obj[selectedSupplier] !== null) ;
+        });
+
+        const elem = document.getElementById('order-list');
+        elem.remove();
+        console.log(elem)
+        populateTable(filteredData);
+
     });
+}
 
-    // And make the table fancy
-    // const fancyTableA = $(`#${tableId}`).fancyTable({
-    //     sortColumn: 0,
-    //     pagination: true,
-    //     perPage: 5,
-    //     globalSearch: true,
-    // });
-});
+export const supplierOption = async () => {
+    const router = new Router()
+    let supplierData;
+    const supplier = Promise.resolve(router.createFetch(supplierUrls.GET_ALL))
+
+    supplierData = await supplier
+    console.log(supplierData);
+
+    //supplier option
+    const selectedSupplier = supplierData.map(obj => obj.name)
+    console.log(selectedSupplier);
+
+    const selectElementSupplier = document.getElementById('filterSupplier');
+
+    selectedSupplier.forEach(name => {
+        const option = document.createElement('option');
+        option.text = name;
+        selectElementSupplier.add(option);
+    });
+}
 
 
 
@@ -79,7 +142,7 @@ function generateFooterText(firstText, secondText) {
     });
 
     // Append the table to the container
-    $(".border").append(table);
+    // $(".border").append(table);
 
     // Append the container to the page or desired parent element
     $(".border").append(container);
@@ -89,4 +152,4 @@ function generateFooterText(firstText, secondText) {
 }
 
 // Example usage
-generateFooterText("First Text", "Second Text");
+// generateFooterText("First Text", "Second Text");
