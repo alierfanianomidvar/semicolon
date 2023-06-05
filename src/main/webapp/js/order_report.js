@@ -1,63 +1,30 @@
 import {createGenericTable} from "./table/table.js";
-import orderUrls from "./urls/orderUrls.js";
-
-// const router = new Router();
 export const onInitial = () => {
-    console.log("AA")
-    // let orderData;
-    // try{
-    //     orderData = await router.createFetch(orderUrls.GET_ALL);
-    //     console.log("OrderData: ", orderData)
-    //     createGenericTable(
-    //         "order_report",
-    //         ["","id", "price", "status", "date"],
-    //         orderData,
-    //         null,
-    //         "default"
-    //     );
-    // }catch (e) {
-    //     console.log("Error: ", e);
-    // }
+
     const orderData = [{
-        id:1,
-        price: "$13000",
-        status: "active",
-        date: "12-12-2023"
+        ID:1 , Price:12 , Status:"DELIVERED" , Date:"12-01-2023"
     },{
-        id:2,
-        price: "$13000",
-        status: "active",
-        date: "12-12-2023"
+        ID:2 , Price:32 , Status:"PENDING" , Date:"05-04-2023"
     },{
-        id:3,
-        price: "$13000",
-        status: "active",
-        date: "12-12-2023"
+        ID:3 , Price:6 , Status:"DELIVERED" , Date:"30-11-2023"
     },{
-        id:4,
-        price: "$13000",
-        status: "active",
-        date: "12-12-2023"
+        ID:4 , Price:89 , Status:"CANCELLED" , Date:"11-09-2023"
     }]
 
     const footerContent = {
-        button: {
-            active: false,
-            cancel: "Cancel",
-            onCancel: () => {},
-            submit: "Submit",
-            onSubmit: () => {}
-        },
-
+        text: {
+            active: true,
+            left: "Total: 5$",
+            center: ""
+        }
     }
 
-    // showModal('Order', "Are you sure to submit your order?", 'Order_submit', orderData, "Total Price: 20$")
     createGenericTable(
-        "order_report",
-        ["id", "price", "status", "date"],
+        "order_list",
+        ["","ID", "Price", "Status", "Date"],
         orderData,
-        null,
-        "default"
+        footerContent,
+        'default'
     );
 
 };

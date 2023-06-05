@@ -1,45 +1,42 @@
 import {createGenericTable} from "./table/table.js";
 export const onInitial = () => {
-    console.log("BB");
-    const orderData = [{
-        id:1,
-        price: "$13000",
-        status: "active",
-        date: "12-12-2023"
+
+    const receiptData = [{
+        ID : 1,
+        Price: 32,
+        PaymentMethod: "CASH",
+        Date: "10-07-2023"
     },{
-        id:2,
-        price: "$13000",
-        status: "active",
-        date: "12-12-2023"
+        ID : 2,
+        Price: 2,
+        PaymentMethod: "CREDIT_CARD",
+        Date: "23-03-2023"
     },{
-        id:3,
-        price: "$13000",
-        status: "active",
-        date: "12-12-2023"
+        ID : 3,
+        Price: 55,
+        PaymentMethod: "DEBIT_CARD",
+        Date: "23-05-2023"
     },{
-        id:4,
-        price: "$13000",
-        status: "active",
-        date: "12-12-2023"
+        ID : 4,
+        Price: 169,
+        PaymentMethod: "PAYPAL",
+        Date: "05-12-2023"
     }]
 
     const footerContent = {
-        button: {
+        text: {
             active: true,
-            cancel: "Cancel",
-            onCancel: () => {},
-            submit: "Submit",
-            onSubmit: () => {}
+            left: "Total: 5$",
+            center: ""
         }
     }
 
-    // showModal('Order', "Are you sure to submit your order?", 'Order_submit', orderData, "Total Price: 20$")
     createGenericTable(
-        "receipt_report",
-        ["orderId", "price", "Payment Method", "date"],
-        orderData,
-        null,
-        "default"
+        "receipt_list",
+        ["","ID", "Price", "PaymentMethod", "Date"],
+        receiptData,
+        footerContent,
+        'default'
     );
 
 };
