@@ -5,6 +5,7 @@ import materialUrls from "./urls/materialUrls.js";
 import orderUrls from "./urls/orderUrls.js";
 import supplierUrls from "./urls/supplierUrls.js";
 import userUrls from "./urls/userUrls.js";
+import '../js/table/fancyTable.js'
 
 
 //routing
@@ -23,7 +24,7 @@ $(window).on('hashchange load', function () {
         //TODO: use the fetched data in each case if you need to change the content
         case "receipt":
             //TODO: url must change
-            endPoint = receiptUrls.GET_BY_ID;
+            endPoint = receiptUrls.GET_ALL;
             break;
         case "drug":
             endPoint = drugUrls.GET_ALL;
@@ -48,32 +49,39 @@ $(window).on('hashchange load', function () {
             endPoint = userUrls.GET_ALL;
             break;
         default:
-            endPoint = storageUrls.GET_ALL;
+            // endPoint = storageUrls.GET_ALL;
             break;
     }
 
-    const fetch = router.createFetch(endPoint);
-    fetch.then(data => {
-        localStorage.setItem('getData', JSON.stringify(data));
-        // Do something with the data here
-    }).catch(error => {
-        console.log("Error fetching data:", error);
-    });
+    if(endPoint !== null)  {
+        const fetch = router.createFetch(endPoint);
+        fetch.then(data => {
+            localStorage.setItem('getData', JSON.stringify(data));
+            // Do something with the data here
+        }).catch(error => {
+            console.log("Error fetching data:", error);
+        });
 
-    // Skip if no page is selected
-    if (!route || route === "") return;
+        // Skip if no page is selected
 
-    const url = `${route}.html?`;
-    $("#main-content").load(url, function (response, status, xhr) {
-        if (status == "success") {
-            console.log("Content loaded successfully");
-        } else {
-            console.log("Error loading content: " + xhr.status + " " + xhr.statusText);
-        }
-    });
+    }
+    console.log("route: ", route)
+    if (!route || route === "") {
 
-    
+    } else {
+        const url = `${route}.html?`;
+        $("#main-content").load(url, function (response, status, xhr) {
+            if (status == "success") {
+                console.log("Content loaded successfully");
+            } else {
+                console.log("Error loading content: " + xhr.status + " " + xhr.statusText);
+            }
+        });
+    }
+
+
 });
+
 
 
 $(document).ready(function () {
