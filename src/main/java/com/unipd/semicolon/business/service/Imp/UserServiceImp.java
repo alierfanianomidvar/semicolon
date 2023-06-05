@@ -218,18 +218,7 @@ public class UserServiceImp implements UserService {
     public UserResponse getById(Long id) {
         User user = userRepository.findUserById(id);
         if (user != null) {
-            return new UserResponse(
-                    user.getName(),
-                    user.getLastName(),
-                    user.getGender(),
-                    user.getBirthDate(),
-                    user.getPhoneNumber(),
-                    user.getAddress(),
-                    user.getRole(),
-                    user.getEmail(),
-                    user.getAccountStatus(),
-                    user.getProfilePicture()
-            );
+            return UserMapper.userResponse(user);
         }
         throw new EntityNotFoundException("User not found with id:" + id);
     }
