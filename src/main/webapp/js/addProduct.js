@@ -82,7 +82,7 @@ function validateExpirationDate() {
 export async function fetchAndPopulateSuppliers() {
     console.log("HERE")
     const router = new Router();
-    const suppliers = await router.createFetch(storageUrls.GET_ALL);
+    const suppliers = await router.createFetch(supplierUrls.GET_ALL);
     console.log(suppliers)
     const selectElement = document.getElementById("supplierId");
 
