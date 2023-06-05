@@ -60,16 +60,16 @@ $(window).on('hashchange load', function () {
             break;
     }
 
-    // const fetch = router.createFetch(endPoint);
-    // fetch.then(data => {
-    //     localStorage.setItem('getData', JSON.stringify(data));
-    //     // Do something with the data here
-    // }).catch(error => {
-    //     console.log("Error fetching data:", error);
-    // });
+    const fetch = router.createFetch(endPoint);
+    fetch.then(data => {
+        localStorage.setItem('getData', JSON.stringify(data));
+        // Do something with the data here
+    }).catch(error => {
+        console.log("Error fetching data:", error);
+    });
 
-    // // Skip if no page is selected
-    // if (!route || route === "") return;
+    // Skip if no page is selected
+    if (!route || route === "") return;
 
     const url = `${route}.html?`;
     $("#main-content").load(url, function (response, status, xhr) {

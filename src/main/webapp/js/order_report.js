@@ -24,7 +24,6 @@ export const onInitial = () => {
         })
     }
 
-    console.log("Hamide analyzer",orderData);
     const footerContent = {
         text: {
             active: false,
