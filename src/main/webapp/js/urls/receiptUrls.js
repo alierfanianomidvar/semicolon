@@ -15,6 +15,11 @@ class receiptUrls extends BaseApiUrl {
         method: 'GET',
         token: false
     };
+    static GET_ALL = {
+        url: `${BaseApiUrl.BASE_URL}/${receiptUrls.RECEIPT_BASE_URL}/get-pharmacy`, //NOTE: ADD THIS TO URL /{id}
+        method: 'GET',
+        token: false
+    };
 
     static GET_ALL = {
         url: `${BaseApiUrl.BASE_URL}/${receiptUrls.RECEIPT_BASE_URL}/get-pharmacy`, //NOTE: ADD THIS TO URL /{id}

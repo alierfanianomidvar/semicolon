@@ -1,0 +1,71 @@
+<div class="container">
+  <h5 class="h5 mb-5 mt-4">Add Order</h5>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="search-box">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search Product" id="search-input">
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="form-group">
+        <select class="form-control" id="Supplier">
+          <option value="">Suppliers</option>
+          <option>Supplier A</option>
+          <option>Supplier B</option>
+          <option>Supplier C</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="form-group">
+        <select id="product" name="product">
+          <option value="">Products</option>
+          <option value="drug">Drug</option>
+          <option value="material">Material</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="add-btn text-lg-right">
+        <button class="btn btn-custom">Filter</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="border rounded-xl bg-white">
+
+  </div>
+
+  <div class="row">
+    <div class="col-lg-3">
+      <p>Total Price: <span id="total-price">$0</span></p>
+    </div>
+    <div class="col-lg-3">
+      <div class="add-btn text-lg-right">
+        <button class="btn btn-custom">Cancel</button>
+      </div>
+    </div>
+   <!-- <div class="col-lg-3">
+      <div class="add-btn text-lg-right">
+        <button class="btn btn-custom">Submit Order</button>
+      </div>
+    </div> -->
+
+    <div class="col-lg-3">
+      <div class="add-btn text-lg-right">
+        <button class="btn btn-custom" onclick="openOrderForm()">Submit Order</button>
+      </div>
+    </div>
+
+    <script>
+      function openOrderForm() {
+        window.open("confirm-order.html", "_blank", "width=600,height=400");
+      }
+    </script>
+
+  </div>
+</div>
+<script type="module" src="../js/addDrug.js"></script>
+
