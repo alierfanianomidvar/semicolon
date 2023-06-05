@@ -42,16 +42,17 @@ function populateTable(data) {
           active: false
         },
         text: {
-            active: true,
-            left: "Total Ordered Price : $12000",
-            center: "Quantity : 1200"
+            active: false,
+            left: "",
+            center: ""
         }
     }
     createGenericTable(
         "order-list",
         ["id", "price", "status" , "date"],
         tableData,
-        footerContent
+        footerContent,
+        "default",
     );
 
     const filterForm = document.getElementById('filterForm');
@@ -96,6 +97,19 @@ export const supplierOption = async () => {
     });
 }
 
+export const calculateTotal = () => {
+    var total = 0;
+    var checkboxes = document.getElementsByClassName("order-checkbox");
+
+    for (var i = 0; i < checkboxes.length; i++) {
+        var checkbox = checkboxes[i];
+        if (checkbox.checked) {
+            var price = parseFloat(checkbox.getAttribute("data-price"));
+            total += price;
+        }
+    }
+    document.getElementById("total-price").textContent = "Total Price: $" + total.toFixed(2);
+}
 
 
 function generateFooterText(firstText, secondText) {
