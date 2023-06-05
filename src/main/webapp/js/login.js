@@ -1,12 +1,13 @@
 import accountUrls from "./urls/accountUrls.js";
+import {getTokenFromLocalStorage} from "./utils.js";
 
 function sendData() {
     event.preventDefault();
     const username = document.getElementById("email").value;
     const password = document.getElementById("password").value;
     const param = {
-        "username" : username,
-        "password" : password
+        "username": username,
+        "password": password
     }
     console.log("ali");
     // Validate email and password
@@ -23,7 +24,8 @@ function sendData() {
         console.log("url", accountUrls.LOGIN);
         const router = new Router();
         console.log("router", router);
-        router.createFetch(accountUrls.LOGIN,null,param,null, null).then(data =>{
+
+        router.createFetch(accountUrls.LOGIN, null, param, null, null).then(data => {
             console.log("Rrrr")
             if (data) {
                 $(document).ready(async () => {
@@ -41,7 +43,7 @@ function sendData() {
                 });
             }
         })
-            .catch(ex =>{
+            .catch(ex => {
                 console.log(ex)
             });
 
@@ -123,8 +125,20 @@ function togglePasswordVisibility() {
         passwordIcon.classList.add("bi-eye");
     }
 }
+
 $(function () {
-    document.querySelector("#login-btn").addEventListener("click",sendData);
-    document.querySelector("#password-toggle").addEventListener("click",togglePasswordVisibility);
+    if (getTokenFromLocalStorage()) {
+        const url = '../pages/index.html';
+        console.log("we have the token.");
+        try {
+            window.location.href = url
+        } catch (error) {
+            console.error('Error loading new HTML:', error);
+        }
+    } else {
+        console.log("ali", getTokenFromLocalStorage());
+    }
+    document.querySelector("#login-btn").addEventListener("click", sendData);
+    document.querySelector("#password-toggle").addEventListener("click", togglePasswordVisibility);
 
 });
