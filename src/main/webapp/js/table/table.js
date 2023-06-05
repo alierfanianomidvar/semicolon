@@ -220,5 +220,3 @@ export function createGenericTable(genericTableId,genericColumnNames, tableData,
         $(".border").append(bottomContainer);
     }
 }
-
-
