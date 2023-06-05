@@ -20,9 +20,16 @@ public class ReceiptModel {
     private Date date;
     private PaymentMethod paymentMethod;
 
+    private Long totalAmount;
+
+
     public ReceiptModel() {
     }
 
+
+    public Long getTotalAmount() {
+        return totalAmount;
+    }
 
     public Long getId() {
         return id;
