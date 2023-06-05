@@ -9,9 +9,9 @@
 
         <div class="form-inline">
             <div class="dropdown-container dropdown">
-                <select class="form-control" id="selection">
-                    <option value="RECEIPT">RECEIPT</option>
+                <select class="form-control" id="selectionB">
                     <option value="ORDER">ORDER</option>
+                    <option value="RECEIPT">RECEIPT</option>
                 </select>
             </div>
         </div>
@@ -28,9 +28,9 @@
 <script type="module">
     import { onInitial } from "../js/order_report.js"
     onInitial()
-    $("#selection").change(function() {
+    $("#selectionB").change(function() {
         const selectedOption = $(this).val();
-        console.log("this is selected: ", selectedOption)
+        console.log("this is selectedB: ", selectedOption)
         if (selectedOption === "RECEIPT") {
             $("#main-content").load("receipt_report.html")
         }
