@@ -3,6 +3,7 @@ import {createButtonsAndText, createGenericTable, createTable} from "./table/tab
 import '../js/table/fancyTable.js'
 import drugUrls from "./urls/drugUrls.js";
 import materialUrls from "./urls/materialUrls.js";
+import {showModal} from "./modal.js";
 
 let tableData;
 const router = new Router();
@@ -22,9 +23,95 @@ export const onInitial = async () => {
 
 // Populate table with data
 function populateTable(data) {
-    console.log("raw",data)
+    console.log(data)
 
     //Name: item.name, Price:item.price, Supplier: item["supplier"].name, id : item.id ,
+
+    const tableData = data.map(obj => {
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+
+
+        // Create an empty array to store the selected products
+        const selectedProducts = [];
+
+// Event listener for checkbox clicks
+        checkbox.addEventListener('change', () => {
+            if (checkbox.checked) {
+                // Checkbox is checked, add product details to the selectedProducts array
+                selectedProducts.push({
+                    Name: obj.name, // Store the name of the product
+                    Price: obj.price * parseInt(quantityInput.value) // Multiply the price by the quantity
+                });
+            } else {
+                // Checkbox is unchecked, remove product details from the selectedProducts array
+                const index = selectedProducts.findIndex(product => product.Name === obj.name);
+                if (index !== -1) {
+                    selectedProducts.splice(index, 1);
+                }
+            }
+        });
+
+// Event listener for submitting the order
+        submitButton.addEventListener('click', () => {
+            // Prepare the data to pass to the showModal function
+            const data = {
+                price: "1200", // Placeholder value, update it with the actual price
+                tax: "10", // Placeholder value, update it with the actual tax
+                discount: "12", // Placeholder value, update it with the actual discount
+                totalPrice: "" // Placeholder value, update it with the actual total price
+            };
+
+            // Call the showModal function with the selected products and the data
+            showModal("Submit", "", "Order_submit", data, selectedProducts);
+        });
+
+        // document.addEventListener(()=>{
+
+        // })
+
+        // const decreaseBtn = document.createElement('button');
+        // decreaseBtn.className = 'btn btn-outline-secondary';
+        // decreaseBtn.textContent = '-';
+
+        // const increaseBtn = document.createElement('button');
+        // increaseBtn.className = 'btn btn-outline-secondary';
+        // increaseBtn.textContent = '+';
+
+        const quantityInput = document.createElement('input');
+        quantityInput.type = 'number';
+        quantityInput.className = 'form-control';
+        quantityInput.id = 'quantity';
+        quantityInput.min = '0';
+        quantityInput.value = '0';
+
+
+        // decreaseBtn.addEventListener('click', () => {
+        //     let quantity = parseInt(quantityInput.value);
+        //     if (quantity > 1) {
+        //         quantity--;
+        //         quantityInput.value = quantity;
+        //     }
+        // });
+        //
+        // increaseBtn.addEventListener('click', () => {
+        //     let quantity = parseInt(quantityInput.value);
+        //     quantity++;
+        //     quantityInput.value = quantity;
+        // });
+
+        const newObj = {
+            Checkbox: checkbox,
+            Name: obj.name, //isOrder ? obj.drug.name : obj.material.name,
+            Price: obj.price, //isOrder ? obj.drug.price : obj.material.price,
+            Supplier: obj.supplier.name,
+            Quantity: [quantityInput]
+        };
+        return newObj;
+    });
+
+
+    /*
     const tableData = data.map(obj => {
         const newObj = {
             Name: obj.name, //isOrder ? obj.drug.name : obj.material.name,
@@ -34,25 +121,37 @@ function populateTable(data) {
         };
         return newObj;
     });
-    console.log("tbldt",tableData)
+    */
+    console.log(tableData)
 
     const footerContent = {
         button: {
             active: true,
             cancel: "Cancel",
             submit: "Submit Order",
-            //onCancel: ,
-            //onSubmit:
+            onCancel: () => {
+                    window.location.href = 'orders.html';
+                },
+            onSubmit:() => {
+                //window.location.href = '#confirm-order.html';
+                showModal("Submit", "", "Order_submit", {
+                    price:"1200",
+                    tax:"10",
+                    discount:"12",
+                    totalPrice:""
+                }, null)
+
+            },
 
         },
         text: {
             active: true,
-            left: "Total Price: $",
+            left: " ",
         }
     }
     createGenericTable(
         "order-list",
-        ["","Name", "Price", "Supplier", "Quantity"],
+        ["Checkbox","Name", "Price", "Supplier", "Quantity"],
         tableData,
         footerContent,
     );
@@ -74,7 +173,7 @@ function populateTable(data) {
             );
         });
 
-        console.log("fıııl",filteredData)
+        console.log(filteredData)
         const elem = document.getElementById('order-list');
         elem.parentNode.replaceChildren("");
 
@@ -107,33 +206,3 @@ export const supplierOption = async () => {
         selectElementSupplier.add(option);
     });
 }
-
-/*
-//for calculation total price
-export const calculateTotal = () => {
-    var total = 0;
-    var checkboxes = document.getElementsByClassName("order-checkbox");
-
-    for (var i = 0; i < checkboxes.length; i++) {
-        var checkbox = checkboxes[i];
-        if (checkbox.checked) {
-            var price = parseFloat(checkbox.getAttribute("data-price"));
-            total += price;
-        }
-    }
-    document.getElementById("total-price").textContent = "Total Price: $" + total.toFixed(2);
-}
-
-
-//link for confirm-order.html
-export const linking = () => {
-    $(document).ready(() => {
-        const submitButton = $('#submit-order-btn');
-        if (submitButton) {
-            submitButton.on('click', () => {
-                window.location.href = 'confirm-order.html';
-            });
-        }
-    });
-};
-*/
