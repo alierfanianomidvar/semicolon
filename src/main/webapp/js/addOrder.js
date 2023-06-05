@@ -3,9 +3,12 @@ import {createButtonsAndText, createGenericTable, createTable} from "./table/tab
 import orderUrls from "./urls/orderUrls.js";
 import drugUrls from "./urls/drugUrls.js";
 import materialUrls from "./urls/materialUrls.js";
+import '../js/table/fancyTable.js'
 
 let data;
 const router = new Router();
+console.log(Promise.resolve(router.createFetch(orderUrls.GET_ALL)),"HEREEEE")
+console.log(Promise.resolve(router.createFetch(supplierUrls.GET_ALL)),"SUPPLIER")
 
 export const onInitial = async () => {
     try {
@@ -31,29 +34,43 @@ function populateTable(data) {
         return newObj;
     });
     console.log(tableData)
+    const footerContent = {
+        button: {
+            active: true,
+            cancel: "Cancel",
+            submit: "Submit Order",
+            //onCancel: resetTotal(),
+            //onSubmit:
+
+        },
+        text: {
+            active: true,
+            left: "Total Price: $",
+        }
+    }
     createGenericTable(
         "order-list",
         ["Name", "Price", "IsActive", "Quantity"],
         tableData,
+        footerContent,
     );
-
-    const bottomContainer = createButtonsAndText("", "", "Total Price: $", "","Cancel","Submit Order", "", "")
 
     const filterForm = document.getElementById('filterForm');
     filterForm.addEventListener('submit', (event) => {
         event.preventDefault();
 
         // Filter the data
+        const selectedSupplier = document.getElementById('filterSupplier').value;
         const selectedType = document.getElementById('filterType').value;
 
         const filteredData = data.filter(obj => {
 
-            return selectedType === '' || obj[selectedType] !== null;
+            return (selectedType === '' || obj[selectedType] !== null) && (selectedSupplier === '' || obj[selectedSupplier] !== null) ;
         });
-
 
         const elem = document.getElementById('order-list');
         elem.remove();
+        console.log(elem)
         populateTable(filteredData);
 
     });
@@ -82,6 +99,21 @@ export const supplierOption = async () => {
 
 
 /*
+//for making total 0 when clicking cancel button
+export const resetTotal = () => {
+    $(document).ready(() => {
+        const cancelButton = $('#cancel-btn');
+        if (cancelButton) {
+            cancelButton.on('click', () => {
+                const totalPrice = $('#total-price');
+                if (totalPrice) {
+                    totalPrice.text('Total Price: $0');
+                }
+            });
+        }
+    });
+};
+
 //for calculation total price
 export const calculateTotal = () => {
     var total = 0;
@@ -97,21 +129,6 @@ export const calculateTotal = () => {
     document.getElementById("total-price").textContent = "Total Price: $" + total.toFixed(2);
 }
 
-
-//for making total 0 when clicking cancel button
-export const resetTotal = () => {
-    $(document).ready(() => {
-        const cancelButton = $('#cancel-btn');
-        if (cancelButton) {
-            cancelButton.on('click', () => {
-                const totalPrice = $('#total-price');
-                if (totalPrice) {
-                    totalPrice.text('Total Price: $0');
-                }
-            });
-        }
-    });
-};
 
 //link for confirm-order.html
 export const linking = () => {
