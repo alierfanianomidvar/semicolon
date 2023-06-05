@@ -1,60 +1,44 @@
-import {showModal} from "../js/modal.js";
 import {createGenericTable} from "./table/table.js";
 export const onInitial = () => {
 
-    const orderData = {
-        price: "$13000",
-        tax: "10%",
-        discount: "12%"
-    };
-    const userData = [{
-        Id: 1,
-        Name: "Ali",
-        LastName: "Mahdavi",
-        Role: "Admin",
-        Address: "via romana",
-        Status: "Active",
-        image: "../images/users.svg"
-    },{
-        Id: 2,
-        Name: "Abi",
-        LastName: "mor",
-        Role: "Staff",
-        Address: "via romana",
-        Status: "Active",
-        image: "../images/users.svg"
-    },{
-        Id: 3,
-        Name: "Alex",
-        LastName: "pegi",
-        Role: "Admin",
-        Address: "via romana",
-        Status: "Active",
-        image: "../images/users.svg"
-    }]
+    let userData = []
+    if(localStorage.getItem("getData")) {
+        JSON.parse(localStorage.getItem("getData")).map((item, index) => {
+            const newObject = {
+                Name: item.name,
+                LastName: item.lastName,
+                Role:item.role.role,
+                Status: item.accountStatus,
+                Address: item.address,
+                image: item.profileImage
+            }
+            return userData.push(newObject)
+        })
+    }
 
     const footerContent = {
         button: {
-            active: true,
+            active: false,
             cancel: "Cancel",
             onCancel: () => {},
             submit: "Submit",
             onSubmit: () => {}
         }
-        // ,
-        // text: {
-        //     active: true,
-        //     left: "Total: 5$",
-        //     center: "WhatEver!"
-        // }
+        ,
+        text: {
+            active: false,
+            left: "Total: 5$",
+            center: "WhatEver!"
+        }
     }
 
-    showModal('Order', "Are you sure to submit your order?", 'Order_submit', orderData, "Total Price: 20$")
+    // showModal('Order', "Are you sure to submit your order?", 'Order_submit', orderData, "Total Price: 20$")
     createGenericTable(
         "user_list",
-        ["","Name", "Last Name", "Role", "Address", "Status"],
+        ["","Name", "LastName", "Role", "Address", "Status"],
         userData,
-        footerContent
+        footerContent,
+        'user'
         );
-    
+
 };

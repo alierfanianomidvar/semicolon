@@ -26,6 +26,7 @@ public class MaterialResponse {
     private List<Receipt> receipts;
 
     public MaterialResponse(
+            Long id,
             String name,
             Supplier supplier,
             Country countryOfProduction,
@@ -36,6 +37,7 @@ public class MaterialResponse {
             AgeGroup ageGroup,
             LocalDate lastModifiedDate,
             String description) {
+        this.id = id;
         this.name = name;
         this.supplier = supplier;
         this.countryOfProduction = countryOfProduction;

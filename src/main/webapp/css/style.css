@@ -37,6 +37,7 @@ body {
     color: white;
     border-color: var(--primary-color);
     background-color: var(--primary-color);
+    color: whitesmoke;
 }
 
 .btn-custom:hover {
@@ -53,5 +54,26 @@ body {
 .rounded-xl{
     border-radius: 16px;
 }
+
+.cancel-btn {
+    background-color: var(--second-btn-color);
+    color: var(--dark-color);
+    border: none;
+    border-radius: 0.3rem;
+    width: 8rem;
+}
+
+.add-btn {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    border-radius: 0.3rem;
+    border: none;
+    width: 8rem;
+}
+
+.cancel-btn:hover{
+    background-color: var(--other-btn-hover);
+}
+
 
 

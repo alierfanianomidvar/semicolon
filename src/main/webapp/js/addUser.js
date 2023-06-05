@@ -1,9 +1,14 @@
 import userUrls from "./urls/userUrls.js";
-import {showErrorMessage} from "./utils.js";
+import {
+    generateRoleOptions,
+    getBase64ProfilePicture,
+    getTokenFromLocalStorage,
+    extractRole
+} from "./utils.js";
 
 const addUserForm = document.getElementById('add-user-form');
 
-addUserForm.addEventListener('submit', async function(event) {
+addUserForm.addEventListener('submit', async function (event) {
     event.preventDefault();
 
     const formData = new FormData(addUserForm);
@@ -17,50 +22,47 @@ addUserForm.addEventListener('submit', async function(event) {
     }
 
     if (body.profilePicture.size !== 0) {
-        body.profilePicture = await getByteProfilePicture();
-    }
-    else {
+        body.profilePicture = await getBase64ProfilePicture();
+    } else {
         body.profilePicture = null;
     }
 
-    const token = localStorage.getItem("token");
+    const token = getTokenFromLocalStorage();
 
-    const response = await fetch(userUrls.ADD.url, {
-        method: userUrls.ADD.method,
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': token
-        },
-        body: JSON.stringify(body)
-    })
-    const data = await response.json();
-    if (response.ok) {
+    console.log(body);
+    const router = new Router();
+    try {
+        await router.createFetch(userUrls.ADD, null, null, token, body);
         window.location.hash = "#user";
-    } else {
-        showErrorMessage(data.msg);
-        console.log('There was a problem with the fetch operation:', data.msg);
+    } catch (error) {
+        console.log("Error: ", error);
     }
 });
 
-function getByteProfilePicture() {
-    return new Promise((resolve) => {
-        const fileInput = document.querySelector('input[type="file"]');
-        const file = fileInput.files[0];
+export const onInitial = async () => {
+    const addUserForm = document.getElementById('add-user-form');
+    // Extract the role from the JWT token payload
+    const token = getTokenFromLocalStorage();
+    const role = extractRole(token);
 
-        // Create a new FileReader object
+    // Generate the role dropdown options based on the user's role
+    generateRoleOptions(role, addUserForm);
+}
+
+
+document.getElementById("profilePicture").addEventListener("change", userAddHandleFileSelect);
+
+function userAddHandleFileSelect(event) {
+    const fileInput = event.target;
+    const avatarPreview = document.getElementById("add-avatar-preview");
+
+    if (fileInput.files && fileInput.files[0]) {
         const reader = new FileReader();
 
-        // Set up a function to be called when the file is read
-        reader.onload = function (event) {
-            // Get the loaded file data as a byte array
-            const byteArray = new Uint8Array(event.target.result);
-
-            // Send the byte array to the backend
-            resolve(Array.from(byteArray));
-
+        reader.onload = function (e) {
+            avatarPreview.setAttribute("src", e.target.result);
         };
 
-        // Read the file as an ArrayBuffer
-        reader.readAsArrayBuffer(file);
-    });
+        reader.readAsDataURL(fileInput.files[0]);
+    }
 }

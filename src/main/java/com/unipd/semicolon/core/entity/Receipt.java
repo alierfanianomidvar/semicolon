@@ -1,5 +1,6 @@
 package com.unipd.semicolon.core.entity;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -20,14 +21,17 @@ public class Receipt {
     @ManyToMany
     private List<Material> receiptMaterials;
 
-    @Column(name = "image")
-    private byte[] image;
+    @Column(name = "string_image", columnDefinition = "TEXT")
+    private String image;
 
     @Column(name = "date")
-    private Date date;
+    private LocalDate date;
 
     @Column(name = "payment_method")
     private PaymentMethod paymentMethod;
+
+    @Column(name = "total_amount")
+    private Long totalAmount;
 
     public Receipt() {
     }
@@ -35,14 +39,16 @@ public class Receipt {
     public Receipt(
             List<Drug> receiptDrugs,
             List<Material> receiptMaterials,
-            byte[] image,
-            Date date,
-            PaymentMethod paymentMethod) {
+            String image,
+            LocalDate date,
+            PaymentMethod paymentMethod,
+            Long totalAmount) {
         this.receiptDrugs = receiptDrugs;
         this.receiptMaterials = receiptMaterials;
         this.image = image;
         this.date = date;
         this.paymentMethod = paymentMethod;
+        this.totalAmount = totalAmount;
     }
 
     // getters and setters for all attributes
@@ -68,19 +74,19 @@ public class Receipt {
         this.receiptMaterials = receiptMaterials;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -90,5 +96,13 @@ public class Receipt {
 
     public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    public Long getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(Long totalAmount) {
+        this.totalAmount = totalAmount;
     }
 }

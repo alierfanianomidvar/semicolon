@@ -5,8 +5,8 @@ import materialUrls from "./urls/materialUrls.js";
 import orderUrls from "./urls/orderUrls.js";
 import supplierUrls from "./urls/supplierUrls.js";
 import userUrls from "./urls/userUrls.js";
-import {Router} from "./router.js";
-
+import { getPageTitle } from "./utils.js"
+import '../js/table/fancyTable.js'
 
 
 //routing
@@ -15,8 +15,9 @@ $(window).on('hashchange load', function () {
 
     localStorage.removeItem('getData'); // removing all dats before finding the new Data.
 
-    document.title = window.location.hash;
     const route = location.hash.replace("#", "").split("/")[0];
+    document.title = getPageTitle();
+
 
     let endPoint = null;
     const router = new Router();
@@ -25,7 +26,7 @@ $(window).on('hashchange load', function () {
         //TODO: use the fetched data in each case if you need to change the content
         case "receipt":
             //TODO: url must change
-            endPoint = receiptUrls.GET_BY_ID;
+            endPoint = receiptUrls.GET_ALL;
             break;
         case "drug":
             endPoint = drugUrls.GET_ALL;
@@ -49,8 +50,15 @@ $(window).on('hashchange load', function () {
         case "user":
             endPoint = userUrls.GET_ALL;
             break;
+        case "order_report":
+            console.log("A")
+            endPoint = orderUrls.GET_ALL;
+            break;
+        case "receipt_report":
+            console.log("B")
+            endPoint = receiptUrls.GET_ALL;
         default:
-            endPoint = storageUrls.GET_ALL;
+            // endPoint = storageUrls.GET_ALL;
             break;
     }
 
@@ -73,8 +81,6 @@ $(window).on('hashchange load', function () {
             console.log("Error loading content: " + xhr.status + " " + xhr.statusText);
         }
     });
-
-
 });
 
 

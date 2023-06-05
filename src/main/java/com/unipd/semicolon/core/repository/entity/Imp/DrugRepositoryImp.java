@@ -29,29 +29,30 @@ public abstract class DrugRepositoryImp extends CustomRepository implements Drug
 //    }
 
 //    @Override
-//    public List<Drug> searchDrug(String name, Supplier supplier, Date expirationDate, String shape, AgeGroup ageGroup, Country countryOFProduction)
+//    public List<Drug> searchDrug(String name, Supplier supplier, Date expirationDate, String shape, AgeGroup ageGroup, Country countryOf
+//    Production)
 //    {
 //
 ////        return listQueryWrapper(entityManager.createQuery(
 ////                "SELECT g FROM Drug g where g.name="+name+" and g.supplier="+supplierId+
 ////                        " and g.expirationDate= "+expirationDate+" and g.shape= "+shape+
-////                        " and g.ageGroup = "+ageGroup.ordinal()+" and g.countryOFProduction= "+countryOFProduction.ordinal()+
+////                        " and g.ageGroup = "+ageGroup.ordinal()+" and g.countryOfProduction= "+countryOfProduction.ordinal()+
 ////                        " ORDER BY g.id desc ",Drug.class
 ////        ));
 ////        return listQueryWrapper(entityManager.createQuery(
 ////                "SELECT g FROM Drug g"+" where g.name="+name//+" and g.supplier="+supplierId+
 ////                        //" and g.expirationDate= "+expirationDate+" and g.shape= "+shape+
-////                        //" and g.ageGroup = "+ageGroup.ordinal()+" and g.countryOFProduction= "+countryOFProduction.ordinal()+
+////                        //" and g.ageGroup = "+ageGroup.ordinal()+" and g.countryOfProduction= "+countryOfProduction.ordinal()+
 ////                        +" ORDER BY g.id desc ",Drug.class
 ////        ));
 //        return listQueryWrapper(entityManager.createQuery(
-//                        "SELECT g FROM Drug g WHERE g.name = :name and g.supplier = :supplier and g.expirationDate= :expirationDate and g.shape= :shape and g.ageGroup = :ageGroup and g.countryOFProduction= :countryOFProduction ORDER BY g.id DESC", Drug.class)
+//                        "SELECT g FROM Drug g WHERE g.name = :name and g.supplier = :supplier and g.expirationDate= :expirationDate and g.shape= :shape and g.ageGroup = :ageGroup and g.countryOfProduction= :countryOfProduction ORDER BY g.id DESC", Drug.class)
 //                .setParameter("name", name)
 //                .setParameter("supplier", supplier)
 //                .setParameter("expirationDate", expirationDate)
 //                .setParameter("shape", shape)
 //                .setParameter("ageGroup", ageGroup)
-//                .setParameter("countryOFProduction", countryOFProduction)
+//                .setParameter("countryOfProduction", countryOfProduction)
 //        );
 //    }
 
