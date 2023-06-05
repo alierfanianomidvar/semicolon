@@ -35,7 +35,7 @@ export const onInitial = () => {
 
     const footerContent = {
         button: {
-            active: true,
+            active: false,
             cancel: "Cancel",
             onCancel: () => {},
             submit: "Submit",
@@ -49,7 +49,7 @@ export const onInitial = () => {
         }
     }
 
-    showModal('Order', "Are you sure to submit your order?", 'Order_submit', orderData, "Total Price: 20$")
+    // showModal('Order', "Are you sure to submit your order?", 'Order_submit', orderData, "Total Price: 20$")
     createGenericTable(
         "user_list",
         ["","Name", "Last Name", "Role", "Address", "Status"],
