@@ -1,20 +1,20 @@
 import supplierUrls from "./urls/supplierUrls.js";
 import {createButtonsAndText, createGenericTable, createTable} from "./table/table.js";
-import orderUrls from "./urls/orderUrls.js";
+import '../js/table/fancyTable.js'
 import drugUrls from "./urls/drugUrls.js";
 import materialUrls from "./urls/materialUrls.js";
-import '../js/table/fancyTable.js'
 
-let data;
+let tableData;
 const router = new Router();
-console.log(Promise.resolve(router.createFetch(orderUrls.GET_ALL)),"HEREEEE")
-console.log(Promise.resolve(router.createFetch(supplierUrls.GET_ALL)),"SUPPLIER")
 
 export const onInitial = async () => {
     try {
-        data = await router.createFetch(orderUrls.GET_ALL);
-        console.log(data)
-        populateTable(data);
+        const data = await Promise.allSettled([router.createFetch(drugUrls.GET_ALL), router.createFetch(materialUrls.GET_ALL)])
+        const productData =[
+            ...data[0].value.map(item => ({ ...item,type : "drug"})),
+            ...data[1].value.map(item => ({ ...item,type : "material"}))
+        ]
+        populateTable(productData);
     } catch (e) {
         console.log("Error: ", e);
     }
@@ -22,24 +22,26 @@ export const onInitial = async () => {
 
 // Populate table with data
 function populateTable(data) {
+    console.log("raw",data)
 
+    //Name: item.name, Price:item.price, Supplier: item["supplier"].name, id : item.id ,
     const tableData = data.map(obj => {
-        const isOrder = obj.order !== null;
         const newObj = {
             Name: obj.name, //isOrder ? obj.drug.name : obj.material.name,
             Price: obj.price, //isOrder ? obj.drug.price : obj.material.price,
-            IsActive: isOrder ? "Active" : "Not Active",
-            Quantity: obj.quantity
+            Supplier: obj.supplier.name,
+            Quantity: "button"
         };
         return newObj;
     });
-    console.log(tableData)
+    console.log("tbldt",tableData)
+
     const footerContent = {
         button: {
             active: true,
             cancel: "Cancel",
             submit: "Submit Order",
-            //onCancel: resetTotal(),
+            //onCancel: ,
             //onSubmit:
 
         },
@@ -50,7 +52,7 @@ function populateTable(data) {
     }
     createGenericTable(
         "order-list",
-        ["Name", "Price", "IsActive", "Quantity"],
+        ["","Name", "Price", "Supplier", "Quantity"],
         tableData,
         footerContent,
     );
@@ -62,17 +64,25 @@ function populateTable(data) {
         // Filter the data
         const selectedSupplier = document.getElementById('filterSupplier').value;
         const selectedType = document.getElementById('filterType').value;
+        console.log("type",selectedType,"sup",selectedSupplier)
 
         const filteredData = data.filter(obj => {
 
-            return (selectedType === '' || obj[selectedType] !== null) && (selectedSupplier === '' || obj[selectedSupplier] !== null) ;
+            return (
+                (selectedType === '' || selectedType === 'All' || obj.type === selectedType) &&
+                (selectedSupplier === '' || selectedSupplier === 'All' || obj.supplier.name === selectedSupplier)
+            );
         });
 
+        console.log("fıııl",filteredData)
         const elem = document.getElementById('order-list');
-        elem.remove();
-        console.log(elem)
-        populateTable(filteredData);
+        elem.parentNode.replaceChildren("");
 
+        if (selectedSupplier === 'All') {
+            populateTable(filteredData); // Display all data
+        } else {
+            populateTable(filteredData); // Display filtered data
+        }
     });
 }
 
@@ -93,27 +103,12 @@ export const supplierOption = async () => {
     selectedSupplier.forEach(name => {
         const option = document.createElement('option');
         option.text = name;
+        option.value = name;
         selectElementSupplier.add(option);
     });
 }
 
-
 /*
-//for making total 0 when clicking cancel button
-export const resetTotal = () => {
-    $(document).ready(() => {
-        const cancelButton = $('#cancel-btn');
-        if (cancelButton) {
-            cancelButton.on('click', () => {
-                const totalPrice = $('#total-price');
-                if (totalPrice) {
-                    totalPrice.text('Total Price: $0');
-                }
-            });
-        }
-    });
-};
-
 //for calculation total price
 export const calculateTotal = () => {
     var total = 0;
