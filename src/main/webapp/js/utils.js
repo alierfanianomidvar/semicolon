@@ -57,6 +57,19 @@ export function generateRoleOptions(role, userForm) {
     });
 }
 
+export function getPageTitle() {
+    const appName = "Semicolon";
+    const hashName = window.location.hash.split("/")[0].replace("#", "").replaceAll("-", " ");
+
+    if (hashName === "") {
+        return appName;
+    }
+
+    const pageName = hashName.substring(0,1).toUpperCase() + hashName.substring(1);
+    return `${appName} - ${pageName}`;
+
+} 
+
 
 export function extractRole(token) {
     const payload = parseJwt(token);
