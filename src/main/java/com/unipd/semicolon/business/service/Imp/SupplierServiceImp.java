@@ -120,7 +120,7 @@ public class SupplierServiceImp extends AbstractDatabaseServlet implements Suppl
                                 drug.getDescription(),
                                 drug.getLimitation(),
                                 drug.getPrice(),
-                                drug.getCountryOFProduction()
+                                drug.getCountryOfProduction()
                         );
                     }
                 }
@@ -178,13 +178,13 @@ public class SupplierServiceImp extends AbstractDatabaseServlet implements Suppl
                 }
                 if (drugs != null && !drugs.isEmpty()) {
                     for (Drug drug : drugs) {
-                        if (drugService.findDrugsByNameAndSupplierAndExpirationDateAndShapeAndAgeGroupAndCountryOFProduction(
+                        if (drugService.findDrugsByNameAndSupplierAndExpirationDateAndShapeAndAgeGroupAndCountryOfProduction(
                                 drug.getName(),
                                 drug.getSupplier(),
                                 drug.getExpirationDate(),
                                 drug.getShape(),
                                 drug.getAgeGroup(),
-                                drug.getCountryOFProduction()
+                                drug.getCountryOfProduction()
                         ).isEmpty()) {
                             drugService.save(
                                     drug.getName(),
@@ -199,7 +199,7 @@ public class SupplierServiceImp extends AbstractDatabaseServlet implements Suppl
                                     drug.getDescription(),
                                     drug.getLimitation(),
                                     drug.getPrice(),
-                                    drug.getCountryOFProduction()
+                                    drug.getCountryOfProduction()
                             );
                         }
 
